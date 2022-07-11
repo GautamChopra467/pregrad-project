@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+.sub_header_internships {
+    background-color: #fff;
+    padding: 5px 40px;
+    height: 3rem;
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    border-top: 1px solid #EEEEEE;
+}
+
+.sub_header_internships h5 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 0;
+}
+
+.section_internships {
+    background-color: #f7f7f7;
+    height: 100vh;
+}

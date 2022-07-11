@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+.main_container_sidebar {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #FaFaFa;
+}
+
+.sidebar_container_sidebar {
+    background-color: #FFFFFF;
+    color: #7840f2;
+    height: 100vh;
+    overflow-y: hidden;
+    /* top: 0; */
+    z-index: 800;
+}
+
+.top_section_sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+.hamburger_menu_sidebar {
+    cursor: pointer;
+}
+
+.mid_section_sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    grid-gap: 0px;
+    margin-bottom: 10px;
+}
+
+.user_image_container_sidebar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background-color: #E4D9FC;
+    border-radius: 7px;
+}
+
+.mid_section_sidebar h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000;
+}
+
+.mid_section_sidebar span {
+    font-weight: 500;
+}
+
+.mid_section_sidebar h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #7E7E7E;
+    font-weight: 400;
+}
+
+.user_image_container_sidebar img {
+    width: 80px;
+}
+
+.routes_link_sidebar {
+    display: flex;
+    align-items:center;
+    /* color: #666666; */
+    color: #3f4358;
+    gap: 15px;
+}
+
+.routes_link_sidebar:hover {
+    border-right: 5px solid #7840f2;
+    transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    background-color: #E4D9FC;
+    color: #7840f2;
+}
+
+.active {
+    border-right: 5px solid #7840f2;
+    background-color: #E4D9FC;
+    color: #7840f2;
+}
+
+.routes_link_sidebar:hover .side_menu_text_sidebar {
+    transform: translateX(15px);
+    transition: all 0.3s ease-in-out;
+}
+
+.routes_container_sidebar a {
+    vertical-align: middle;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.side_menu_icon_sidebar {
+    display: flex;
+    align-items: center;
+}
+
+.side_menu_text_sidebar {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.03rem;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+
+.children_container_sidebar {
+    width: 100%;
+}
