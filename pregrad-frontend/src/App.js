@@ -25,7 +25,7 @@ const App = () => {
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/emailverify" element={<EmailVerify />} />
-        <Route exact path="/otpverify" element={<OTPVerify />} />
+        <Route exact path="/otpverify/:email" element={<OTPVerify />} />
         <Route exact path="/detailsone" element={<DetailsOne />} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>

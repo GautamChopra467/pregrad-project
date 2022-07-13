@@ -66,7 +66,7 @@ const SignUp = () => {
     if(!values.name){
       errors.name = "Name required";
     }else if(values.name.length < 2){
-      errors.name = "Min 2 characters required";
+      errors.name = "Minimum 2 characters required";
     }
 
     if(!values.email){
@@ -191,13 +191,13 @@ const SignUp = () => {
 
                 <div className="form-box box3">
                   <label>Password</label>
-                  <input type="text" name="password" placeholder="Enter Password" value={user.password} onChange={handleForm} />
+                  <input type="password" name="password" placeholder="Enter Password" value={user.password} onChange={handleForm} />
                   <p className="errors-msg">{formErrors.password}</p>
                 </div>
 
                 <div className="form-box box4">
                   <label>Confirm Password</label>
-                  <input type="text" name="confirmpassword" placeholder="Confirm Password" value={user.confirmpassword} onChange={handleForm} />
+                  <input type="password" name="confirmpassword" placeholder="Confirm Password" value={user.confirmpassword} onChange={handleForm} />
                   <p className="errors-msg">{formErrors.confirmpassword}</p>
                 </div>
 

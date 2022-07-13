@@ -41,14 +41,14 @@ const EmailVerify = () => {
   useEffect(() => {
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-    //   axios.post("http://localhost:8000/login", user)
-    //   .then( res => {
-    //     if(res.data.message === "true"){
-    //       navigate("/signup");
-    //     }else {
-    //       setFormErrors({final: res.data.message})
-    //     }
-    //   });
+      axios.post("http://localhost:8000/verifyemail", user)
+      .then( res => {
+        if(res.data.message === "true"){
+          navigate(`/otpverify/${user.email}`);
+        }else {
+          setFormErrors({final: res.data.message})
+        }
+      });
     console.log("submitted");
     }else {
       console.log("alert")
@@ -146,7 +146,7 @@ const EmailVerify = () => {
                 <div className="form-full">
                 <div className="form-container-box">
                   <label>Email Address</label>
-                  <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
+                  <input type="email" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
                   <p className="errors-msg">{formErrors.email}</p>
                 </div>
                 </div>
