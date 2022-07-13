@@ -4,7 +4,7 @@ import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 
 const Education = () => {
-  const [isContent, setIsContent] = useState(false);
+  const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -104,14 +104,15 @@ const Education = () => {
 
             <div className='content_container_education'>
               <div className='top_section_content_education'>
-                <h4>Ambaram Store</h4>
+                <h4>Bharati Vidyapeeth's College of Engineering</h4>
                 <div className='content_logo_education'>
                   <BiEditAlt size={22} color='#7840f2' />
                 </div>
               </div>
 
               <div className='bottom_section_content_education'>
-                <a href='you' alt="Link">field Link</a>
+                <h4>B.Tech, Computer Science Engineering</h4>
+                <h3>2020 - 2024</h3>
               </div>
             </div>
             </>

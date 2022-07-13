@@ -241,6 +241,10 @@ img {
   margin-top: 25px;
 }
 
+.form-container-box:nth-child(3){
+  margin-top: 25px;
+}
+
 .container6 {
   display: flex;
   align-items: center;

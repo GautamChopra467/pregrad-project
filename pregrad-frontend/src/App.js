@@ -8,13 +8,7 @@ import EmailVerify from "./pages/EmailVerify";
 import OTPVerify from "./pages/OTPVerify";
 import DetailsOne from "./pages/DetailsOne";
 import HeaderUser from "./components/jsx/HeaderUser";
-// import Sidebar from "./components/jsx/Sidebar";
-// import WorkExperience from "./pages/UserStudent/WorkExperience";
-// import Education from "./pages/UserStudent/Education";
-// import Internships from "./pages/UserStudent/Internships";
-// import Projects from "./pages/UserStudent/Projects";
-// import Achievements from "./pages/UserStudent/Achievements";
-// import Certifications from "./pages/UserStudent/Certifications";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   return (
@@ -27,6 +21,7 @@ const App = () => {
         <Route exact path="/emailverify" element={<EmailVerify />} />
         <Route exact path="/otpverify" element={<OTPVerify />} />
         <Route exact path="/detailsone" element={<DetailsOne />} />
+        <Route exact path="/forgotpassword" element={<ForgotPassword />} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>
       {/* <Sidebar>

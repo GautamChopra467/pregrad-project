@@ -177,6 +177,11 @@
   justify-content: space-between;
 }
 
+.top_section_content_education h4 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
 .content_logo_education {
   padding: 3px 20px;
   background-color: #f5f5f5;
@@ -188,12 +193,17 @@
   background-color: #ebebeb;
 }
 
-.bottom_section_content_education a {
-  color: #7840f2;
+.bottom_section_content_education h4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  color: #566474;
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
-.bottom_section_content_education a:hover {
-  color: #9467f4;
+.bottom_section_content_education h3 {
+  font-size: 14px;
+  color: #68798D;
 }
 
 .modal_backgound_education {
@@ -329,10 +339,6 @@
     padding: 5px 5px;
   }
 
-  .bottom_section_content_education a {
-    font-size: 0.9rem;
-  }
-
   .modal_container_education {
     padding: 16px;
   }
@@ -361,5 +367,20 @@
 
   .add_section2_details_education p {
     text-align: center;
+  }
+
+  .top_section_content_education h4 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .bottom_section_content_education h4 {
+    font-size: 14px;
+    letter-spacing: 0.2px;
+  }
+
+  .bottom_section_content_education h3 {
+    font-size: 13px;
+    font-weight: 500;
   }
 }
