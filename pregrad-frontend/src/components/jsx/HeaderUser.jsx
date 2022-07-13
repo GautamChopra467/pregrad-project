@@ -5,11 +5,23 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import "../css/HeaderUserStyles.css";
+import {useCookies} from 'react-cookie'
 
 const HeaderUser = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
+
+  const navigate = useNavigate()
+
+  const [cookies,setCookies,removeCookie] = useCookies([])
+
+  const LogOut = ()=>{
+    console.log("Remove Cookie")
+    removeCookie("jwt")
+    navigate('/login')
+    window.location.reload(true)
+  }
 
   return (
     <div className="headerUser">
@@ -33,7 +45,7 @@ const HeaderUser = () => {
 
           { isLogoutMenu && (
             <div className="logout_container_headerUser">
-            <Link to="/">Logout <MdLogout /></Link>
+            <a onClick={LogOut}>Logout <MdLogout /></a>
          </div>
           ) }
         </div>
@@ -48,7 +60,7 @@ const HeaderUser = () => {
                 <Link to="/">Home</Link>
             </div>
             <div>
-            <Link to="/login">Logout <MdLogout /></Link>
+            <a onClick={LogOut}>Logout <MdLogout /></a>
             </div>
          </div>
           </>

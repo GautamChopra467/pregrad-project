@@ -7,8 +7,36 @@ import Internships from "./UserStudent/Internships";
 import Projects from "./UserStudent/Projects";
 import Achievements from "./UserStudent/Achievements";
 import Certifications from "./UserStudent/Certifications";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
+
 
 const Student = () => {
+
+  const navigate = useNavigate()
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
+
+useEffect(()=>{
+  const verifyUser = async()=>{
+    if(!cookies.jwt){
+      navigate('/login')
+    }else{
+      const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+      if(!data.status){
+        removeCookie("jwt")
+        navigate('/login')
+      }else{
+        
+        navigate('/student')
+      }
+    }
+  }
+  verifyUser()
+},[])
+
   return (
     <Sidebar>
       <Routes>

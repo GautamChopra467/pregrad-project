@@ -9,14 +9,19 @@ import {
 } from "react-icons/md";
 import { GiAchievement } from "react-icons/gi";
 import { TbFileCertificate } from "react-icons/tb";
-import { NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 import Logo from "../../img/logo.png";
 import UserImage from "../../img/user3.png";
 import HeaderStudent from "./HeaderStudent";
 
+
 const Sidebar = ({ children }) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
+
+
+
+
 
   const routes = [
     {

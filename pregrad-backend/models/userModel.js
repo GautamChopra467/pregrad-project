@@ -34,6 +34,30 @@ userRegisterSchema.pre("save", async function(next){
     next();
 })
 
-const UserRegister = new mongoose.model("UserRegister", userRegisterSchema);
+userRegisterSchema.statics.login = async function(email,password){
+
+    const user = await this.findOne({email})
+
+    if(user){
+        if(user.verified == true){
+            const auth = await bcrypt.compare(password,user.password)
+            if(auth){
+                return user;
+            }
+        }else{
+            return false
+        }
+    }
+    else{
+       return false
+    }
+
+   
+
+}
+
+const UserRegister =  mongoose.model("UserRegister", userRegisterSchema);
 
 module.exports = UserRegister;
+
+

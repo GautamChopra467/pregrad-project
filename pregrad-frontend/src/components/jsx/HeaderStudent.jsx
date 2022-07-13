@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
@@ -7,11 +7,23 @@ import { MdLogout } from "react-icons/md";
 import { CgMenuRight } from "react-icons/cg"
 import { FaRegUser } from "react-icons/fa"
 import "../css/HeaderStudentStyles.css";
+import {useCookies} from 'react-cookie'
 
 const HeaderStudent = (props) => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
+
+const navigate = useNavigate()
+
+  const [cookies,setCookies,removeCookie] = useCookies([])
+
+  const LogOut = ()=>{
+    console.log("Remove Cookie")
+    removeCookie("jwt")
+    navigate('/login')
+    window.location.reload(true)
+  }
 
   return (
     <div className="headerStudent">
@@ -40,7 +52,7 @@ const HeaderStudent = (props) => {
           { isLogoutMenu && (
             <div className="logout_container_headerStudent">
               <div className="logout_items_headerStudent"><Link to="/">Profile <div> <FaRegUser /></div></Link></div>
-              <div className="logout_items_headerStudent"><Link to="/">Logout <div> <MdLogout /></div></Link></div>
+              <div className="logout_items_headerStudent"><a onClick={LogOut}>Logout <div> <MdLogout /></div></a></div>
          </div>
           ) }
         </div>
@@ -55,7 +67,7 @@ const HeaderStudent = (props) => {
                 <Link to="/">Home</Link>
             </div>
             <div>
-            <Link to="/login">Logout <MdLogout /></Link>
+            <a onClick={LogOut}>Logout <MdLogout /></a>
             </div>
          </div>
           </>

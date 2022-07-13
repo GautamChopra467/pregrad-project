@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 import "../../components/css/UserStudent/AchievementsStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
 
 const Achievements = () => {
+  
+  const navigate = useNavigate()
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
+  
+  
   const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
 
@@ -31,13 +40,28 @@ const Achievements = () => {
   }
 
   useEffect(() => {
-    console.log(formErrors)
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted");
-    }else {
-      console.log("alert")
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        if(!data.status){
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+       
+          navigate('/student/achievements')
+        }
+      }
     }
-  }, [formErrors]);
+    verifyUser()
+    // console.log(formErrors)
+    if( Object.keys(formErrors).length === 0 && isSubmit ){
+      // console.log("submitted");
+    }else {
+      // console.log("alert")
+    }
+  }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
@@ -62,7 +86,7 @@ const Achievements = () => {
       </div>
 
       <div className='main_container_achievements'>
-        {console.log(window)}
+      
           {!isContent ? (
             <div className='add_section1_achievements'>
               <div className='add_section1_logo_achievements'>

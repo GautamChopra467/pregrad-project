@@ -40,18 +40,21 @@ const Login = () => {
   }
 
   useEffect(() => {
-    console.log(formErrors)
+  
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/login", user)
+      axios.post("http://localhost:8000/login",
+      { 
+        ...user
+      },{
+        withCredentials:true
+      })
       .then( res => {
         if(res.data.message === "true"){
-          navigate("/signup");
+          navigate("/student/internships");
         }else {
           setFormErrors({final: res.data.message})
         }
       });
-    }else {
-      console.log("alert")
     }
   }, [formErrors]);
 
@@ -160,7 +163,7 @@ const Login = () => {
 
                 <div className="form-container-box">
                   <label>Password</label>
-                  <input type="text" name="password" placeholder="Enter Password" value={user.password} onChange={handleForm} />
+                  <input type="password" name="password" placeholder="Enter Password" value={user.password} onChange={handleForm} />
                   <p className="errors-msg">{formErrors.password}</p>
                 </div>
 

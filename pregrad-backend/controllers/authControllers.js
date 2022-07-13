@@ -1,8 +1,64 @@
 const UserRegister = require("../models/userModel");
-const bcrypt = require("bcryptjs");
+const Otp = require('../models/OtpVerifyModel')
+
+const nodemailer = require('nodemailer')
+const {google} = require('googleapis')
+
+const jwt = require('jsonwebtoken');
+
+const maxAge = 3*24*60*60
+
+const createToken =(id)=>{
+
+  return jwt.sign({id},"AnuragPandey",{
+    expiresIn:maxAge
+  })
+
+
+}
+
+const oAuth2Client = new google.auth.OAuth2(process.GOOGLE_CLIENTID,process.env.GOOGLE_SECRET,process.REDIRECT_URI)
+oAuth2Client.setCredentials({refresh_token:process.env.REFRESH_TOKEN})
+
+
+const transporter = nodemailer.createTransport({
+  service:"gmail",
+  auth:{
+    type:"OAuth2",
+    user:process.env.AUTH_EMAIL,
+    clientId:process.env.GOOGLE_CLIENTID,
+    clientSecret:process.env.GOOGLE_SECRET,
+    refreshToken:process.env.REFRESH_TOKEN
+  }
+})
+
+const sendOtpToVerify = async({email})=>{
+ 
+  try{
+ 
+    const otp = Math.floor(Math.random()*(10000-1000)+1000)
+    const expiredAt = Date.now()+3600000
+
+    const mailOptions={
+      from:process.env.AUTH_EMAIL,
+      to:email,
+      subject:"Please Verify Your Email",
+      html:`<p>Please Enter the ${otp} in the app to verify your email address and complete the registeration process</p>
+      <p>The code expires in 1 hour</p>`
+    }
+
+const newUser = await Otp.create({email,otp,createdAt:Date.now(),expiredAt})
+
+const result = await transporter.sendMail(mailOptions)
+
+  }catch(err){
+    console.log(err)
+  }
+
+}
 
 module.exports.signup = async (req, res) => {
-  const { name, email, password, confirmpassword, mobile } = req.body;
+  const { name, email, password, mobile } = req.body;
 
   UserRegister.findOne({ email: email }, async (err, user) => {
     if (user) {
@@ -27,20 +83,83 @@ module.exports.signup = async (req, res) => {
 };
 
 
-module.exports.login = async (req, res) => {
-    const {email, password} = req.body;
 
-    UserRegister.findOne({email: email}, async (err, user) => {
-        if (user) {
-            const passwordCheck = await bcrypt.compare(password, user.password);
-            
-            if(passwordCheck){
-                res.send({message: "true", user: user})
-            }else {
-                res.send({message: "Incorrect Login Details"})
-            }
-        } else {
-            res.send({message: "User not Registered !"})
-        }
+module.exports.verifyEmail=async(req,res)=>{
+try{
+  const {email} = req.body
+
+  const user = await UserRegister.findOne({email})
+  
+  if(user)
+  { 
+     sendOtpToVerify(user);
+     res.send({ message: "true" });
+  }
+  else{
+    res.send({ message: "Please Enter a register Email Id" });
+  }
+}catch(err){
+  console.log(err)
+}
+}
+
+module.exports.verifyOtp = async(req,res)=>{
+try{
+  const {email,otp1,otp2,otp3,otp4} = req.body 
+
+const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`
+
+  const user = await Otp.findOne({email})
+
+  if(user){
+    if(user.expiredAt.getTime() < Date.now())
+    {
+      res.send({message:"Code Expired"})
+    }else{
+      if(user.otp != otp){
+        res.send({message:"Invalid Otp"})
+      }else{
+        await UserRegister.updateOne({email},{$set:{
+          verified:true
+        }})
+         await Otp.deleteOne({email})
+         res.send({message:"true"})
+      }
+    }
+  }
+}catch(err){
+  console.log(err)
+}
+
+
+}
+
+module.exports.login = async (req, res) => {
+  try{  
+
+   
+  const {email, password} = req.body;
+ 
+    const user = await UserRegister.login(email,password)
+
+    if(!user)
+    {
+      
+       res.send({message:"Invalid Credentials"})
+    }
+else{
+    const token = createToken(user._id)
+
+    res.cookie("jwt",token,{
+      withCredentials:true,
+      httpOnly:false,
+      maxAge:maxAge*1000
     })
+
+    res.send({message:"true"})
+  }
+}catch(err){
+  console.log(err)
+}
+    
 }

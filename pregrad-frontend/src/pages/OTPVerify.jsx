@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import Logo from "../img/logo.png";
 import OTPVerifyLogo from "../img/otpverify-image.png";
 import InstaLogo from "../img/instagram-logo.svg";
@@ -11,7 +11,10 @@ import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
 
 const OTPVerify = () => {
+
   const navigate = useNavigate();
+
+const {email} = useParams()
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -20,12 +23,17 @@ const OTPVerify = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const [user, setUser] = useState({
-    email: "",
+    email: email,
     otp1: "",
     otp2: "",
     otp3: "",
     otp4: ""
   });
+
+
+// const [sendDetails,setSendDetails] = useState({})
+
+
 
   const handleForm = (e) => {
     const {name, value} = e.target;
@@ -33,8 +41,11 @@ const OTPVerify = () => {
       ...user,
       [name]: value
     })
+   
     console.log(name, value)
   }
+
+ 
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -45,14 +56,15 @@ const OTPVerify = () => {
   useEffect(() => {
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-    //   axios.post("http://localhost:8000/login", user)
-    //   .then( res => {
-    //     if(res.data.message === "true"){
-    //       navigate("/signup");
-    //     }else {
-    //       setFormErrors({final: res.data.message})
-    //     }
-    //   });
+    
+      axios.post(`http://localhost:8000/verifyotp`, user)
+      .then( res => {
+        if(res.data.message === "true"){
+          navigate("/login");
+        }else {
+          setFormErrors({final: res.data.message})
+        }
+      });
     console.log("submitted");
     }else {
       console.log("alert")
