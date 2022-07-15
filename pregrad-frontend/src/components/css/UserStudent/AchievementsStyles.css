@@ -177,6 +177,11 @@
   justify-content: space-between;
 }
 
+.content_logo_container_achievements {
+  display: flex;
+  grid-gap: 10px;
+}
+
 .content_logo_achievements {
   padding: 3px 20px;
   background-color: #f5f5f5;
@@ -359,5 +364,9 @@
 
   .add_section2_details_achievements p {
     text-align: center;
+  }
+
+  .content_logo_achievements {
+    padding: 2px 10px 0 10px;
   }
 }

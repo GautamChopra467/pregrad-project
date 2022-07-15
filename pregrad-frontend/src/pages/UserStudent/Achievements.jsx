@@ -4,7 +4,8 @@ import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import {useCookies} from 'react-cookie';
+import { MdOutlineDelete } from "react-icons/md";
 
 const Achievements = () => {
   
@@ -116,8 +117,13 @@ const Achievements = () => {
             <div className='content_container_achievements'>
               <div className='top_section_content_achievements'>
                 <h4>Ambaram Store</h4>
+                <div className='content_logo_container_achievements'>
                 <div className='content_logo_achievements'>
                   <BiEditAlt size={22} color='#7840f2' />
+                </div>
+                <div className='content_logo_achievements'>
+                  <MdOutlineDelete size={22} color='#ef233c' />
+                </div>
                 </div>
               </div>
 
