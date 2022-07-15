@@ -3,6 +3,7 @@ import "../../components/css/UserStudent/EducationStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineDelete } from 'react-icons/md';
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 
@@ -13,7 +14,7 @@ const Education = () => {
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
-  const [isContent, setIsContent] = useState(false);
+  const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -128,8 +129,13 @@ const Education = () => {
             <div className='content_container_education'>
               <div className='top_section_content_education'>
                 <h4>Bharati Vidyapeeth's College of Engineering</h4>
+                <div className='content_logo_container_education'>
                 <div className='content_logo_education'>
                   <BiEditAlt size={22} color='#7840f2' />
+                </div>
+                <div className='content_logo_education'>
+                  <MdOutlineDelete size={22} color='#ef233c' />
+                </div>
                 </div>
               </div>
 

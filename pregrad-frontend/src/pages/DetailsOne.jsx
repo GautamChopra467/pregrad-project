@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderUser from "../components/jsx/HeaderUser";
 import "../components/css/DetailsOneStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
-import MultiSelect from  'react-multiple-select-dropdown-lite'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useState } from "react";
+import Select from "react-select";
 
 const DetailsOne = () => {
 
@@ -23,6 +21,16 @@ const DetailsOne = () => {
     { label:  'Full Stack Software', value:  'Full Stack Software'  },
   ]
 
+  const customStyles = {
+    valueContainer: (provided, state) => ({
+      ...provided,
+      backgroundColor: "white",
+      position: "absolute",
+      top:120,
+      placeholder: "",
+      color: "red"
+    })
+  }
 
   return (
     <div>
@@ -61,30 +69,14 @@ const DetailsOne = () => {
 
               <div className="form_box_detailsOne box3_detailsOne">
                 <label className="label_detailsOne">Q. Which domain are you interested in working?</label>
-                {/* <select className="select_detailsOne">
-                  <option value="other">Enter Domain</option> 
-                </select> */}
-                {/* <Multiselect
-                options={jobOptions} 
-                selectedValues={this.state.selectedValue} 
-                onSelect={this.onSelect} 
-                onRemove={this.onRemove} 
-                displayValue="name"  
-               />  */}
-                <h4>Values</h4>
-        {value}
-
-      <MultiSelect
-      closeOnSelect="false"
-        onChange={handleOnchange}
-        options={options}
-        
-      />
               </div>
 
               <div className="form_box_detailsOne box4_detailsOne">
                 <label className="label_detailsOne">Q. Which type of job would you like?</label>
-                
+                <Select 
+                styles={customStyles}
+                isMulti={true}
+                options={options} />
               </div>
 
               <div className="form_box_detailsOne box5_detailsOne">

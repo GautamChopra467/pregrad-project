@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../../components/css/UserStudent/WorkExperienceStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
+import { MdOutlineDelete } from "react-icons/md"
 
 const WorkExperience = () => {
   const [isContent, setIsContent] = useState(true);
@@ -105,8 +106,13 @@ const WorkExperience = () => {
             <div className='content_container_workexperience'>
               <div className='top_section_content_workexperience'>
                 <h4>Google Engage</h4>
+                <div className='content_logo_container_workexperience'>
                 <div className='content_logo_workexperience'>
                   <BiEditAlt size={22} color='#7840f2' />
+                </div>
+                <div className='content_logo_workexperience'>
+                  <MdOutlineDelete size={22} color='#ef233c' />
+                </div>
                 </div>
               </div>
 
