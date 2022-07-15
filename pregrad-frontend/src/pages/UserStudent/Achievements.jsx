@@ -19,15 +19,15 @@ const Achievements = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [user, setUser] = useState({
+  const [achievements, setAchievements] = useState({
     title: "",
     certificate: ""
   });
 
   const handleForm = (e) => {
     const {name, value} = e.target;
-    setUser({
-      ...user,
+    setAchievements({
+      ...achievements,
       [name]: value
     })
     console.log(name, value)
@@ -35,7 +35,7 @@ const Achievements = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    setFormErrors(validate(user));
+    setFormErrors(validate(achievements));
     setIsSubmit(true);
   }
 
@@ -55,9 +55,11 @@ const Achievements = () => {
       }
     }
     verifyUser()
-    // console.log(formErrors)
+
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      // console.log("submitted");
+     const {data} = axios.post("http://localhost:8000/student/achievements",{
+      ...achievements
+     })
     }else {
       // console.log("alert")
     }
@@ -140,13 +142,13 @@ const Achievements = () => {
               <form>
                 <div className="form_box_achievements">
                   <label>Title</label>
-                  <input type="text" name="title" placeholder="Title of Achievement" value={user.title}  onChange={handleForm} />
+                  <input type="text" name="title" placeholder="Title of Achievement" value={achievements.title}  onChange={handleForm} />
                   <p className="errors_msg_achievements">{formErrors.title}</p>
                 </div>
 
                 <div className="form_box_achievements">
                   <label>Certificate Link</label>
-                  <input type="url" name="certificate" placeholder="Certification Link" value={user.certificate}  onChange={handleForm} />
+                  <input type="url" name="certificate" placeholder="Certification Link" value={achievements.certificate}  onChange={handleForm} />
                   <p className="errors_msg_achievements">{formErrors.certificate}</p>
                 </div>
 

@@ -168,7 +168,7 @@ const Login = () => {
                 </div>
 
                 <div className="container6">
-                  <a href="youtube.com">Forgot Password ?</a>
+                  <Link to='/forgotpassword'>Forgot Password ?</Link>
                 </div>
                 </div>
 

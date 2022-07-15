@@ -3,6 +3,8 @@ const Otp = require('../models/OtpVerifyModel')
 
 const nodemailer = require('nodemailer')
 const {google} = require('googleapis')
+const bcrypt = require('bcryptjs')
+
 
 const jwt = require('jsonwebtoken');
 
@@ -86,18 +88,31 @@ module.exports.signup = async (req, res) => {
 
 module.exports.verifyEmail=async(req,res)=>{
 try{
+
   const {email} = req.body
 
   const user = await UserRegister.findOne({email})
-  
+
   if(user)
   { 
-     sendOtpToVerify(user);
-     res.send({ message: "true" });
+
+    if(req.query.type == 'register')
+    {
+      sendOtpToVerify(user);
+      res.send({ message: "true" });
+    }else{
+      if(user.verified == true)
+      {
+        sendOtpToVerify(user);
+        res.send({ message: "true" });
+    }else{
+      res.send({ message: "Invalid" });
+    }
+    }
   }
   else{
     res.send({ message: "Please Enter a register Email Id" });
-  }
+}
 }catch(err){
   console.log(err)
 }
@@ -116,7 +131,10 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`
     {
       res.send({message:"Code Expired"})
     }else{
-      if(user.otp != otp){
+
+      const validOtp = await bcrypt.compare(otp,user.otp)
+
+      if(!validOtp){
         res.send({message:"Invalid Otp"})
       }else{
         await UserRegister.updateOne({email},{$set:{
@@ -162,4 +180,20 @@ else{
   console.log(err)
 }
     
+}
+
+module.exports.newPassword = async(req,res)=>{
+  try{ const {email,password} = req.body
+
+   const salt = await bcrypt.genSalt(10)
+   password = await bcrypt.hash(password,salt)
+
+const user = await UserRegister.findOneAndUpdate({email},{$set:{
+  password
+}})
+
+res.send({message:"true"})
+}catch(err){
+  console.log(err)
+}
 }

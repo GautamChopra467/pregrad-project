@@ -1,4 +1,5 @@
 const mongoose= require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const OtpSchema= new mongoose.Schema({
     email:{
@@ -14,6 +15,12 @@ const OtpSchema= new mongoose.Schema({
     expiredAt:{
         type:Date
     }
+})
+
+OtpSchema.pre('save',async function(){
+
+    const salt = await bcrypt.genSalt(10)
+    this.otp = await bcrypt.hash(this.otp,salt)
 })
 
 const Otp = mongoose.model('Otp',OtpSchema)

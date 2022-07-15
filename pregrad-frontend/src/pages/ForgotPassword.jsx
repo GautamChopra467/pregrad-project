@@ -32,7 +32,7 @@ const ForgotPassword = () => {
       [name]: value
     })
   }
-
+  
   const submitForm = (e) => {
     e.preventDefault();
     setFormErrors(validate(user));
@@ -42,14 +42,14 @@ const ForgotPassword = () => {
   useEffect(() => {
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-    //   axios.post("http://localhost:8000/login", user)
-    //   .then( res => {
-    //     if(res.data.message === "true"){
-    //       navigate("/signup");
-    //     }else {
-    //       setFormErrors({final: res.data.message})
-    //     }
-    //   });
+      axios.post("http://localhost:8000/verifyemail/?type=forgotpassword", user)
+      .then( res => {
+        if(res.data.message === "true"){
+          navigate("/newpassword");
+        }else {
+          setFormErrors({final: res.data.message})
+        }
+      });
     console.log("submitted");
     }else {
       console.log("alert")

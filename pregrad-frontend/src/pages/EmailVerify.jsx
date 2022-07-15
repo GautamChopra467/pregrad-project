@@ -41,7 +41,7 @@ const EmailVerify = () => {
   useEffect(() => {
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/verifyemail", user)
+      axios.post("http://localhost:8000/verifyemail/?type=register", user)
       .then( res => {
         if(res.data.message === "true"){
           navigate(`/otpverify/${user.email}`);
