@@ -3,9 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
 import "../css/HeaderStyles.css";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
-const Header = () => {
+const Header = ({theme, setTheme}) => {
   const navigate = useNavigate();
+
+  const toggleTheme = () => {
+    if(theme === "light-theme"){
+      setTheme("dark-theme");
+    }else{
+      setTheme("light-theme");
+    }
+  }
 
   const [click,setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -22,28 +31,39 @@ const Header = () => {
     window.addEventListener('scroll', changeShadow);
 
   return (
-    <div className={shadow ? "header header_shadow" : "header"}>
-      <div className="left_section">
+    <div className={shadow ? "header_header header_shadow_header" : "header_header"}>
+      <div className="left_section_header">
           <Link to="/">
             <img src={Logo} alt="pregrad" />
           </Link>
-        <Link to="/" className="intern">Top Internships</Link>
+          {/* <button onClick={toggleTheme}>Click</button> */}
+        <Link to="/" className="intern_header">Top Internships</Link>
       </div>
 
-      <div className={click ? "right_section active" : "right_section"}>
+      <div className={click ? "right_section_header active_header" : "right_section_header"}>
         <div className="abc">
-          <Link to="/" className="intern2">Top Internships</Link>
+          <Link to="/" className="intern2_header">Top Internships</Link>
         </div>
         <Link to="/">Are you a Company ?</Link>
-        <div className="button_container">
-          <button onClick={() => navigate("/login")} className="btn_light">Log in</button>
-          <button onClick={() => navigate("/signup")} className="btn_primary">Sign Up</button>
+        <div className="button_container_header">
+          <button onClick={() => navigate("/login")} className="btn_light_header">Log in</button>
+          <button onClick={() => navigate("/signup")} className="btn_primary_header">Sign Up</button>
+          <div className="theme_icon_container_header" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon_header" /> : <BsSunFill className="theme_icon_header" />
+            }
+          </div>
         </div>
       </div>
 
-      <div className="hamburger" onClick={handleClick}>
-          {click ? (<FaTimes size={20} style={{ color: '#000' }}/>) :
-          (<FaBars size={20} style={{ color: '#000' }}/>)}
+      <div className="hamburger_header">
+          <div className="theme_icon_container2_header" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon2_header" /> : <BsSunFill className="theme_icon2_header" />
+            }
+          </div>
+          {click ? (<FaTimes size={20} className="hamburger_icon_header" onClick={handleClick} />) :
+          (<FaBars size={20}  className="hamburger_icon_header"  onClick={handleClick} />)}
       </div>
     </div>
   );

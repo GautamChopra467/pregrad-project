@@ -8,8 +8,17 @@ import { CgMenuRight } from "react-icons/cg"
 import { FaRegUser } from "react-icons/fa"
 import "../css/HeaderStudentStyles.css";
 import {useCookies} from 'react-cookie'
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const HeaderStudent = (props) => {
+  const toggleTheme = () => {
+    if(props.theme === "light-theme"){
+      props.setTheme("dark-theme");
+    }else{
+      props.setTheme("light-theme");
+    }
+  }
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
@@ -28,7 +37,7 @@ const navigate = useNavigate()
   return (
     <div className="headerStudent">
       <div className="left_section_headerStudent">
-        {window.innerWidth < 940 ? (<CgMenuRight size={30} color="#7840f2" onClick={() => props.setIsOpenSidebar(!props.isOpenSidebar)} />
+        {window.innerWidth < 940 ? (<CgMenuRight size={30} className="left_section_icon_headerStudent" onClick={() => props.setIsOpenSidebar(!props.isOpenSidebar)} />
 ) : ""}
         {!props.isOpenSidebar && (
           <Link to="/">
@@ -43,25 +52,37 @@ const navigate = useNavigate()
             Home
           </Link>
 
+          <div className="theme_icon_container_headerStudent" onClick={toggleTheme}>
+            {
+              props.theme==="light-theme" ? <BsMoonFill className="theme_icon_headerStudent" /> : <BsSunFill className="theme_icon_headerStudent" />
+            }
+          </div>
+
           <div className="user_details_container_headerStudent" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
             <div className="user_avavtar_headerStudent">G</div>
             <p>Gautam</p>
-            { isLogoutMenu ? <RiArrowDropUpLine size={29} style={{ color: "#000" }} /> : <RiArrowDropDownLine size={29} style={{ color: "#000" }} />}
+            { isLogoutMenu ? <RiArrowDropUpLine size={29} className="user_avatar_logo_headerStudent" /> : <RiArrowDropDownLine size={29} className="user_avatar_logo_headerStudent" />}
           </div>
 
           { isLogoutMenu && (
             <div className="logout_container_headerStudent">
-              <div className="logout_items_headerStudent"><Link to="/">Profile <div> <FaRegUser /></div></Link></div>
+              <div className="logout_items_headerStudent"><Link to="/student/profile">Profile <div> <FaRegUser /></div></Link></div>
               <div className="logout_items_headerStudent"><a onClick={LogOut}>Logout <div> <MdLogout /></div></a></div>
          </div>
           ) }
         </div>
       </div>
 
-      <div className="hamburger" onClick={handleClick}>
+      <div className="hamburger">
+          <div className="theme_icon_container2_headerStudent" onClick={toggleTheme}>
+            {
+              props.theme==="light-theme" ? <BsMoonFill className="theme_icon2_headerStudent" /> : <BsSunFill className="theme_icon2_headerStudent" />
+            }
+          </div>
+
         {click ? (
           <>
-          <div className="user_avavtar_headerStudent">G</div>
+          <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
           <div className="logout_container_headerStudent">
             <div>
                 <Link to="/">Home</Link>
@@ -69,11 +90,14 @@ const navigate = useNavigate()
             <div>
             <a onClick={LogOut}>Logout <MdLogout /></a>
             </div>
+            <div className="logout_items_headerStudent">
+              <Link to="/student/profile">Profile <div> <FaRegUser /></div></Link>
+            </div>
          </div>
           </>
         ) : (
             <>
-          <div className="user_avavtar_headerStudent">G</div>
+          <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
           
          </>
         )}

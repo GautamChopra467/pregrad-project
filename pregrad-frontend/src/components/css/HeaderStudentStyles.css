@@ -10,7 +10,7 @@
   left: 0;
   /* box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1); */
   margin: 0;
-  background-color: white;
+  background-color: var(--header-bg);
 }
 
 .left_section_headerStudent {
@@ -25,11 +25,15 @@
   justify-content: space-around;
 }
 
+.left_section_icon_headerStudent {
+  color: var(--primary-color);
+}
+
 .left_section_headerStudent .intern_headerStudent {
   margin-left: 2.188rem;
   text-align: center;
   text-decoration: none;
-  color: #000000;
+  color: var(--black-color);
   font-weight: 500;
   font-size: 1rem;
   position: relative;
@@ -41,7 +45,7 @@
   width: 100%;
   height: 2px;
   border-radius: 4px;
-  background-color: #000000;
+  background-color: var(--black-color);
   bottom: 0;
   left: 0;
   transform-origin: right;
@@ -56,7 +60,7 @@
 
 .right_section_headerStudent a {
   text-decoration: none;
-  color: #7840f2;
+  color: var(--primary-color);
   font-weight: 700;
   font-size: 1rem;
   position: relative;
@@ -68,7 +72,7 @@
   width: 100%;
   height: 2px;
   border-radius: 4px;
-  background-color: #7840f2;
+  background-color: var(--primary-color);
   bottom: 0;
   left: 0;
   transform-origin: right;
@@ -81,6 +85,25 @@
   transform: scaleX(1);
 }
 
+.theme_icon_container_headerStudent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7.5px 8px 7.5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+
+.theme_icon_container_headerStudent:hover {
+  background-color: var(--background-secondary-hover);
+}
+
+.theme_icon_headerStudent {
+  font-size: 23px;
+  color: var(--primary-color);
+}
+
 img {
   width: 120px;
 }
@@ -89,7 +112,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  grid-gap: 30px;
+  grid-gap: 25px;
 }
 
 .user_details_container_headerStudent {
@@ -100,8 +123,8 @@ img {
   cursor: pointer;
   grid-gap: 9px;
   gap: 9px;
-  background-color: #fff;
-  border: 1.5px solid #ebf0f5;
+  background-color: var(--white-color);
+  border: 1.5px solid var(--input-border);
   border-radius: 8px;
   position: relative;
   min-width: 140px;
@@ -109,13 +132,18 @@ img {
 }
 
 .user_details_container_headerStudent:hover {
-  background-color: #fdfdfd;
+  background-color: var(--background-secondary);
   box-shadow: 0 0 1px 0 rgb(0, 0, 0, 0.1);
 }
 
 .user_details_container_headerStudent p {
   font-weight: 700;
   font-size: 0.9rem;
+  color: var(--black-color);
+}
+
+.user_avatar_logo_headerStudent {
+  color: var(--black-color);
 }
 
 .user_avavtar_headerStudent {
@@ -124,8 +152,8 @@ img {
   border-radius: 50%;
   font-size: 14px;
   font-weight: 700;
-  color: rgb(86, 100, 116);
-  background-color: rgb(247, 248, 250);
+  color: var(--input-color);
+  background-color: var(--background-secondary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,7 +168,7 @@ img {
   right: 5%;
   border-radius: 8px;
   z-index: 900;
-  background-color: white;
+  background-color: var(--header-bg);
   box-shadow: 0 0 4px 0 rgb(0, 0, 0, 0.1);
 }
 
@@ -153,7 +181,7 @@ img {
     align-items: center;
     grid-gap: 10px;
   text-decoration: none;
-  color: #000000;
+  color: var(--black-color);
   font-weight: 500;
 }
 
@@ -164,7 +192,7 @@ img {
 }
 
 .logout_container_headerStudent a:hover {
-  color: #7840f2;
+  color: var(--primary-color);
 }
 
 .logout_container_headerStudent a:hover::before {
@@ -185,10 +213,36 @@ img {
   .intern_headerStudent {
     display: none;
   }
+  
+  .theme_icon_container_headerStudent {
+    display: none;
+  }
+
+  .theme_icon_container2_headerStudent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 7px 6px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+  }
+  
+  .theme_icon_container2_headerStudent:hover {
+    background-color: var(--background-secondary-hover);
+  }
+
+  .theme_icon2_headerStudent {
+    font-size: 20px;
+    color: var(--primary-color);
+  }
 
   .intern2_headerStudent,
   .hamburger {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 15px;
   }
 
   .right_section_headerStudent.active {
@@ -215,7 +269,7 @@ img {
   }
 
   .logout_container_headerStudent div {
-    padding: 15px 20px;
+    padding: 10px 20px;
   }
 
   .user_avavtar_headerStudent {
@@ -239,5 +293,9 @@ img {
     height: 32px;
     width: 32px;
     font-size: 16px;
+  }
+
+  .logout_container_headerStudent div {
+    padding: 8px 15px;
   }
 }

@@ -14,7 +14,7 @@ const Achievements = () => {
   const [cookies,setCookie,removeCookie] = useCookies([])
   
   
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -93,7 +93,7 @@ const Achievements = () => {
           {!isContent ? (
             <div className='add_section1_achievements'>
               <div className='add_section1_logo_achievements'>
-              <FiFileText size={30} />
+              <FiFileText size={30} className="add_section1_icon_achievements" />
               </div>
               <div className='add_section1_details_achievements'>
                 <h2>Add Achievements/ Extracurricular Activity</h2>
@@ -106,7 +106,7 @@ const Achievements = () => {
             <div className='add_section2_achievements'>
               <div className='add_section2_left_achievements'>
               <div className='add_section2_logo_achievements'>
-                <FiFileText size={26} />
+                <FiFileText size={26} className="add_section2_icon_achievements" />
               </div>
               <div className='add_section2_details_achievements'>
                 <h2>Add Achievements/ Extracurricular Activity</h2>
@@ -121,7 +121,7 @@ const Achievements = () => {
                 <h4>Ambaram Store</h4>
                 <div className='content_logo_container_achievements'>
                 <div className='content_logo_achievements'>
-                  <BiEditAlt size={22} color='#7840f2' />
+                  <BiEditAlt size={22} className="content_icon_achievements" />
                 </div>
                 <div className='content_logo_achievements'>
                   <MdOutlineDelete size={22} color='#ef233c' />

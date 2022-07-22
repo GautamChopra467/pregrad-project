@@ -2,10 +2,10 @@ import React from 'react'
 import Header from '../components/jsx/Header';
 import HomeBanner1 from '../components/jsx/HomeBanner1';
 
-const Home = () => {
+const Home = ({theme, setTheme}) => {
   return (
     <div>
-      <Header />
+      <Header theme={theme} setTheme={setTheme} />
       <HomeBanner1 />
     </div>
   )

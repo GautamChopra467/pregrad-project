@@ -2,22 +2,22 @@
 
 .sub_header_education {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--header-bg);
   padding: 5px 40px;
   height: 3rem;
   display: flex;
-  background-color: #fff;
   align-items: center;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid var(--background-secondary-hover);
   position: fixed;
   z-index: 110;
+  box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
 }
 
 .sub_header_education h5 {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
   font-weight: 500;
-  color: #000;
+  color: var(--black-color);
   margin-bottom: 0;
 }
 
@@ -49,9 +49,13 @@
 
 .add_section1_logo_education {
   display: inline-block;
-  background-color: #f5f5f5;
+  background-color: var(--input-border);
   padding: 14px 20px;
   border-radius: 50px;
+}
+
+.add_section1_icon_education {
+  color: var(--black-color);
 }
 
 .add_section1_details_education {
@@ -66,33 +70,34 @@
   font-weight: 700;
   font-size: 1rem;
   text-align: center;
+  color: var(--black-color);
 }
 
 .add_section1_details_education p {
-  color: #566474;
+  color: var(--para-color);
   text-align: center;
 }
 
 .btn_light_education {
   min-width: 90px;
   background-color: transparent;
-  color: #7840f2;
+  color: var(--primary-color);
   padding: 9px 14px;
   border-radius: 0.375rem;
   font-size: 1rem;
   font-weight: 500;
-  border: 1px solid #7840f2;
+  border: 1px solid var(--primary-color);
   cursor: pointer;
 }
 
 .btn_light_education:hover {
-  background-color: #f5f5f5;
+  background-color: var(--primary-lightest);
 }
 
 .btn_primary_education {
   min-width: 90px;
-  background-color: #7840f2;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white-color);
   padding: 9px 14px;
   border-radius: 0.313rem;
   font-size: 1rem;
@@ -103,7 +108,7 @@
 }
 
 .btn_primary_education:hover {
-  background-color: #9a70f4;
+  background-color: var(--primary-light);
 }
 
 .add_section2_education {
@@ -112,7 +117,7 @@
   justify-content: space-between;
   border-radius: 10px;
   padding: 15px;
-  background-color: white;
+  background-color: var(--header-bg);
   width: 100%;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
   transition: 0.2s all ease-in-out;
@@ -132,9 +137,13 @@
 
 .add_section2_logo_education {
   display: inline-block;
-  background-color: #f5f5f5;
+  background-color: var(--background-secondary);
   padding: 10px 14px;
   border-radius: 50px;
+}
+
+.add_section2_icon_education {
+  color: var(--black-color);
 }
 
 .add_section2_details_education {
@@ -147,10 +156,11 @@
 .add_section2_details_education h2 {
   font-weight: 700;
   font-size: 1rem;
+  color: var(--black-color);
 }
 
 .add_section2_details_education p {
-  color: #566474;
+  color: var(--para-color);
   font-size: 0.9rem;
 }
 
@@ -159,7 +169,7 @@
   flex-direction: column;
   border-radius: 10px;
   padding: 15px;
-  background-color: white;
+  background-color: var(--header-bg);
   width: 100%;
   grid-gap: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
@@ -180,6 +190,7 @@
 .top_section_content_education h4 {
   font-size: 17px;
   font-weight: 600;
+  color: var(--black-color);
 }
 
 .content_logo_container_education {
@@ -189,26 +200,30 @@
 
 .content_logo_education {
   padding: 3px 20px;
-  background-color: #f5f5f5;
+  background-color: var(--background-secondary);
   border-radius: 18px;
   cursor: pointer;
 }
 
+.content_icon_education {
+  color: var(--primary-color);
+}
+
 .content_logo_education:hover {
-  background-color: #ebebeb;
+  background-color: var(--background-secondary-hover);
 }
 
 .bottom_section_content_education h4 {
   font-family: "Poppins", sans-serif;
   font-size: 15px;
-  color: #566474;
+  color: var(--para-color);
   font-weight: 400;
   letter-spacing: 0.3px;
 }
 
 .bottom_section_content_education h3 {
   font-size: 14px;
-  color: #68798D;
+  color: var(--info-color-dark);
 }
 
 .modal_backgound_education {
@@ -228,9 +243,9 @@
 
 .modal_container_education {
     /* height: 100%; */
-  background-color: rgb(254, 254, 254);
+  background-color: var(--white-color);
   padding: 32px;
-  border: 1px solid rgb(136, 136, 136);
+  border: 1px solid var(--input-border);
   width: 727px;
   min-width: 250px;
   border-radius: 10px;
@@ -238,6 +253,10 @@
   flex-direction: column;
   grid-gap: 25px;
   overflow-y: scroll;
+}
+
+.modal_top_section_education h2 {
+  color: var(--black-color);
 }
 
 .modal_mid_section_education form {
@@ -254,7 +273,7 @@
 
 .form_box_education label {
   font-weight: 700;
-  color: #566474;
+  color: var(--para-color);
   font-size: 1rem;
   margin-left: 2px;
 }
@@ -263,24 +282,25 @@
   outline: none;
   padding: 12px 10px;
   width: 100%;
-  border: 1px solid #ebf0f5;
-  color: #1e272e;
+  border: 1px solid var(--input-border);
+  color: var(--input-color);
   border-radius: 5px;
   font-size: 1rem;
   margin: 3px 0;
   transition: 0.1s;
+  background-color: var(--header-bg);
 }
 
 .form_box_education input:hover {
-  border: 1px solid #d7e1ea;
+  border: 1px solid var(--input-hover);
 }
 
 .form_box_education input:focus {
-  border-color: #7840f2;
+  border-color: var(--input-focus);
 }
 
 .errors_msg_education {
-  color: red;
+  color: var(--warning-color);
   font-size: 16px;
 }
 

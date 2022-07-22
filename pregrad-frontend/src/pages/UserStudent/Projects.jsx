@@ -74,7 +74,7 @@ const Projects = () => {
           {!isContent ? (
             <div className='add_section1_projects'>
               <div className='add_section1_logo_projects'>
-              <FiFileText size={30} />
+              <FiFileText size={30} className="add_section1_icon_projects" />
               </div>
               <div className='add_section1_details_projects'>
                 <h2>Add Project Details</h2>
@@ -87,7 +87,7 @@ const Projects = () => {
             <div className='add_section2_projects'>
               <div className='add_section2_left_projects'>
               <div className='add_section2_logo_projects'>
-                <FiFileText size={26} />
+                <FiFileText size={26} className="add_section2_icon_projects" />
               </div>
               <div className='add_section2_details_projects'>
                 <h2>Add Project Details</h2>
@@ -102,7 +102,7 @@ const Projects = () => {
                 <h4>E-commerce Website</h4>
                 <div className='content_logo_container_projects'>
                   <div className='content_logo_projects'>
-                    <BiEditAlt size={22} color='#7840f2' />
+                    <BiEditAlt size={22} className="content_icon_projects" />
                   </div>
                   <div className='content_logo_projects'>
                     <MdOutlineDelete size={22} color='#ef233c' />

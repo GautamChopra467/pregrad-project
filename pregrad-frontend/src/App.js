@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -11,17 +11,23 @@ import HeaderUser from "./components/jsx/HeaderUser";
 import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
+  const [theme, setTheme] = useState("light-theme");
+
+  useEffect(() => {
+    document.body.className = theme;
+  },[theme]);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/student/*" element={<Student />} />
-        <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/emailverify" element={<EmailVerify />} />
-        <Route exact path="/otpverify/:email" element={<OTPVerify />} />
-        <Route exact path="/detailsone" element={<DetailsOne />} />
-        <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+        <Route exact path="/" element={<Home theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/student/*" element={<Student theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/signup" element={<SignUp theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/emailverify" element={<EmailVerify theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/otpverify/:email" element={<OTPVerify theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme} />} />
+        <Route exact path="/forgotpassword" element={<ForgotPassword theme={theme} setTheme={setTheme} />} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>
       {/* <Sidebar>

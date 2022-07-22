@@ -8,11 +8,19 @@ import YoutubeLogo from "../img/youtube-logo.svg";
 import GoogleLogo from "../img/google-logo.svg";
 import "../components/css/LoginStyles.css";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({theme, setTheme}) => {
   const navigate = useNavigate();
+
+  const toggleTheme = () => {
+    if(theme === "light-theme"){
+      setTheme("dark-theme");
+    }else{
+      setTheme("light-theme");
+    }
+  }
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -82,56 +90,66 @@ const Login = () => {
 
   return (
     <div>
-      <div className="header">
-        <div className="left_section">
+      <div className="header_login">
+        <div className="left_section_login">
           <Link to="/">
-            <img src={Logo} alt="pregrad" />
+            <img src={Logo} alt="pregrad_login" />
           </Link>
-          <Link to="/" className="intern">
+          <Link to="/" className="intern_login">
             Contact
           </Link>
         </div>
 
-        <div className={click ? "right_section active" : "right_section"}>
-          <div className="abc">
-            <Link to="/" className="intern2">
+        <div className={click ? "right_section_login active_login" : "right_section_login"}>
+          <div className="abc_login">
+            <Link to="/" className="intern2_login">
               Contact
             </Link>
           </div>
+          <div className="theme_icon_container_login" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon_login" /> : <BsSunFill className="theme_icon_login" />
+            }
+          </div>
         </div>
 
-        <div className="hamburger" onClick={handleClick}>
+        <div className="hamburger_login">
+        <div className="theme_icon_container2_login" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon2_login" /> : <BsSunFill className="theme_icon2_login" />
+            }
+          </div>
           {click ? (
-            <FaTimes size={20} style={{ color: "#000" }} />
+            <FaTimes size={20} className="hamburger_icon_login" onClick={handleClick} />
           ) : (
-            <FaBars size={20} style={{ color: "#000" }} />
+            <FaBars size={20} className="hamburger_icon_login" onClick={handleClick} />
           )}
         </div>
       </div>
 
-      <div className="main">
-        <div className="left-part">
-          <div className="top">
+      <div className="main_login">
+        <div className="left-part_login">
+          <div className="top_login">
             <h2>Find Your Dream Job !</h2>
             <p>Sign Up to become a part of our community</p>
           </div>
 
-          <div className="signup-banner">
+          <div className="signup-banner_login">
             <img src={LoginLogo} alt="Sign Up" />
           </div>
 
-          <div className="social">
-            <div className="social-logo">
+          <div className="social_login">
+            <div className="social-logo_login">
               <a href="https://www.remove.bg/upload">
                 <img src={InstaLogo} alt="Instagram" />
               </a>
             </div>
-            <div className="social-logo">
+            <div className="social-logo_login">
               <a href="https://www.remove.bg/upload">
                 <img src={LinkedinLogo} alt="Linkedin" />
               </a>
             </div>
-            <div className="social-logo">
+            <div className="social-logo_login">
               <a href="https://www.remove.bg/upload">
                 <img src={YoutubeLogo} alt="Youtube" />
               </a>
@@ -139,53 +157,53 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="right-part">
-          <div className="form-container">
-            <div className="top">
+        <div className="right-part_login">
+          <div className="form-container_login">
+            <div className="top_login">
               <h2>Sign in</h2>
               <Link to="/signup">Create an account</Link>
             </div>
 
-            <div className="line"></div>
+            <div className="line_login"></div>
 
-            <div className="main-error-msg">
+            <div className="main-error-msg_login">
               <p>{formErrors.final}</p>
             </div>
 
-            <div className="mid-part">
+            <div className="mid-part_login">
               <form>
-                <div className="form-full">
-                <div className="form-container-box">
+                <div className="form-full_login">
+                <div className="form-container-box_login">
                   <label>Email Address</label>
                   <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
-                  <p className="errors-msg">{formErrors.email}</p>
+                  <p className="errors-msg_login">{formErrors.email}</p>
                 </div>
 
-                <div className="form-container-box">
+                <div className="form-container-box_login">
                   <label>Password</label>
                   <input type="password" name="password" placeholder="Enter Password" value={user.password} onChange={handleForm} />
-                  <p className="errors-msg">{formErrors.password}</p>
+                  <p className="errors-msg_login">{formErrors.password}</p>
                 </div>
 
-                <div className="container6">
+                <div className="container6_login">
                   <Link to='/forgotpassword'>Forgot Password ?</Link>
                 </div>
                 </div>
 
-                <button type="submit" onClick={submitForm} className="create-btn">
+                <button type="submit" onClick={submitForm} className="create-btn_login">
                   Login now
-                  <BsArrowRightShort size={27} style={{ color: '#fff' }} />
+                  <BsArrowRightShort size={27} className="create-btn-logo_login" />
                 </button> 
 
-                <a className="google-btn" href="youtube.com">
+                <a className="google-btn_login" href="youtube.com">
                 <img src={GoogleLogo} alt="" />
                   Login with Google
                 </a> 
               </form>
 
-              <div className="line"></div>
+              <div className="line_login"></div>
 
-              <div className="bottom-part">
+              <div className="bottom-part_login">
                 <p>New to Pregrad ?&nbsp;</p>
                 <Link to="/signup">Create an account</Link>
               </div>

@@ -5,7 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md"
 
 const WorkExperience = () => {
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -14,6 +14,7 @@ const WorkExperience = () => {
   const [user, setUser] = useState({
     companyname: "",
     position: "",
+    role: "",
     duration: "",
     websitelink: "",
     skills: ""
@@ -53,6 +54,10 @@ const WorkExperience = () => {
     if(!values.position){
       errors.position = "Position of responsibility required";
     }
+    
+    if(!values.role){
+      errors.role = "Description of role required";
+    }
 
     if(!values.duration){
       errors.duration = "Duration required";
@@ -80,7 +85,7 @@ const WorkExperience = () => {
           {!isContent ? (
             <div className='add_section1_workexperience'>
               <div className='add_section1_logo_workexperience'>
-              <FiFileText size={30} />
+              <FiFileText size={30} className="add_section1_icon_workexperience" />
               </div>
               <div className='add_section1_details_workexperience'>
                 <h2>Add Work Experience Details</h2>
@@ -93,7 +98,7 @@ const WorkExperience = () => {
             <div className='add_section2_workexperience'>
               <div className='add_section2_left_workexperience'>
               <div className='add_section2_logo_workexperience'>
-                <FiFileText size={26} />
+                <FiFileText size={26} className="add_section2_icon_workexperience" />
               </div>
               <div className='add_section2_details_workexperience'>
                 <h2>Add Work Experience Details</h2>
@@ -108,7 +113,7 @@ const WorkExperience = () => {
                 <h4>Google Engage</h4>
                 <div className='content_logo_container_workexperience'>
                 <div className='content_logo_workexperience'>
-                  <BiEditAlt size={22} color='#7840f2' />
+                  <BiEditAlt size={22} className="content_icon_workexperience" />
                 </div>
                 <div className='content_logo_workexperience'>
                   <MdOutlineDelete size={22} color='#ef233c' />
@@ -117,8 +122,21 @@ const WorkExperience = () => {
               </div>
 
               <div className='bottom_section_content_workexperience'>
-                <h4>B.Tech, Computer Science Engineering</h4>
-                <h3>2020 - 2024</h3>
+                <h4>Full Stack Developer</h4>
+                <h3>2 months</h3>
+                <p>This calculator converts pixels to the CSS unit REM. The conversion is based on the default font-size of 16 pixel, but can be changed.
+
+With the CSS rem unit you can define a size relative to the font-size of the HTML root tag.
+
+The conversion works of course in both directions, just change the opposite input field.</p>
+              </div>
+
+              <div className='skills_content_workexperience'>
+                <ul>
+                  <li>HTML</li>
+                  <li>CSS</li>
+                  <li>JS</li>
+                </ul>
               </div>
             </div>
             </>
@@ -147,6 +165,12 @@ const WorkExperience = () => {
                 </div>
 
                 <div className="form_box_workexperience">
+                  <label>Describe Your Role (in 70-100 words)</label>
+                  <textarea type="text" name="role" placeholder="Enter your skills" value={user.role}  onChange={handleForm} />
+                  <p className="errors_msg_workexperience">{formErrors.role}</p>
+                </div>
+
+                <div className="form_box_workexperience">
                   <label>Duration</label>
                   <input type="text" name="duration" placeholder="Enter duration" value={user.duration}  onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.duration}</p>
@@ -154,7 +178,7 @@ const WorkExperience = () => {
 
                 <div className="form_box_workexperience">
                   <label>Company Website Link</label>
-                  <input type="url" name="starear" placeholder="Enter website link" value={user.websitelink}  onChange={handleForm} />
+                  <input type="url" name="websitelink" placeholder="Enter website link" value={user.websitelink}  onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.websitelink}</p>
                 </div>
 

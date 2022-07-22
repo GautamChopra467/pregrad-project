@@ -16,12 +16,8 @@ import UserImage from "../../img/user3.png";
 import HeaderStudent from "./HeaderStudent";
 
 
-const Sidebar = ({ children }) => {
+const Sidebar = ({ children, theme, setTheme }) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
-
-
-
-
 
   const routes = [
     {
@@ -134,7 +130,7 @@ const Sidebar = ({ children }) => {
             <NavLink
               className={(navData) =>
                 navData.isActive
-                  ? "routes_link_sidebar active"
+                  ? "routes_link_sidebar active_sidebar"
                   : "routes_link_sidebar"
               }
               to={routes.path}
@@ -169,6 +165,8 @@ const Sidebar = ({ children }) => {
         <HeaderStudent
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
+          theme={theme}
+          setTheme={setTheme}
         />
         {children}
       </motion.main>
