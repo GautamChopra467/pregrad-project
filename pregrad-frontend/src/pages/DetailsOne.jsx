@@ -4,7 +4,7 @@ import "../components/css/DetailsOneStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 // import Select from "react-select";
 
-const DetailsOne = () => {
+const DetailsOne = ({theme, setTheme}) => {
 
   const domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
 
@@ -34,7 +34,7 @@ const DetailsOne = () => {
 
   return (
     <div>
-      <HeaderUser />
+      <HeaderUser theme={theme} setTheme={setTheme} />
       <div className="main_detailsOne">
         <div className="greeting_container_detailsOne">
           <div className="greeting_box_detailsOne">
@@ -44,7 +44,7 @@ const DetailsOne = () => {
             </div>
 
             <div className="greeting_right_section_detailsOne">
-              <button className="btn_primary_detailsOne">Submit <BsArrowRightShort size={27} style={{ color: '#fff' }} />
+              <button className="btn_primary_detailsOne">Submit <BsArrowRightShort size={27} className="btn_primary_logo_detailsOne" />
               </button>
             </div>
           </div>

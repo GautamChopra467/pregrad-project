@@ -163,7 +163,7 @@ const setStateValue = ()=>{
           {!isContent ? (
             <div className='add_section1_projects'>
               <div className='add_section1_logo_projects'>
-              <FiFileText size={30}/>
+              <FiFileText size={30} className="add_section1_icon_projects" />
               </div>
               <div className='add_section1_details_projects'>
                 <h2>Add Project Details</h2>
@@ -176,7 +176,7 @@ const setStateValue = ()=>{
             <div className='add_section2_projects'>
               <div className='add_section2_left_projects'>
               <div className='add_section2_logo_projects'>
-                <FiFileText size={26} />
+                <FiFileText size={26} className="add_section2_icon_projects" />
               </div>
               <div className='add_section2_details_projects'>
                 <h2>Add Project Details</h2>
@@ -204,6 +204,23 @@ const setStateValue = ()=>{
    <p>{proj.description}</p>
   <span>Project Link : <a href='yo'>{proj.projectlink}</a></span>
  </div>
+            {/* <div className='content_container_projects'>
+              <div className='top_section_content_projects'>
+                <h4>E-commerce Website</h4>
+                <div className='content_logo_container_projects'>
+                  <div className='content_logo_projects'>
+                    <BiEditAlt size={22} className="content_icon_projects" />
+                  </div>
+                  <div className='content_logo_projects'>
+                    <MdOutlineDelete size={22} color='#ef233c' />
+                  </div>
+                </div>
+              </div>
+
+              <div className='bottom_section_content_projects'>
+                <p>"Ambaram" is web application that provides a compelling user experience has a large lists of products and provides lot of offers. Responsive in all devices.</p>
+                <a href='yo'>Project Link</a>
+              </div> */}
 
  <div className='skills_content_projects'>
    <p style={{padding:"3px",marginLeft:"-20px"}}><b>Skills Used In Project</b></p>

@@ -7,14 +7,21 @@ import LinkedinLogo from "../img/linkedin-logo.svg";
 import YoutubeLogo from "../img/youtube-logo.svg";
 import "../components/css/EmailOTPVerifyStyles.css";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { BsArrowRightShort } from "react-icons/bs";
+import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
 import axios from "axios";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
 const {email} = useParams()
 
+  const toggleTheme = () => {
+    if(theme === "light-theme"){
+      setTheme("dark-theme");
+    }else{
+      setTheme("light-theme");
+    }
+  }
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -89,56 +96,66 @@ const {email} = useParams()
 
   return (
     <div>
-      <div className="header">
-        <div className="left_section">
+      <div className="header_emailOtp">
+        <div className="left_section_emailOtp">
           <Link to="/">
             <img src={Logo} alt="pregrad" />
           </Link>
-          <Link to="/" className="intern">
+          <Link to="/" className="intern_emailOtp">
             Contact
           </Link>
         </div>
 
-        <div className={click ? "right_section active" : "right_section"}>
+        <div className={click ? "right_section_emailOtp active_emailOtp" : "right_section_emailOtp"}>
           <div className="abc">
-            <Link to="/" className="intern2">
+            <Link to="/" className="intern2_emailOtp">
               Contact
             </Link>
           </div>
+          <div className="theme_icon_container_emailOtp" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon_emailOtp" /> : <BsSunFill className="theme_icon_emailOtp" />
+            }
+          </div>
         </div>
 
-        <div className="hamburger" onClick={handleClick}>
+        <div className="hamburger_emailOtp">
+        <div className="theme_icon_container2_emailOtp" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon2_emailOtp" /> : <BsSunFill className="theme_icon2_emailOtp" />
+            }
+          </div>
           {click ? (
-            <FaTimes size={20} style={{ color: "#000" }} />
+            <FaTimes size={20} className="hamburger_icon_emailOtp" onClick={handleClick} />
           ) : (
-            <FaBars size={20} style={{ color: "#000" }} />
+            <FaBars size={20} className="hamburger_icon_emailOtp" onClick={handleClick} />
           )}
         </div>
       </div>
 
-      <div className="main">
-        <div className="left-part">
-          <div className="top">
+      <div className="main_emailOtp">
+        <div className="left-part_emailOtp">
+          <div className="top_emailOtp">
             <h2>Find Your Dream Job !</h2>
             <p>Sign Up to become a part of our community</p>
           </div>
 
-          <div className="signup-banner">
+          <div className="signup-banner_emailOtp">
             <img src={ForgotPasswordLogo} alt="Sign Up" />
           </div>
 
-          <div className="social">
-            <div className="social-logo">
+          <div className="social_emailOtp">
+            <div className="social-logo_emailOtp">
               <a href="https://www.remove.bg/upload">
                 <img src={InstaLogo} alt="Instagram" />
               </a>
             </div>
-            <div className="social-logo">
+            <div className="social-logo_emailOtp">
               <a href="https://www.remove.bg/upload">
                 <img src={LinkedinLogo} alt="Linkedin" />
               </a>
             </div>
-            <div className="social-logo">
+            <div className="social-logo_emailOtp">
               <a href="https://www.remove.bg/upload">
                 <img src={YoutubeLogo} alt="Youtube" />
               </a>
@@ -146,48 +163,46 @@ const {email} = useParams()
           </div>
         </div>
 
-        <div className="right-part">
-          <div className="form-container">
-            <div className="top">
+        <div className="right-part_emailOtp">
+          <div className="form-container_emailOtp">
+            <div className="top_emailOtp">
               <h2>Verify Your Email Id</h2>
               <Link to="/signup">Create an account</Link>
             </div>
 
-            <div className="line"></div>
+            <div className="line_emailOtp"></div>
 
-            <div className="main-error-msg">
+            <div className="main-error-msg_emailOtp">
               <p>{formErrors.final}</p>
             </div>
 
-            <div className="mid-part">
+            <div className="mid-part_emailOtp">
               <form>
-                <div className="form-full">
-                <div className="form-container-box">
+                <div className="form-full_emailOtp">
+                <div className="form-container-box_emailOtp">
                   <label>Email Address</label>
                   <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
-                  <p className="errors-msg">{formErrors.email}</p>
+                  <p className="errors-msg_emailOtp">{formErrors.email}</p>
                 </div>
 
-                <div className="form-container-box">
+                <div className="form-container-box_emailOtp">
                     <label>Password</label>
                     <input type="password" name="password" placeholder="Enter new password" value={user.password} onChange={handleForm} />
-                    <p className="errors-msg">{formErrors.password}</p>
+                    <p className="errors-msg_emailOtp">{formErrors.password}</p>
                 </div>
 
-                <div className="form-container-box">
+                <div className="form-container-box_emailOtp">
                     <label>Confirm Password</label>
                     <input type="text" name="confirmpassword" placeholder="Confirm password" value={user.confirmpassword} onChange={handleForm} />
-                    <p className="errors-msg">{formErrors.confirmpassword}</p>
+                    <p className="errors-msg_emailOtp">{formErrors.confirmpassword}</p>
                 </div>
                 </div>
 
-                <button type="submit" onClick={submitForm} className="create-button">
+                <button type="submit" onClick={submitForm} className="create-button_emailOtp">
                   Change Password
-                  <BsArrowRightShort size={27} style={{ color: '#fff' }} />
+                  <BsArrowRightShort size={27} className="create-btn-logo_emailOtp" />
                 </button> 
               </form>
-
-              <div className="line"></div>
             </div>
           </div>
         </div>

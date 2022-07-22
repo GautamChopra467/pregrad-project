@@ -6,13 +6,22 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import "../css/HeaderUserStyles.css";
 import {useCookies} from 'react-cookie'
+import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
-const HeaderUser = () => {
+const HeaderUser = ({theme, setTheme}) => {
+  const navigate = useNavigate();
+
+  const toggleTheme = () => {
+    if(theme === "light-theme"){
+      setTheme("dark-theme");
+    }else{
+      setTheme("light-theme");
+    }
+  }
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
-
-  const navigate = useNavigate()
 
   const [cookies,setCookies,removeCookie] = useCookies([])
 
@@ -31,16 +40,22 @@ const HeaderUser = () => {
         </Link>
       </div>
 
-      <div className={click ? "right_section_headerUser active" : "right_section_headerUser"}>
+      <div className={click ? "right_section_headerUser active_headerUser" : "right_section_headerUser"}>
         <div className="menu_headerUser">
           <Link to="/" className="intern_headerUser">
             Home
           </Link>
 
+          <div className="theme_icon_container_headerUser" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon_headerUser" /> : <BsSunFill className="theme_icon_headerUser" />
+            }
+          </div>
+
           <div className="user_details_container_headerUser" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
             <div className="user_avavtar_headerUser">G</div>
             <p>Gautam</p>
-            { isLogoutMenu ? <RiArrowDropUpLine size={29} style={{ color: "#000" }} /> : <RiArrowDropDownLine size={29} style={{ color: "#000" }} />}
+            { isLogoutMenu ? <RiArrowDropUpLine size={29} className="dropdown_menu_headerUser" /> : <RiArrowDropDownLine size={29} className="dropdown_menu_headerUser" />}
           </div>
 
           { isLogoutMenu && (
@@ -51,10 +66,16 @@ const HeaderUser = () => {
         </div>
       </div>
 
-      <div className="hamburger" onClick={handleClick}>
+      <div className="hamburger">
+          <div className="theme_icon_container2_signup" onClick={toggleTheme}>
+            {
+              theme==="light-theme" ? <BsMoonFill className="theme_icon2_signup" /> : <BsSunFill className="theme_icon2_signup" />
+            }
+          </div>
+
         {click ? (
           <>
-          <div className="user_avavtar_headerUser">G</div>
+          <div className="user_avavtar_headerUser" onClick={handleClick}>G</div>
           <div className="logout_container_headerUser">
             <div>
                 <Link to="/">Home</Link>
@@ -66,7 +87,7 @@ const HeaderUser = () => {
           </>
         ) : (
             <>
-          <div className="user_avavtar_headerUser">G</div>
+          <div className="user_avavtar_headerUser" onClick={handleClick}>G</div>
           
          </>
         )}

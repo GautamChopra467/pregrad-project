@@ -105,7 +105,7 @@ const Education = () => {
           {!isContent ? (
             <div className='add_section1_education'>
               <div className='add_section1_logo_education'>
-              <FiFileText size={30} />
+              <FiFileText size={30} className="add_section1_icon_education" />
               </div>
               <div className='add_section1_details_education'>
                 <h2>Add Education Details</h2>
@@ -118,7 +118,7 @@ const Education = () => {
             <div className='add_section2_education'>
               <div className='add_section2_left_education'>
               <div className='add_section2_logo_education'>
-                <FiFileText size={26} />
+                <FiFileText size={26} className="add_section2_icon_education" />
               </div>
               <div className='add_section2_details_education'>
                 <h2>Add Education Details</h2>
@@ -133,7 +133,7 @@ const Education = () => {
                 <h4>Bharati Vidyapeeth's College of Engineering</h4>
                 <div className='content_logo_container_education'>
                 <div className='content_logo_education'>
-                  <BiEditAlt size={22} color='#7840f2' />
+                  <BiEditAlt size={22} className="content_icon_education" />
                 </div>
                 <div className='content_logo_education'>
                   <MdOutlineDelete size={22} color='#ef233c' />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -11,6 +11,12 @@ import HeaderUser from "./components/jsx/HeaderUser";
 import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
+  const [theme, setTheme] = useState("light-theme");
+
+  useEffect(() => {
+    document.body.className = theme;
+  },[theme]);
+
   return (
     <BrowserRouter>
       <Routes>

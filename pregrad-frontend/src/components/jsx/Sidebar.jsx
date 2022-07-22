@@ -18,11 +18,11 @@ import UserImage from "../../img/user3.png";
 import HeaderStudent from "./HeaderStudent";
 
 
-const Sidebar = ({ children,userid }) => {
+
+const Sidebar = ({ children, userid,theme, setTheme }) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
 
-const {id} = useParams()
-
+  const {id} = useParams()
 
   const routes = [
     {
@@ -135,7 +135,7 @@ const {id} = useParams()
             <NavLink
               className={(navData) =>
                 navData.isActive
-                  ? "routes_link_sidebar active"
+                  ? "routes_link_sidebar active_sidebar"
                   : "routes_link_sidebar"
               }
               to={routes.path}
@@ -170,6 +170,8 @@ const {id} = useParams()
         <HeaderStudent
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
+          theme={theme}
+          setTheme={setTheme}
         />
         {children}
       </motion.main>

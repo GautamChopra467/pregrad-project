@@ -11,9 +11,10 @@ import { useEffect } from "react";
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
+import StudentProfile from "./UserStudent/StudentProfile";
 
 
-const Student = () => {
+const Student = ({theme, setTheme}) => {
 
   const navigate = useNavigate()
 
@@ -40,7 +41,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <Sidebar userid={id}>
+    <Sidebar  userid={id} theme={theme} setTheme={setTheme}>
       <Routes>
         <Route exact path="/internships" element={<Internships/>} />
         <Route exact path="/workexperience" element={<WorkExperience />} />
@@ -48,6 +49,7 @@ useEffect(()=>{
         <Route path="/achievements" element={<Achievements />} />
         <Route path="/certifications" element={<Certifications />} />
         <Route path="/education" element={<Education />} />
+        <Route path="/profile" element={<StudentProfile />} />
       </Routes>
     </Sidebar>
   );
