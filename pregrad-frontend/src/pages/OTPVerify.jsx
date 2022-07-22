@@ -14,7 +14,7 @@ const OTPVerify = () => {
 
   const navigate = useNavigate();
 
-const {email} = useParams()
+const {email,type} = useParams()
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -60,7 +60,11 @@ const {email} = useParams()
       axios.post(`http://localhost:8000/verifyotp`, user)
       .then( res => {
         if(res.data.message === "true"){
+          if(type === 'register'){
           navigate("/login");
+        }else{
+          navigate(`/forgotpassword/${email}`)
+        }
         }else {
           setFormErrors({final: res.data.message})
         }

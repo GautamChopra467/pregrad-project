@@ -3,8 +3,16 @@ import "../../components/css/UserStudent/WorkExperienceStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md"
-
+import { useNavigate,useParams } from "react-router-dom";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
 const WorkExperience = () => {
+
+  const navigate = useNavigate()
+   const {id} = useParams()
+  const [cookies,setCookie,removeCookie] = useCookies([])
+
+
   const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
 
@@ -35,13 +43,29 @@ const WorkExperience = () => {
   }
 
   useEffect(() => {
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        if(!data.status){
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+         
+          navigate(`/student/${id}/workexperience`)
+        }
+      }
+    }
+    verifyUser()
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       console.log("submitted");
     }else {
       console.log("alert")
     }
-  }, [formErrors]);
+  }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};

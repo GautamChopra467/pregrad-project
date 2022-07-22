@@ -21,6 +21,8 @@ const SignUp = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [checkboxCheck, setCheckboxCheck] = useState(false);
 
+  const type = "register"
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -49,7 +51,7 @@ const SignUp = () => {
       axios.post("http://localhost:8000/signup", user)
       .then( res => {
         if(res.data.message === "true"){
-          navigate("/emailverify");
+          navigate(`/emailverify/${type}`);
         }else {
           setFormErrors({final: res.data.message});
         }

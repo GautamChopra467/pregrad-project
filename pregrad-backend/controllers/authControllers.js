@@ -98,13 +98,18 @@ try{
 
     if(req.query.type == 'register')
     {
+      if(user.verified == false)
+      {
       sendOtpToVerify(user);
-      res.send({ message: "true" });
+      res.send({ message: "true",type:"register" });
+    }else{
+      res.send({ message: "Already Verified" });
+    }
     }else{
       if(user.verified == true)
       {
         sendOtpToVerify(user);
-        res.send({ message: "true" });
+        res.send({ message: "true",type:"forgotpassword" });
     }else{
       res.send({ message: "Invalid" });
     }
@@ -130,6 +135,8 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`
     if(user.expiredAt.getTime() < Date.now())
     {
       res.send({message:"Code Expired"})
+      await Otp.deleteOne({email})
+
     }else{
 
       const validOtp = await bcrypt.compare(otp,user.otp)
@@ -174,7 +181,7 @@ else{
       maxAge:maxAge*1000
     })
 
-    res.send({message:"true"})
+    res.send({message:"true",id:user._id})
   }
 }catch(err){
   console.log(err)
@@ -183,13 +190,14 @@ else{
 }
 
 module.exports.newPassword = async(req,res)=>{
-  try{ const {email,password} = req.body
+  try{ 
+    const {email,password} = req.body
 
    const salt = await bcrypt.genSalt(10)
-   password = await bcrypt.hash(password,salt)
+   const hashPassword = await bcrypt.hash(password,salt)
 
 const user = await UserRegister.findOneAndUpdate({email},{$set:{
-  password
+  password:hashPassword
 }})
 
 res.send({message:"true"})

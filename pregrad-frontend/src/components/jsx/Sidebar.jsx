@@ -7,6 +7,8 @@ import {
   MdOutlineDesignServices,
   MdOutlineCastForEducation,
 } from "react-icons/md";
+
+import {useParams} from 'react-router-dom'
 import { GiAchievement } from "react-icons/gi";
 import { TbFileCertificate } from "react-icons/tb";
 import {  NavLink } from "react-router-dom";
@@ -16,41 +18,40 @@ import UserImage from "../../img/user3.png";
 import HeaderStudent from "./HeaderStudent";
 
 
-const Sidebar = ({ children }) => {
+const Sidebar = ({ children,userid }) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
 
-
-
+const {id} = useParams()
 
 
   const routes = [
     {
-      path: "/student/internships",
+      path: `/student/${userid}/internships`,
       name: "internships",
       icon: <AiOutlineFileText size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: "/student/workexperience",
+      path: `/student/${userid}/workexperience`,
       name: "work experience",
       icon: <BsBriefcase size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: "/student/projects",
+      path: `/student/${userid}/projects`,
       name: "projects",
       icon: <MdOutlineDesignServices size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: "/student/achievements",
+      path: `/student/${userid}/achievements`,
       name: "achievements",
       icon: <GiAchievement size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: "/student/certifications",
+      path: `/student/${userid}/certifications`,
       name: "certifications",
       icon: <TbFileCertificate size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: "/student/education",
+      path: `/student/${userid}/education`,
       name: "education",
       icon: <MdOutlineCastForEducation size={isOpenSidebar ? "20" : "24"} />,
     },

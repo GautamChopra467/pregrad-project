@@ -8,7 +8,7 @@ import Projects from "./UserStudent/Projects";
 import Achievements from "./UserStudent/Achievements";
 import Certifications from "./UserStudent/Certifications";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 
@@ -16,6 +16,8 @@ import {useCookies} from 'react-cookie'
 const Student = () => {
 
   const navigate = useNavigate()
+
+const {id} = useParams()
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
@@ -30,7 +32,7 @@ useEffect(()=>{
         navigate('/login')
       }else{
         
-        navigate('/student')
+        navigate(`/student/${id}`)
       }
     }
   }
@@ -38,9 +40,9 @@ useEffect(()=>{
 },[])
 
   return (
-    <Sidebar>
+    <Sidebar userid={id}>
       <Routes>
-        <Route exact path="/internships" element={<Internships />} />
+        <Route exact path="/internships" element={<Internships/>} />
         <Route exact path="/workexperience" element={<WorkExperience />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/achievements" element={<Achievements />} />

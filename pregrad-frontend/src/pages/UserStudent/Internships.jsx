@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 
@@ -8,6 +8,7 @@ import {useCookies} from 'react-cookie'
 const Internships = () => {
 
   const navigate = useNavigate()
+   const {id} = useParams()
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
@@ -23,7 +24,7 @@ useEffect(()=>{
         navigate('/login')
       }else{
        
-        navigate('/student/internships')
+        navigate(`/student/${id}/internships`)
       }
     }
   }

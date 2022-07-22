@@ -15,13 +15,13 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/student/*" element={<Student />} />
+        <Route exact path="/student/:id/*" element={<Student />} />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/emailverify" element={<EmailVerify />} />
-        <Route exact path="/otpverify/:email" element={<OTPVerify />} />
+        <Route exact path="/emailverify/:type" element={<EmailVerify />} />
+        <Route exact path="/otpverify/:email/:type" element={<OTPVerify />} />
         <Route exact path="/detailsone" element={<DetailsOne />} />
-        <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+        <Route exact path="/forgotpassword/:email" element={<ForgotPassword />} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>
       {/* <Sidebar>

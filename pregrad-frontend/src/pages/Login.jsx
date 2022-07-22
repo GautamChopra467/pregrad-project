@@ -17,6 +17,8 @@ const Login = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
+// const type = "forgotpassword" 
+
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -50,7 +52,8 @@ const Login = () => {
       })
       .then( res => {
         if(res.data.message === "true"){
-          navigate("/student/internships");
+          
+          navigate(`/student/${res.data.id}`);
         }else {
           setFormErrors({final: res.data.message})
         }
@@ -168,7 +171,7 @@ const Login = () => {
                 </div>
 
                 <div className="container6">
-                  <Link to='/forgotpassword'>Forgot Password ?</Link>
+                  <Link to='/emailverify/forgotpassword'>Forgot Password ?</Link>
                 </div>
                 </div>
 
@@ -182,7 +185,6 @@ const Login = () => {
                   Login with Google
                 </a> 
               </form>
-
               <div className="line"></div>
 
               <div className="bottom-part">

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HeaderUser from "../components/jsx/HeaderUser";
 import "../components/css/DetailsOneStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
-import Select from "react-select";
+// import Select from "react-select";
 
 const DetailsOne = () => {
 
@@ -73,10 +73,10 @@ const DetailsOne = () => {
 
               <div className="form_box_detailsOne box4_detailsOne">
                 <label className="label_detailsOne">Q. Which type of job would you like?</label>
-                <Select 
+                {/* <Select 
                 styles={customStyles}
                 isMulti={true}
-                options={options} />
+                options={options} /> */}
               </div>
 
               <div className="form_box_detailsOne box5_detailsOne">

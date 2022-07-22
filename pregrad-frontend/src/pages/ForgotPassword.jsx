@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import Logo from "../img/logo.png";
 import ForgotPasswordLogo from "../img/forgotpassword-image.png";
 import InstaLogo from "../img/instagram-logo.svg";
@@ -13,6 +13,9 @@ import axios from "axios";
 const ForgotPassword = () => {
   const navigate = useNavigate();
 
+const {email} = useParams()
+
+
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
 
@@ -20,7 +23,7 @@ const ForgotPassword = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const [user, setUser] = useState({
-    email: "",
+    email: email,
     password: "",
     confirmpassword: ""
   });
@@ -42,10 +45,10 @@ const ForgotPassword = () => {
   useEffect(() => {
     console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/verifyemail/?type=forgotpassword", user)
+      axios.post("http://localhost:8000/newpassword", user)
       .then( res => {
         if(res.data.message === "true"){
-          navigate("/newpassword");
+          navigate("/login");
         }else {
           setFormErrors({final: res.data.message})
         }
