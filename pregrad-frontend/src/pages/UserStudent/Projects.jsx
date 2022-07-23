@@ -50,7 +50,7 @@ const Projects = () => {
       ...project,
       [name]: value
     })
-    console.log(name, value)
+   
   }
 
   const submitForm = (e) => {
@@ -62,7 +62,9 @@ const Projects = () => {
 
 const getProjects = async()=>{
   const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
+  if(data.message == "true"){
   setGetProject(data.project)
+  }
 } 
 
   useEffect(() => {
@@ -78,7 +80,7 @@ const getProjects = async()=>{
         }else{
          
           navigate(`/student/${id}/projects`)
-          getProjects()
+           getProjects()
         }
       }
     }
@@ -192,7 +194,7 @@ const setStateValue = ()=>{
    <h4>{proj.projecttitle}</h4>
    <div className='content_logo_container_projects'>
      <div className='content_logo_projects' onClick={()=>editProject(id,proj._id)}>
-       <BiEditAlt size={22} color='#7840f2'/>
+       <BiEditAlt size={22} className="content_icon_projects"/>
      </div>
      <div className='content_logo_projects' onClick={()=>deleteProject(id,proj._id)}>
        <MdOutlineDelete size={22} color='#ef233c' />
@@ -202,7 +204,7 @@ const setStateValue = ()=>{
 
  <div className='bottom_section_content_projects'>
    <p>{proj.description}</p>
-  <span>Project Link : <a href='yo'>{proj.projectlink}</a></span>
+  <span><a href='yo'>{proj.projectlink}</a></span>
  </div>
             {/* <div className='content_container_projects'>
               <div className='top_section_content_projects'>
@@ -223,7 +225,7 @@ const setStateValue = ()=>{
               </div> */}
 
  <div className='skills_content_projects'>
-   <p style={{padding:"3px",marginLeft:"-20px"}}><b>Skills Used In Project</b></p>
+   <p style={{padding:"3px",marginLeft:"-20px"}}></p>
    <ul style={{marginLeft:"10px"}}>
      <li>{proj.skills}</li>
    </ul>

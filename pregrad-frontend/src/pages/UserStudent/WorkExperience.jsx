@@ -12,6 +12,7 @@ const WorkExperience = () => {
    const {id} = useParams()
   const [cookies,setCookie,removeCookie] = useCookies([])
 
+  const [editform,seteditform] = useState("")
 
   const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
@@ -19,29 +20,53 @@ const WorkExperience = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [user, setUser] = useState({
+  const [editworkexperience,setEditWorkExperience] = useState({})
+
+  const [studentwork,setStudentwork] = useState([])
+
+  const [workexperience, setWorkExperience] = useState({
     companyname: "",
     position: "",
     role: "",
     duration: "",
     websitelink: "",
-    skills: ""
+    skills: "",
+    id:id
   });
 
   const handleForm = (e) => {
     const {name, value} = e.target;
-    setUser({
-      ...user,
+    setWorkExperience({
+      ...workexperience,
       [name]: value
     })
-    console.log(name, value)
+  }
+
+  const updateForm = (e)=>{
+    const {name, value} = e.target;
+    setEditWorkExperience({
+      ...editworkexperience,
+      [name]: value
+    })
   }
 
   const submitForm = (e) => {
     e.preventDefault();
-    setFormErrors(validate(user));
+    setFormErrors(validate(workexperience));
     setIsSubmit(true);
+    setIsModal(!isModal)
   }
+
+  const getWorkExperience = ()=>{
+    axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
+      if(res.data.message == "true"){  
+    setStudentwork(res.data.workexperience)
+      }
+    }).catch((err)=>{
+      console.log(err)
+    })
+
+  } 
 
   useEffect(() => {
     const verifyUser = async()=>{
@@ -56,15 +81,20 @@ const WorkExperience = () => {
         }else{
          
           navigate(`/student/${id}/workexperience`)
+          getWorkExperience()
         }
       }
     }
     verifyUser()
-    console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted");
-    }else {
-      console.log("alert")
+     axios.post(`http://localhost:8000/student/workexperience`,{
+      ...workexperience
+     }).then((res)=>{
+      if(res.data.message == "true")
+      {
+        getWorkExperience()
+      }
+     })
     }
   }, [formErrors,cookies,removeCookie,navigate]);
 
@@ -98,6 +128,39 @@ const WorkExperience = () => {
     return errors;
   }
 
+  const setStateValue = ()=>{
+    setIsModal(!isModal)
+    seteditform("addnew")
+
+  }
+
+const editWorkExperience = async(u_id,w_id)=>{
+  setIsModal(!isModal) 
+  seteditform("edit")
+  const {data} = await axios.get(`http://localhost:8000/student/updateworkexperience/${u_id}/${w_id}`)
+  setEditWorkExperience(data)
+}
+ 
+const deleteWorkExperience = async(u_id,w_id)=>{
+  const {data} = await axios.delete(`http://localhost:8000/student/deleteworkexperience/${u_id}/${w_id}`)
+ 
+  if(data.message == "true")
+  {
+   getWorkExperience()
+  }
+}
+
+const UpdatedWorExperience = async(e,u_id)=>{
+  e.preventDefault();
+   
+  const {data} = await axios.put(`http://localhost:8000/student/updatedworkexperience/${u_id}/${editworkexperience._id}`,{
+    ...editworkexperience
+  })
+  setStudentwork(data.workexperience)
+   setIsModal(!isModal)
+   getWorkExperience()
+}
+
   return (
     <div>
       <div className='sub_header_workexperience'>
@@ -105,7 +168,6 @@ const WorkExperience = () => {
       </div>
 
       <div className='main_container_workexperience'>
-        {console.log(window)}
           {!isContent ? (
             <div className='add_section1_workexperience'>
               <div className='add_section1_logo_workexperience'>
@@ -115,7 +177,7 @@ const WorkExperience = () => {
                 <h2>Add Work Experience Details</h2>
                 <p>Add your school / college information</p>
               </div>
-              <button className='btn_light_workexperience' onClick={() => setIsModal(!isModal)}>+ Add New</button>
+              <button className='btn_light_workexperience' onClick={() => setStateValue()}>+ Add New</button>
             </div>
           ) : (
             <>
@@ -129,40 +191,38 @@ const WorkExperience = () => {
                 <p>Add your school / college information</p>
               </div>
               </div>
-              <button className='btn_light_workexperience' onClick={() => setIsModal(!isModal)}>+ Add New</button>
+              <button className='btn_light_workexperience' onClick={() => setStateValue()}>+ Add New</button>
             </div>
-
-            <div className='content_container_workexperience'>
+{
+  studentwork.map(work=>(
+    <div className='content_container_workexperience' key={work._id}>
               <div className='top_section_content_workexperience'>
-                <h4>Google Engage</h4>
+                <h4>{work.companyname}</h4>
                 <div className='content_logo_container_workexperience'>
-                <div className='content_logo_workexperience'>
+                <div className='content_logo_workexperience' onClick={()=>editWorkExperience(id,work._id)}>
                   <BiEditAlt size={22} className="content_icon_workexperience" />
                 </div>
-                <div className='content_logo_workexperience'>
+                <div className='content_logo_workexperience' onClick={()=>deleteWorkExperience(id,work._id)}>
                   <MdOutlineDelete size={22} color='#ef233c' />
                 </div>
                 </div>
               </div>
 
               <div className='bottom_section_content_workexperience'>
-                <h4>Full Stack Developer</h4>
-                <h3>2 months</h3>
-                <p>This calculator converts pixels to the CSS unit REM. The conversion is based on the default font-size of 16 pixel, but can be changed.
-
-With the CSS rem unit you can define a size relative to the font-size of the HTML root tag.
-
-The conversion works of course in both directions, just change the opposite input field.</p>
+                <h4>{work.position}</h4>
+                <h3>{work.duration}</h3>
+                <p>{work.role}</p>
+                <p>{work.websitelink}</p>
               </div>
 
               <div className='skills_content_workexperience'>
                 <ul>
-                  <li>HTML</li>
-                  <li>CSS</li>
-                  <li>JS</li>
+                  <li>{work.skills}</li>
                 </ul>
               </div>
             </div>
+  ))
+            }
             </>
           )}
         </div>
@@ -173,42 +233,43 @@ The conversion works of course in both directions, just change the opposite inpu
             <div className='modal_top_section_workexperience'>
               <h2>Work Experience Details</h2>
             </div>
-
+{
+  editform === "addnew"?(
             <div className='modal_mid_section_workexperience'>
               <form>
                 <div className="form_box_workexperience">
                   <label>Company Name</label>
-                  <input type="text" name="companyname" placeholder="Enter company name" value={user.companyname}  onChange={handleForm} />
+                  <input type="text" name="companyname" placeholder="Enter company name" onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.companyname}</p>
                 </div>
 
                 <div className="form_box_workexperience">
                   <label>Position Of Responsibility</label>
-                  <input type="text" name="position" placeholder="Enter your position" value={user.position}  onChange={handleForm} />
+                  <input type="text" name="position" placeholder="Enter your position"   onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.position}</p>
                 </div>
 
                 <div className="form_box_workexperience">
                   <label>Describe Your Role (in 70-100 words)</label>
-                  <textarea type="text" name="role" placeholder="Enter your skills" value={user.role}  onChange={handleForm} />
+                  <textarea type="text" name="role" placeholder="Enter your skills" onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.role}</p>
                 </div>
 
                 <div className="form_box_workexperience">
                   <label>Duration</label>
-                  <input type="text" name="duration" placeholder="Enter duration" value={user.duration}  onChange={handleForm} />
+                  <input type="text" name="duration" placeholder="Enter duration" onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.duration}</p>
                 </div>
 
                 <div className="form_box_workexperience">
                   <label>Company Website Link</label>
-                  <input type="url" name="websitelink" placeholder="Enter website link" value={user.websitelink}  onChange={handleForm} />
+                  <input type="url" name="websitelink" placeholder="Enter website link"   onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.websitelink}</p>
                 </div>
 
                 <div className="form_box_workexperience">
                   <label>Skills Used</label>
-                  <input type="text" name="skills" placeholder="Enter your skills" value={user.skills}  onChange={handleForm} />
+                  <input type="text" name="skills" placeholder="Enter your skills"   onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.skills}</p>
                 </div>
 
@@ -218,7 +279,53 @@ The conversion works of course in both directions, just change the opposite inpu
                 </div>
               </form>
             </div>
+            ):(
+              <div className='modal_mid_section_workexperience'>
+              <form>
+                <div className="form_box_workexperience">
+                  <label>Company Name</label>
+                  <input type="text" name="companyname" placeholder="Enter company name" value={editworkexperience.companyname || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.companyname}</p>
+                </div>
 
+                <div className="form_box_workexperience">
+                  <label>Position Of Responsibility</label>
+                  <input type="text" name="position" placeholder="Enter your position" value={editworkexperience.position || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.position}</p>
+                </div>
+
+                <div className="form_box_workexperience">
+                  <label>Describe Your Role (in 70-100 words)</label>
+                  <textarea type="text" name="role" placeholder="Enter your skills" value={editworkexperience.role || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.role}</p>
+                </div>
+
+                <div className="form_box_workexperience">
+                  <label>Duration</label>
+                  <input type="text" name="duration" placeholder="Enter duration" value={editworkexperience.duration || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.duration}</p>
+                </div>
+
+                <div className="form_box_workexperience">
+                  <label>Company Website Link</label>
+                  <input type="url" name="websitelink" placeholder="Enter website link" value={editworkexperience.websitelink || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.websitelink}</p>
+                </div>
+
+                <div className="form_box_workexperience">
+                  <label>Skills Used</label>
+                  <input type="text" name="skills" placeholder="Enter your skills" value={editworkexperience.skills || ''}  onChange={updateForm} />
+                  <p className="errors_msg_workexperience">{formErrors.skills}</p>
+                </div>
+
+                <div className='modal_bottom_section_workexperience'>
+                  <button className='btn_light_workexperience' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button type='submit' onClick={(e)=>UpdatedWorExperience(e,id)} className='btn_primary_workexperience'>Save Details</button>
+                </div>
+              </form>
+            </div>
+            )
+}
             
           </div>
         </div>

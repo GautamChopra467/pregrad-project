@@ -1,11 +1,28 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import "../../components/css/UserStudent/StudentProfileStyles.css";
 import ProfileBackground from "../../img/profile-background.jpg";
 import UserImage from "../../img/profile-image.png";
 import { BiEditAlt, BiLink } from "react-icons/bi";
+import { useNavigate,useParams } from "react-router-dom";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 
 const StudentProfile = () => {
+
+  const navigate = useNavigate()
+  const {id} = useParams()
+ const [cookies,setCookie,removeCookie] = useCookies([])
+
+ const  [user,setUser] = useState({})
+
+ const [Achievement,setAchievement] = useState([])
+const [WorkExperience,setWorkExperience] = useState([])
+const [Project,setProject] = useState([])
+const [Education,setEducation] = useState([])
+
+
+
   const skills = [
     "HTML",
     "CSS",
@@ -18,6 +35,45 @@ const StudentProfile = () => {
     "Figma",
     "Express",
   ];
+
+  const getUserData = async()=>{
+    const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
+    if(data.message == "true"){
+    setAchievement(data.achievement)
+    setProject(data.project)
+    setWorkExperience(data.workexperience)
+    setEducation(data.education)
+  }
+  }
+
+
+  const getUserDetails= async()=>{
+    const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+    setUser(data)
+  }
+
+
+
+  useEffect(()=>{
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        if(!data.status){
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+         
+          navigate(`/student/${id}/profile`)
+          getUserDetails()
+          getUserData()
+        }
+      }
+    }
+    verifyUser()
+  },[cookies,removeCookie,navigate])
 
   return (
     <div>
@@ -53,11 +109,11 @@ const StudentProfile = () => {
             <div className="profile_info_studentprofile">
               <div className="info_container_studentprofile">
                 <div className="info_left_section_studentprofile">
-                  <h5>Gautam Chopra</h5>
+                  <h5>{user.name}</h5>
                   <p>Full Stack Developer</p>
                 </div>
                 <div className="info_middle_section_studentprofile">
-                  <h5>info@example.com</h5>
+                  <h5>{user.email}</h5>
                 </div>
               </div>
 
@@ -95,20 +151,30 @@ const StudentProfile = () => {
             <div className="education_container_studentprofile card_studentprofile">
               <h4>Education</h4>
               <div className="line_studentprofile"></div>
-              <div className="education_info_box_studentprofile">
-                <h3>Bharati Vidyapeeth's College of Engineering</h3>
-                <h5>B.Tech, Computer Science Engineering</h5>
-                <p>2020 - 2024</p>
+
+   {        
+    Education.map((edu)=>(
+             <div className="education_info_box_studentprofile" key={edu._id}>
+                <h3>{edu.university}</h3>
+                <h5>{edu.degree},{edu.field}</h5>
+                <p>{edu.start} - {edu.end}</p>
               </div>
+    ))   
+              }
             </div>
 
             <div className="achievements_container_studentprofile card_studentprofile">
               <h4>Achievements</h4>
+
               <div className="line_studentprofile"></div>
-              <div className="achievements_info_box_studentprofile">
-                <h3>ISTE 2022 Hackathon</h3>
-                <a href="">Certificate Link</a>
+             {
+              Achievement.map((achi)=>(
+                <div className="achievements_info_box_studentprofile" key={achi._id}>
+                <h3>{achi.title}</h3>
+                <a href="">{achi.certificate}</a>
               </div>
+              ))
+              }
             </div>
           </div>
 
@@ -116,88 +182,48 @@ const StudentProfile = () => {
             <div className="workexperience_container_studentprofile card_studentprofile">
               <h4>Work Experience</h4>
               <div className="line_studentprofile"></div>
-              <div className="workexperience_details_box_studentprofile">
-                <h3>Google Engage</h3>
-                <h5>Full Stack Developer | 2 months</h5>
-                <p>
-                  This calculator converts pixels to the CSS unit REM. The
-                  conversion is based on the default font-size of 16 pixel, but
-                  can be changed.With the CSS rem unit you can define a size
-                  relative to the font-size of the HTML root tag.The conversion
-                  works of course in both directions, just change the opposite
-                  input field.
-                </p>
-                <div className="skills_content_studentprofile">
-                  <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JS</li>
-                  </ul>
-                </div>
-              </div>
+{        
+    WorkExperience.map((work)=>(
+      <div className="workexperience_details_box_studentprofile" key={work._id}>
+      <h3>{work.companyname}</h3>
+      <h5>{work.position} | {work.duration}</h5>
+      <p>
+      {work.role}  
+      </p>
+      <div className="skills_content_studentprofile">
+        <ul>
+          <li>{work.skills}</li>
+        </ul>
+      </div>
+    </div>
 
-              <div className="workexperience_details_box_studentprofile">
-                <h3>Google Engage</h3>
-                <h5>Full Stack Developer | 2 months</h5>
-                <p>
-                  This calculator converts pixels to the CSS unit REM. The
-                  conversion is based on the default font-size of 16 pixel, but
-                  can be changed.With the CSS rem unit you can define a size
-                  relative to the font-size of the HTML root tag.The conversion
-                  works of course in both directions, just change the opposite
-                  input field.
-                </p>
-                <div className="skills_content_studentprofile">
-                  <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JS</li>
-                  </ul>
-                </div>
-              </div>
+    ))
+            
+}              
             </div>
 
             <div className="projects_container_studentprofile card_studentprofile">
               <h4>Projects</h4>
               <div className="line_studentprofile"></div>
-              <div className="projects_details_box_studentprofile">
-                <h3>Ambaram : E-commerce</h3>
+{          
+    Project.map((proj)=>(
+<div className="projects_details_box_studentprofile">
+                <h3>{proj.projecttitle}</h3>
                 <p>
-                  Ambaram" is web application that provides a compelling user
-                  experience has a large lists of products and provides lot of
-                  offers. Responsive in all devices.At the beginning I designed
-                  a basic layout of my website using Figma, then collected
-                  necessary information related to the projects, made logos,
-                  posters etc. Then I used HTML to make the basic structure and
-                  later designed it using CSS then add some functionalities
-                  using Javascript.1) Great user experience and awesome UI 2)
-                  Content management capabilities 3) An integrated blog or
-                  articles section.
+                {proj.description}
                 </p>
-                <a href="">
+                <a href={proj.projectlink}>
                   <BiLink size={24} color="#7840f2" />
                 </a>
                 <div className="skills_content_studentprofile">
                   <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JS</li>
+                    <li>{proj.skills}</li>
                   </ul>
                 </div>
               </div>
+    ))
 
-              <div className="projects_details_box_studentprofile">
-                <h3>Ambaram : E-commerce</h3>
-                <p>Ambaram" is web application that provides a compelling user experience has a large lists of products and provides lot of offers. Responsive in all devices.At the beginning I designed a basic layout of my website using Figma, then collected necessary information related to the projects, made logos, posters etc. Then I used HTML to make the basic structure and later designed it using CSS then add some functionalities using Javascript.1) Great user experience and awesome UI 2) Content management capabilities 3) An integrated blog or articles section.</p>
-                <a href=""><BiLink size={24} color="#7840f2" /></a>
-                <div className="skills_content_studentprofile">
-                  <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JS</li>
-                  </ul>
-                </div>
-              </div>
+}
             </div>
           </div>
         </div>

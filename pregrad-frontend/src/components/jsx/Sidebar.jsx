@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import "../css/SidebarStyles.css";
 import { AiOutlineFileText } from "react-icons/ai";
@@ -7,7 +7,7 @@ import {
   MdOutlineDesignServices,
   MdOutlineCastForEducation,
 } from "react-icons/md";
-
+import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import { GiAchievement } from "react-icons/gi";
 import { TbFileCertificate } from "react-icons/tb";
@@ -21,8 +21,21 @@ import HeaderStudent from "./HeaderStudent";
 
 const Sidebar = ({ children, userid,theme, setTheme }) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
+  
+  const [user,setUser] = useState({})
+
+
 
   const {id} = useParams()
+
+  const getUserDetails= async()=>{
+    const {data} = await axios.get(`http://localhost:8000/userDetails/${userid}`)
+    setUser(data)
+  }
+useEffect(()=>{
+    getUserDetails()
+},[])
+
 
   const routes = [
     {
@@ -95,7 +108,7 @@ const Sidebar = ({ children, userid,theme, setTheme }) => {
       <motion.div
         animate={{
           width: window.innerWidth > 940 ? (isOpenSidebar ? "280px" : "60px") : (isOpenSidebar ? "280px" : "0px"),
-          position: window.innerWidth >940 ? "fixed" : "absolute",
+          position: window.innerWidth >940 ? "fixed" : "fixed",
           transition: { duration: 0.3, type: "spring,", damping: 11 },
         }}
         className="sidebar_container_sidebar"
@@ -123,9 +136,9 @@ const Sidebar = ({ children, userid,theme, setTheme }) => {
                 <img src={UserImage} alt="user" />
               </div>
               <h2>
-                Hello, <span>Gautam</span>
+                Hello, <span>{user.name}</span>
               </h2>
-              <h3>harshchopra467@gmail.com</h3>
+              <h3>{user.email}</h3>
             </motion.div>
           )}
         </AnimatePresence>
@@ -166,12 +179,15 @@ const Sidebar = ({ children, userid,theme, setTheme }) => {
           paddingLeft: window.innerWidth > 940 ? (isOpenSidebar ? "280px" : "60px") : "0px",
           transition: { duration: 0.3, type: "spring,", damping: 11 },
         }}
+        style = {{position:"absolute"}}
       >
         <HeaderStudent
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
           theme={theme}
           setTheme={setTheme}
+          userid={userid}
+          user={user}
         />
         {children}
       </motion.main>

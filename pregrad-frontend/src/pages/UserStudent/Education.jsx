@@ -22,27 +22,54 @@ const Education = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [user, setUser] = useState({
-    collegename: "",
+  const [editeducation,setEditEducation] = useState({})
+
+  const [editform,seteditform] = useState("")
+
+  const [education, setEducation] = useState({
+    university: "",
     field: "",
     degree: "",
-    startyear: "",
-    endyear: ""
+    start: "",
+    end: "",
+    id:id
   });
+
+  const [studentedu,setStudentedu] = useState([])
+
+  const updateForm = (e)=>{
+    const {name, value} = e.target;
+    setEditEducation({
+      ...editeducation,
+      [name]: value
+    })
+  }
+
 
   const handleForm = (e) => {
     const {name, value} = e.target;
-    setUser({
-      ...user,
+    setEducation({
+      ...education,
       [name]: value
     })
-    console.log(name, value)
+    
   }
 
   const submitForm = (e) => {
     e.preventDefault();
-    setFormErrors(validate(user));
+    setFormErrors(validate(education));
     setIsSubmit(true);
+    setIsModal(!isModal);
+  }
+
+  const getEducation = async()=>{
+    
+        const {data} = await axios.get(`http://localhost:8000/student/geteducation/${id}`)
+          if(data.message == "true")
+          {  
+           setStudentedu(data.education)
+          }
+
   }
 
   useEffect(() => {
@@ -58,22 +85,28 @@ const Education = () => {
         }else{
        
           navigate(`/student/${id}/education`)
+          getEducation()
         }
       }
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      // console.log("submitted");
-    }else {
-      // console.log("alert")
+     axios.post(`http://localhost:8000/student/education`,{
+       ...education
+     }).then((res)=>{
+       if(res.data.message == "true")
+       {
+        getEducation()
+       }
+     })
     }
   }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
 
-    if(!values.collegename){
-      errors.collegename = "Name required";
+    if(!values.university){
+      errors.university = "Name required";
     }
 
     if(!values.field){
@@ -84,16 +117,53 @@ const Education = () => {
       errors.degree = "Degree required";
     }
 
-    if(!values.startyear){
-      errors.startyear = "Start year required";
+    if(!values.start){
+      errors.start = "Start year required";
     }
 
-    if(!values.endyear){
-      errors.endyear = "End year required";
+    if(!values.end){
+      errors.end = "End year required";
     }
 
     return errors;
   }
+
+const deleteEducation = async(u_id,e_id)=>{
+
+  const {data} = await axios.delete(`http://localhost:8000/student/deleteeducation/${u_id}/${e_id}`)
+ 
+  if(data.message == "true")
+  {
+    getEducation()
+  }
+ 
+
+}
+
+const UpdatedEducation = async(e,u_id)=>{
+  e.preventDefault();
+   
+  const {data} = await axios.put(`http://localhost:8000/student/updatededucation/${u_id}/${editeducation._id}`,{
+    ...editeducation
+  })
+  setStudentedu(data.education)
+   setIsModal(!isModal)
+   getEducation()
+}
+
+const editEducation = async(u_id,e_id)=>{
+  setIsModal(!isModal) 
+  seteditform("edit")
+  const {data} = await axios.get(`http://localhost:8000/student/updateeducation/${u_id}/${e_id}`)
+  setEditEducation(data)
+
+}
+
+const setStateValue = ()=>{
+  setIsModal(!isModal)
+  seteditform("addnew")
+
+}
 
   return (
     <div>
@@ -111,7 +181,7 @@ const Education = () => {
                 <h2>Add Education Details</h2>
                 <p>Add your school / college information</p>
               </div>
-              <button className='btn_light_education' onClick={() => setIsModal(!isModal)}>+ Add New</button>
+              <button className='btn_light_education' onClick={() => setStateValue()}>+ Add New</button>
             </div>
           ) : (
             <>
@@ -125,27 +195,32 @@ const Education = () => {
                 <p>Add your school / college information</p>
               </div>
               </div>
-              <button className='btn_light_education' onClick={() => setIsModal(!isModal)}>+ Add New</button>
+              <button className='btn_light_education' onClick={() => setStateValue()}>+ Add New</button>
             </div>
 
-            <div className='content_container_education'>
+           { 
+           
+           studentedu.map(edu=>(
+            <div className='content_container_education' key={edu._id}>
               <div className='top_section_content_education'>
-                <h4>Bharati Vidyapeeth's College of Engineering</h4>
+                <h4>{edu.university}</h4>
                 <div className='content_logo_container_education'>
-                <div className='content_logo_education'>
+                <div className='content_logo_education' onClick={()=>editEducation(id,edu._id)}>
                   <BiEditAlt size={22} className="content_icon_education" />
                 </div>
                 <div className='content_logo_education'>
-                  <MdOutlineDelete size={22} color='#ef233c' />
+                  <MdOutlineDelete size={22} color='#ef233c' onClick={()=>deleteEducation(id,edu._id)}/>
                 </div>
                 </div>
               </div>
 
               <div className='bottom_section_content_education'>
-                <h4>B.Tech, Computer Science Engineering</h4>
-                <h3>2020 - 2024</h3>
+              <h4>{edu.degree}, {edu.field}</h4>
+                <h3>{edu.start} - {edu.end}</h3>
               </div>
             </div>
+           ))
+            }
             </>
           )}
         </div>
@@ -156,37 +231,38 @@ const Education = () => {
             <div className='modal_top_section_education'>
               <h2>Education Details</h2>
             </div>
-
+            {
+   editform === "addnew"?(
             <div className='modal_mid_section_education'>
               <form>
                 <div className="form_box_education">
                   <label>University / College Name</label>
-                  <input type="text" name="collegename" placeholder="Enter college name" value={user.collegename}  onChange={handleForm} />
-                  <p className="errors_msg_education">{formErrors.collegename}</p>
+                  <input type="text" name="university" placeholder="Enter college name"   onChange={handleForm} />
+                  <p className="errors_msg_education">{formErrors.university}</p>
                 </div>
 
                 <div className="form_box_education">
                   <label>Field of Study</label>
-                  <input type="text" name="field" placeholder="Enter your field" value={user.field}  onChange={handleForm} />
+                  <input type="text" name="field" placeholder="Enter your field"   onChange={handleForm} />
                   <p className="errors_msg_education">{formErrors.field}</p>
                 </div>
 
                 <div className="form_box_education">
                   <label>Degree</label>
-                  <input type="text" name="degree" placeholder="Enter your degree" value={user.degree}  onChange={handleForm} />
+                  <input type="text" name="degree" placeholder="Enter your degree"   onChange={handleForm} />
                   <p className="errors_msg_education">{formErrors.degree}</p>
                 </div>
 
                 <div className="form_box_education">
                   <label>Start Year</label>
-                  <input type="text" name="startyear" placeholder="Enter start year" value={user.startyear}  onChange={handleForm} />
-                  <p className="errors_msg_education">{formErrors.startyear}</p>
+                  <input type="text" name="start" placeholder="Enter start year"  onChange={handleForm} />
+                  <p className="errors_msg_education">{formErrors.start}</p>
                 </div>
 
                 <div className="form_box_education">
                   <label>End Year</label>
-                  <input type="text" name="endyear" placeholder="Enter end year" value={user.endyear}  onChange={handleForm} />
-                  <p className="errors_msg_education">{formErrors.endyear}</p>
+                  <input type="text" name="end" placeholder="Enter end year"  onChange={handleForm} />
+                  <p className="errors_msg_education">{formErrors.end}</p>
                 </div>
 
                 <div className='modal_bottom_section_education'>
@@ -195,6 +271,46 @@ const Education = () => {
                 </div>
               </form>
             </div>
+            ):(
+              <div className='modal_mid_section_education'>
+              <form>
+                <div className="form_box_education">
+                  <label>University / College Name</label>
+                  <input type="text" name="university" placeholder="Enter college name" value={editeducation.university || ''}  onChange={updateForm} />
+                  <p className="errors_msg_education">{formErrors.university}</p>
+                </div>
+              <div className="form_box_education">
+              <label>Field of Study</label>
+              <input type="text" name="field" placeholder="Enter your field" value={editeducation.field || ''}  onChange={updateForm} />
+              <p className="errors_msg_education">{formErrors.field}</p>
+            </div>
+
+            <div className="form_box_education">
+              <label>Degree</label>
+              <input type="text" name="degree" placeholder="Enter your degree" value={editeducation.degree || ''}  onChange={updateForm} />
+              <p className="errors_msg_education">{formErrors.degree}</p>
+            </div>
+
+            <div className="form_box_education">
+              <label>Start Year</label>
+              <input type="text" name="start" placeholder="Enter start year" value={editeducation.start || ''}  onChange={updateForm} />
+              <p className="errors_msg_education">{formErrors.start}</p>
+            </div>
+
+            <div className="form_box_education">
+              <label>End Year</label>
+              <input type="text" name="end" placeholder="Enter end year" value={editeducation.end || ''}  onChange={updateForm} />
+              <p className="errors_msg_education">{formErrors.end}</p>
+            </div>
+
+            <div className='modal_bottom_section_education'>
+              <button className='btn_light_education' onClick={() => setIsModal(!isModal)}>Cancel</button>
+              <button type='submit' onClick={(e)=>UpdatedEducation(e,id)}  className='btn_primary_education'>Save Details</button>
+            </div>
+          </form>
+        </div>
+            )
+            }
 
             
           </div>

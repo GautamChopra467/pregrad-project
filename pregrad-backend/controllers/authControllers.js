@@ -205,3 +205,17 @@ res.send({message:"true"})
   console.log(err)
 }
 }
+
+module.exports.getUserDetails = async(req,res)=>{
+
+  const {id} = req.params
+
+  const user = await UserRegister.findOne({_id:id})
+
+  res.send({
+    name:user.name,
+    email:user.email
+  })
+
+
+}

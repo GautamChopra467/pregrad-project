@@ -31,13 +31,17 @@ const workSchema = new mongoose.Schema({
     position:{
         type:String
     },
+    role:{
+        type:String
+     
+    },
     duration:{
         type:String
     },
-    companyweb:{
+    websitelink:{
         type:String
     },
-    skillsUsed:{
+    skills:{
         type:String
     }
 })

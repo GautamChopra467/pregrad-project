@@ -20,14 +20,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/student/:id/*" element={<Student />} />
-        <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/emailverify/:type" element={<EmailVerify />} />
-        <Route exact path="/otpverify/:email/:type" element={<OTPVerify />} />
-        <Route exact path="/detailsone" element={<DetailsOne />} />
-        <Route exact path="/forgotpassword/:email" element={<ForgotPassword />} />
+        <Route exact path="/" element={<Home theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/student/:id/*" element={<Student theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/signup" element={<SignUp theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/login" element={<Login theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/emailverify/:type" element={<EmailVerify theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/otpverify/:email/:type" element={<OTPVerify theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>
       {/* <Sidebar>

@@ -188,7 +188,7 @@ const Login = ({theme, setTheme}) => {
                   <p className="errors-msg_login">{formErrors.password}</p>
                 </div>
 
-                <div className="container6">
+                <div className="container6_login">
                   <Link to='/emailverify/forgotpassword'>Forgot Password ?</Link>
                 </div>
                 </div>

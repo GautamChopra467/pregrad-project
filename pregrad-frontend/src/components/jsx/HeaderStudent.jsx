@@ -9,6 +9,9 @@ import { FaRegUser } from "react-icons/fa"
 import "../css/HeaderStudentStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
+import { useEffect } from "react";
+
+
 
 const HeaderStudent = (props) => {
   const toggleTheme = () => {
@@ -18,6 +21,10 @@ const HeaderStudent = (props) => {
       props.setTheme("light-theme");
     }
   }
+
+  const initials = props.user.name
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -59,14 +66,14 @@ const navigate = useNavigate()
           </div>
 
           <div className="user_details_container_headerStudent" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
-            <div className="user_avavtar_headerStudent">G</div>
-            <p>Gautam</p>
+            <div className="user_avavtar_headerStudent">{name_initials}</div>
+            <p>{props.user.name}</p>
             { isLogoutMenu ? <RiArrowDropUpLine size={29} className="user_avatar_logo_headerStudent" /> : <RiArrowDropDownLine size={29} className="user_avatar_logo_headerStudent" />}
           </div>
 
           { isLogoutMenu && (
             <div className="logout_container_headerStudent">
-              <div className="logout_items_headerStudent"><Link to="/student/profile">Profile <div> <FaRegUser /></div></Link></div>
+              <div className="logout_items_headerStudent"><Link to={`/student/${props.userid}/profile`}>Profile <div> <FaRegUser /></div></Link></div>
               <div className="logout_items_headerStudent"><a onClick={LogOut}>Logout <div> <MdLogout /></div></a></div>
          </div>
           ) }
@@ -82,7 +89,7 @@ const navigate = useNavigate()
 
         {click ? (
           <>
-          <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
+          <div className="user_avavtar_headerStudent" onClick={handleClick}>{name_initials}</div>
           <div className="logout_container_headerStudent">
             <div>
                 <Link to="/">Home</Link>
@@ -91,13 +98,13 @@ const navigate = useNavigate()
             <a onClick={LogOut}>Logout <MdLogout /></a>
             </div>
             <div className="logout_items_headerStudent">
-              <Link to="/student/profile">Profile <div> <FaRegUser /></div></Link>
+              <Link to={`/student/${props.userid}/profile`}>Profile <div> <FaRegUser /></div></Link>
             </div>
          </div>
           </>
         ) : (
             <>
-          <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
+          <div className="user_avavtar_headerStudent" onClick={handleClick}>{name_initials}</div>
           
          </>
         )}

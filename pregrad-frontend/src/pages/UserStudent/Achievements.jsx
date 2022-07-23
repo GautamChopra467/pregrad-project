@@ -18,7 +18,7 @@ const Achievements = () => {
   
   const [editform,seteditform] = useState("")
   
-  const [isContent, setIsContent] = useState(false);
+  const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -60,7 +60,9 @@ const [studentachi,setStudentachi] = useState([])
 
   const getAchievements = ()=>{
     axios.get(`http://localhost:8000/student/getachievements/${id}`).then((res)=>{
+      if(res.data.message == "true"){
       setStudentachi(res.data.achievements)
+      }
     }).catch((err)=>{
       console.log(err)
     })
@@ -192,7 +194,7 @@ const editAchievement = async(u_id,a_id)=>{
                   <h4>{stu.title}</h4>
                   <div className='content_logo_container_achievements'  >
                   <div className='content_logo_achievements' onClick={()=>editAchievement(id,stu._id)}>
-                    <BiEditAlt size={22} color='#7840f2' />
+                    <BiEditAlt size={22} className="content_icon_achievements" />
                   </div>
                   <div className='content_logo_achievements' onClick={()=>deleteAchievement(id,stu._id)}>
                     <MdOutlineDelete size={22} color='#ef233c' />
