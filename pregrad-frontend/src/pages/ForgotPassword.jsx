@@ -50,7 +50,6 @@ const {email} = useParams()
   }
 
   useEffect(() => {
-    console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post("http://localhost:8000/newpassword", user)
       .then( res => {

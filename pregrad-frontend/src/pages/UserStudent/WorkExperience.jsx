@@ -75,9 +75,11 @@ const WorkExperience = () => {
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(!data.status){
+        if(data.id != id || data.status != true){
+         
           removeCookie("jwt")
           navigate('/login')
+          
         }else{
          
           navigate(`/student/${id}/workexperience`)

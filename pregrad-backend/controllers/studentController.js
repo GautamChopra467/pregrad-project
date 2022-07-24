@@ -7,6 +7,7 @@ module.exports.studentAchievement = async(req,res)=>{
  if(student)
  {
     const updateStudent = await StudentInfo.updateOne({
+        id,
         'achievements.certificate':{
             '$ne':certificate
         },
@@ -113,6 +114,7 @@ module.exports.studentProject = async(req,res)=>{
 
   if(student){
    const updateStudent= await StudentInfo.updateOne({
+    id,
     'project.projecttitle':{
         '$ne':projecttitle
     },
@@ -227,6 +229,7 @@ const student =await StudentInfo.findOne({id})
 if(student){
 
     const updateEducation = await StudentInfo.updateOne({
+        id,
         'education.university':{
             '$ne':university
         },
@@ -359,6 +362,7 @@ const student =await StudentInfo.findOne({id})
     if(student){
 
         const updateEducation = await StudentInfo.updateOne({
+            id,
             'workexperience.companyname':{
                 '$ne':companyname
             },

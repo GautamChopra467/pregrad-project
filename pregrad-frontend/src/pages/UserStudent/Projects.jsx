@@ -74,11 +74,10 @@ const getProjects = async()=>{
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(!data.status){
+        if(data.id != id || data.status != true){
           removeCookie("jwt")
           navigate('/login')
         }else{
-         
           navigate(`/student/${id}/projects`)
            getProjects()
         }
@@ -257,7 +256,7 @@ const setStateValue = ()=>{
    
                    <div className="form_box_projects">
                      <label>Description of Project</label>
-                     <input type="text" name="description" placeholder="Enter projectdescription"   onChange={handleForm} />
+                     <input type="text" name="description" placeholder="Enter project description"   onChange={handleForm} />
                      <p className="errors_msg_projects">{formErrors.description}</p>
                    </div>
    

@@ -26,6 +26,7 @@ const {
 
 } = require('../controllers/studentController')
 
+
 // getAll Data
 
 router.route('/profile/:id').get(allStudentData)

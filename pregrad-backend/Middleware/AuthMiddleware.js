@@ -6,20 +6,26 @@ module.exports.CheckUser = (req,res,next)=>{
     if(token){
         jwt.verify(token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
             if(err){
+                
                 res.json({
                         status:false
                     });
                 next();
             }else{
-                const user = await User.findById(decodedToken.id)
-                if(user)
-                {
-                    res.json({
-                        status:true,  
-                        user:user.email
-                    })
-
-                }else{
+                    const user = await User.findById(decodedToken.id)
+                  
+                    if(user)
+                    {
+                    
+                        res.json({
+                            status:true,  
+                            user:user.email,
+                            id:decodedToken.id
+                        })
+    
+                    }
+                else{
+                  
                     res.json(
                         {
                             status:false
@@ -30,6 +36,7 @@ module.exports.CheckUser = (req,res,next)=>{
             }
         })
     }else{
+
         res.json(
             {
                 status:false
