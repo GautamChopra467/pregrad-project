@@ -59,9 +59,6 @@ const {email} = useParams()
           setFormErrors({final: res.data.message})
         }
       });
-    console.log("submitted");
-    }else {
-      console.log("alert")
     }
   }, [formErrors]);
 

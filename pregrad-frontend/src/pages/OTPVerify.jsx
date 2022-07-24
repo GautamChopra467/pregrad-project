@@ -50,8 +50,6 @@ const {email,type} = useParams()
       ...user,
       [name]: value
     })
-   
-    console.log(name, value)
   }
 
  
@@ -63,7 +61,6 @@ const {email,type} = useParams()
   }
 
   useEffect(() => {
-    console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
     
       axios.post(`http://localhost:8000/verifyotp`, user)
@@ -78,9 +75,6 @@ const {email,type} = useParams()
           setFormErrors({final: res.data.message})
         }
       });
-    console.log("submitted");
-    }else {
-      console.log("alert")
     }
   }, [formErrors]);
 

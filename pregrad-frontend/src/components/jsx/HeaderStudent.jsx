@@ -35,7 +35,6 @@ const navigate = useNavigate()
   const [cookies,setCookies,removeCookie] = useCookies([])
 
   const LogOut = ()=>{
-    console.log("Remove Cookie")
     removeCookie("jwt")
     navigate('/login')
     window.location.reload(true)

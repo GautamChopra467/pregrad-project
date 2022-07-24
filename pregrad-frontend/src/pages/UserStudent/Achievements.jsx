@@ -97,7 +97,6 @@ const [studentachi,setStudentachi] = useState([])
         }
       })
      }else { 
-       // console.log("alert")
      }
 
   }, [formErrors,cookies,removeCookie,navigate]);

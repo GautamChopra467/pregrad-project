@@ -38,7 +38,6 @@ const {type} = useParams()
       ...user,
       [name]: value
     })
-    console.log(name, value)
   }
 
   const submitForm = (e) => {
@@ -48,7 +47,6 @@ const {type} = useParams()
   }
 
   useEffect(() => {
-    console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post(`http://localhost:8000/verifyemail/?type=${type}`, user)
       .then( res => {
@@ -63,9 +61,6 @@ const {type} = useParams()
           setFormErrors({final: res.data.message})
         }
       });
-    console.log("submitted");
-    }else {
-      console.log("alert")
     }
   }, [formErrors]);
 

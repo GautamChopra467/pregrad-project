@@ -62,10 +62,8 @@ const [Education,setEducation] = useState([])
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
         if(data.id != id || data.status != true){
-          console.log("Invalid Detail")
           removeCookie("jwt")
           navigate('/login')
-          removeCookie("jwt")
         }else{
           navigate(`/student/${id}/profile`)
           getUserDetails()

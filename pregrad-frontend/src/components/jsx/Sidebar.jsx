@@ -59,11 +59,6 @@ useEffect(()=>{
       icon: <GiAchievement size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: `/student/${userid}/certifications`,
-      name: "certifications",
-      icon: <TbFileCertificate size={isOpenSidebar ? "20" : "24"} />,
-    },
-    {
       path: `/student/${userid}/education`,
       name: "education",
       icon: <MdOutlineCastForEducation size={isOpenSidebar ? "20" : "24"} />,

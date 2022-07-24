@@ -65,7 +65,6 @@ const WorkExperience = () => {
     }).catch((err)=>{
       console.log(err)
     })
-
   } 
 
   useEffect(() => {

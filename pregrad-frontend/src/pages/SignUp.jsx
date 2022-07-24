@@ -54,7 +54,6 @@ const SignUp = ({theme, setTheme}) => {
   }
 
   useEffect(() => {
-    console.log(formErrors)
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post("http://localhost:8000/signup", user)
       .then( res => {
@@ -64,8 +63,6 @@ const SignUp = ({theme, setTheme}) => {
           setFormErrors({final: res.data.message});
         }
       });
-    }else {
-      console.log("alert")
     }
   }, [formErrors]);
 

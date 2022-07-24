@@ -140,7 +140,6 @@ module.exports.studentProject = async(req,res)=>{
            }]
     })
     await newStudentInfo.save()
-    // console.log("student created")
 }
 
 res.send({message:"true"})
