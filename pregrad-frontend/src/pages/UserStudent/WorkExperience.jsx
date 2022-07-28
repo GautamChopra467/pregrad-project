@@ -59,7 +59,7 @@ const WorkExperience = () => {
 
   const getWorkExperience = ()=>{
     axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
-      if(res.data.message == "true"){  
+      if(res.data.message === "true"){  
     setStudentwork(res.data.workexperience)
       }
     }).catch((err)=>{
@@ -74,7 +74,7 @@ const WorkExperience = () => {
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(data.id != id || data.status != true){
+        if(data.id !== id || data.status !== true){
          
           removeCookie("jwt")
           navigate('/login')
@@ -91,7 +91,7 @@ const WorkExperience = () => {
      axios.post(`http://localhost:8000/student/workexperience`,{
       ...workexperience
      }).then((res)=>{
-      if(res.data.message == "true")
+      if(res.data.message === "true")
       {
         getWorkExperience()
       }
@@ -145,7 +145,7 @@ const editWorkExperience = async(u_id,w_id)=>{
 const deleteWorkExperience = async(u_id,w_id)=>{
   const {data} = await axios.delete(`http://localhost:8000/student/deleteworkexperience/${u_id}/${w_id}`)
  
-  if(data.message == "true")
+  if(data.message === "true")
   {
    getWorkExperience()
   }
@@ -213,7 +213,7 @@ const UpdatedWorExperience = async(e,u_id)=>{
                 <h4>{work.position}</h4>
                 <h3>{work.duration}</h3>
                 <p>{work.role}</p>
-                <p>{work.websitelink}</p>
+                <a href={work.websitelink}>Website Link</a>
               </div>
 
               <div className='skills_content_workexperience'>

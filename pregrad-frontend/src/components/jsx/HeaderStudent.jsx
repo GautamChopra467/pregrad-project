@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
+import Logo2 from "../../img/logo-white.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
@@ -47,7 +48,12 @@ const navigate = useNavigate()
 ) : ""}
         {!props.isOpenSidebar && (
           <Link to="/">
-          <img src={Logo} alt="pregrad" />
+          {props.theme === "light-theme" && (
+            <img src={Logo} alt="pregrad" />
+          )}
+          {props.theme === "dark-theme" && (
+            <img src={Logo2} alt="pregrad" />
+          )}
         </Link>
         )}
       </div>
@@ -72,7 +78,7 @@ const navigate = useNavigate()
 
           { isLogoutMenu && (
             <div className="logout_container_headerStudent">
-              <div className="logout_items_headerStudent"><Link to={`/student/${props.userid}/profile`}>Profile <div> <FaRegUser /></div></Link></div>
+              <div className="logout_items_headerStudent"><Link to={`/student/${props.userid}/profile`} onClick={() => setIsLogoutMenu(!isLogoutMenu)}>Profile <div> <FaRegUser /></div></Link></div>
               <div className="logout_items_headerStudent"><a onClick={LogOut}>Logout <div> <MdLogout /></div></a></div>
          </div>
           ) }
@@ -97,7 +103,7 @@ const navigate = useNavigate()
             <a onClick={LogOut}>Logout <MdLogout /></a>
             </div>
             <div className="logout_items_headerStudent">
-              <Link to={`/student/${props.userid}/profile`}>Profile <div> <FaRegUser /></div></Link>
+              <Link to={`/student/${props.userid}/profile`} onClick={handleClick}>Profile <div> <FaRegUser /></div></Link>
             </div>
          </div>
           </>

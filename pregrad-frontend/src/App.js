@@ -7,8 +7,8 @@ import Student from "./pages/Student";
 import EmailVerify from "./pages/EmailVerify";
 import OTPVerify from "./pages/OTPVerify";
 import DetailsOne from "./pages/DetailsOne";
-import HeaderUser from "./components/jsx/HeaderUser";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResumeStudent from "./pages/UserStudent/ResumeStudent";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -28,19 +28,9 @@ const App = () => {
         <Route exact path="/otpverify/:email/:type" element={<OTPVerify theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/resume" element={<ResumeStudent />} />
         {/* <Route exact path="/internships" element={<Internships />} /> */}
       </Routes>
-      {/* <Sidebar>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/internships" element={<Internships />} />
-          <Route path="/workexperience" element={<WorkExperience />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/certifications" element={<Certifications />} />
-          <Route path="/education" element={<Education />} />
-        </Routes>
-      </Sidebar> */}
     </BrowserRouter>
   );
 };

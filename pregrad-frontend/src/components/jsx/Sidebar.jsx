@@ -14,6 +14,7 @@ import { TbFileCertificate } from "react-icons/tb";
 import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 import Logo from "../../img/logo.png";
+import Logo2 from "../../img/logo-white.png";
 import UserImage from "../../img/user3.png";
 import HeaderStudent from "./HeaderStudent";
 
@@ -81,6 +82,20 @@ useEffect(()=>{
     },
   };
 
+  const scoreAnimation = {
+    hidden: {
+      width: 0,
+      opacity: 0,
+    },
+    show: {
+      width: "auto",
+      opacity: 1,
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
   const menuTextAnimation = {
     hidden: {
       width: 0,
@@ -98,6 +113,12 @@ useEffect(()=>{
     },
   };
 
+  const closeSidebar = () => {
+    if(isOpenSidebar && window.innerWidth < 940){
+      setIsOpenSidebar(!isOpenSidebar)
+    }
+  }
+
   return (
     <div className="main_container_sidebar">
       <motion.div
@@ -109,7 +130,8 @@ useEffect(()=>{
         className="sidebar_container_sidebar"
       >
         <div className="top_section_sidebar">
-          {isOpenSidebar && <img src={Logo} alt="logo" />}
+          {isOpenSidebar && (theme === "light-theme") && <img src={Logo} alt="logo" />}
+          {isOpenSidebar && (theme === "dark-theme") && <img src={Logo2} alt="logo" />}
           <div
             className="hamburger_menu_sidebar"
             style={{ marginLeft: isOpenSidebar ? "20px" : "-10px" }}
@@ -138,6 +160,22 @@ useEffect(()=>{
           )}
         </AnimatePresence>
 
+        {isOpenSidebar && (
+          <motion.div initial="hidden"
+          animate="show"
+          exit="hidden"
+          variants={scoreAnimation} className="score_section_sidebar">
+          <div className="left_score_section_sidebar">
+            <p>60 %</p>
+          </div>
+
+          <div className="right_score_section_sidebar">
+            <h3>Your's Profile Health</h3>
+            {/* <p>Complete your profile for better chances of internships.</p> */}
+          </div>
+        </motion.div>
+        )}
+
         <section className="routes_container_sidebar">
           {routes.map((routes) => (
             <NavLink
@@ -149,6 +187,7 @@ useEffect(()=>{
               to={routes.path}
               key={routes.name}
               style={{ padding: isOpenSidebar ? "13px 20px" : "20px" }}
+              onClick={closeSidebar}
             >
               <div className="side_menu_icon_sidebar">{routes.icon}</div>
               <AnimatePresence>

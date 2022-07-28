@@ -65,7 +65,7 @@ const Education = () => {
   const getEducation = async()=>{
     
         const {data} = await axios.get(`http://localhost:8000/student/geteducation/${id}`)
-          if(data.message == "true")
+          if(data.message === "true")
           {  
            setStudentedu(data.education)
           }
@@ -79,7 +79,7 @@ const Education = () => {
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(data.id != id || data.status != true){
+        if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
         }else{
@@ -94,7 +94,7 @@ const Education = () => {
      axios.post(`http://localhost:8000/student/education`,{
        ...education
      }).then((res)=>{
-       if(res.data.message == "true")
+       if(res.data.message === "true")
        {
         getEducation()
        }
@@ -132,7 +132,7 @@ const deleteEducation = async(u_id,e_id)=>{
 
   const {data} = await axios.delete(`http://localhost:8000/student/deleteeducation/${u_id}/${e_id}`)
  
-  if(data.message == "true")
+  if(data.message === "true")
   {
     getEducation()
   }

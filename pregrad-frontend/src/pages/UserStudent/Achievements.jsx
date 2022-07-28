@@ -60,7 +60,7 @@ const [studentachi,setStudentachi] = useState([])
 
   const getAchievements = ()=>{
     axios.get(`http://localhost:8000/student/getachievements/${id}`).then((res)=>{
-      if(res.data.message == "true"){
+      if(res.data.message === "true"){
       setStudentachi(res.data.achievements)
       }
     }).catch((err)=>{
@@ -76,7 +76,7 @@ const [studentachi,setStudentachi] = useState([])
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(data.id != id || data.status != true){
+        if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
         }else{
@@ -121,7 +121,7 @@ const [studentachi,setStudentachi] = useState([])
   
  const {data} = await axios.delete(`http://localhost:8000/student/deleteachievement/${u_id}/${a_id}`)
  
- if(data.message == "true")
+ if(data.message === "true")
  {
   getAchievements()
  }
@@ -202,7 +202,7 @@ const editAchievement = async(u_id,a_id)=>{
                 </div>
   
                 <div className='bottom_section_content_achievements'>
-                  <a href='you' alt="Link">{stu.certificate}</a>
+                  <a href={stu.certificate} alt="Link">Certificate Link</a>
                 </div>
               </div>
               ))
