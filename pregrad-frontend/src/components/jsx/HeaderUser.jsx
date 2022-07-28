@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
+import Logo2 from "../../img/logo-white.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
@@ -35,7 +36,12 @@ const HeaderUser = ({theme, setTheme}) => {
     <div className="headerUser">
       <div className="left_section_headerUser">
         <Link to="/">
-          <img src={Logo} alt="pregrad" />
+        {theme === "light-theme" && (
+            <img src={Logo} alt="pregrad" />
+          )}
+          {theme === "dark-theme" && (
+            <img src={Logo2} alt="pregrad" />
+          )}
         </Link>
       </div>
 

@@ -62,7 +62,7 @@ const Projects = () => {
 
 const getProjects = async()=>{
   const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
-  if(data.message == "true"){
+  if(data.message==="true"){
   setGetProject(data.project)
   }
 } 
@@ -74,7 +74,7 @@ const getProjects = async()=>{
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
-        if(data.id != id || data.status != true){
+        if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
         }else{
@@ -88,7 +88,7 @@ const getProjects = async()=>{
       axios.post(`http://localhost:8000/student/projects`,{
             ...project
       }).then(res=>{
-        if(res.data.message == "true"){
+        if(res.data.message==="true"){
            getProjects()
         }
       })
@@ -122,7 +122,7 @@ const getProjects = async()=>{
 
 const deleteProject = async(u_id,p_id)=>{
  const {data} = await axios.delete(`http://localhost:8000/student/deleteproject/${u_id}/${p_id}`)
- if(data.message == "true")
+ if(data.message === "true")
  {
   getProjects()
  }
@@ -203,7 +203,7 @@ const setStateValue = ()=>{
 
  <div className='bottom_section_content_projects'>
    <p>{proj.description}</p>
-  <span><a href='yo'>{proj.projectlink}</a></span>
+  <span><a href={proj.projectlink}>Project Link</a></span>
  </div>
             {/* <div className='content_container_projects'>
               <div className='top_section_content_projects'>

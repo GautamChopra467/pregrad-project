@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import Logo from "../img/logo.png";
+import Logo2 from "../img/logo-white.png";
 import ForgotPasswordLogo from "../img/forgotpassword-image.png";
 import InstaLogo from "../img/instagram-logo.svg";
 import LinkedinLogo from "../img/linkedin-logo.svg";
@@ -94,9 +95,12 @@ const {email} = useParams()
     <div>
       <div className="header_emailOtp">
         <div className="left_section_emailOtp">
-          <Link to="/">
+        {theme === "light-theme" && (
             <img src={Logo} alt="pregrad" />
-          </Link>
+          )}
+          {theme === "dark-theme" && (
+            <img src={Logo2} alt="pregrad" />
+          )}
           <Link to="/" className="intern_emailOtp">
             Contact
           </Link>

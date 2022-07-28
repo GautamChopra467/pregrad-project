@@ -230,7 +230,12 @@
   margin-top: 5px;
   font-size: 15px;
   color: var(--para-color);
-  max-width: 650px;
+}
+
+.bottom_section_content_workexperience a {
+  margin-top: 5px;
+  font-size: 15px;
+  color: var(--primary-color);
 }
 
 .skills_content_workexperience {

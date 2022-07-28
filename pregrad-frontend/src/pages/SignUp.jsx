@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import Logo from "../img/logo.png";
+import Logo2 from "../img/logo-white.png";
 import SignUpLogo from "../img/signup-image.png";
 import InstaLogo from "../img/instagram-logo.svg";
 import LinkedinLogo from "../img/linkedin-logo.svg";
@@ -113,9 +114,12 @@ const SignUp = ({theme, setTheme}) => {
     <div>
       <div className="header_signup">
         <div className="left_section_signup">
-          <Link to="/">
-            <img src={Logo} alt="pregrad_signup" />
-          </Link>
+        {theme === "light-theme" && (
+            <img src={Logo} alt="pregrad" />
+          )}
+          {theme === "dark-theme" && (
+            <img src={Logo2} alt="pregrad" />
+          )}
           <Link to="/" className="intern_signup">
             Contact
           </Link>

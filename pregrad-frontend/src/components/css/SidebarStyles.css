@@ -12,6 +12,9 @@
     color: var(--primary-color);
     height: 100vh;
     overflow-y: hidden;
+    /* display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; */
     top: 0;
     z-index: 800;
 }
@@ -68,12 +71,55 @@
     width: 80px;
 }
 
+.score_section_sidebar {
+    background-color: var(--background-secondary-hover);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+    margin: 10px;
+    border-radius: 3px;
+}
+
+.left_score_section_sidebar {
+    padding: 13px 6px;
+    background-color: var(--background-secondary);
+    border-radius: 50%;
+    border: 3px solid var(--header-bg);
+    /* border: 3px solid var(--input-hover); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.left_score_section_sidebar p {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.right_score_section_sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right_score_section_sidebar h3 {
+    font-size: 1rem;
+}
+
+.right_score_section_sidebar p {
+    font-size: 13px;
+    color: var(--para-color);
+    /* text-align: center; */
+}
+
 .routes_link_sidebar {
     display: flex;
     align-items:center;
     /* color: #3f4358; */
     color: var(--menu-link);
-    /* color: var(--black-color); */
     gap: 15px;
 }
 

@@ -136,9 +136,14 @@
 }
 
 .info_middle_section_studentprofile h5 {
-  font-size: 1.2rem;
+  font-size: 1.07rem;
   font-weight: 600;
   color: var(--para-color);
+}
+
+.profile_edit_container_studentprofile {
+  display: flex;
+  grid-gap: 10px;
 }
 
 .profile_edit_studentprofile {
@@ -148,6 +153,7 @@
   border-radius: 5px;
   width: 35px;
   height: 35px;
+  font-size: 20px;
   background-color: var(--primary-lightest);
   color: var(--primary-dark);
   cursor: pointer;
@@ -157,7 +163,9 @@
   background-color: var(--input-hover);
 }
 
-.profile_edit2_studentprofile {
+.profile_edit2_studentprofile, 
+.profile_edit3_studentprofile, 
+.profile_edit4_studentprofile {
   display: none;
 }
 
@@ -189,6 +197,7 @@
   border-radius: 10px;
   padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   grid-gap: 15px;
   border: 1px solid var(--input-border);
@@ -281,6 +290,10 @@
   grid-gap: 5px;
 }
 
+.project_details_icon_studentprofile {
+  color: var(--primary-color);
+}
+
 .workexperience_details_box_studentprofile h3,
 .projects_details_box_studentprofile h3 {
   font-size: 1.08rem;
@@ -319,20 +332,50 @@
     padding: 80px 25px 30px 25px;
     grid-gap: 22px;
   }
+
+  .profile_user_details_studentprofile {
+    padding: 1rem;
+  }
 }
 
-@media screen and (max-width: 690px) {
+@media screen and (max-width: 840px) {
+  .info_middle_section_studentprofile h5 {
+    font-size: 1rem;
+  }
+
+  .profile_edit_studentprofile {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+  
+  .user_image_studentprofile {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 720px) {
   .main_container_studentprofile {
     padding: 75px 20px 30px 20px;
+  }
+
+  .info_container_studentprofile {
+    grid-gap: 10px;
+  }
+
+  .profile_edit_container_studentprofile {
+    grid-gap: 5px;
+  }
+
+  .profile_edit_studentprofile {
+    width: 27px;
+    height: 27px;
+    font-size: 16px;
   }
 
   .card_studentprofile {
     padding: 0.7rem;
     grid-gap: 10px;
-  }
-
-  .info_container_studentprofile {
-    grid-gap: 12px;
   }
 
   .info_left_section_studentprofile h5 {
@@ -344,7 +387,7 @@
   }
 
   .info_middle_section_studentprofile h5 {
-    font-size: 1.063rem;
+    font-size: 0.95rem;
   }
 
   .education_info_box_studentprofile h3,
@@ -432,12 +475,44 @@
     align-items: center;
     justify-content: center;
     border-radius: 3px;
-    width: 26px;
-    height: 26px;
+    width: 25px;
+    height: 25px;
     background-color: rgba(228, 217, 252, 0.45);
     color: var(--primary-dark);
     cursor: pointer;
     margin: 6px 6px 0 0;
+  }
+
+  .profile_edit3_studentprofile {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    background-color: rgba(228, 217, 252, 0.45);
+    color: var(--primary-dark);
+    cursor: pointer;
+    margin: 6px 36px 0 0;
+  }
+
+  .profile_edit4_studentprofile {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    background-color: rgba(228, 217, 252, 0.45);
+    color: var(--primary-dark);
+    cursor: pointer;
+    margin: 6px 66px 0 0;
   }
 
   .user_image_studentprofile {
