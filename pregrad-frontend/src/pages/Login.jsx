@@ -10,9 +10,14 @@ import "../components/css/LoginStyles.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
 import axios from "axios";
+import {useCookies} from 'react-cookie';
+
 
 const Login = ({theme, setTheme}) => {
+
   const navigate = useNavigate();
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
 
   const toggleTheme = () => {
     if(theme === "light-theme"){
@@ -90,6 +95,16 @@ const Login = ({theme, setTheme}) => {
     return errors;
   }
 
+  const googleAuth = async()=>{
+    if(cookies.jwt)
+    {
+      const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true})
+      navigate(`/student/${data.id}`)
+    }
+    else{
+     window.open("http://localhost:8000/auth/google","_self")
+   }
+}
 
   return (
     <div>
@@ -198,7 +213,7 @@ const Login = ({theme, setTheme}) => {
                   <BsArrowRightShort size={27} className="create-btn-logo_login" />
                 </button> 
 
-                <a className="google-btn_login" href="youtube.com">
+                <a className="google-btn_login" onClick={googleAuth}>
                 <img src={GoogleLogo} alt="" />
                   Login with Google
                 </a> 

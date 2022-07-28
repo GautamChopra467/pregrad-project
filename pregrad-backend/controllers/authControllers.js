@@ -84,8 +84,6 @@ module.exports.signup = async (req, res) => {
   });
 };
 
-
-
 module.exports.verifyEmail=async(req,res)=>{
 try{
 
@@ -169,7 +167,6 @@ module.exports.login = async (req, res) => {
 
     if(!user)
     {
-      
        res.send({message:"Invalid Credentials"})
     }
 else{

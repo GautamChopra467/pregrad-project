@@ -22,7 +22,7 @@ const HomeBanner1 = () => {
             </div>
             </div>
             <div className='center'>
-            <div class="vl">
+            <div className="vl">
             </div>
             </div>
             <div className='right'>

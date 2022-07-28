@@ -18,8 +18,7 @@ const userRegisterSchema = new mongoose.Schema({
         required: true,
     },
     mobile: {
-        type: Number,
-        required: true
+        type: Number
     },
     verified: {
         type: Boolean,

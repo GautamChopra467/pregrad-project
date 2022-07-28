@@ -6,7 +6,11 @@ const cookieParser = require('cookie-parser')
 const connectDb  = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 const studentInfoRoute = require('./routes/studentInfoRoute')
+const companyRoute = require('./routes/companyRoutes')
 const port = process.env.PORT || 8000;
+
+const passport = require('passport') 
+const session = require('express-session')
 
 
 const start = async()=>{
@@ -25,16 +29,27 @@ app.use(cors({
     origin:["http://localhost:3000"],
     method:["GET","POST","DELETE","PUT"],
     credentials:true
-}));
+})); 
 
 app.use(cookieParser())
 
 app.use(express.json());
 
+app.use(session({
+    secret:'secret',
+    resave:true,
+    saveUninitialized:true
+}))
+
+app.use(passport.initialize())
+
+app.use(passport.session())
 // app.use(express.urlencoded({ extended: false }));
 
 app.use("/", authRouter);
+
 app.use("/student",studentInfoRoute)
 
+app.use('/company',companyRoute)
 
 
