@@ -29,7 +29,7 @@ const ResumeStudent = () => {
 
   return (
     <div className='resumestudent'>
-        {/* <button onClick={generatePDF}>Download</button> */}
+        <button onClick={generatePDF}>Download</button>
         <div className="main_container_resumestudent">
           {/* <div className="watermark_resumestudent">
             <h1>Pregrad</h1>
