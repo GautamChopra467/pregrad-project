@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../img/logo.png";
-import Logo2 from "../img/logo-white.png";
-import LoginLogo from "../img/login-image.png";
-import InstaLogo from "../img/instagram-logo.svg";
-import LinkedinLogo from "../img/linkedin-logo.svg";
-import YoutubeLogo from "../img/youtube-logo.svg";
-import GoogleLogo from "../img/google-logo.svg";
-import "../components/css/LoginStyles.css";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
+import LoginLogo from "../../img/login-image.png";
+import InstaLogo from "../../img/instagram-logo.svg";
+import LinkedinLogo from "../../img/linkedin-logo.svg";
+import YoutubeLogo from "../../img/youtube-logo.svg";
+import GoogleLogo from "../../img/google-logo.svg";
+import "../../components/student/css/LoginStyles.css";
+import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
 import {useCookies} from 'react-cookie';
+import HeaderAuth from "../../components/student/jsx/HeaderAuth";
 
 
 const Login = ({theme, setTheme}) => {
@@ -19,18 +17,6 @@ const Login = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
   const [cookies,setCookie,removeCookie] = useCookies([])
-
-  const toggleTheme = () => {
-    if(theme === "light-theme"){
-      setTheme("dark-theme");
-    }else{
-      setTheme("light-theme");
-    }
-  }
-
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-
 // const type = "forgotpassword" 
 
   const [formErrors, setFormErrors] = useState({});
@@ -109,45 +95,8 @@ const Login = ({theme, setTheme}) => {
 
   return (
     <div>
-      <div className="header_login">
-        <div className="left_section_login">
-        {theme === "light-theme" && (
-            <img src={Logo} alt="pregrad" />
-          )}
-          {theme === "dark-theme" && (
-            <img src={Logo2} alt="pregrad" />
-          )}
-          <Link to="/" className="intern_login">
-            Contact
-          </Link>
-        </div>
-
-        <div className={click ? "right_section_login active_login" : "right_section_login"}>
-          <div className="abc_login">
-            <Link to="/" className="intern2_login">
-              Contact
-            </Link>
-          </div>
-          <div className="theme_icon_container_login" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon_login" /> : <BsSunFill className="theme_icon_login" />
-            }
-          </div>
-        </div>
-
-        <div className="hamburger_login">
-        <div className="theme_icon_container2_login" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon2_login" /> : <BsSunFill className="theme_icon2_login" />
-            }
-          </div>
-          {click ? (
-            <FaTimes size={20} className="hamburger_icon_login" onClick={handleClick} />
-          ) : (
-            <FaBars size={20} className="hamburger_icon_login" onClick={handleClick} />
-          )}
-        </div>
-      </div>
+      
+      <HeaderAuth theme={theme} setTheme={setTheme} />
 
       <div className="main_login">
         <div className="left-part_login">

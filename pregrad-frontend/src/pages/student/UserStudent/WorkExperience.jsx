@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "../../components/css/UserStudent/WorkExperienceStyles.css";
+import "../../../components/student/css/UserStudent/WorkExperienceStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md"

@@ -1,6 +1,6 @@
 import '../css/HomeBanner1Styles.css'
-import User1 from '../../img/user1.png'
-import User2 from '../../img/user2.png' 
+import User1 from '../../../img/user1.png'
+import User2 from '../../../img/user2.png' 
 import {BsFillArrowRightCircleFill} from 'react-icons/bs';
 
 const HomeBanner1 = () => {

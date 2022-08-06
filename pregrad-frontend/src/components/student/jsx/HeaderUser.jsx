@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../img/logo.png";
-import Logo2 from "../../img/logo-white.png";
+import Logo from "../../../img/logo.png";
+import Logo2 from "../../../img/logo-white.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
@@ -76,7 +76,7 @@ const HeaderUser = ({theme, setTheme}) => {
       <div className="hamburger">
           <div className="theme_icon_container2_signup" onClick={toggleTheme}>
             {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon2_signup" /> : <BsSunFill className="theme_icon2_signup" />
+              theme==="light-theme" ? <BsMoonFill className="theme_icon2_headerUser" /> : <BsSunFill className="theme_icon2_headerUser" />
             }
           </div>
 

@@ -1,6 +1,10 @@
 import React, {useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import "../css/SidebarStyles.css";
+import Logo from "../../../img/logo.png";
+import Logo2 from "../../../img/logo-white.png";
+import UserImage from "../../../img/user3.png";
+import HeaderStudent from "./HeaderStudent";
 import { AiOutlineFileText } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import {
@@ -13,10 +17,7 @@ import { GiAchievement } from "react-icons/gi";
 import { TbFileCertificate } from "react-icons/tb";
 import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
-import Logo from "../../img/logo.png";
-import Logo2 from "../../img/logo-white.png";
-import UserImage from "../../img/user3.png";
-import HeaderStudent from "./HeaderStudent";
+
 
 
 

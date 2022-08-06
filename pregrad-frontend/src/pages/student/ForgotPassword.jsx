@@ -1,49 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate,useParams } from "react-router-dom";
-import Logo from "../img/logo.png";
-import Logo2 from "../img/logo-white.png";
-import OTPVerifyLogo from "../img/otpverify-image.png";
-import InstaLogo from "../img/instagram-logo.svg";
-import LinkedinLogo from "../img/linkedin-logo.svg";
-import YoutubeLogo from "../img/youtube-logo.svg";
-import "../components/css/EmailOTPVerifyStyles.css";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
+import ForgotPasswordLogo from "../../img/forgotpassword-image.png";
+import InstaLogo from "../../img/instagram-logo.svg";
+import LinkedinLogo from "../../img/linkedin-logo.svg";
+import YoutubeLogo from "../../img/youtube-logo.svg";
+import "../../components/student/css/EmailOTPVerifyStyles.css";
+import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
+import HeaderAuth from "../../components/student/jsx/HeaderAuth";
 
-const OTPVerify = ({theme, setTheme}) => {
-
+const ForgotPassword = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
-const {email,type} = useParams()
-
-  const toggleTheme = () => {
-    if(theme === "light-theme"){
-      setTheme("dark-theme");
-    }else{
-      setTheme("light-theme");
-    }
-  }
-
-
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
+  const {email} = useParams()
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const [user, setUser] = useState({
     email: email,
-    otp1: "",
-    otp2: "",
-    otp3: "",
-    otp4: ""
+    password: "",
+    confirmpassword: ""
   });
-
-
-// const [sendDetails,setSendDetails] = useState({})
-
-
 
   const handleForm = (e) => {
     const {name, value} = e.target;
@@ -52,9 +30,7 @@ const {email,type} = useParams()
       [name]: value
     })
   }
-
- 
-
+  
   const submitForm = (e) => {
     e.preventDefault();
     setFormErrors(validate(user));
@@ -63,15 +39,10 @@ const {email,type} = useParams()
 
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-    
-      axios.post(`http://localhost:8000/verifyotp`, user)
+      axios.post("http://localhost:8000/newpassword", user)
       .then( res => {
         if(res.data.message === "true"){
-          if(type === 'register'){
           navigate("/login");
-        }else{
-          navigate(`/forgotpassword/${email}`)
-        }
         }else {
           setFormErrors({final: res.data.message})
         }
@@ -89,6 +60,19 @@ const {email,type} = useParams()
       errors.email = "Incorrect Email Format";
     }
 
+    if(!values.password){
+        errors.password = "Password required";
+    }else if(values.password.length < 6){
+        errors.password = "Min 6 characters required";
+    }else if(values.password.length > 12){
+        errors.password = "Max 12 characters required";
+    }
+
+    if(!values.confirmpassword){
+        errors.confirmpassword = "Confirm password required";
+    }else if(values.confirmpassword !== values.password){
+        errors.confirmpassword = "Confirm password didn't match password"
+    }
 
     return errors;
   }
@@ -96,45 +80,7 @@ const {email,type} = useParams()
 
   return (
     <div>
-      <div className="header_emailOtp">
-        <div className="left_section_emailOtp">
-        {theme === "light-theme" && (
-            <img src={Logo} alt="pregrad" />
-          )}
-          {theme === "dark-theme" && (
-            <img src={Logo2} alt="pregrad" />
-          )}
-          <Link to="/" className="intern_emailOtp">
-            Contact
-          </Link>
-        </div>
-
-        <div className={click ? "right_section_emailOtp active_emailOtp" : "right_section_emailOtp"}>
-          <div className="abc_emailOtp">
-            <Link to="/" className="intern2_emailOtp">
-              Contact
-            </Link>
-          </div>
-          <div className="theme_icon_container_emailOtp" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon_emailOtp" /> : <BsSunFill className="theme_icon_emailOtp" />
-            }
-          </div>
-        </div>
-
-        <div className="hamburger_emailOtp">
-          <div className="theme_icon_container2_emailOtp" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon2_emailOtp" /> : <BsSunFill className="theme_icon2_emailOtp" />
-            }
-          </div>
-          {click ? (
-            <FaTimes size={20} className="hamburger_icon_emailOtp" onClick={handleClick} />
-          ) : (
-            <FaBars size={20} className="hamburger_icon_emailOtp" onClick={handleClick} />
-          )}
-        </div>
-      </div>
+      <HeaderAuth theme={theme} setTheme={setTheme} />
 
       <div className="main_emailOtp">
         <div className="left-part_emailOtp">
@@ -144,7 +90,7 @@ const {email,type} = useParams()
           </div>
 
           <div className="signup-banner_emailOtp">
-            <img src={OTPVerifyLogo} alt="Sign Up" />
+            <img src={ForgotPasswordLogo} alt="Sign Up" />
           </div>
 
           <div className="social_emailOtp">
@@ -185,22 +131,24 @@ const {email,type} = useParams()
                 <div className="form-container-box_emailOtp">
                   <label>Email Address</label>
                   <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
-                  <p className="errors-msg">{formErrors.email}</p>
+                  <p className="errors-msg_emailOtp">{formErrors.email}</p>
                 </div>
 
                 <div className="form-container-box_emailOtp">
-                  <label>Enter OTP</label>
-                  <div className="otp-field_emailOtp">
-                    <input type="text" maxLength="1" name="otp1" value={user.otp1} onChange={handleForm} />
-                    <input type="text" maxLength="1" name="otp2" value={user.otp2} onChange={handleForm} />
-                    <input type="text" maxLength="1" name="otp3" value={user.otp3} onChange={handleForm} />
-                    <input type="text" maxLength="1" name="otp4" value={user.otp4} onChange={handleForm} />
-                  </div>
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter new password" value={user.password} onChange={handleForm} />
+                    <p className="errors-msg_emailOtp">{formErrors.password}</p>
+                </div>
+
+                <div className="form-container-box_emailOtp">
+                    <label>Confirm Password</label>
+                    <input type="text" name="confirmpassword" placeholder="Confirm password" value={user.confirmpassword} onChange={handleForm} />
+                    <p className="errors-msg_emailOtp">{formErrors.confirmpassword}</p>
                 </div>
                 </div>
 
                 <button type="submit" onClick={submitForm} className="create-button_emailOtp">
-                  Verify Email
+                  Change Password
                   <BsArrowRightShort size={27} className="create-btn-logo_emailOtp" />
                 </button> 
               </form>
@@ -212,4 +160,4 @@ const {email,type} = useParams()
   );
 };
 
-export default OTPVerify;
+export default ForgotPassword;

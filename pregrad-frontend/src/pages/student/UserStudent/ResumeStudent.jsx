@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import "../../components/css/UserStudent/ResumeStudentStyles.css";
+import "../../../components/student/css/UserStudent/ResumeStudentStyles.css";
 import jsPDF from "jspdf";
 
 const ResumeStudent = () => {
