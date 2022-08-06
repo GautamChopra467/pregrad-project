@@ -93,10 +93,21 @@
 
 .user_image_studentprofile {
   max-width: 6.25rem;
+  width: 6rem;
+  height: 5.4rem;
+  border-radius: 50%;
+  border: 2px solid var(--header-bg);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--para-color);
   position: relative;
   z-index: 1;
   margin-top: -5rem;
   margin-right: 0.625rem;
+  background-color: var(--background-secondary-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user_image_studentprofile img {
@@ -363,6 +374,167 @@
   color: var(--black-color);
 }
 
+.modal_backgound_studentprofile {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 39, 46, 0.95);
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 900;
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  overflow: auto;
+}
+
+.modal_container_studentprofile {
+  background-color: var(--white-color);
+  padding: 32px;
+  border: 1px solid var(--input-border);
+  width: 727px;
+  min-width: 250px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 25px;
+  overflow-y: scroll;
+}
+
+.modal_top_section_studentprofile h2 {
+  color: var(--black-color);
+}
+
+.modal_mid_section_studentprofile form {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 25px;
+}
+
+.form_box_studentprofile {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 7px;
+}
+
+.form_box_studentprofile label {
+  font-weight: 700;
+  color: var(--para-color);
+  font-size: 1rem;
+  margin-left: 2px;
+}
+
+.form_box_studentprofile input {
+  outline: none;
+  padding: 12px 10px;
+  width: 100%;
+  border: 1px solid var(--input-border);
+  color: var(--input-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 3px 0;
+  transition: 0.1s;
+  background-color: var(--header-bg);
+}
+
+.form_box_studentprofile input:hover {
+  border: 1px solid var(--input-hover);
+}
+
+.form_box_studentprofile input:focus {
+  border-color: var(--input-focus);
+}
+
+.select_studentprofile {
+  outline: none;
+padding: 12px 10px;
+width: 100%;
+border: 1px solid var(--input-border);
+color: var(--input-color);
+border-radius: 5px;
+font-size: 1rem;
+margin: 3px 0;
+transition: 0.1s;
+background-color: var(--header-bg);
+}
+
+.select_studentprofile:hover {
+  border: 1px solid var(--input-hover);
+}
+
+.select_studentprofile:focus {
+  border-color: var(--input-focus);
+}
+
+.selected_domains_container_studentprofile {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  flex-wrap: wrap;
+  grid-gap: 10px;
+}
+
+.selected_domains_box_studentprofile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 8px;
+  padding: 4px 10px;
+  background-color: var(--primary-background);
+  border-radius: 10px;
+  color: var(--black-color);
+  cursor:default;
+}
+
+.selected_domains_icon_studentprofile {
+  cursor: pointer;
+}
+
+.errors_msg_studentprofile {
+  color: var(--warning-color);
+  font-size: 16px;
+}
+
+.modal_bottom_section_studentprofile {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn_light_studentprofile {
+  min-width: 90px;
+  background-color: transparent;
+  color: var(--primary-color);
+  padding: 9px 14px;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+}
+
+.btn_light_studentprofile:hover {
+  background-color: var(--primary-lightest);
+}
+
+.btn_primary_studentprofile {
+  min-width: 90px;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 9px 14px;
+  border-radius: 0.313rem;
+  font-size: 1rem;
+  font-weight: 400;
+  border: none;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.btn_primary_studentprofile:hover {
+  background-color: var(--primary-light);
+}
+
+
 @media screen and (max-width: 1100px) {
   .main_container_studentprofile {
     padding: 80px 25px 30px 25px;
@@ -371,6 +543,10 @@
 
   .profile_user_details_studentprofile {
     padding: 1rem;
+  }
+
+  .btn_light_studentprofile{
+    padding: 8px 10px;
   }
 }
 
@@ -387,6 +563,10 @@
   
   .user_image_studentprofile {
     margin-right: 0;
+  }
+
+  .modal_backgound_studentprofile {
+    padding: 80px 20px 40px 20px;
   }
 }
 
@@ -452,6 +632,10 @@
 
   .user_image_studentprofile img {
     width: 110px;
+  }
+
+  .btn_light_studentprofile {
+    padding: 6px 7px;
   }
 }
 
@@ -553,6 +737,9 @@
 
   .user_image_studentprofile {
     margin-right: 0;
+    width: 5.2rem;
+    height: 5rem;
+    margin-top: -4rem;
   }
 
   .main_details_container_studentprofile {
@@ -583,6 +770,15 @@
 
   .social_links_box_studentprofile {
     grid-gap: 40px;
+  }
+
+  .modal_container_studentprofile {
+    padding: 16px;
+  }
+
+  .btn_light_studentprofile {
+    font-size: 0.9rem;
+    padding: 5px 5px;
   }
 }
 
