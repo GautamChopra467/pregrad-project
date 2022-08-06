@@ -9,7 +9,7 @@ import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
-import { FaRegFileVideo } from "react-icons/fa";
+import { FaRegFileVideo, FaTimes } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 
 const StudentProfile = () => {
@@ -25,9 +25,7 @@ const [WorkExperience,setWorkExperience] = useState([])
 const [Project,setProject] = useState([])
 const [Education,setEducation] = useState([])
 
-
-
-  const skills = [
+  const skillsData = [
     "HTML",
     "CSS",
     "JS",
@@ -50,13 +48,94 @@ const [Education,setEducation] = useState([])
   }
   }
 
-
   const getUserDetails= async()=>{
     const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
     setUser(data)
   }
 
+  //Edit Form
+  const domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
+  // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
 
+  // Domains
+  const [domains, setDomains] = useState(domainsData);
+  const [selectedDomains, setSelectedDomains] = useState([]);
+
+  const handleDomain = (event) => {
+    setSelectedDomains(current => [...current, event.target.value])
+    setDomains(current => current.filter(domain => {
+      return domain !== event.target.value;
+    }))
+  }
+
+  const deleteDomain = (value) => {
+    setSelectedDomains(current => current.filter(selectedDomain => {
+      return selectedDomain !== value;
+    }))
+    setDomains(current => [...current, value])
+  }
+
+  // Skills
+  const [skills, setSkills] = useState(skillsData);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const handleSkill = (event) => {
+    if(selectedSkills.length < 10){
+      setSelectedSkills(current => [...current, event.target.value])
+      setSkills(current => current.filter(skill => {
+        return skill !== event.target.value;
+      }))
+    }else{
+      console.log("error")
+    }
+  }
+
+  const deleteSkill = (value) => {
+    setSelectedSkills(current => current.filter(selectedSkill => {
+      return selectedSkill !== value;
+    }))
+    setSkills(current => [...current, value])
+  }
+
+
+
+  const [isModal, setIsModal] = useState(false);
+
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const [data, setData] = useState({
+    name: "",
+    github: "",
+    linkedin: "",
+    instagram: "",
+  });
+
+  const handleForm = (e) => {
+    const {name, value} = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    setFormErrors(validate());
+    setIsSubmit(true);
+  }
+
+  const validate = (values) => {
+    const errors = {};
+
+    if(!values.title){
+      errors.title = "Name required";
+    }else if(values.title.length < 3){
+      errors.title = "Min 3 characters required";
+    }
+
+    return errors;
+  }
 
   useEffect(()=>{
     const verifyUser = async()=>{
@@ -89,6 +168,7 @@ const [Education,setEducation] = useState([])
 
   return (
     <div>
+      {console.log(isModal)}
       <div className="sub_header_studentprofile">
         <h5>Profile</h5>
       </div>
@@ -118,7 +198,7 @@ const [Education,setEducation] = useState([])
                   <FaRegFileVideo />
                 </div>
 
-              <div className="profile_edit2_studentprofile">
+              <div className="profile_edit2_studentprofile" onClick={() => setIsModal(!isModal)}>
                   <BiEditAlt size={18} />
               </div>
             </div>
@@ -127,7 +207,7 @@ const [Education,setEducation] = useState([])
 
           <div className="profile_user_details_studentprofile">
             <div className="user_image_studentprofile">
-              <img src={UserImage} alt="user" />
+              G
             </div>
             <div className="profile_info_studentprofile">
               <div className="info_container_studentprofile">
@@ -141,7 +221,7 @@ const [Education,setEducation] = useState([])
               </div>
 
               <div className="profile_edit_container_studentprofile">
-                <div className="profile_edit_studentprofile">
+                <div className="profile_edit_studentprofile" onClick={() => setIsModal(!isModal)}>
                   <BiEditAlt />
                 </div>
 
@@ -175,7 +255,7 @@ const [Education,setEducation] = useState([])
               <h4>Skills</h4>
               <div className="line_studentprofile"></div>
               <div className="skills_box_studentprofile">
-                {skills.map((value, id) => (
+                {skillsData.map((value, id) => (
                   <div key={id} className="skill_section_studentprofile">
                     <p>{value}</p>
                   </div>
@@ -296,7 +376,86 @@ const [Education,setEducation] = useState([])
         </div>
       </div>
 
-      
+      {isModal && (
+          <div className='modal_backgound_studentprofile'>
+          <div className='modal_container_studentprofile'>
+            <div className='modal_top_section_studentprofile'>
+              <h2>Edit Details</h2>
+              <p className="errors_msg_studentprofile">{formErrors.others}</p>
+            </div>
+            <div className='modal_mid_section_studentprofile'>
+              <form>
+                <div className="form_box_studentprofile">
+                  <label>Name</label>
+                  <input type="text" name="name" placeholder="Title of Achievement" onChange={handleForm} />
+                  <p className="errors_msg_studentprofile">{formErrors.title}</p>
+                </div>
+
+                <div className="form_box_studentprofile">
+                <label> Which domain are you interested in working ?</label>
+
+                <select onChange={handleDomain} className="select_studentprofile">
+                  <option value="">Select</option>
+                  {domains.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_studentprofile">
+                  {selectedDomains.map((val) => (
+                    <div className="selected_domains_box_studentprofile" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteDomain(val)}} className="selected_domains_icon_studentprofile" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form_box_studentprofile">
+                <label> Enter your skills ?</label>
+                
+                <select onChange={handleSkill} className="select_studentprofile">
+                  <option value="">Select</option>
+                  {skills.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_studentprofile">
+                  {selectedSkills.map((val) => (
+                    <div className="selected_domains_box_studentprofile" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_studentprofile" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form_box_studentprofile">
+                <label>Github Link ( Optional )</label>
+                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
+              </div>
+
+              <div className="form_box_studentprofile">
+                <label> Linkedin Link ( Optional )</label>
+                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
+                <p>{formErrors.github}</p>
+              </div>
+
+              <div className="form_box_studentprofile">
+              <label> Instagram Link ( Optional )</label>
+                <input type="url" name="instagram" value={data.instagram} onChange={handleForm} placeholder="Enter your Instagram link" />
+              </div>
+
+                <div className='modal_bottom_section_studentprofile'>
+                  <button className='btn_light_studentprofile' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button type='submit' onClick={submitForm} className='btn_primary_studentprofile'>Save Details</button>
+                </div>
+              </form>
+            </div>       
+          </div>
+        </div>
+        )}
 
 
 
