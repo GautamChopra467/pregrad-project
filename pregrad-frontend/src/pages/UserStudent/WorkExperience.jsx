@@ -54,7 +54,7 @@ const WorkExperience = () => {
     e.preventDefault();
     setFormErrors(validate(workexperience));
     setIsSubmit(true);
-    setIsModal(!isModal)
+    
   }
 
   const getWorkExperience = ()=>{
@@ -93,14 +93,22 @@ const WorkExperience = () => {
      }).then((res)=>{
       if(res.data.message === "true")
       {
+        setIsModal(!isModal)
         getWorkExperience()
-      }
+      }else if(res.data.message === "You cannot add duplicate information"){
+        setFormErrors(validate(res.data.message));
+       }
      })
     }
   }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
+
+    if(values == "You cannot add duplicate information"){
+      errors.others = "You cannot add duplicate information";
+      return errors
+    }
 
     if(!values.companyname){
       errors.companyname = "Name required";
@@ -160,6 +168,13 @@ const UpdatedWorExperience = async(e,u_id)=>{
   setStudentwork(data.workexperience)
    setIsModal(!isModal)
    getWorkExperience()
+}
+
+const Cancel = ()=>{
+  // Object.keys(formErrors).forEach(key=>{
+  //   formErrors[key] = "";
+  // })
+  setIsModal(!isModal) 
 }
 
   return (
@@ -233,6 +248,7 @@ const UpdatedWorExperience = async(e,u_id)=>{
           <div className='modal_container_workexperience'>
             <div className='modal_top_section_workexperience'>
               <h2>Work Experience Details</h2>
+              <p className="errors_msg_workexperience">{formErrors.others}</p>
             </div>
 {
   editform === "addnew"?(
@@ -275,7 +291,7 @@ const UpdatedWorExperience = async(e,u_id)=>{
                 </div>
 
                 <div className='modal_bottom_section_workexperience'>
-                  <button className='btn_light_workexperience' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button className='btn_light_workexperience' onClick={Cancel}>Cancel</button>
                   <button type='submit' onClick={submitForm} className='btn_primary_workexperience'>Save Details</button>
                 </div>
               </form>
@@ -320,7 +336,7 @@ const UpdatedWorExperience = async(e,u_id)=>{
                 </div>
 
                 <div className='modal_bottom_section_workexperience'>
-                  <button className='btn_light_workexperience' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button className='btn_light_workexperience' onClick={Cancel}>Cancel</button>
                   <button type='submit' onClick={(e)=>UpdatedWorExperience(e,id)} className='btn_primary_workexperience'>Save Details</button>
                 </div>
               </form>

@@ -20,6 +20,15 @@ module.exports.studentAchievement = async(req,res)=>{
             certificate
         }]
     }})
+
+    if(updateStudent.modifiedCount != 1)
+    {
+        res.send({
+            message:"You cannot add duplicate information"
+        })
+        return;
+    }
+
  }else{
     const newStudentInfo = await StudentInfo.create({
         id,
@@ -128,7 +137,17 @@ module.exports.studentProject = async(req,res)=>{
         skills,
         projectlink
        }]
-   }})
+    }})
+
+    if(updateStudent.modifiedCount != 1)
+    {
+        res.send({
+            message:"You cannot add duplicate information"
+        })
+        return;
+    }
+    
+
 }else{
     const newStudentInfo = await StudentInfo.create({
         id,
@@ -256,6 +275,14 @@ if(student){
     }]
     }})
 
+    if(updateEducation.modifiedCount != 1)
+    {
+        res.send({
+            message:"You cannot add duplicate information"
+        })
+        return;
+    }
+
 }else{
     const newStudentInfo = await StudentInfo.create({
         id,
@@ -360,7 +387,7 @@ const student =await StudentInfo.findOne({id})
 
     if(student){
 
-        const updateEducation = await StudentInfo.updateOne({
+        const updateExperience = await StudentInfo.updateOne({
             id,
             'workexperience.companyname':{
                 '$ne':companyname
@@ -380,6 +407,14 @@ const student =await StudentInfo.findOne({id})
         }]
         }})
     
+        if(updateExperience.modifiedCount != 1)
+    {
+        res.send({
+            message:"You cannot add duplicate information"
+        })
+        return;
+    }
+
     }else{
         const newStudentInfo = await StudentInfo.create({
             id,

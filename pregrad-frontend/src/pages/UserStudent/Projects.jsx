@@ -57,7 +57,7 @@ const Projects = () => {
     e.preventDefault();
     setFormErrors(validate(project));
     setIsSubmit(true);
-    setIsModal(!isModal)
+   
   }
 
 const getProjects = async()=>{
@@ -89,18 +89,19 @@ const getProjects = async()=>{
             ...project
       }).then(res=>{
         if(res.data.message==="true"){
+          setIsModal(!isModal)
            getProjects()
-        }
+        }else if(res.data.message === "You cannot add duplicate information"){
+          setFormErrors(validate(res.data.message));
+         }
       })
-
-    }else {
-    
     }
   },[formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
 
+  
     if(!values.projecttitle){
       errors.projecttitle = "Title required";
     }
@@ -116,6 +117,12 @@ const getProjects = async()=>{
     if(!values.projectlink){
       errors.projectlink = "Project Link required";
     }
+
+    if(values == "You cannot add duplicate information"){
+      errors.others = "You cannot add duplicate information";
+      return errors
+    }
+
 
     return errors;
   }
@@ -152,6 +159,9 @@ const setStateValue = ()=>{
 
 }
 
+const Cancel = ()=>{
+  setIsModal(!isModal) 
+}
 
 
   return (
@@ -243,6 +253,7 @@ const setStateValue = ()=>{
           <div className='modal_container_projects'>
             <div className='modal_top_section_projects'>
               <h2>Project Details</h2>
+              <p className="errors_msg_projects">{formErrors.others}</p>
             </div>
    {     editform === "addnew"?(
    
@@ -273,7 +284,7 @@ const setStateValue = ()=>{
                    </div>
    
                    <div className='modal_bottom_section_projects'>
-                     <button className='btn_light_projects' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                     <button className='btn_light_projects' onClick={Cancel}>Cancel</button>
                      <button type='submit' onClick={submitForm} className='btn_primary_projects'>Save Details</button>
                    </div>
                  </form>
@@ -307,7 +318,7 @@ const setStateValue = ()=>{
                    </div>
    
                    <div className='modal_bottom_section_projects'>
-                     <button className='btn_light_projects' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                     <button className='btn_light_projects' onClick={Cancel}>Cancel</button>
                      <button type='submit' onClick={(e)=>UpdatedProject(e,id)} className='btn_primary_projects'>Save Details</button>
                    </div>
                  </form>

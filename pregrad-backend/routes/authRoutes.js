@@ -53,4 +53,15 @@ next()
 
 },CheckUser)
 
+
+router.get('/logout', (req, res, next) => {
+  
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    } 
+    res.status(202).clearCookie('jwt',{path:'/'}).send("cookie cleared")
+  });
+});
+
 module.exports = router;

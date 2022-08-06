@@ -31,20 +31,20 @@ app.use(cors({
     credentials:true
 })); 
 
-app.use(cookieParser())
 
 app.use(express.json());
 
 app.use(session({
     secret:'secret',
-    resave:true,
-    saveUninitialized:true
+    resave:false,   //if true,for every request in the server we want to create a new session id 
+    saveUninitialized:false
 }))
 
 app.use(passport.initialize())
 
 app.use(passport.session())
 // app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser())
 
 app.use("/", authRouter);
 

@@ -11,7 +11,7 @@ import "../css/HeaderStudentStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import { useEffect } from "react";
-
+import axios from "axios"
 
 
 const HeaderStudent = (props) => {
@@ -35,10 +35,10 @@ const navigate = useNavigate()
 
   const [cookies,setCookies,removeCookie] = useCookies([])
 
-  const LogOut = ()=>{
-    removeCookie("jwt")
-    navigate('/login')
-    window.location.reload(true)
+  const LogOut = async()=>{
+     removeCookie("jwt")
+     navigate('/login')
+     window.location.reload(true);
   }
 
   return (

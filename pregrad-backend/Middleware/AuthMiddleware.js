@@ -9,7 +9,6 @@ module.exports.CheckUser = async(req,res,next)=>{
         {
             jwt.verify(req.token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
                 if(err){
-                    console.log(err)
                     res.json({
                             status:false
                         });

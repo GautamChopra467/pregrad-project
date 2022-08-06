@@ -11,7 +11,6 @@ passport.use(
     function(accessToken,refreshToken,profile,done){
          User.findOne({email:profile.emails[0].value}).then((data)=>{
             if(data){
-
               done(null,data)
               return;
 
@@ -25,7 +24,9 @@ passport.use(
                 }).save(function(err,data){
                     if(err)
                     {
-                        console.log(err)
+                        res.send({
+                            message:"Something went Wrong"
+                        })
                     }
                      done(null,data)
                      return

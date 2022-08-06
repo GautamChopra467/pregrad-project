@@ -55,7 +55,6 @@ const [studentachi,setStudentachi] = useState([])
     e.preventDefault();
     setFormErrors(validate(achievements));
     setIsSubmit(true);
-    setIsModal(!isModal) 
   }
 
   const getAchievements = ()=>{
@@ -92,13 +91,13 @@ const [studentachi,setStudentachi] = useState([])
        ...achievements
       }).then(res=>{
         if(res.data.message === "true"){
-          // setIsModal(!isModal) 
+           setIsModal(!isModal) 
           getAchievements()
-        }
+        }else if(res.data.message === "You cannot add duplicate information"){
+          setFormErrors(validate(res.data.message));
+         }
       })
-     }else { 
      }
-
   }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
@@ -112,6 +111,11 @@ const [studentachi,setStudentachi] = useState([])
 
     if(!values.certificate){
       errors.certificate = "Certificate link required";
+    }
+
+    if(values == "You cannot add duplicate information"){
+      errors.others = "You cannot add duplicate information";
+      return errors
     }
 
     return errors;
@@ -151,6 +155,10 @@ const editAchievement = async(u_id,a_id)=>{
      setStudentachi(data.achievements)
      setIsModal(!isModal)
      getAchievements()
+  }
+
+  const Cancel = ()=>{
+    setIsModal(!isModal) 
   }
 
   return (
@@ -217,6 +225,7 @@ const editAchievement = async(u_id,a_id)=>{
           <div className='modal_container_achievements'>
             <div className='modal_top_section_achievements'>
               <h2>Achievements</h2>
+              <p className="errors_msg_achievements">{formErrors.others}</p>
             </div>
 { editform === "addnew"?(
   
@@ -235,7 +244,7 @@ const editAchievement = async(u_id,a_id)=>{
                 </div>
 
                 <div className='modal_bottom_section_achievements'>
-                  <button className='btn_light_achievements' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button className='btn_light_achievements' onClick={Cancel}>Cancel</button>
                   <button type='submit' onClick={submitForm} className='btn_primary_achievements'>Save Details</button>
                 </div>
               </form>
@@ -258,7 +267,7 @@ const editAchievement = async(u_id,a_id)=>{
   </div>
 
   <div className='modal_bottom_section_achievements'>
-    <button className='btn_light_achievements' onClick={() => setIsModal(!isModal)}>Cancel</button>
+    <button className='btn_light_achievements' onClick={Cancel}>Cancel</button>
     <button type='submit' onClick={(e)=>UpdatedAchievement(e,id)} className='btn_primary_achievements'>Save Details</button>
   </div>
 </form>

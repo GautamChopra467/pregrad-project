@@ -8,7 +8,7 @@ import { MdLogout } from "react-icons/md";
 import "../css/HeaderUserStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
-
+import axios from "axios"
 const HeaderUser = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
@@ -26,10 +26,12 @@ const HeaderUser = ({theme, setTheme}) => {
 
   const [cookies,setCookies,removeCookie] = useCookies([])
 
-  const LogOut = ()=>{
+  const LogOut = async()=>{
+    console.log(cookies.session)
     removeCookie("jwt")
     navigate('/login')
-    window.location.reload(true)
+    window.location.reload(true);
+
   }
 
   return (

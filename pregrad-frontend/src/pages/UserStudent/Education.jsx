@@ -59,7 +59,6 @@ const Education = () => {
     e.preventDefault();
     setFormErrors(validate(education));
     setIsSubmit(true);
-    setIsModal(!isModal);
   }
 
   const getEducation = async()=>{
@@ -96,7 +95,10 @@ const Education = () => {
      }).then((res)=>{
        if(res.data.message === "true")
        {
+        setIsModal(!isModal);
         getEducation()
+       }else if(res.data.message === "You cannot add duplicate information"){
+        setFormErrors(validate(res.data.message));
        }
      })
     }
@@ -104,6 +106,11 @@ const Education = () => {
 
   const validate = (values) => {
     const errors = {};
+
+    if(values == "You cannot add duplicate information"){
+      errors.others = "You cannot add duplicate information";
+      return errors
+    }
 
     if(!values.university){
       errors.university = "Name required";
@@ -163,6 +170,13 @@ const setStateValue = ()=>{
   setIsModal(!isModal)
   seteditform("addnew")
 
+}
+
+const Cancel = ()=>{
+  // Object.keys(formErrors).forEach(key=>{
+  //   formErrors[key] = "";
+  // })
+  setIsModal(!isModal) 
 }
 
   return (
@@ -230,6 +244,7 @@ const setStateValue = ()=>{
           <div className='modal_container_education'>
             <div className='modal_top_section_education'>
               <h2>Education Details</h2>
+            <p className="errors_msg_education">{formErrors.others}</p>
             </div>
             {
    editform === "addnew"?(
@@ -266,7 +281,7 @@ const setStateValue = ()=>{
                 </div>
 
                 <div className='modal_bottom_section_education'>
-                  <button className='btn_light_education' onClick={() => setIsModal(!isModal)}>Cancel</button>
+                  <button className='btn_light_education' onClick={Cancel}>Cancel</button>
                   <button type='submit' onClick={submitForm} className='btn_primary_education'>Save Details</button>
                 </div>
               </form>
@@ -304,7 +319,7 @@ const setStateValue = ()=>{
             </div>
 
             <div className='modal_bottom_section_education'>
-              <button className='btn_light_education' onClick={() => setIsModal(!isModal)}>Cancel</button>
+              <button className='btn_light_education' onClick={Cancel}>Cancel</button>
               <button type='submit' onClick={(e)=>UpdatedEducation(e,id)}  className='btn_primary_education'>Save Details</button>
             </div>
           </form>
