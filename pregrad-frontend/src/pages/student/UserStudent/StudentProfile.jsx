@@ -1,15 +1,16 @@
 import React,{useEffect,useState} from "react";
-import "../../components/css/UserStudent/StudentProfileStyles.css";
-import "../../components/css/UserStudent/ResumeStudentStyles.css"
-import ProfileBackground from "../../img/profile-background.jpg";
-import UserImage from "../../img/profile-image.png";
+import "../../../components/student/css/UserStudent/StudentProfileStyles.css";
+import "../../../components/student/css/UserStudent/ResumeStudentStyles.css";
+import ProfileBackground from "../../../img/profile-background.jpg";
+import UserImage from "../../../img/profile-image.png";
 import { BiDownload, BiEditAlt, BiLink } from "react-icons/bi";
-import { useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo } from "react-icons/fa";
+import { FiFileText } from "react-icons/fi";
 
 const StudentProfile = () => {
 
@@ -185,16 +186,24 @@ const [Education,setEducation] = useState([])
             <div className="education_container_studentprofile card_studentprofile">
               <h4>Education</h4>
               <div className="line_studentprofile"></div>
-
-   {        
-    Education.map((edu)=>(
-             <div className="education_info_box_studentprofile" key={edu._id}>
+              {
+              Education.map((edu)=>(
+              <div className="education_info_box_studentprofile" key={edu._id}>
                 <h3>{edu.university}</h3>
                 <h5>{edu.degree},{edu.field}</h5>
                 <p>{edu.start} - {edu.end}</p>
               </div>
-    ))   
+              ))   
               }
+              {!Education.length && (
+                <div className="add_content_box_studentprofile">
+                  <div className='add_section1_logo_studentprofile'>
+                    <FiFileText size={24} className="add_section1_icon_studentprofile" />
+                  </div>
+                  <Link to="/">Add Education Details</Link>
+                  <p>Increase your <span>Profile Health</span></p>
+                </div>
+              )} 
             </div>
 
             <div className="achievements_container_studentprofile card_studentprofile">
@@ -209,6 +218,15 @@ const [Education,setEducation] = useState([])
               </div>
               ))
               }
+              {!Achievement.length && (
+                <div className="add_content_box_studentprofile">
+                  <div className='add_section1_logo_studentprofile'>
+                    <FiFileText size={24} className="add_section1_icon_studentprofile" />
+                  </div>
+                  <Link to="/">Add Achievement Details</Link>
+                  <p>Increase your <span>Profile Health</span></p>
+                </div>
+              )} 
             </div>
           </div>
 
@@ -216,32 +234,39 @@ const [Education,setEducation] = useState([])
             <div className="workexperience_container_studentprofile card_studentprofile">
               <h4>Work Experience</h4>
               <div className="line_studentprofile"></div>
-{        
-    WorkExperience.map((work)=>(
-      <div className="workexperience_details_box_studentprofile" key={work._id}>
-      <h3>{work.companyname}</h3>
-      <h5>{work.position} | {work.duration}</h5>
-      <p>
-      {work.role}  
-      </p>
-      <div className="skills_content_studentprofile">
-        <ul>
-          <li>{work.skills}</li>
-        </ul>
-      </div>
-    </div>
-
-    ))
-            
-}              
+              {        
+              WorkExperience.map((work)=>(
+              <div className="workexperience_details_box_studentprofile" key={work._id}>
+                <h3>{work.companyname}</h3>
+                <h5>{work.position} | {work.duration}</h5>
+                <p>
+                {work.role}  
+                </p>
+                <div className="skills_content_studentprofile">
+                  <ul>
+                    <li>{work.skills}</li>
+                  </ul>
+                </div>
+              </div>
+              ))
+              }
+              {!WorkExperience.length && (
+                <div className="add_content_box_studentprofile">
+                  <div className='add_section1_logo_studentprofile'>
+                    <FiFileText size={24} className="add_section1_icon_studentprofile" />
+                  </div>
+                  <Link to="/">Add Work Experience Details</Link>
+                  <p>Increase your <span>Profile Health</span></p>
+                </div>
+              )}              
             </div>
 
             <div className="projects_container_studentprofile card_studentprofile">
               <h4>Projects</h4>
               <div className="line_studentprofile"></div>
-{          
-    Project.map((proj)=>(
-<div className="projects_details_box_studentprofile">
+              {          
+              Project.map((proj)=>(
+              <div className="projects_details_box_studentprofile">
                 <h3>{proj.projecttitle}</h3>
                 <p>
                 {proj.description}
@@ -255,9 +280,17 @@ const [Education,setEducation] = useState([])
                   </ul>
                 </div>
               </div>
-    ))
-
-}
+              ))
+              }
+              {!Project.length && (
+                <div className="add_content_box_studentprofile">
+                  <div className='add_section1_logo_studentprofile'>
+                    <FiFileText size={24} className="add_section1_icon_studentprofile" />
+                  </div>
+                  <Link to="/">Add Project Details</Link>
+                  <p>Increase your <span>Profile Health</span></p>
+                </div>
+              )}   
             </div>
           </div>
         </div>

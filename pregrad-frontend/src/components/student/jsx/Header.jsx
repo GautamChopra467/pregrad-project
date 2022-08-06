@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../img/logo.png";
-import Logo2 from "../../img/logo-white.png";
+import Logo from "../../../img/logo.png";
+import Logo2 from "../../../img/logo-white.png";
 import "../css/HeaderStyles.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";

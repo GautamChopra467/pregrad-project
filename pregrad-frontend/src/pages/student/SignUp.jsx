@@ -1,30 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
-import Logo from "../img/logo.png";
-import Logo2 from "../img/logo-white.png";
-import SignUpLogo from "../img/signup-image.png";
-import InstaLogo from "../img/instagram-logo.svg";
-import LinkedinLogo from "../img/linkedin-logo.svg";
-import YoutubeLogo from "../img/youtube-logo.svg";
-import GoogleLogo from "../img/google-logo.svg";
-import "../components/css/SignUpStyles.css";
-import { FaBars, FaTimes } from "react-icons/fa";
-import { BsArrowRightShort, BsMoonFill, BsSunFill } from "react-icons/bs";
+import SignUpLogo from "../../img/signup-image.png";
+import InstaLogo from "../../img/instagram-logo.svg";
+import LinkedinLogo from "../../img/linkedin-logo.svg";
+import YoutubeLogo from "../../img/youtube-logo.svg";
+import GoogleLogo from "../../img/google-logo.svg";
+import "../../components/student/css/SignUpStyles.css";
+import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
+import HeaderAuth from "../../components/student/jsx/HeaderAuth";
 
 const SignUp = ({theme, setTheme}) => {
   const navigate = useNavigate();
-
-  const toggleTheme = () => {
-    if(theme === "light-theme"){
-      setTheme("dark-theme");
-    }else{
-      setTheme("light-theme");
-    }
-  }
-
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -112,45 +99,7 @@ const SignUp = ({theme, setTheme}) => {
 
   return (
     <div>
-      <div className="header_signup">
-        <div className="left_section_signup">
-        {theme === "light-theme" && (
-            <img src={Logo} alt="pregrad" />
-          )}
-          {theme === "dark-theme" && (
-            <img src={Logo2} alt="pregrad" />
-          )}
-          <Link to="/" className="intern_signup">
-            Contact
-          </Link>
-        </div>
-
-        <div className={click ? "right_section_signup active_signup" : "right_section_signup"}>
-          <div className="abc_signup">
-            <Link to="/" className="intern2_signup">
-              Contact
-            </Link>
-          </div>
-          <div className="theme_icon_container_signup" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon_signup" /> : <BsSunFill className="theme_icon_signup" />
-            }
-          </div>
-        </div>
-
-        <div className="hamburger_signup">
-          <div className="theme_icon_container2_signup" onClick={toggleTheme}>
-            {
-              theme==="light-theme" ? <BsMoonFill className="theme_icon2_signup" /> : <BsSunFill className="theme_icon2_signup" />
-            }
-          </div>
-          {click ? (
-            <FaTimes size={20} className="hamburger_icon_signup" onClick={handleClick} />
-          ) : (
-            <FaBars size={20} className="hamburger_icon_signup" onClick={handleClick} />
-          )}
-        </div>
-      </div>
+      <HeaderAuth theme={theme} setTheme={setTheme} />
 
       <div className="main_signup">
         <div className="left-part_signup">
@@ -232,7 +181,7 @@ const SignUp = ({theme, setTheme}) => {
                   <div>
                   <input type="checkbox" id="cb1" onClick={() => setCheckboxCheck(!checkboxCheck)} />
                   <label for="cb1"></label>
-                  <p>I agree to <a href="youtube.com">Terms and Conditions</a></p>
+                  <p><span>I agree to</span> <a href="youtube.com">Terms and Conditions</a></p>
                   </div>
                   <p className="errors-msg_signup">{formErrors.checkbox}</p>
                 </div>

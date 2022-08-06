@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "../../components/css/UserStudent/EducationStyles.css";
+import "../../../components/student/css/UserStudent/EducationStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { useNavigate,useParams } from "react-router-dom";

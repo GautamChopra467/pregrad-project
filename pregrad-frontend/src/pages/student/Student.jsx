@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Sidebar from "../components/jsx/Sidebar";
+import Sidebar from "../../components/student/jsx/Sidebar";
 import WorkExperience from "./UserStudent/WorkExperience";
 import Education from "./UserStudent/Education";
 import Internships from "./UserStudent/Internships";

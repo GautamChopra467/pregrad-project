@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/jsx/Header';
-import HomeBanner1 from '../components/jsx/HomeBanner1';
+import Header from '../../components/student/jsx/Header';
+import HomeBanner1 from '../../components/student/jsx/HomeBanner1';
 
 const Home = ({theme, setTheme}) => {
   return (

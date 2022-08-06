@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Logo from "../../img/logo.png";
-import Logo2 from "../../img/logo-white.png";
-import { FaBars, FaTimes } from "react-icons/fa";
+import Logo from "../../../img/logo.png";
+import Logo2 from "../../../img/logo-white.png";
+import { FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import { CgMenuRight } from "react-icons/cg"

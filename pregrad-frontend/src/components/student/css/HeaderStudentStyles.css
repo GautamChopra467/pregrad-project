@@ -128,6 +128,7 @@ img {
   border-radius: 8px;
   position: relative;
   min-width: 140px;
+  max-width: 210px;
   transition: 0.1s;
 }
 
@@ -140,6 +141,9 @@ img {
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--black-color);
+  max-width: 134px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .user_avatar_logo_headerStudent {
@@ -183,6 +187,7 @@ img {
   text-decoration: none;
   color: var(--black-color);
   font-weight: 500;
+  cursor: pointer;
 }
 
 .logout_container_headerStudent a div {

@@ -79,7 +79,11 @@ const UserInfoSchema = new mongoose.Schema({
     ],
     education:[
         educationSchema
-    ]
+    ],
+    score: {
+        type: Number,
+        default: 30
+    }
 })
    
 

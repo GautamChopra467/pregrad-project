@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Student from "./pages/Student";
-import EmailVerify from "./pages/EmailVerify";
-import OTPVerify from "./pages/OTPVerify";
-import DetailsOne from "./pages/DetailsOne";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResumeStudent from "./pages/UserStudent/ResumeStudent";
+import Home from "./pages/student/Home";
+import Login from "./pages/student/Login";
+import SignUp from "./pages/student/SignUp";
+import Student from "./pages/student/Student";
+import EmailVerify from "./pages/student/EmailVerify";
+import OTPVerify from "./pages/student/OTPVerify";
+import DetailsOne from "./pages/student/DetailsOne";
+import ForgotPassword from "./pages/student/ForgotPassword";
+import ResumeStudent from "./pages/student/UserStudent/ResumeStudent";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
