@@ -151,6 +151,20 @@
   margin-top: 25px;
 }
 
+.box2_password_emailOtp {
+  position: relative;
+}
+
+.hide_password_emailOtp {
+  cursor: pointer;
+  position: absolute;
+  width: 20px;
+  right: 10px;
+  top: 38px;
+  font-size: 20px;
+  color: var(--para-color);
+}
+
 .form-container-box_emailOtp label {
   font-weight: 700;
   color: var(--para-color);

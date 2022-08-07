@@ -21,8 +21,8 @@ body {
     --warning-color: red;
     --para-color: #566474;
     --input-color: #1e272e;
-    --input-border: #ebf0f5;
-    --input-hover: #d7e1ea;
+    --input-border: #E4EBF1;
+    --input-hover: #CAD7E3;   
     --input-focus: #7840f2;
     --background-secondary: #f7f7f7;
     --background-secondary-hover: #E6EAEF;
@@ -58,3 +58,7 @@ body {
     --menu-link: #C7CCD1;
     --primary-background: #282244;;
 }
+
+
+/* --input-border: #ebf0f5
+--input-hover : #d7e1ea */

@@ -129,7 +129,6 @@ const DetailsOne = ({theme, setTheme}) => {
 
   return (
     <div>
-      {console.log(selectedLocation)}
       <HeaderUser theme={theme} setTheme={setTheme} />
       <div className="main_detailsOne">
         <div className="greeting_container_detailsOne">

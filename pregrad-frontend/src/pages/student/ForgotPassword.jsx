@@ -8,11 +8,14 @@ import "../../components/student/css/EmailOTPVerifyStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
 import HeaderAuth from "../../components/student/jsx/HeaderAuth";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ForgotPassword = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
-  const {email} = useParams()
+  const {email} = useParams();
+
+  const [showPassword, setShowPassword] = useState(true);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -134,9 +137,14 @@ const ForgotPassword = ({theme, setTheme}) => {
                   <p className="errors-msg_emailOtp">{formErrors.email}</p>
                 </div>
 
-                <div className="form-container-box_emailOtp">
+                <div className="form-container-box_emailOtp box2_password_emailOtp">
                     <label>Password</label>
-                    <input type="password" name="password" placeholder="Enter new password" value={user.password} onChange={handleForm} />
+                    <input type={showPassword ? "password" : "text"} name="password" placeholder="Enter new password" value={user.password} onChange={handleForm} />
+                    {
+                    showPassword ? (<AiOutlineEye title="Show password" className="hide_password_emailOtp" onClick={()=>setShowPassword(!showPassword)} />) 
+                    : 
+                    (<AiOutlineEyeInvisible title="Hide password" className="hide_password_emailOtp" onClick={()=>setShowPassword(!showPassword)} />)
+                    }
                     <p className="errors-msg_emailOtp">{formErrors.password}</p>
                 </div>
 

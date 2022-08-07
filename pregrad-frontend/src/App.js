@@ -10,6 +10,12 @@ import DetailsOne from "./pages/student/DetailsOne";
 import ForgotPassword from "./pages/student/ForgotPassword";
 import ResumeStudent from "./pages/student/UserStudent/ResumeStudent";
 
+
+import HomeCompany from "./pages/company/HomeCompany";
+import SignUpCompany from "./pages/company/SignUpCompany";
+import DetailsOneCompany from "./pages/company/DetailsOneCompany";
+import InfoCompany from "./pages/company/InfoCompany";
+
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
 
@@ -29,7 +35,14 @@ const App = () => {
         <Route exact path="/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/resume" element={<ResumeStudent />} />
-        {/* <Route exact path="/internships" element={<Internships />} /> */}
+
+
+
+        {/* Company Routes */}
+        <Route exact path="/company" element={<HomeCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/info/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -176,7 +176,7 @@ const Login = ({theme, setTheme}) => {
 
               <div className="bottom-part_login">
                 <p>New to Pregrad ?&nbsp;</p>
-                <Link to="/signup">Create an account</Link>
+                <Link to="/company/signup">Register as a Company</Link>
               </div>
             </div>
           </div>
