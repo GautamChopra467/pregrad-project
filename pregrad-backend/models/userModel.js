@@ -23,7 +23,11 @@ const userRegisterSchema = new mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
-    }
+    },
+   detailFlag:{
+    type:Boolean,
+    default:false
+   }
 });
 
 userRegisterSchema.pre("save", async function(next){

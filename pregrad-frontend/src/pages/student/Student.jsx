@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "../../components/student/jsx/Sidebar";
 import WorkExperience from "./UserStudent/WorkExperience";
@@ -19,6 +19,8 @@ const Student = ({theme, setTheme}) => {
 
 const {id} = useParams()
 
+const [profilehealth,setprofileHealth] = useState("20")
+
   const [cookies,setCookie,removeCookie] = useCookies([])
 
 useEffect(()=>{
@@ -31,18 +33,23 @@ useEffect(()=>{
         removeCookie("jwt")
         navigate('/login')
       }else{
-        
         navigate(`/student/${id}`)
+        const userHealthProfile = ()=>{
+          axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
+            setprofileHealth(data.profileHealth)
+          })
+        }
+        userHealthProfile()
       }
     }
   }
   verifyUser()
-},[])
+},[profilehealth])
 
   return (
-    <Sidebar  userid={id} theme={theme} setTheme={setTheme}>
+    <Sidebar  profileHealth={profilehealth} userid={id} theme={theme} setTheme={setTheme}>
       <Routes>
-        <Route exact path="/internships" element={<Internships/>} />
+        <Route exact path="/internships" element={<Internships  />} />
         <Route exact path="/workexperience" element={<WorkExperience />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/achievements" element={<Achievements />} />

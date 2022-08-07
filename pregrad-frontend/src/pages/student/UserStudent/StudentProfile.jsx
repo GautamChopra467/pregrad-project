@@ -20,10 +20,16 @@ const StudentProfile = () => {
 
  const  [user,setUser] = useState({})
 
+
+
+
  const [Achievement,setAchievement] = useState([])
 const [WorkExperience,setWorkExperience] = useState([])
 const [Project,setProject] = useState([])
 const [Education,setEducation] = useState([])
+const [studentSkill,setStudentSkills] = useState([])
+const [studentDomain,setstudentDomain]= useState([])
+const [studentSocialLink,setStudentSocialLink]= useState({})
 
   const skillsData = [
     "HTML",
@@ -40,11 +46,15 @@ const [Education,setEducation] = useState([])
 
   const getUserData = async()=>{
     const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
+  
     if(data.message === "true"){
     setAchievement(data.achievement)
     setProject(data.project)
     setWorkExperience(data.workexperience)
     setEducation(data.education)
+    setStudentSkills(data.skills)
+    setstudentDomain(data.domain)
+    setStudentSocialLink(data.socialLink)
   }
   }
 
@@ -53,6 +63,8 @@ const [Education,setEducation] = useState([])
     setUser(data)
   }
 
+  const initials =user.name
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
   //Edit Form
   const domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
   // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
@@ -168,7 +180,6 @@ const [Education,setEducation] = useState([])
 
   return (
     <div>
-      {console.log(isModal)}
       <div className="sub_header_studentprofile">
         <h5>Profile</h5>
       </div>
@@ -177,7 +188,7 @@ const [Education,setEducation] = useState([])
         <div className="welcome_container_studentprofile">
           <div className="welcome_left_section_studentprofile">
             <h4>Hi, welcome back!</h4>
-            <p>Your business dashboard template</p>
+            <p>Your dashboard</p>
           </div>
           <div className="welcome_right_section_studentprofile">
             <h4>
@@ -207,13 +218,17 @@ const [Education,setEducation] = useState([])
 
           <div className="profile_user_details_studentprofile">
             <div className="user_image_studentprofile">
-              G
+              {name_initials}
             </div>
             <div className="profile_info_studentprofile">
               <div className="info_container_studentprofile">
                 <div className="info_left_section_studentprofile">
                   <h5>{user.name}</h5>
-                  <p>Full Stack Developer</p>
+                  {
+                    studentDomain.map((domain)=>(
+                      <p>{domain}</p>
+                    ))
+                  }
                 </div>
                 <div className="info_middle_section_studentprofile">
                   <h5>{user.email}</h5>
@@ -245,9 +260,13 @@ const [Education,setEducation] = useState([])
               <h4>Social Links</h4>
               <div className="line_studentprofile"></div>
               <div className="social_links_box_studentprofile">
-                <AiFillGithub className="social_links_studentprofile" />
-                <AiFillLinkedin className="social_links_studentprofile" />
-                <AiFillInstagram className="social_links_studentprofile" />
+                
+                 { studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_studentprofile" />)}
+                {  studentSocialLink.linkedin == ""?(""): ( <AiFillLinkedin className="social_links_studentprofile" />)}
+                {  studentSocialLink.instagram == ""?(""): (  <AiFillInstagram className="social_links_studentprofile" />)}
+                  
+                
+                
               </div>
             </div>
 
@@ -255,8 +274,8 @@ const [Education,setEducation] = useState([])
               <h4>Skills</h4>
               <div className="line_studentprofile"></div>
               <div className="skills_box_studentprofile">
-                {skillsData.map((value, id) => (
-                  <div key={id} className="skill_section_studentprofile">
+                {studentSkill.map((value) => (
+                  <div key={value} className="skill_section_studentprofile">
                     <p>{value}</p>
                   </div>
                 ))}
@@ -346,7 +365,7 @@ const [Education,setEducation] = useState([])
               <div className="line_studentprofile"></div>
               {          
               Project.map((proj)=>(
-              <div className="projects_details_box_studentprofile">
+              <div className="projects_details_box_studentprofile" key={proj._id}>
                 <h3>{proj.projecttitle}</h3>
                 <p>
                 {proj.description}
@@ -463,150 +482,7 @@ const [Education,setEducation] = useState([])
 
      {/* Resume */}
 
-      {/* <div className='resumestudent'>
-        <div className="main_container_resumestudent">
-        <div className="profile_container_resumestudent">
-
-          <div className="profile_user_details_resumestudent">
-            <div className="user_image_resumestudent">
-              <p>G</p>
-            </div>
-            <div className="profile_info_resumestudent">
-              <div className="info_container_resumestudent">
-                <div className="info_left_section_resumestudent">
-                  <h5>{user.name}</h5>
-                  <p>Full Stack Developer</p>
-                </div>
-                <div className="info_middle_section_resumestudent">
-                  <h5>{user.email}</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="main_details_container_resumestudent">
-          <div className="main_details_left_section_resumestudent">
-            <div className="social_container_resumestudent card_resumestudent">
-              <h4>Social Links</h4>
-              <div className="line_resumestudent"></div>
-              <div className="social_links_box_resumestudent">
-                <a href="yo">https://cuvette.tech/app/student/</a>
-                <a href="yo">https://cuvette.tech/app/student/</a>
-                <a href="yo">https://cuvette.tech/app/student/</a>
-              </div>
-            </div>
-
-            <div className="skills_container_resumestudent card_resumestudent">
-              <h4>Skills</h4>
-              <div className="line_resumestudent"></div>
-              <div className="skills_box_resumestudent">
-                {skills.map((value, id) => (
-                  <div key={id} className="skill_section_resumestudent">
-                    <p>{value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-  
-  {
-     (Education.length != 0)?(
-            <div className="education_container_resumestudent card_resumestudent">
-              <h4>Education</h4>
-              <div className="line_resumestudent"></div>
-
     
-              {
-
-              Education.map((edu)=>(
-              <div className="education_info_box_studentprofile" key={edu._id}>
-                <h3>{edu.university}</h3>
-                <h5>{edu.degree},{edu.field}</h5>
-                <p>{edu.start} - {edu.end}</p>
-              </div>
-              ))   
-              }
-              
-            </div>
-            ):""
-  
-             }          
-  {
-              (Achievement.length != 0)?(
-              <div className="achievements_container_resumestudent card_resumestudent">
-              <h4>Achievements</h4>
-
-              <div className="line_resumestudent"></div>
-             
-              {
-              Achievement.map((achi)=>(
-                <div className="achievements_info_box_studentprofile" key={achi._id}>
-                <h3>{achi.title}</h3>
-                <a href={achi.certificate}>{achi.certificate}</a>
-              </div>
-              ))
-              }
-              
-            </div>
-            ):""            
-          }
-
-          
-        </div>
-        <div className="main_details_right_section_resumestudent">
-            <div className="workexperience_container_resumestudent card_resumestudent">
-              <h4>Work Experience</h4>
-              <div className="line_resumestudent"></div>
-
-              {        
-              WorkExperience.map((work)=>(
-              <div className="workexperience_details_box_studentprofile" key={work._id}>
-                <h3>{work.companyname}</h3>
-                <h5>{work.position} | {work.duration}</h5>
-                <p>
-                {work.role}  
-                </p>
-                <div className="skills_content_studentprofile">
-                  <ul>
-                    <li>{work.skills}</li>
-                  </ul>
-                </div>
-              </div>
-              ))
-              }
-
-             
-        </div>
-
-            <div className="projects_container_resumestudent card_resumestudent">
-              <h4>Projects</h4>
-              <div className="line_resumestudent"></div>
-              {          
-              Project.map((proj)=>(
-              <div className="projects_details_box_studentprofile">
-                <h3>{proj.projecttitle}</h3>
-                <p>
-                {proj.description}
-                </p>
-                <a href={proj.projectlink}>
-                  <BiLink size={24} className="project_details_icon_studentprofile" />
-                </a>
-                <div className="skills_content_studentprofile">
-                  <ul>
-                    <li>{proj.skills}</li>
-                  </ul>
-                </div>
-              </div>
-              ))
-              }
-  
-            </div>
-          </div>
-      </div>
-    </div>
-    </div> */}
-
-
 <div className='resumestudent'>
         <div className="main_container_resumestudent">
         <div className="profile_container_resumestudent">
@@ -619,7 +495,11 @@ const [Education,setEducation] = useState([])
               <div className="info_container_resumestudent">
                 <div className="info_left_section_resumestudent">
                   <h5>{user.name}</h5>
-                  <p>Full Stack Developer</p>
+                  {
+                    studentDomain.map((domain)=>(
+                      <p>{domain}</p>
+                    ))
+                  }
                 </div>
                 <div className="info_middle_section_resumestudent">
                   <h5>{user.email}</h5>
@@ -635,9 +515,9 @@ const [Education,setEducation] = useState([])
               <h4>Social Links</h4>
               <div className="line_resumestudent"></div>
               <div className="social_links_box_resumestudent">
-                <a href="yo">https://cuvette.tech/app/student/</a>
-                <a href="yo">https://cuvette.tech/app/student/</a>
-                <a href="yo">https://cuvette.tech/app/student/</a>
+                <a href={studentSocialLink.github}>{studentSocialLink.github}</a>
+                <a href={studentSocialLink.linkedin}>{studentSocialLink.linkedin}</a>
+                <a href={studentSocialLink.instagram}>{studentSocialLink.instagram}</a>
               </div>
             </div>
 
@@ -645,8 +525,8 @@ const [Education,setEducation] = useState([])
               <h4>Skills</h4>
               <div className="line_resumestudent"></div>
               <div className="skills_box_resumestudent">
-                {skills.map((value, id) => (
-                  <div key={id} className="skill_section_resumestudent">
+                {studentSkill.map((value) => (
+                  <div key={value} className="skill_section_resumestudent">
                     <p>{value}</p>
                   </div>
                 ))}
@@ -659,7 +539,7 @@ const [Education,setEducation] = useState([])
               <div className="line_resumestudent"></div>
        {
        Education.map((edu)=>(
-        <div className="education_info_box_resumestudent">
+        <div className="education_info_box_resumestudent" key={edu._id}>
                 <h3>{edu.university}</h3>
                 <h5>{edu.degree}, {edu.field}</h5>
                 <p>{edu.start} - {edu.start} </p>
@@ -733,7 +613,8 @@ const [Education,setEducation] = useState([])
               <div className="line_resumestudent"></div>
 
             {
-              Project.map((proj)=>(<div className="projects_details_box_resumestudent">
+              Project.map((proj)=>(
+              <div className="projects_details_box_resumestudent" key={proj._id}>
               <h3>{proj.projecttitle}</h3>
               <p>
               {proj.description} 

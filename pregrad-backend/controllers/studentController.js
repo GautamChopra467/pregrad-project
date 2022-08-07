@@ -1,4 +1,7 @@
 const StudentInfo = require('../models/UserInfoModel')
+const UserRegister = require("../models/userModel");
+
+//Achievement Functions
 
 module.exports.studentAchievement = async(req,res)=>{
 
@@ -504,6 +507,8 @@ module.exports.updateWorkExperience = async(req,res)=>{
     }
 }      
 
+//all Student Info
+
 module.exports.allStudentData= async(req,res)=>{
     const {id} = req.params
 
@@ -516,10 +521,109 @@ module.exports.allStudentData= async(req,res)=>{
         education:student.education,
         project:student.project,
         workexperience:student.workexperience,
+        skills:student.skills,
+        domain:student.domain,
+        socialLink:student.socialLinks,
         message:"true"
     })
     }else{
         res.send({message:"false"})
     }
 
+}
+
+//detailsOne function
+
+module,exports.detailsOne = async(req,res)=>{
+    try{
+        const {id} = req.params
+
+        const student = await StudentInfo.findOne({id})
+
+        if(student){
+
+           const updateStudent = await StudentInfo.updateOne({id},{
+               $set:{
+                skills:req.body.selectedSkills,
+                domain:req.body.selectedDomains,
+                socialLinks:req.body.socialLink,
+                location:req.body.selectedLocation
+               }
+           })
+
+        }else{
+            const newStudent = await StudentInfo.create({
+                id,
+                skills:req.body.selectedSkills,
+                domain:req.body.selectedDomains,
+                socialLinks:req.body.socialLink,
+                location:req.body.selectedLocation
+            })
+
+            await newStudent.save()
+        }
+
+        const user = await UserRegister.findByIdAndUpdate({_id:id},{
+            $set:{
+                detailFlag:true
+            }
+        })
+ 
+        res.send({message:"true",verified:user.detailFlag})
+       
+    }catch(err){
+        console.log(err)
+    }
+    
+}
+
+// Profile Health
+
+module.exports.profileHealth = async(req,res)=>{
+    try{
+        const {id} =req.params
+
+        const student = await StudentInfo.findOne({id})
+    
+        let projectScore = 0,workScore = 0,AchiScore = 0,EduScore=0,profileScore=20;
+
+        if(student){
+            
+          if(student.project.length >3){
+            projectScore = 30;
+          }else{
+            projectScore = student.project.length*10;
+          }
+
+          if(student.education.length >1){
+            EduScore = 5;
+          }else{
+            EduScore =student.education.length*5;
+          }
+
+          if(student.achievements.length > 2){
+            AchiScore = 20;
+          }else{
+            AchiScore =student.achievements.length*10;
+          }
+          if(student.workexperience.length >1){
+            workScore = 10;
+          }else{
+            workScore =student.workexperience.length*10;
+          }
+
+          profileScore += EduScore+projectScore+AchiScore+workScore
+          
+        }
+       const updatedStudentProfile = await StudentInfo.updateOne({id},{
+        $set:{
+            profilescore: profileScore
+        }
+    })
+
+        res.send({profileHealth:student.profilescore})
+
+    }catch(err){
+        console.log(err)
+    }
 }

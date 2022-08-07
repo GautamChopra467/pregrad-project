@@ -30,7 +30,7 @@ const transporter = nodemailer.createTransport({
     user:process.env.AUTH_EMAIL,
     clientId:process.env.GOOGLE_CLIENTID,
     clientSecret:process.env.GOOGLE_SECRET,
-    refreshToken:process.env.REFRESH_TOKEN
+    refreshToken:process.env.REFRESH_TOKEN 
   }
 })
 
@@ -178,7 +178,7 @@ else{
       maxAge:maxAge*1000
     })
 
-    res.send({message:"true",id:user._id})
+    res.send({usertype:"student",id:user._id,verified:user.detailFlag})
   }
 }catch(err){
   console.log(err)
@@ -211,7 +211,8 @@ module.exports.getUserDetails = async(req,res)=>{
 
   res.send({
     name:user.name,
-    email:user.email
+    email:user.email,
+    verified:user.detailFlag
   })
 
 

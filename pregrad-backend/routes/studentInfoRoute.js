@@ -6,12 +6,12 @@ const {
     getAchievementInfo,
     deleteAchievement,
     updateAchievement,
-    updatedAchievement
-    ,studentProject
-    ,getProjectsInfo
-    ,deleteProject
-    ,updateProject
-    ,updatedProject,
+    updatedAchievement,
+    studentProject,
+    getProjectsInfo,
+    deleteProject,
+    updateProject,
+    updatedProject,
     studentEducation,
     getEducationInfo,
     deleteEducation,
@@ -22,7 +22,9 @@ const {
     deleteWorkExperience,
     updatedWorkExperience,
     updateWorkExperience,
-    allStudentData
+    allStudentData,
+    detailsOne,
+    profileHealth
 
 } = require('../controllers/studentController')
 
@@ -80,5 +82,13 @@ router.route('/deleteworkexperience/:u_id/:id').delete(deleteWorkExperience)
 router.route('/updateworkexperience/:u_id/:id').get(updateWorkExperience)
 
 router.route('/updatedworkexperience/:u_id/:id').put(updatedWorkExperience)
+
+//detailsone route
+
+router.route('/detailsone/:id').post(detailsOne)
+
+//profile health Route
+
+router.route('/profilehealth/:id').get(profileHealth)
 
 module.exports = router

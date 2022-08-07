@@ -50,12 +50,18 @@ const Login = ({theme, setTheme}) => {
       },{
         withCredentials:true
       })
-      .then( res => {
-        if(res.data.message === "true"){
+      .then( ({data}) => {
+ 
+        if(data.usertype === "student" && data.verified == false){
+         
+          navigate(`/student/${data.id}/detailsone`);
+        }else if(data.usertype === "student" && data.verified == true){
+        
+          navigate(`/student/${data.id}`);
+        }
+        else {
           
-          navigate(`/student/${res.data.id}`);
-        }else {
-          setFormErrors({final: res.data.message})
+          setFormErrors({final: data.message})
         }
       });
     }
