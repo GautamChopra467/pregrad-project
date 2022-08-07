@@ -411,6 +411,13 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                 </div>
 
                 <div className="form_box_studentprofile">
+                  <label>Enter Your Introductory Video</label>
+                  <input type="text" name="name" placeholder="Video Link" onChange={handleForm} />
+                  <p className="video_para_studentprofile">Add your Introductory video to increase your chances of getting selected.</p>
+                  <p className="errors_msg_studentprofile">{formErrors.title}</p>
+                </div>
+
+                <div className="form_box_studentprofile">
                 <label> Which domain are you interested in working ?</label>
 
                 <select onChange={handleDomain} className="select_studentprofile">
@@ -451,14 +458,14 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               </div>
 
               <div className="form_box_studentprofile">
-                <label>Github Link ( Optional )</label>
-                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
+                <label> Linkedin Link*</label>
+                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
+                <p>{formErrors.github}</p>
               </div>
 
               <div className="form_box_studentprofile">
-                <label> Linkedin Link ( Optional )</label>
-                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
-                <p>{formErrors.github}</p>
+                <label>Github Link ( Optional )</label>
+                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
               </div>
 
               <div className="form_box_studentprofile">

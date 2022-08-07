@@ -123,9 +123,9 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
               </div>
 
               <div className="form_box_detailsOneCompany">
-                 <label>Type of Company</label>
+                 <label>Type of Company*</label>
                  <select onChange={handleType} className="select_detailsOneCompany">
-                  <option value="other">Enter College Name</option> 
+                  <option value="other">Enter Type of Company</option> 
                   {typeData.map(val => (
                     <option key={val} value={val}>{val}</option>
                   ))}

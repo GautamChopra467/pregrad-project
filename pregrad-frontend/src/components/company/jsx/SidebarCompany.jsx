@@ -11,10 +11,12 @@ import { BsBriefcase } from "react-icons/bs";
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import { TbFileCertificate } from "react-icons/tb";
-import {  NavLink } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
 const SidebarCompany = ({ children, theme, setTheme }) => {
+    const navigate = useNavigate();
+
     const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
 
     const routes = [
@@ -129,15 +131,8 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
           <motion.div initial="hidden"
           animate="show"
           exit="hidden"
-          variants={scoreAnimation} className="score_section_sidebar">
-          <div className="left_score_section_sidebar">
-            <p>60 %</p>
-          </div>
-
-          <div className="right_score_section_sidebar">
-            <h3>Your's Profile Health</h3>
-            {/* <p>Complete your profile for better chances of internships.</p> */}
-          </div>
+          variants={scoreAnimation} className="score_section2_sidebar">
+          <button className="btn_light_sidebar" onClick={()=>navigate("/company/info/add")}>New Internship</button>
         </motion.div>
         )}
 

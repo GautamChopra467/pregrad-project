@@ -73,7 +73,7 @@
 .form_main_box_detailsOne {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -137,6 +137,10 @@
   grid-area: 4 / 2 / 5 / 3;
 }
 
+.box9_detailsOne {
+  grid-area: 5 / 1 / 6 / 2;
+}
+
 .label_detailsOne {
   font-weight: 700;
   color: var(--para-color);
@@ -191,6 +195,12 @@
 
 .selected_domains_icon_detailsOne {
   cursor: pointer;
+}
+
+.video_para_detailsOne {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
 }
 
 @media screen and (max-width: 960px) {

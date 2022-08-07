@@ -496,6 +496,12 @@ background-color: var(--header-bg);
   font-size: 16px;
 }
 
+.video_para_studentprofile {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
 .modal_bottom_section_studentprofile {
   display: flex;
   justify-content: flex-end;
