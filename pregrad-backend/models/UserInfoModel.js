@@ -80,10 +80,25 @@ const UserInfoSchema = new mongoose.Schema({
     education:[
         educationSchema
     ],
-    score: {
+    profilescore: {
         type: Number,
-        default: 30
-    }
+        default: 20
+    },
+   skills:{
+    type:Array,
+    default:[]
+   },
+   domain:{
+    type:Array,
+    default:[]
+   },
+   socialLinks:{
+    type:Object,
+    default:{}
+   },
+   location:{
+    type:String
+   }
 })
    
 

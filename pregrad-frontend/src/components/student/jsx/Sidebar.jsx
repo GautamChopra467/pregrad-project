@@ -21,11 +21,12 @@ import { CgMenuRight } from "react-icons/cg";
 
 
 
-const Sidebar = ({ children, userid,theme, setTheme }) => {
+const Sidebar = ({ children, userid,theme, setTheme, profileHealth}) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
   
   const [user,setUser] = useState({})
 
+  // const [profilehealth,setprofileHealth] = useState("20")
 
 
   const {id} = useParams()
@@ -34,8 +35,16 @@ const Sidebar = ({ children, userid,theme, setTheme }) => {
     const {data} = await axios.get(`http://localhost:8000/userDetails/${userid}`)
     setUser(data)
   }
-useEffect(()=>{
-    getUserDetails()
+useEffect(()=>{ 
+
+  getUserDetails()
+  // const userHealthProfile = ()=>{
+  //   axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
+  //     setprofileHealth(data.profileHealth)
+  //   })
+  // }
+  // userHealthProfile()
+  
 },[])
 
 
@@ -167,11 +176,11 @@ useEffect(()=>{
           exit="hidden"
           variants={scoreAnimation} className="score_section_sidebar">
           <div className="left_score_section_sidebar">
-            <p>60 %</p>
+            <p>{profileHealth} %</p>
           </div>
 
           <div className="right_score_section_sidebar">
-            <h3>Your's Profile Health</h3>
+            <h3>Your Profile Health</h3>
             {/* <p>Complete your profile for better chances of internships.</p> */}
           </div>
         </motion.div>

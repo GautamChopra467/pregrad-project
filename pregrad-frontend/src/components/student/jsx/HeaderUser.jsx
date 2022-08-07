@@ -9,7 +9,7 @@ import "../css/HeaderUserStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 import axios from "axios"
-const HeaderUser = ({theme, setTheme}) => {
+const HeaderUser = ({theme, setTheme,name}) => {
   const navigate = useNavigate();
 
   const toggleTheme = () => {
@@ -19,6 +19,8 @@ const HeaderUser = ({theme, setTheme}) => {
       setTheme("light-theme");
     }
   }
+  const initials = name
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
 
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -60,8 +62,8 @@ const HeaderUser = ({theme, setTheme}) => {
           </div>
 
           <div className="user_details_container_headerUser" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
-            <div className="user_avavtar_headerUser">G</div>
-            <p>Gautam</p>
+            <div className="user_avavtar_headerUser">{name_initials}</div>
+            <p>{name}</p>
             { isLogoutMenu ? <RiArrowDropUpLine size={29} className="dropdown_menu_headerUser" /> : <RiArrowDropDownLine size={29} className="dropdown_menu_headerUser" />}
           </div>
 
@@ -82,7 +84,7 @@ const HeaderUser = ({theme, setTheme}) => {
 
         {click ? (
           <>
-          <div className="user_avavtar_headerUser" onClick={handleClick}>G</div>
+          <div className="user_avavtar_headerUser" onClick={handleClick}>{name_initials}</div>
           <div className="logout_container_headerUser">
             <div>
                 <Link to="/">Home</Link>
@@ -94,7 +96,7 @@ const HeaderUser = ({theme, setTheme}) => {
           </>
         ) : (
             <>
-          <div className="user_avavtar_headerUser" onClick={handleClick}>G</div>
+          <div className="user_avavtar_headerUser" onClick={handleClick}>{name_initials}</div>
           
          </>
         )}

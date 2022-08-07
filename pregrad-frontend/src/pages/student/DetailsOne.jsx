@@ -3,9 +3,16 @@ import HeaderUser from "../../components/student/jsx/HeaderUser";
 import "../../components/student/css/DetailsOneStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
+import axios from 'axios'
+import {useNavigate,useParams}  from "react-router-dom"
+import {useCookies} from 'react-cookie'
 
 const DetailsOne = ({theme, setTheme}) => {
 
+  const navigate = useNavigate()
+  const {id} = useParams()
+ const [cookies,setCookie,removeCookie] = useCookies([])
+ const  [user,setUser] = useState({})
   var currentYear = new Date().getFullYear();
   const yearData = [];
   for(let i=0; i<10; i++){
@@ -23,6 +30,8 @@ const DetailsOne = ({theme, setTheme}) => {
   const collegeData = ["Nitte Meenakshi Institute Of Technology", "BVCOE", "MSIT", "New Horizon College Of Engineering", "MAIT", "Netaji Subhash Chandra Bose Subharti Medical College", "Neelam College Of Engineering & Technology", "Naraina Vidya Peeth Engineering & Management Institute"]
   const locationData = ["Delhi, New Delhi", "Mumbai", "Chennai", "Jaipur", "Hyderabad"];
 
+
+
   // College
   const [selectedCollege, setSelectedCollege] = useState("");
  
@@ -31,8 +40,7 @@ const DetailsOne = ({theme, setTheme}) => {
   }
 
   // Year
-  const [selectedYear, setSelectedYear] = useState("");
-
+  const [selectedYear, setSelectedYear] = useState("");      //
   const handleYear = (event) => {
     setSelectedYear(event.target.value)
   }
@@ -49,10 +57,15 @@ const DetailsOne = ({theme, setTheme}) => {
   const [selectedDomains, setSelectedDomains] = useState([]);
 
   const handleDomain = (event) => {
-    setSelectedDomains(current => [...current, event.target.value])
-    setDomains(current => current.filter(domain => {
-      return domain !== event.target.value;
-    }))
+    if(selectedDomains.length < 2){
+      setSelectedDomains(current => [...current, event.target.value])
+      setDomains(current => current.filter(domain => {
+        return domain !== event.target.value;
+      }))
+    }else{
+       console.log("errors")
+    }
+    
   }
 
   const deleteDomain = (value) => {
@@ -88,7 +101,7 @@ const DetailsOne = ({theme, setTheme}) => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [data, setData] = useState({
+  const [socialLink, setsocialLinks] = useState({
     github: "",
     linkedin: "",
     instagram: "",
@@ -96,50 +109,101 @@ const DetailsOne = ({theme, setTheme}) => {
 
   const handleForm = (e) => {
     const {name, value} = e.target;
-    setData({
-      ...data,
+    setsocialLinks({
+      ...socialLink,
       [name]: value
     })
   }
 
+  const detailsOneStudent= {
+    selectedYear,
+    selectedLocation,
+    selectedDomains,
+    selectedSkills,
+    selectedCollege,
+    socialLink
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
-    setFormErrors(validate(data));
+    setFormErrors(validate(socialLink));
     setIsSubmit(true);
   }
 
+  const getUserDetails= async()=>{
+    const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+    setUser(data)
+
+  }
+
   useEffect(() => {
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted")
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true){
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+          getUserDetails()
+          if(user.verified == true){ 
+            navigate(`/student/${id}`)
+          }else{
+            navigate(`/student/${id}/detailsone`)
+          } 
+        }
+      }
     }
-  }, [formErrors]);
+    verifyUser()
+    
+    if( Object.keys(formErrors).length === 0 && isSubmit ){
+      if(user.verified){
+        navigate(`/student/${id}`)
+      }else{
+     axios.post(`http://localhost:8000/student/detailsone/${id}`,{
+      ...detailsOneStudent
+     }).then(({data})=>{
+      console.log(data)
+      if(data.message == "true" && data.verified == true)
+      {
+        navigate(`/student/${id}`)
+      }else{
+        navigate(`/student/${id}/detailsone`)
+      }
+     })
+    }
+    }
+  }, [formErrors,cookies,removeCookie,navigate,user]);
 
   const validate = (values) => {
     const errors = {};
 
-    if(!values.github){
-      errors.github = "link required";
+    if(!values.linkedin){
+      errors.linkedin = "link required";
     }
 
     return errors;
   }
 
-
-
-
   return (
     <div>
+<<<<<<< HEAD
       <HeaderUser theme={theme} setTheme={setTheme} />
+=======
+      <HeaderUser theme={theme} setTheme={setTheme} name={user.name}/>
+>>>>>>> ea9c50fc7cde53b445e63ad6e69e3bc025d69bf3
       <div className="main_detailsOne">
         <div className="greeting_container_detailsOne">
           <div className="greeting_box_detailsOne">
             <div className="greeting_left_section_detailsOne">
               <h4>Welcome to Pregrad</h4>
-              <p><span>Gautam, </span> build your profile to join our community.</p>
+              <p><span>{user.name} , </span> build your profile to join our community.</p>
             </div>
 
             <div className="greeting_right_section_detailsOne">
-              <button className="btn_primary_detailsOne">Submit <BsArrowRightShort size={27} className="btn_primary_logo_detailsOne" />
+              <button className="btn_primary_detailsOne" onClick={submitForm}>Submit <BsArrowRightShort size={27} className="btn_primary_logo_detailsOne" />
               </button>
             </div>
           </div>
@@ -218,20 +282,20 @@ const DetailsOne = ({theme, setTheme}) => {
                 </select>
               </div>
 
-              <div className="form_box_detailsOne box6_detailsOne">
-                <label className="label_detailsOne">Q. Github Link ( Optional )</label>
-                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
+              <div className="form_box_detailsOne box7_detailsOne">
+                <label className="label_detailsOne">Q. Linkedin Link </label>
+                <input type="url" name="linkedin" value={socialLink.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
+                <p>{formErrors.linkedin}</p>
               </div>
 
-              <div className="form_box_detailsOne box7_detailsOne">
-                <label className="label_detailsOne">Q. Linkedin Link ( Optional )</label>
-                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
-                <p>{formErrors.github}</p>
+              <div className="form_box_detailsOne box6_detailsOne">
+                <label className="label_detailsOne">Q. Github Link ( Optional )</label>
+                <input type="url" name="github" value={socialLink.github} onChange={handleForm} placeholder="Enter your github link" />
               </div>
 
               <div className="form_box_detailsOne box8_detailsOne">
               <label className="label_detailsOne">Q. Instagram Link ( Optional )</label>
-                <input type="url" name="instagram" value={data.instagram} onChange={handleForm} placeholder="Enter your Instagram link" />
+                <input type="url" name="instagram" value={socialLink.instagram} onChange={handleForm} placeholder="Enter your Instagram link" />
               </div>
             </div>
           </form>
