@@ -125,7 +125,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
               <div className="form_box_detailsOneCompany">
                  <label>Type of Company*</label>
                  <select onChange={handleType} className="select_detailsOneCompany">
-                  <option value="other">Enter Type of Company</option> 
+                  <option value="other" disabled selected hidden>Enter Type of Company</option> 
                   {typeData.map(val => (
                     <option key={val} value={val}>{val}</option>
                   ))}
@@ -142,7 +142,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
               <div className="form_box_detailsOneCompany">
                  <label>Location of Headquarters*</label>
                  <select onChange={handleLocation} className="select_detailsOneCompany">
-                  <option value="">Enter Location</option> 
+                  <option value="" disabled selected hidden>Enter Location</option> 
                   {locationData.map(val => (
                     <option key={val} value={val}>{val}</option>
                   ))}

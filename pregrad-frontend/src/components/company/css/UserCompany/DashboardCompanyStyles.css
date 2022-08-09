@@ -255,7 +255,7 @@
     margin-left: 2px;
   }
   
-  .form_box_dashboardCompany input {
+  .form_box_dashboardCompany input, .form_box_dashboardCompany textarea {
     outline: none;
     padding: 12px 10px;
     width: 100%;
@@ -268,12 +268,16 @@
     background-color: var(--header-bg);
   }
   
-  .form_box_dashboardCompany input:hover {
+  .form_box_dashboardCompany input:hover, .form_box_dashboardCompany textarea:hover {
     border: 1px solid var(--input-hover);
   }
   
-  .form_box_dashboardCompany input:focus {
+  .form_box_dashboardCompany input:focus, .form_box_dashboardCompany textarea:focus {
     border-color: var(--input-focus);
+  }
+
+  .form_box_dashboardCompany input:read-only {
+    background-color: var(--primary-lightest);
   }
   
   .errors_msg_dashboardCompany {
@@ -339,12 +343,6 @@
 .select_dashboardCompany:focus {
     border-color: var(--input-focus);
 }
-
-
-
-
-
-
 
 
 

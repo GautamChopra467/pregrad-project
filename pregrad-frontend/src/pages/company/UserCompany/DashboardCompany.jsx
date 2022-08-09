@@ -8,7 +8,7 @@ import "../../../components/company/css/UserCompany/DashboardCompanyStyles.css";
 const DashboardCompany = () => {
   const navigate = useNavigate();
 
-  // EDIT FORM
+  // EDIT FORM 1
   const [isModal, setIsModal] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -20,12 +20,17 @@ const DashboardCompany = () => {
     setSelectedLocation(event.target.value);
   }
 
+  const typeData = ["StartUp", "Private Limited Company", "Public Company", "Business Corporation", "Government Agency", "Not Registered Organisation"]
+  const [selectedType, setSelectedType] = useState("");
+ 
+  const handleType = (event) => {
+    setSelectedType(event.target.value);
+  }
+
   const [companyInfo, setCompanyInfo] = useState({
-    name: "",
-    companyname: "",
-    designation: "",
+    linkedinlink: "",
     websitelink: "",
-    mobile: ""
+    about: ""
   });
 
   const handleForm = (e) => {
@@ -44,13 +49,58 @@ const DashboardCompany = () => {
    
   }
 
-  useEffect(() => {
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted")
-    }
-  },[formErrors]);
-
   const validate = (values) => {
+    const errors = {};
+
+    if(!values.linkedinlink){
+      errors.linkedinlink = "Linkedin Id required"
+    }
+
+    if(!selectedLocation){
+      errors.location = "Location required"
+    }
+
+    if(!selectedType){
+      errors.type = "Company Type required"
+    }
+
+    if(!values.about){
+      errors.about = "About company required"
+    }
+
+    return errors;
+  }
+
+
+  // EDIT FORM 2
+  const [isModal2, setIsModal2] = useState(false);
+  const [formErrors2, setFormErrors2] = useState({});
+  const [isSubmit2, setIsSubmit2] = useState(false);
+
+  const [accountInfo, setAccountInfo] = useState({
+    name: "",
+    companyname: "",
+    designation: "", 
+    mobile: "",
+  });
+
+  const handleForm2 = (e) => {
+    const {name, value} = e.target;
+    setAccountInfo({
+      ...accountInfo,
+      [name]: value
+    })
+   
+  }
+
+  const submitForm2 = (e) => {
+    e.preventDefault();
+    setFormErrors2(validate2(accountInfo));
+    setIsSubmit2(true);
+   
+  }
+
+  const validate2 = (values) => {
     const errors = {};
 
     if(!values.name){
@@ -81,12 +131,19 @@ const DashboardCompany = () => {
       errors.mobile = "Mobile number is Invalid";
     }
 
-    if(!selectedLocation){
-      errors.location = "Location required"
-    }
-
     return errors;
   }
+
+
+  useEffect(() => {
+    if( Object.keys(formErrors).length === 0 && isSubmit ){
+      console.log("submitted")
+    }
+
+    if(Object.keys(formErrors2).length == 0 && isSubmit2){
+      console.log("submitted2")
+    }
+  },[formErrors, formErrors2]);
 
   return (
     <div>
@@ -101,11 +158,11 @@ const DashboardCompany = () => {
                 <h2>Google</h2>
                 <p>Private Organisation . Delhi, India</p>
               </div>
-              <HiOutlinePencil className="edit_icon2_dashboardCompany" />
+              <HiOutlinePencil onClick={() => setIsModal(!isModal)} className="edit_icon2_dashboardCompany" />
             </div>
 
             <div className='right_details_section_dashboardCompany'>
-              <HiOutlinePencil className="edit_icon_dashboardCompany" />
+              <HiOutlinePencil onClick={() => setIsModal(!isModal)} className="edit_icon_dashboardCompany" />
               <button onClick={() => navigate("/company/info/profile")} className='btn_primary_profile_dashboardCompany'>View Profile</button>
             </div>
           </div>
@@ -117,7 +174,7 @@ const DashboardCompany = () => {
                   <FiSettings className='settings_icon_dashboardCompany' />
                   <h2>Account Settings</h2>
                 </div>
-                <p onClick={() => setIsModal(!isModal)}>Change</p>
+                <p onClick={() => setIsModal2(!isModal2)}>Change</p>
               </div>
               <div className='bottom_box_account_dashboardCompany'>
                 <p>Change your name, location, company type, etc. from here.</p>
@@ -153,53 +210,58 @@ const DashboardCompany = () => {
         <div className='modal_backgound_dashboardCompany'>
         <div className='modal_container_dashboardCompany'>
           <div className='modal_top_section_dashboardCompany'>
-            <h2>Edit Account Details</h2>
+            <h2>Edit Profile</h2>
             <p className="errors_msg_dashboardCompany">{formErrors.others}</p>
           </div>
  
           <div className='modal_mid_section_dashboardCompany'>
             <form>
               <div className="form_box_dashboardCompany">
-                <label>Name</label>
-                <input type="text" name="name" placeholder="Enter Your Name" onChange={handleForm} />
-                <p className="errors_msg_dashboardCompany">{formErrors.name}</p>
+                <label>Linkedin*</label>
+                <input type="url" name="linkedinlink" placeholder="Linkedin Id" onChange={handleForm} />
+                <p className="errors_msg_dashboardCompany">{formErrors.linkedinlink}</p>
               </div>
- 
+
               <div className="form_box_dashboardCompany">
-                <label>Company Name</label>
-                <input type="text" name="companyname" placeholder="Enter Company Name" onChange={handleForm} />
-                  <p className="errors_msg_dashboardCompany">{formErrors.companyname}</p>
-              </div>
- 
-              <div className="form_box_dashboardCompany">
-                <label>Designation</label>
-                <input type="text" name="designation" placeholder="Enter Your Designation" onChange={handleForm} />
-                <p className="errors_msg_dashboardCompany">{formErrors.designation}</p>
+                <label>Website Link</label>
+                <input type="url" name="websitelink" placeholder="Your Website Link" onChange={handleForm} />
+                <p className="errors_msg_dashboardCompany">{formErrors.websitelink}</p>
               </div>
 
               <div className="form_box_dashboardCompany">
                    <label>Location of Headquarters</label>
                    <select onChange={handleLocation} className="select_dashboardCompany">
-                    <option value="">Enter Location</option> 
+                    <option value="" disabled selected hidden>Enter Location</option> 
                     {locationData.map(val => (
                       <option key={val} value={val}>{val}</option>
                     ))}
                     </select>
                    <p className="errors_msg_dashboardCompany">{formErrors.location}</p>
-                 </div>
- 
-                 <div className="form_box_dashboardCompany">
-                   <label>Company Website Link</label>
-                   <input type="url" name="websitelink" placeholder="Enter Website Link" onChange={handleForm} />
-                   <p className="errors_msg_dashboardCompany">{formErrors.websitelink}</p>
-                 </div>
+              </div>
 
-                 <div className="form_box_dashboardCompany">
-                   <label>Mobile Number</label>
-                   <input type="number" name="mobile" placeholder="Enter Phone Number" onChange={handleForm} />
-                   <p className="errors_msg_dashboardCompany">{formErrors.mobile}</p>
-                 </div>
- 
+              <div className="form_box_dashboardCompany">
+                   <label>Type of Company*</label>
+                   <select onChange={handleType} className="select_dashboardCompany">
+                    <option value="" disabled selected hidden>Choose Type of Company</option> 
+                    {typeData.map(val => (
+                      <option key={val} value={val}>{val}</option>
+                    ))}
+                    </select>
+                   <p className="errors_msg_dashboardCompany">{formErrors.type}</p>
+              </div>
+
+
+              <div className="form_box_dashboardCompany">
+                <label>Established In* (Year)</label>
+                <input readOnly type="number" name="year" placeholder="Year of Establishment" onChange={handleForm} />
+              </div>
+
+              <div className='form_box_dashboardCompany'>
+                <label>About Company*</label>
+                <textarea rows="7" name="about" onChange={handleForm} placeholder="Explain what your company does..."></textarea>
+                <p className="errors_msg_dashboardCompany">{formErrors.about}</p>
+              </div>
+
                  <div className='modal_bottom_section_dashboardCompany'>
                    <button onClick={() => setIsModal(!isModal)} className='btn_light_dashboardCompany'>Cancel</button>
                    <button type='submit' onClick={submitForm} className='btn_primary_dashboardCompany'>Save Details</button>
@@ -209,6 +271,58 @@ const DashboardCompany = () => {
          </div>
       </div>
        
+      )}
+
+
+      {isModal2 && (
+
+        <div className='modal_backgound_dashboardCompany'>
+          <div className='modal_container_dashboardCompany'>
+            <div className='modal_top_section_dashboardCompany'>
+            <h2>Edit Account Details</h2>
+            <p className="errors_msg_dashboardCompany">{formErrors.others}</p>
+          </div>
+
+          <div className='modal_mid_section_dashboardCompany'>
+            <form>
+              <div className="form_box_dashboardCompany">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter Your Name" onChange={handleForm2} />
+                <p className="errors_msg_dashboardCompany">{formErrors2.name}</p>
+              </div>
+
+              <div className="form_box_dashboardCompany">
+                <label>Company Name</label>
+                <input type="text" name="companyname" placeholder="Enter Company Name" onChange={handleForm2} />
+                <p className="errors_msg_dashboardCompany">{formErrors2.companyname}</p>
+              </div>
+
+      <div className="form_box_dashboardCompany">
+        <label>Designation</label>
+        <input type="text" name="designation" placeholder="Enter Your Designation" onChange={handleForm2} />
+        <p className="errors_msg_dashboardCompany">{formErrors2.designation}</p>
+      </div>
+
+         <div className="form_box_dashboardCompany">
+           <label>Mobile Number</label>
+           <input type="number" name="mobile" placeholder="Enter Phone Number"/>
+           <p className="errors_msg_dashboardCompany">{formErrors2.mobile}</p>
+         </div>
+
+         <div className='form_box_dashboardCompany'>
+          <label>Email Address</label>
+          <input readOnly value="harshchopra467@gmail.com" type="email"></input>
+         </div>
+
+         <div className='modal_bottom_section_dashboardCompany'>
+           <button onClick={() => setIsModal2(!isModal2)} className='btn_light_dashboardCompany'>Cancel</button>
+           <button type='submit' onClick={submitForm2} className='btn_primary_dashboardCompany'>Save Details</button>
+         </div>
+       </form>
+  </div>
+ </div>
+        </div>
+
       )}
     </div>
   )
