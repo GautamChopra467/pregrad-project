@@ -347,6 +347,16 @@ input.active:focus {
   color: var(--black-color);
 }
 
+@media screen and (max-width: 1110px) {
+  .right-part_signup {
+    padding: 30px 40px;
+  }
+
+  .form-container_signup {
+    padding: 30px;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .left-part_signup {
     display: none;
@@ -356,14 +366,16 @@ input.active:focus {
     width: 100%;
   }
 
-  .form-main-box_signup {
-    display: flex;
-    flex-direction: column;
-  }
-
   .box6_signup {
     margin-top: 10px;
     margin-bottom: 30px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .form-main-box_signup {
+    display: flex;
+    flex-direction: column;
   }
 }
 
