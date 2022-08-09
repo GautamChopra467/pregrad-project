@@ -41,7 +41,7 @@ const App = () => {
         {/* Company Routes */}
         <Route exact path="/company" element={<HomeCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
-        <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} /> 
         <Route exact path="/company/info/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/:id/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} />
       </Routes>

@@ -189,7 +189,10 @@ const DetailsOne = ({theme, setTheme}) => {
 
   return (
     <div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> e509338a65c9e80ac48e22fcf48da546835abd4d
       <HeaderUser theme={theme} setTheme={setTheme} name={user.name}/>
 
       <div className="main_detailsOne">
@@ -280,18 +283,25 @@ const DetailsOne = ({theme, setTheme}) => {
                 </select>
               </div>
 
+              <div className="form_box_detailsOne box6_detailsOne">
+                <label className="label_detailsOne">Q. Enter Your Introductory Video ( Optional) </label>
+                <input type="url" name="video" value={socialLink.video} onChange={handleForm} placeholder="Video Link" />
+                <p className="video_para_detailsOne">Add your Introductory video to increase your chances of getting selected.</p>
+                <p>{formErrors.video}</p>
+              </div>
+
               <div className="form_box_detailsOne box7_detailsOne">
                 <label className="label_detailsOne">Q. Linkedin Link </label>
                 <input type="url" name="linkedin" value={socialLink.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
                 <p>{formErrors.linkedin}</p>
               </div>
 
-              <div className="form_box_detailsOne box6_detailsOne">
+              <div className="form_box_detailsOne box8_detailsOne">
                 <label className="label_detailsOne">Q. Github Link ( Optional )</label>
                 <input type="url" name="github" value={socialLink.github} onChange={handleForm} placeholder="Enter your github link" />
               </div>
 
-              <div className="form_box_detailsOne box8_detailsOne">
+              <div className="form_box_detailsOne box9_detailsOne">
               <label className="label_detailsOne">Q. Instagram Link ( Optional )</label>
                 <input type="url" name="instagram" value={socialLink.instagram} onChange={handleForm} placeholder="Enter your Instagram link" />
               </div>
