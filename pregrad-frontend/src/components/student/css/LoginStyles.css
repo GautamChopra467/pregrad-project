@@ -282,6 +282,16 @@
   color: var(--black-color);
 }
 
+@media screen and (max-width: 1110px) {
+  .right-part_login {
+    padding: 30px 40px;
+  }
+
+  .form-container_login {
+    padding: 30px;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .left-part_login {
     display: none;
@@ -289,6 +299,11 @@
 
   .right-part_login {
     width: 100%;
+    padding: 40px 60px;
+  }
+
+  .form-container_login {
+    padding: 35px 45px;
   }
 
   .form-main-box_login {

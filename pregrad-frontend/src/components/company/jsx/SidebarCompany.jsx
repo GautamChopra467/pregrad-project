@@ -132,7 +132,7 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          <button className="btn_light_sidebar" onClick={()=>navigate("/company/info/add")}>New Internship</button>
+          <button className="btn_light_sidebar" onClick={()=>navigate("/company/info/addinternship")}>New Internship</button>
         </motion.div>
         )}
 

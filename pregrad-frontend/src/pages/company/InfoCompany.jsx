@@ -13,7 +13,7 @@ const InfoCompany = ({theme, setTheme}) => {
             <Route exact path="/dashboard" element={<DashboardCompany />}  />
             <Route exact path="/listings" element={<ListingsCompany />} />
             <Route exact path="/profile" element={<ProfileCompany />} />
-            <Route exact path="/add" element={<AddInternshipCompany />} />
+            <Route exact path="/addinternship" element={<AddInternshipCompany />} />
         </Routes>
     </SidebarCompany>
   )

@@ -333,7 +333,7 @@
     max-width: 360px;
   }
 
-  .btn_light_projects {
+  .btn_light_projects, .btn_primary_projects {
     padding: 8px 10px;
   }
 }
@@ -349,7 +349,7 @@
     max-width: 280px;
   }
 
-  .btn_light_projects {
+  .btn_light_projects, .btn_primary_projects {
     padding: 6px 7px;
   }
 
@@ -376,7 +376,7 @@
     font-size: 0.8rem;
   }
 
-  .btn_light_projects {
+  .btn_light_projects, .btn_primary_projects {
     font-size: 0.9rem;
     padding: 5px 5px;
   }
