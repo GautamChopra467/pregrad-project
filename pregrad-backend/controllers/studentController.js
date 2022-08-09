@@ -627,3 +627,39 @@ module.exports.profileHealth = async(req,res)=>{
         console.log(err)
     }
 }
+
+// edit profile
+
+module.exports.editProfileDetails = async(req,res)=>{
+  try{
+    const {id} = req.params
+     console.log(req.body.links)
+    const student = await StudentInfo.findOne({id})
+
+    if(student){
+        const upadateStudentInfo = await StudentInfo.updateOne({id},{
+            $set:{
+                socialLinks:req.body.links,
+                skills:req.body.selectedSkills,
+                domain:req.body.selectedDomains,
+
+            }
+        })
+    }
+
+    const registerStudent = await UserRegister.findOne({_id:id})
+
+        if(registerStudent){
+           const updateregisterStudent = await UserRegister.updateOne({_id:id},{
+            $set:{
+               name:req.body.data.name
+            }
+           })
+
+        }
+
+        res.send("Updated")
+}catch(err){
+    console.log(err)
+}
+}

@@ -38,6 +38,7 @@ const Sidebar = ({ children, userid,theme, setTheme, profileHealth}) => {
 useEffect(()=>{ 
 
   getUserDetails()
+  
   // const userHealthProfile = ()=>{
   //   axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
   //     setprofileHealth(data.profileHealth)

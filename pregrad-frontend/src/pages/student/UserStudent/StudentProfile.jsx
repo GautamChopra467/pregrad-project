@@ -15,23 +15,29 @@ import { FiFileText } from "react-icons/fi";
 const StudentProfile = () => {
 
   const navigate = useNavigate()
+
   const {id} = useParams()
+  
  const [cookies,setCookie,removeCookie] = useCookies([])
 
  const  [user,setUser] = useState({})
 
 
+const [Achievement,setAchievement] = useState([])
 
-
- const [Achievement,setAchievement] = useState([])
 const [WorkExperience,setWorkExperience] = useState([])
+
 const [Project,setProject] = useState([])
+
 const [Education,setEducation] = useState([])
+
 const [studentSkill,setStudentSkills] = useState([])
+
 const [studentDomain,setstudentDomain]= useState([])
+
 const [studentSocialLink,setStudentSocialLink]= useState({})
 
-  const skillsData = [
+  let skillsData = [
     "HTML",
     "CSS",
     "JS",
@@ -41,7 +47,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     "JQuery",
     "NodeJs",
     "Figma",
-    "Express",
+    "ExpressJs",
   ];
 
   const getUserData = async()=>{
@@ -63,24 +69,26 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     setUser(data)
   }
 
-  const initials =user.name
+  const initials = user.name
   const name_initials=typeof initials==="string" ?initials.split('')[0]:""
   //Edit Form
-  const domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
+  let domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
   // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
-
   // Domains
-  const [domains, setDomains] = useState(domainsData);
+  const [domains, setDomains] = useState([]);
   const [selectedDomains, setSelectedDomains] = useState([]);
 
+
   const handleDomain = (event) => {
+    if(selectedDomains.length < 2){
     setSelectedDomains(current => [...current, event.target.value])
     setDomains(current => current.filter(domain => {
       return domain !== event.target.value;
     }))
   }
+  }
 
-  const deleteDomain = (value) => {
+  const deleteDomain = (value) => { 
     setSelectedDomains(current => current.filter(selectedDomain => {
       return selectedDomain !== value;
     }))
@@ -109,27 +117,11 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     setSkills(current => [...current, value])
   }
 
-
-
-  const [isModal, setIsModal] = useState(false);
+  const [isModal,  setIsModal ] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [data, setData] = useState({
-    name: "",
-    github: "",
-    linkedin: "",
-    instagram: "",
-  });
-
-  const handleForm = (e) => {
-    const {name, value} = e.target;
-    setData({
-      ...data,
-      [name]: value
-    })
-  }
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -178,6 +170,66 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     })
   }
 
+  const [data, setData] = useState({
+    name: ""
+  });
+
+  const [links,setLinks] = useState({
+    github: "",
+    linkedin: "",
+    instagram:""
+  })
+
+  const handleForm = (e) => {
+    const {name, value} = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  }
+
+  const handleLinks = (e) => {
+    const {name, value} = e.target;
+    setLinks({
+      ...links,
+      [name]: value
+    })
+  }
+
+  const editProfileObject = {
+    data, 
+    selectedSkills,
+    selectedDomains,
+    links
+  }
+
+  const setEditDetails = (event)=>{
+    setIsModal(!isModal)
+    domainsData = domainsData.filter((element)=>!studentDomain.includes(element))
+    setDomains(domainsData)
+    skillsData = skillsData.filter((element)=>!studentSkill.includes(element))
+    setSkills(skillsData)
+    setSelectedDomains(studentDomain)
+    setSelectedSkills(studentSkill)
+    setData({...data,name:user.name})
+    setLinks({...links,github:studentSocialLink.github,linkedin:studentSocialLink.linkedin,instagram:studentSocialLink.instagram})
+
+  }
+
+
+
+  const editProfileDetails = (e)=>{
+    e.preventDefault()
+    axios.put(`http://localhost:8000/student/editprofiledetails/${id}`,{
+      ...editProfileObject
+    }).then(({data})=>{
+      getUserDetails()
+      getUserData()
+      setIsModal(!isModal)
+    })
+  }
+
+
   return (
     <div>
       <div className="sub_header_studentprofile">
@@ -209,7 +261,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <FaRegFileVideo />
                 </div>
 
-              <div className="profile_edit2_studentprofile" onClick={() => setIsModal(!isModal)}>
+              <div className="profile_edit2_studentprofile" onClick={(e)=>setEditDetails(e)}>
                   <BiEditAlt size={18} />
               </div>
             </div>
@@ -236,7 +288,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               </div>
 
               <div className="profile_edit_container_studentprofile">
-                <div className="profile_edit_studentprofile" onClick={() => setIsModal(!isModal)}>
+                <div className="profile_edit_studentprofile" onClick={(e)=>setEditDetails(e)}>
                   <BiEditAlt />
                 </div>
 
@@ -261,7 +313,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               <div className="line_studentprofile"></div>
               <div className="social_links_box_studentprofile">
                 
-                 { studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_studentprofile" />)}
+                {  studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_studentprofile" />)}
                 {  studentSocialLink.linkedin == ""?(""): ( <AiFillLinkedin className="social_links_studentprofile" />)}
                 {  studentSocialLink.instagram == ""?(""): (  <AiFillInstagram className="social_links_studentprofile" />)}
                   
@@ -406,7 +458,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               <form>
                 <div className="form_box_studentprofile">
                   <label>Name</label>
-                  <input type="text" name="name" placeholder="Title of Achievement" onChange={handleForm} />
+                  <input type="text" name="name" placeholder="Your Name" defaultValue={user.name} onChange={handleForm} />
                   <p className="errors_msg_studentprofile">{formErrors.title}</p>
                 </div>
 
@@ -419,7 +471,6 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
-
                 <div className="selected_domains_container_studentprofile">
                   {selectedDomains.map((val) => (
                     <div className="selected_domains_box_studentprofile" key={val}>
@@ -439,7 +490,6 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
-
                 <div className="selected_domains_container_studentprofile">
                   {selectedSkills.map((val) => (
                     <div className="selected_domains_box_studentprofile" key={val}>
@@ -448,27 +498,28 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                     </div>
                   ))}
                 </div>
+              
               </div>
 
               <div className="form_box_studentprofile">
                 <label>Github Link ( Optional )</label>
-                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
+                <input type="url" name="github" defaultValue={studentSocialLink.github} onChange={handleLinks} placeholder="Enter your github link" />
               </div>
 
               <div className="form_box_studentprofile">
                 <label> Linkedin Link ( Optional )</label>
-                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
+                <input type="url" name="linkedin" defaultValue={studentSocialLink.linkedin} onChange={handleLinks} placeholder="Enter your linkedin link" />
                 <p>{formErrors.github}</p>
               </div>
 
               <div className="form_box_studentprofile">
               <label> Instagram Link ( Optional )</label>
-                <input type="url" name="instagram" value={data.instagram} onChange={handleForm} placeholder="Enter your Instagram link" />
+                <input type="url" name="instagram" defaultValue={studentSocialLink.instagram} onChange={handleLinks} placeholder="Enter your Instagram link" />
               </div>
 
                 <div className='modal_bottom_section_studentprofile'>
                   <button className='btn_light_studentprofile' onClick={() => setIsModal(!isModal)}>Cancel</button>
-                  <button type='submit' onClick={submitForm} className='btn_primary_studentprofile'>Save Details</button>
+                  <button type='submit' onClick={(e)=>editProfileDetails(e)} className='btn_primary_studentprofile'>Save Details</button>
                 </div>
               </form>
             </div>       

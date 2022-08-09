@@ -144,7 +144,7 @@ const {email,type} = useParams()
                 <div className="form-full_emailOtp">
                 <div className="form-container-box_emailOtp">
                   <label>Email Address</label>
-                  <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
+                  <input type="text" name="email" placeholder="Your Email Address" readOnly value={user.email} onChange={handleForm} />
                   <p className="errors-msg">{formErrors.email}</p>
                 </div>
 

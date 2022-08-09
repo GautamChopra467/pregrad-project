@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require("bcryptjs");
 
 const companySchema = new mongoose.Schema({
     name:{
@@ -14,9 +15,6 @@ const companySchema = new mongoose.Schema({
     companyname:{
         type:String
     },
-    establish:{
-        type:Number
-    },
     phoneno:{
         type:Number
     },
@@ -26,8 +24,32 @@ const companySchema = new mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    detailFlag:{
+        type: Boolean,
+        default: false
     }
 
 })
+
+companySchema.statics.login = async function(email,password){
+
+    const company = await this.findOne({email})
+
+    if(company){
+        if(company.verified == true){
+            const auth = await bcrypt.compare(password,company.password)
+            if(auth){
+                return company;
+            }
+        }else{
+            return false
+        }
+    }
+    else{
+       return false
+    }
+}
+
 
 module.exports = mongoose.model('Company',companySchema)

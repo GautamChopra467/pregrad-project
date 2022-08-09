@@ -23,6 +23,12 @@ const [profilehealth,setprofileHealth] = useState("20")
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
+  const userHealthProfile = ()=>{
+    axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
+      setprofileHealth(data.profileHealth)
+    })
+  }
+
 useEffect(()=>{
   const verifyUser = async()=>{
     if(!cookies.jwt){
@@ -34,11 +40,6 @@ useEffect(()=>{
         navigate('/login')
       }else{
         navigate(`/student/${id}`)
-        const userHealthProfile = ()=>{
-          axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
-            setprofileHealth(data.profileHealth)
-          })
-        }
         userHealthProfile()
       }
     }

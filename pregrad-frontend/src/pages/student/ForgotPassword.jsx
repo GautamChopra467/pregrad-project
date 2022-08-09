@@ -133,12 +133,12 @@ const ForgotPassword = ({theme, setTheme}) => {
                 <div className="form-full_emailOtp">
                 <div className="form-container-box_emailOtp">
                   <label>Email Address</label>
-                  <input type="text" name="email" placeholder="Your Email Address" value={user.email} onChange={handleForm} />
+                  <input type="text" name="email" placeholder="Your Email Address" readOnly value={user.email} onChange={handleForm} />
                   <p className="errors-msg_emailOtp">{formErrors.email}</p>
                 </div>
 
                 <div className="form-container-box_emailOtp box2_password_emailOtp">
-                    <label>Password</label>
+                    <label>New Password</label>
                     <input type={showPassword ? "password" : "text"} name="password" placeholder="Enter new password" value={user.password} onChange={handleForm} />
                     {
                     showPassword ? (<AiOutlineEye title="Show password" className="hide_password_emailOtp" onClick={()=>setShowPassword(!showPassword)} />) 

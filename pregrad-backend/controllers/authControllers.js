@@ -1,6 +1,6 @@
 const UserRegister = require("../models/userModel");
 const Otp = require('../models/OtpVerifyModel')
-
+const Company = require('../models/companyModel')
 const nodemailer = require('nodemailer')
 const {google} = require('googleapis')
 const bcrypt = require('bcryptjs')
@@ -22,7 +22,6 @@ const createToken =(id)=>{
 const oAuth2Client = new google.auth.OAuth2(process.GOOGLE_CLIENTID,process.env.GOOGLE_SECRET,process.REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:process.env.REFRESH_TOKEN})
 
-
 const transporter = nodemailer.createTransport({
   service:"gmail",
   auth:{
@@ -30,9 +29,9 @@ const transporter = nodemailer.createTransport({
     user:process.env.AUTH_EMAIL,
     clientId:process.env.GOOGLE_CLIENTID,
     clientSecret:process.env.GOOGLE_SECRET,
-    refreshToken:process.env.REFRESH_TOKEN 
+    refreshToken:process.env.REFRESH_TOKEN  
   }
-})
+})         
 
 const sendOtpToVerify = async({email})=>{
  
@@ -90,7 +89,8 @@ try{
   const {email} = req.body
 
   const user = await UserRegister.findOne({email})
-
+ const company = await Company.findOne({email})
+ 
   if(user)
   { 
 
@@ -107,6 +107,27 @@ try{
       if(user.verified == true)
       {
         sendOtpToVerify(user);
+        res.send({ message: "true",type:"forgotpassword" });
+    }else{
+      res.send({ message: "Invalid" });
+    }
+    }
+  }
+  else if(company){
+
+    if(req.query.type == 'register')
+    {
+      if(company.verified == false)
+      {
+      sendOtpToVerify(company);
+      res.send({ message: "true",type:"register" });
+    }else{
+      res.send({ message: "Already Verified" });
+    }
+    }else{
+      if(company.verified == true)
+      {
+        sendOtpToVerify(company);
         res.send({ message: "true",type:"forgotpassword" });
     }else{
       res.send({ message: "Invalid" });
@@ -141,19 +162,35 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`
 
       if(!validOtp){
         res.send({message:"Invalid Otp"})
+        await Otp.deleteOne({email})
       }else{
+
+        const student = await UserRegister.findOne({email})
+
+        const company = await Company.findOne({email})
+
+        if(student){
+
         await UserRegister.updateOne({email},{$set:{
           verified:true
         }})
          await Otp.deleteOne({email})
          res.send({message:"true"})
-      }
+     }else if(company){
+      await Company.updateOne({email},{$set:{
+        verified:true
+      }})
+       await Otp.deleteOne({email})
+       res.send({message:"true"})
+    }
     }
   }
+}else{
+  res.send({message:"Invalid Email"})
+}
 }catch(err){
   console.log(err)
 }
-
 
 }
 
@@ -167,8 +204,24 @@ module.exports.login = async (req, res) => {
 
     if(!user)
     {
+      const company = await Company.login(email,password)
+
+      if(company){
+          
+        const token = createToken(company._id)
+
+        res.cookie("jwt",token,{
+          withCredentials:true,
+          httpOnly:false,
+          maxAge:maxAge*1000
+        })
+    
+        res.send({usertype:"company",id:company._id,verified:company.detailFlag})
+
+      }else{
        res.send({message:"Invalid Credentials"})
     }
+  }
 else{
     const token = createToken(user._id)
 
@@ -188,16 +241,40 @@ else{
 
 module.exports.newPassword = async(req,res)=>{
   try{ 
+
     const {email,password} = req.body
 
-   const salt = await bcrypt.genSalt(10)
-   const hashPassword = await bcrypt.hash(password,salt)
+    const user = await UserRegister.findOne({email})
 
-const user = await UserRegister.findOneAndUpdate({email},{$set:{
-  password:hashPassword
-}})
+    const company = await Company.findOne({email})
 
-res.send({message:"true"})
+    if(user){
+      const salt = await bcrypt.genSalt(10)
+
+      const hashPassword = await bcrypt.hash(password,salt)
+  
+      const updateduser = await UserRegister.findOneAndUpdate({email},{$set:{
+       password:hashPassword
+      }})
+
+      res.send({message:"true"})
+    }
+    else if(company){
+
+      const salt = await bcrypt.genSalt(10)
+
+      const hashPassword = await bcrypt.hash(password,salt)
+  
+      const updatedcompnany = await Company.findOneAndUpdate({email},{$set:{
+       password:hashPassword
+      }})
+
+      res.send({message:"true"})
+    }
+
+    
+
+
 }catch(err){
   console.log(err)
 }

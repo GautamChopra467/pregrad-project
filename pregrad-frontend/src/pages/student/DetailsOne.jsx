@@ -189,11 +189,9 @@ const DetailsOne = ({theme, setTheme}) => {
 
   return (
     <div>
-<<<<<<< HEAD
-      <HeaderUser theme={theme} setTheme={setTheme} />
-=======
+
       <HeaderUser theme={theme} setTheme={setTheme} name={user.name}/>
->>>>>>> ea9c50fc7cde53b445e63ad6e69e3bc025d69bf3
+
       <div className="main_detailsOne">
         <div className="greeting_container_detailsOne">
           <div className="greeting_box_detailsOne">

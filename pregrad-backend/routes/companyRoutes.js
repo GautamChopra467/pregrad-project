@@ -1,10 +1,11 @@
 const express = require('express')
 
 const router = express.Router()
-const { registerCompany,loginCompany} = require('../controllers/companyController')
+
+const { registerCompany} = require('../controllers/companyController')
+
+// register 
 
 router.route('/register').post(registerCompany)
-
-router.route('/login').post(loginCompany)
 
 module.exports = router
