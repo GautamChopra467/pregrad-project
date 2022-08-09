@@ -189,10 +189,7 @@ const DetailsOne = ({theme, setTheme}) => {
 
   return (
     <div>
-<<<<<<< HEAD
 
-=======
->>>>>>> e509338a65c9e80ac48e22fcf48da546835abd4d
       <HeaderUser theme={theme} setTheme={setTheme} name={user.name}/>
 
       <div className="main_detailsOne">

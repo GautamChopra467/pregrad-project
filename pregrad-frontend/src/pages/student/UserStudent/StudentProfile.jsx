@@ -508,26 +508,18 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               
               </div>
 
-              <div className="form_box_studentprofile">
-<<<<<<< HEAD
-                <label>Github Link ( Optional )</label>
-                <input type="url" name="github" defaultValue={studentSocialLink.github} onChange={handleLinks} placeholder="Enter your github link" />
-              </div>
+
 
               <div className="form_box_studentprofile">
-                <label> Linkedin Link ( Optional )</label>
-                <input type="url" name="linkedin" defaultValue={studentSocialLink.linkedin} onChange={handleLinks} placeholder="Enter your linkedin link" />
-                <p>{formErrors.github}</p>
-=======
+
                 <label> Linkedin Link*</label>
-                <input type="url" name="linkedin" value={data.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
-                <p>{formErrors.github}</p>
+                <input type="url" name="linkedin" defaultValue={studentSocialLink.linkedin} onChange={handleLinks} placeholder="Enter your linkedin link" />
+                <p>{formErrors.linkedin}</p>
               </div>
 
               <div className="form_box_studentprofile">
                 <label>Github Link ( Optional )</label>
-                <input type="url" name="github" value={data.github} onChange={handleForm} placeholder="Enter your github link" />
->>>>>>> e509338a65c9e80ac48e22fcf48da546835abd4d
+                <input type="url" name="github" defaultValue={studentSocialLink.linkedin} onChange={handleLinks} placeholder="Enter your github link" />
               </div>
 
               <div className="form_box_studentprofile">
