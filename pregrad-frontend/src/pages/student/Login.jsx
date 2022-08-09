@@ -58,10 +58,14 @@ const Login = ({theme, setTheme}) => {
         }else if(data.usertype === "student" && data.verified == true){
         
           navigate(`/student/${data.id}`);
+        }else if(data.usertype === "company" && data.verified == false){
+          navigate(`/company/${data.id}/detailsone`);
+        }
+        else if(data.usertype === "company" && data.verified == true){
+          navigate(`/company/${data.id}`);
         }
         else {
-          
-          setFormErrors({final: data.message})
+             setFormErrors({final: data.message})
         }
       });
     }

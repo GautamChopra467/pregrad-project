@@ -24,7 +24,8 @@ const {
     updateWorkExperience,
     allStudentData,
     detailsOne,
-    profileHealth
+    profileHealth,
+    editProfileDetails
 
 } = require('../controllers/studentController')
 
@@ -90,5 +91,9 @@ router.route('/detailsone/:id').post(detailsOne)
 //profile health Route
 
 router.route('/profilehealth/:id').get(profileHealth)
+
+//edit profile
+
+router.route('/editprofiledetails/:id').put(editProfileDetails)
 
 module.exports = router

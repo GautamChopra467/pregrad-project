@@ -28,7 +28,6 @@ const SignUp = ({theme, setTheme}) => {
     designation: "",
     email: "",
     password: "",
-    confirmpassword: "",
     mobile: "",
   });
 
@@ -48,7 +47,7 @@ const SignUp = ({theme, setTheme}) => {
 
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/signup", user)
+      axios.post("http://localhost:8000/company/register", user)
       .then( res => {
         if(res.data.message === "true"){
           navigate(`/emailverify/${type}`);
@@ -194,7 +193,7 @@ const SignUp = ({theme, setTheme}) => {
 
                 <div className="form-box_signupcompany box5_signupcompany">
                   <label>Mobile Number</label>
-                  <input type="number" name="mobile" placeholder="Your Mobile Number" value={user.mobile} onChange={handleForm} />
+                  <input type="tel" name="mobile" placeholder="Your Mobile Number" value={user.mobile} onChange={handleForm} />
                   <p className="errors-msg_signupcompany">{formErrors.mobile}</p>
                 </div>
 

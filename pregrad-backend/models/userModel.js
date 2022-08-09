@@ -54,9 +54,6 @@ userRegisterSchema.statics.login = async function(email,password){
     else{
        return false
     }
-
-   
-
 }
 
 const UserRegister =  mongoose.model("UserRegister", userRegisterSchema);
