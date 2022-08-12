@@ -5,6 +5,7 @@ import DashboardCompany from "./UserCompany/DashboardCompany";
 import ListingsCompany from "./UserCompany/ListingsCompany";
 import ProfileCompany from "./UserCompany/ProfileCompany";
 import AddInternshipCompany from "./UserCompany/AddInternshipCompany";
+import ApplicantsCompany from "./UserCompany/ApplicantsCompany";
 
 const InfoCompany = ({theme, setTheme}) => {
   return (
@@ -14,6 +15,7 @@ const InfoCompany = ({theme, setTheme}) => {
             <Route exact path="/listings" element={<ListingsCompany />} />
             <Route exact path="/profile" element={<ProfileCompany />} />
             <Route exact path="/addinternship" element={<AddInternshipCompany />} />
+            <Route exact path="/applicants" element={<ApplicantsCompany />} />
         </Routes>
     </SidebarCompany>
   )

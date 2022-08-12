@@ -189,6 +189,10 @@
   color: var(--primary-color);
 }
 
+.top_box_account_dashboardCompany p:hover, .top_box_applicants_dashboardCompany a:hover {
+  color: var(--primary-dark);
+}
+
 .bottom_box_account_dashboardCompany p,
 .bottom_box_applicants_dashboardCompany p {
   font-size: 0.93rem;

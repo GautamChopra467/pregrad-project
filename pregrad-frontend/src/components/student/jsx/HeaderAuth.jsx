@@ -23,8 +23,10 @@ const HeaderAuth = ({theme, setTheme}) => {
     <div>
       <div className="header_headerauth">
         <div className="left_section_headerauth">
+          <Link to="/">
           {theme === "light-theme" && <img src={Logo} alt="pregrad" />}
           {theme === "dark-theme" && <img src={Logo2} alt="pregrad" />}
+          </Link>
           <Link to="/" className="intern_headerauth">
             Contact
           </Link>

@@ -33,6 +33,7 @@ body {
     --info-color-dark: #68798D;
     --menu-link: #3f4358;
     --primary-background: #cbb4f8;
+    --light-gray: #8A8A8A;
 }
 
 .dark-theme {
@@ -56,7 +57,8 @@ body {
     --info-color-light: #B0B8BF;
     --info-color-dark: #A5AEB6;
     --menu-link: #C7CCD1;
-    --primary-background: #282244;;
+    --primary-background: #282244;
+    --light-gray: #E9EBED;
 }
 
 

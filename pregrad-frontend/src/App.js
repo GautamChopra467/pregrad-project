@@ -9,12 +9,15 @@ import OTPVerify from "./pages/student/OTPVerify";
 import ForgotPassword from "./pages/student/ForgotPassword";
 import ResumeStudent from "./pages/student/UserStudent/ResumeStudent";
 import DetailsOne from "./pages/student/DetailsOne";
+import Resume from "./pages/student/Resume";
 
 
+// Company Routes
 import HomeCompany from "./pages/company/HomeCompany";
 import SignUpCompany from "./pages/company/SignUpCompany";
 import DetailsOneCompany from "./pages/company/DetailsOneCompany";
 import InfoCompany from "./pages/company/InfoCompany";
+import InternshipDetail from "./pages/company/InternshipDetail";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -34,7 +37,8 @@ const App = () => {
         <Route exact path="/otpverify/:email/:type" element={<OTPVerify theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/student/:id/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
-        <Route exact path="/resume" element={<ResumeStudent />} />
+        {/* <Route exact path="/resume" element={<ResumeStudent />} /> */}
+        <Route exact path="/resume" element={<Resume theme={theme} setTheme={setTheme}/>} />
 
 
 
@@ -44,6 +48,7 @@ const App = () => {
         <Route exact path="/company/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} /> 
         <Route exact path="/company/info/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/:id/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/internship" element={<InternshipDetail theme={theme} setTheme={setTheme}/>} />
       </Routes>
     </BrowserRouter>
   );
