@@ -1,16 +1,12 @@
 const Company = require('../models/companyModel')
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer')
-const {google} = require('googleapis')
-const Otp = require('../models/OtpVerifyModel')
 const UserRegister = require("../models/userModel");
-
+const CompanyInfo = require("../models/companyInfoModel")
 
 module.exports.registerCompany = async(req,res)=>{
   try{
 
-  const {name,designation,email,companyname,phoneno,password} = req.body
+  const {name,designation,email,companyname,mobile,password} = req.body
 
   const user = await UserRegister.findOne({email})
 
@@ -34,7 +30,7 @@ module.exports.registerCompany = async(req,res)=>{
       designation,
       email,
       companyname,
-      phoneno,
+      phoneno:mobile,
       password:hashPassword
      })
      await newCompany.save()
@@ -49,5 +45,103 @@ module.exports.registerCompany = async(req,res)=>{
 }
 }
 
+module.exports.getCompanyInfo = async(req,res)=>{
+    const {id} = req.params
+
+    const company = await Company.findOne({_id:id})
+
+    if(company){
+       res.send({
+          name:company.name,
+          companyname:company.companyname,
+          verified:company.detailFlag,
+          email:company.email,
+          designation:company.designation,
+          phoneno:company.phoneno
+       })
+    }else{
+      res.send({
+        message:"Company Not found"
+      })
+    }
+}
 
 
+module.exports.companyDetails = async(req,res)=>{
+  try{
+
+    const {id} = req.params
+
+   const newCompanyInfo = await CompanyInfo.create({
+    id,
+    linkedin:req.body.user.linkedin,
+    websitelink:req.body.user.companylink,
+    typeofcompany:req.body.selectedType,
+    established:req.body.user.year,
+    headquaters:req.body.selectedLocation,
+    description:req.body.user.about
+   })
+
+   await newCompanyInfo.save()
+
+   const company = await Company.findByIdAndUpdate({_id:id},{
+    $set:{
+        detailFlag:true
+    }
+},{
+  new:true
+})
+
+res.send({message:"true",verified:company.detailFlag})
+
+}catch(err)
+{
+  console.log(err)
+}
+ 
+}
+
+module.exports.getCompanyDetails = async(req,res)=>{
+  try{
+    const {id} = req.params
+
+    const company = await CompanyInfo.findOne({id})
+  
+    if(company){
+      res.send(company)
+    }
+  }catch(err){
+    console.log(err)
+  }
+
+}
+
+module.exports.editProfile = async(req,res)=>{
+  const {id} = req.params
+
+  const profile = await CompanyInfo.findOneAndUpdate({id},{
+    $set:{
+      linkedin:req.body.companyInfo.linkedinlink,
+      typeofcompany:req.body.selectedType,
+      headquaters:req.body.selectedLocation,
+      description:req.body.companyInfo.about,
+      websitelink:req.body.companyInfo.websitelink
+    }
+  })
+
+}
+
+module.exports.editAccount = async(req,res)=>{
+
+  const {id} = req.params
+
+  const company = await Company.findOneAndUpdate({id},{
+    $set:{
+      name:req.body.name,
+      companyname:req.body.companyname,
+      designation:req.body.designation,
+      phoneno:req.body.mobile
+    }
+  })
+
+}

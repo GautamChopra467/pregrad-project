@@ -9,6 +9,8 @@ const { signup, login,verifyEmail,verifyOtp,newPassword,getUserDetails} = requir
 
 const {CheckUser} = require('../Middleware/AuthMiddleware')
 
+const {CheckCompany} = require('../Middleware/AuthMiddlewareCompany')
+
 const createToken =(id)=>{
 
     return jwt.sign({id},"AnuragPandey",{
@@ -25,6 +27,8 @@ router.route('/verifyemail').post(verifyEmail)
 router.route('/verifyOtp').post(verifyOtp)
 
 router.route('/student').post(CheckUser)
+
+router.route('/company').post(CheckCompany)
 
 router.route('/newpassword').post(newPassword)
 

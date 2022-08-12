@@ -3,15 +3,29 @@ import "../../components/company/css/DetailsOneCompanyStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import { FaLinkedin } from "react-icons/fa";
 import HeaderAuth from "../../components/student/jsx/HeaderAuth";
+import { useNavigate,useParams } from "react-router-dom";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
 
 const DetailsOneCompany = ({ theme, setTheme }) => {
 
+
     const typeData = ["StartUp", "Private Limited Company", "Public Company", "Business Corporation", "Government Agency", "Not Registered Organisation"]
+
   const [selectedType, setSelectedType] = useState("");
- 
+
+  const navigate = useNavigate()
+
+  const {id} = useParams()
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
+
+   const [companydetails,setCompanyDetails] = useState({})
+
   const handleType = (event) => {
     setSelectedType(event.target.value);
   }
+
 
   const locationData = ["Delhi, New Delhi", "Mumbai", "Chennai", "Jaipur", "Hyderabad"]
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -46,11 +60,59 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
     setIsSubmit(true);
   }
 
-  useEffect(() => {
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted");
+  const getCompanyInfo = async()=>{
+    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+      setCompanyDetails(data)
+      if(data.verified){
+        navigate(`/company/info/${id}/dashboard`)
+      }else{
+        navigate(`/company/${id}/detailsone`)
+       } 
+    })
+    
+  }
+
+  const companyDetails = {
+    user,
+    selectedLocation,
+    selectedType
+  }
+  
+ useEffect(()=>{
+
+  const verifyCompany = ()=>{
+    if(!cookies.jwt){
+      navigate('/login')
+    }else{
+      axios.post(`http://localhost:8000/company`,{},{
+        withCredentials:true,
+      }).then(({data})=>{
+        if(data.id != id){
+          removeCookie("jwt")
+          navigate('/login')
+        }else{ 
+            getCompanyInfo()
+        }
+      })
     }
-  }, [formErrors]);
+  }
+
+  verifyCompany()  
+
+  if( Object.keys(formErrors).length === 0 && isSubmit ){
+      axios.post(`http://localhost:8000/company/companydetails/${id}`,{
+        ...companyDetails
+       }).then(({data})=>{
+        if(data.message == "true" && data.verified == true)
+        {
+          navigate(`/company/info/${id}/dashboard`)
+        }else{
+          navigate(`/company/${id}/detailsone`)
+        }
+       }) 
+  }
+
+},[formErrors,cookies,navigate,removeCookie])
 
   const validate = (values) => {
     const errors = {};
@@ -80,6 +142,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
     return errors;
   }
 
+
   return (
     <div>
       <HeaderAuth theme={theme} setTheme={setTheme} />
@@ -90,7 +153,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
             <div className="greeting_left_section_detailsOneCompany">
               <h4>Welcome to Pregrad</h4>
               <p>
-                <span>Gautam, (Google)</span> build your profile to join our
+                <span>{companydetails.name}, ({companydetails.companyname})</span> build your profile to join our
                 community.
               </p>
             </div>
@@ -98,10 +161,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
             <div className="greeting_right_section_detailsOneCompany">
               <button onClick={submitForm} className="btn_primary_detailsOneCompany">
                 Submit{" "}
-                <BsArrowRightShort
-                  size={27}
-                  className="btn_primary_logo_detailsOneCompany"
-                />
+                <BsArrowRightShort size={27} className="btn_primary_logo_detailsOneCompany"/>
               </button>
             </div>
           </div>
