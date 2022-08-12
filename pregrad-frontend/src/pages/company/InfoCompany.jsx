@@ -5,11 +5,19 @@ import DashboardCompany from "./UserCompany/DashboardCompany";
 import ListingsCompany from "./UserCompany/ListingsCompany";
 import ProfileCompany from "./UserCompany/ProfileCompany";
 import AddInternshipCompany from "./UserCompany/AddInternshipCompany";
+
 import ApplicantsCompany from "./UserCompany/ApplicantsCompany";
 
+import { useEffect } from "react";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
+import { useNavigate,useParams } from 'react-router-dom';
+
+
 const InfoCompany = ({theme, setTheme}) => {
+
   return (
-    <SidebarCompany theme={theme} setTheme={setTheme}>
+    <SidebarCompany  theme={theme} setTheme={setTheme}>
         <Routes>
             <Route exact path="/dashboard" element={<DashboardCompany />}  />
             <Route exact path="/listings" element={<ListingsCompany />} />

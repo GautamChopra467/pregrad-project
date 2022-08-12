@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import axios from "axios"
 
 const Header2Company = (props) => {
+
     const toggleTheme = () => {
         if(props.theme === "light-theme"){
           props.setTheme("dark-theme");
@@ -22,9 +23,9 @@ const Header2Company = (props) => {
         }
       }
     
-      // const initials = props.user.name
-      // const name_initials=typeof initials==="string" ?initials.split('')[0]:""
-    
+      const initials = props.name
+
+      const name_initials=typeof initials==="string" ?initials.split('')[0]:""
     
       const [click, setClick] = useState(false);
       const handleClick = () => setClick(!click);
@@ -70,8 +71,8 @@ const Header2Company = (props) => {
               </div>
     
               <div className="user_details_container_headerStudent" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
-                <div className="user_avavtar_headerStudent">G</div>
-                <p>Gautam</p>
+                <div className="user_avavtar_headerStudent">{name_initials}</div>
+                <p>{props.name}</p>
                 { isLogoutMenu ? <RiArrowDropUpLine size={29} className="user_avatar_logo_headerStudent" /> : <RiArrowDropDownLine size={29} className="user_avatar_logo_headerStudent" />}
               </div>
     
@@ -94,7 +95,7 @@ const Header2Company = (props) => {
     
             {click ? (
               <>
-              <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
+              <div className="user_avavtar_headerStudent" onClick={handleClick}>{name_initials}</div>
               <div className="logout_container_headerStudent">
                 <div>
                     <Link to="/">Home</Link>
@@ -106,7 +107,7 @@ const Header2Company = (props) => {
               </>
             ) : (
                 <>
-              <div className="user_avavtar_headerStudent" onClick={handleClick}>G</div>
+              <div className="user_avavtar_headerStudent" onClick={handleClick}>{name_initials}</div>
               
              </>
             )}

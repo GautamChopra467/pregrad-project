@@ -10,10 +10,19 @@ import {useCookies} from 'react-cookie'
 const DetailsOne = ({theme, setTheme}) => {
 
   const navigate = useNavigate()
+
   const {id} = useParams()
+
  const [cookies,setCookie,removeCookie] = useCookies([])
+
  const  [user,setUser] = useState({})
+
+ const [video,setVideo] = useState("")
+
   var currentYear = new Date().getFullYear();
+
+
+
   const yearData = [];
   for(let i=0; i<10; i++){
     if(i<7){
@@ -96,7 +105,6 @@ const DetailsOne = ({theme, setTheme}) => {
     }))
     setSkills(current => [...current, value])
   }
-
   // Form
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -104,7 +112,7 @@ const DetailsOne = ({theme, setTheme}) => {
   const [socialLink, setsocialLinks] = useState({
     github: "",
     linkedin: "",
-    instagram: "",
+    instagram: ""
   });
 
   const handleForm = (e) => {
@@ -115,13 +123,22 @@ const DetailsOne = ({theme, setTheme}) => {
     })
   }
 
+  const handleVideo = (e) => {
+    const {name, value} = e.target;
+    setVideo({
+      ...video,
+      [name]: value
+    })
+  }
+
   const detailsOneStudent= {
     selectedYear,
     selectedLocation,
     selectedDomains,
     selectedSkills,
     selectedCollege,
-    socialLink
+    socialLink,
+    video
   }
 
   const submitForm = (e) => {
@@ -131,15 +148,20 @@ const DetailsOne = ({theme, setTheme}) => {
   }
 
   const getUserDetails= async()=>{
-    const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
-    setUser(data)
 
+    axios.get(`http://localhost:8000/userDetails/${id}`).then(({data})=>{
+      if(data.verified){
+        navigate(`/student/${id}/internships`)
+      }else{
+        navigate(`/student/${id}/detailsone`)
+       } 
+    })
   }
 
   useEffect(() => {
+    
     const verifyUser = async()=>{
       if(!cookies.jwt){
-        
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
@@ -148,34 +170,24 @@ const DetailsOne = ({theme, setTheme}) => {
           navigate('/login')
         }else{
           getUserDetails()
-          if(user.verified == true){ 
-            navigate(`/student/${id}`)
-          }else{
-            navigate(`/student/${id}/detailsone`)
-          } 
         }
       }
     }
     verifyUser()
     
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      if(user.verified){
-        navigate(`/student/${id}`)
-      }else{
      axios.post(`http://localhost:8000/student/detailsone/${id}`,{
       ...detailsOneStudent
      }).then(({data})=>{
-      console.log(data)
       if(data.message == "true" && data.verified == true)
       {
-        navigate(`/student/${id}`)
+        navigate(`/student/${id}/internships`)
       }else{
         navigate(`/student/${id}/detailsone`)
       }
      })
     }
-    }
-  }, [formErrors,cookies,removeCookie,navigate,user]);
+  }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
@@ -189,6 +201,7 @@ const DetailsOne = ({theme, setTheme}) => {
 
   return (
     <div>
+
       <HeaderUser theme={theme} setTheme={setTheme} name={user.name}/>
 
       <div className="main_detailsOne">
@@ -281,7 +294,7 @@ const DetailsOne = ({theme, setTheme}) => {
 
               <div className="form_box_detailsOne box6_detailsOne">
                 <label className="label_detailsOne">Q. Enter Your Introductory Video ( Optional) </label>
-                <input type="url" name="video" value={socialLink.video} onChange={handleForm} placeholder="Video Link" />
+                <input type="url" name="video" value={video} onChange={handleVideo} placeholder="Video Link" />
                 <p className="video_para_detailsOne">Add your Introductory video to increase your chances of getting selected.</p>
                 <p>{formErrors.video}</p>
               </div>

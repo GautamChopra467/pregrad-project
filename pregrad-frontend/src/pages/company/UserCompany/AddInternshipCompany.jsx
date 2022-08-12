@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../../../components/company/css/UserCompany/AddInternshipCompanyStyles.css";
 import { FaTimes } from "react-icons/fa";
-
+import axios from 'axios'
+import {useParams} from 'react-router-dom'
 const AddInternshipCompany = () => {
   // TITLES
+
+  const {id} = useParams()
+
   const titleData = [
     "Front-End",
     "Back-End",
@@ -23,7 +27,9 @@ const AddInternshipCompany = () => {
     "ECONOMICS AND POLICY",
   ];
 
+
   const [selectedTitles, setSelectedTitles] = useState("");
+
   const handleTitle = (event) => {
     setSelectedTitles(event.target.value);
   };
@@ -52,6 +58,7 @@ const AddInternshipCompany = () => {
     "Photoshop",
     "Illustrator",
   ];
+
   const [skills, setSkills] = useState(skillsData);
   const [selectedSkills, setSelectedSkills] = useState([]);
 
@@ -189,7 +196,7 @@ const AddInternshipCompany = () => {
 
     if(!values.maxstipend){
       errors.maxstipend = "Maximum stipend required"
-    }else if(values.maxstipend <= values.minstipend){
+    }else if(values.maxstipend >= values.minstipend){
       errors.maxstipend = "Maximum stipend should be greater than minimum"
     }
 
@@ -200,11 +207,32 @@ const AddInternshipCompany = () => {
     return errors;
   }
 
+  const addInternship = {
+    info,
+    selectedTitles,
+    selectedOfficeType,
+    selectedSkills,
+    selectedDuration,
+    selectedMode,
+    selectedExperience,
+    letterCheckbox,
+    certiCheckbox,
+    jobCheckbox,
+    bonusCheckbox
+    }
+  
+
   useEffect(() => {
     if(Object.keys(formErrors).length === 0 && isSubmit){
-      console.log("submitted")
+      axios.post(`http://localhost:8000/company/addinternships/${id}`,{
+        ...addInternship
+      }).then(({data})=>{
+        console.log(data)
+      })
     }
   }, [formErrors])
+
+
 
   return (
     <div>

@@ -56,13 +56,14 @@ const Login = ({theme, setTheme}) => {
          
           navigate(`/student/${data.id}/detailsone`);
         }else if(data.usertype === "student" && data.verified == true){
-        
-          navigate(`/student/${data.id}`);
+         
+          navigate(`/student/${data.id}/internships`);
         }else if(data.usertype === "company" && data.verified == false){
           navigate(`/company/${data.id}/detailsone`);
         }
         else if(data.usertype === "company" && data.verified == true){
-          navigate(`/company/${data.id}`);
+        
+          navigate(`/company/info/${data.id}/dashboard`);
         }
         else {
              setFormErrors({final: data.message})

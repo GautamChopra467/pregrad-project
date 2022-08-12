@@ -547,7 +547,8 @@ module,exports.detailsOne = async(req,res)=>{
                 skills:req.body.selectedSkills,
                 domain:req.body.selectedDomains,
                 socialLinks:req.body.socialLink,
-                location:req.body.selectedLocation
+                location:req.body.selectedLocation,
+                video:req.body.video
                }
            })
 
@@ -567,8 +568,10 @@ module,exports.detailsOne = async(req,res)=>{
             $set:{
                 detailFlag:true
             }
-        })
- 
+        },{
+            new:true
+          })
+
         res.send({message:"true",verified:user.detailFlag})
        
     }catch(err){

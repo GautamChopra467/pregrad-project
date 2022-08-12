@@ -215,7 +215,7 @@ module.exports.login = async (req, res) => {
           httpOnly:false,
           maxAge:maxAge*1000
         })
-    
+
         res.send({usertype:"company",id:company._id,verified:company.detailFlag})
 
       }else{
@@ -282,15 +282,25 @@ module.exports.newPassword = async(req,res)=>{
 
 module.exports.getUserDetails = async(req,res)=>{
 
-  const {id} = req.params
+  try{
+    const {id} = req.params
 
-  const user = await UserRegister.findOne({_id:id})
-
-  res.send({
-    name:user.name,
-    email:user.email,
-    verified:user.detailFlag
-  })
-
+    const user = await UserRegister.findOne({_id:id})
+  
+    if(user){
+  
+    res.send({
+      name:user.name,
+      email:user.email,
+      verified:user.detailFlag
+    })
+  
+  }else{
+    res.send({message:"User not found"})
+  }
+  }catch(err){
+    console.log(err)
+  }
+  
 
 }

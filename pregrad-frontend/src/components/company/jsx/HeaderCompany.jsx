@@ -7,7 +7,10 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Header = ({theme, setTheme}) => {
+
   const navigate = useNavigate();
+
+
 
   const toggleTheme = () => {
     if(theme === "light-theme"){

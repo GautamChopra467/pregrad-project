@@ -9,24 +9,28 @@ import { IoIosStats } from "react-icons/io";
 import { IoDocumentOutline } from "react-icons/io5"
 import { BsBriefcase } from "react-icons/bs";
 import axios from 'axios'
-import {useParams} from 'react-router-dom'
 import { TbFileCertificate } from "react-icons/tb";
-import {  NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate,useParams } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
 const SidebarCompany = ({ children, theme, setTheme }) => {
+
     const navigate = useNavigate();
+
+    const {id} = useParams()
 
     const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
 
+    const [companydetails,setCompanyDetails] = useState({})
+
     const routes = [
         {
-          path: `/company/info/dashboard`,
+          path: `/company/info/${id}/dashboard`,
           name: "dashboard",
           icon: <IoIosStats size={isOpenSidebar ? "20" : "24"} />,
         },
         {
-          path: `/company/info/listings`,
+          path: `/company/info/${id}/listings`,
           name: "my listings",
           icon: <IoDocumentOutline size={isOpenSidebar ? "20" : "24"} />,
         }
@@ -85,6 +89,15 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
         }
       }
 
+      const getCompanyInfo = ()=>{
+        axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+        setCompanyDetails(data)
+    })
+    }
+      useEffect(()=>{
+        getCompanyInfo()
+      })
+
 
   return (
     <div className="main_container_sidebar">
@@ -120,9 +133,9 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
                 <img src={UserImage} alt="user" />
               </div>
               <h2>
-                Hello, <span>Gautam</span>
+                Hello, <span>{companydetails.name}</span>
               </h2>
-              <h3>harshchopra467@gmail.com</h3>
+              <h3>{companydetails.email}</h3>
             </motion.div>
           )}
         </AnimatePresence>
@@ -132,7 +145,7 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          <button className="btn_light_sidebar" onClick={()=>navigate("/company/info/addinternship")}>New Internship</button>
+          <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship`)}>New Internship</button>
         </motion.div>
         )}
 
@@ -175,11 +188,12 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
         }}
         style = {{position:"absolute"}}
       >
-        <Header2Company
+        <Header2Company 
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
           theme={theme}
           setTheme={setTheme}
+          name={companydetails.name}
         />
         {children}
       </motion.main>

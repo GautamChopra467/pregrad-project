@@ -518,7 +518,9 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
 
               <div className="form_box_studentprofile">
                 <label>Github Link ( Optional )</label>
-                <input type="url" name="github" value={studentSocialLink.github} onChange={handleLinks} placeholder="Enter your github link" />
+
+               <input type="url" name="github" value={studentSocialLink.github} onChange={handleLinks} placeholder="Enter your github link" />
+
               </div>
 
               <div className="form_box_studentprofile">

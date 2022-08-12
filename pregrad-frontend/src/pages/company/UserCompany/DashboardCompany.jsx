@@ -2,11 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { HiOutlinePencil } from "react-icons/hi";
 import { MdOutlinePeopleAlt } from 'react-icons/md';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link,useParams } from 'react-router-dom';
 import "../../../components/company/css/UserCompany/DashboardCompanyStyles.css";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
+
 
 const DashboardCompany = () => {
+  
   const navigate = useNavigate();
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const {id} = useParams()
+  
+  const [companydetails,setCompanyDetails] = useState({})
+ 
+  const [companyInfoDetails,setCompanyInfoDetails] = useState({})
 
   // EDIT FORM 1
   const [isModal, setIsModal] = useState(false);
@@ -46,7 +58,7 @@ const DashboardCompany = () => {
     e.preventDefault();
     setFormErrors(validate(companyInfo));
     setIsSubmit(true);
-   
+     
   }
 
   const validate = (values) => {
@@ -72,7 +84,6 @@ const DashboardCompany = () => {
   }
 
 
-  // EDIT FORM 2
   const [isModal2, setIsModal2] = useState(false);
   const [formErrors2, setFormErrors2] = useState({});
   const [isSubmit2, setIsSubmit2] = useState(false);
@@ -134,16 +145,85 @@ const DashboardCompany = () => {
     return errors;
   }
 
+  const getCompanyInfo = ()=>{
+    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    setCompanyDetails(data)
+})
+}
 
+const getCompanyDetails = ()=>{
+  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+    setCompanyInfoDetails(data)
+}) 
+}
+ 
   useEffect(() => {
+
+    const verifyCompany = ()=>{
+
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        axios.post(`http://localhost:8000/company`,{},{
+          withCredentials:true,
+        }).then(({data})=>{
+
+          if(data.id != id){
+            removeCookie("jwt")
+            navigate('/login')
+          }else{
+             getCompanyInfo()
+             getCompanyDetails()
+            navigate(`/company/info/${id}/dashboard`)
+          } 
+        })
+      }
+    }
+  
+    verifyCompany()  
+  
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("submitted")
+        axios.put(`http://localhost:8000/company/editprofile/${id}`,{
+          ...editDetailsProfile
+        })
+        setIsModal(!isModal)
     }
 
     if(Object.keys(formErrors2).length == 0 && isSubmit2){
-      console.log("submitted2")
-    }
-  },[formErrors, formErrors2]);
+      axios.put(`http://localhost:8000/company/editaccount/${id}`,{
+        ...accountInfo
+      })
+      setIsModal2(!isModal2)
+    } 
+  },[formErrors, formErrors2,cookies,setCookie,removeCookie]);
+
+  const initials = companydetails.companyname
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+
+
+  const setEditProfile = ()=>{
+    setIsModal(!isModal)
+    setCompanyInfo({...companyInfo,linkedinlink:companyInfoDetails.linkedin,websitelink:companyInfoDetails.websitelink,
+    about:companyInfoDetails.description })
+    setSelectedLocation(companyInfoDetails.headquaters)
+    setSelectedType(companyInfoDetails.typeofcompany)
+  }
+
+  const editDetailsProfile = {
+    companyInfo,
+    selectedLocation,
+    selectedType
+  }
+
+  const editAccountDetails = ()=>{
+    setIsModal2(!isModal2)
+    setAccountInfo({...accountInfo,
+    name:companydetails.name,
+    companyname:companydetails.companyname,
+    designation:companydetails.designation, 
+    mobile: companydetails.phoneno
+  })
+  }
 
   return (
     <div>
@@ -152,18 +232,18 @@ const DashboardCompany = () => {
           <div className='top_details_section_dashboardCompany'>
             <div className='left_details_section_dashboardCompany'>
               <div className='logo_container_dashboardCompany'>
-                G
+                {name_initials}
               </div>
               <div className='info_container_dashboardCompany'>
-                <h2>Google</h2>
-                <p>Private Organisation . Delhi, India</p>
+                <h2>{companydetails.companyname}</h2>
+                <p>{companyInfoDetails.typeofcompany} , {companyInfoDetails.headquaters}</p>
               </div>
-              <HiOutlinePencil onClick={() => setIsModal(!isModal)} className="edit_icon2_dashboardCompany" />
+              <HiOutlinePencil onClick={setEditProfile} className="edit_icon2_dashboardCompany" />
             </div>
 
             <div className='right_details_section_dashboardCompany'>
-              <HiOutlinePencil onClick={() => setIsModal(!isModal)} className="edit_icon_dashboardCompany" />
-              <button onClick={() => navigate("/company/info/profile")} className='btn_primary_profile_dashboardCompany'>View Profile</button>
+              <HiOutlinePencil onClick={setEditProfile} className="edit_icon_dashboardCompany" />
+              <button onClick={() => navigate(`/company/info/${id}/profile`)} className='btn_primary_profile_dashboardCompany'>View Profile</button>
             </div>
           </div>
 
@@ -174,7 +254,7 @@ const DashboardCompany = () => {
                   <FiSettings className='settings_icon_dashboardCompany' />
                   <h2>Account Settings</h2>
                 </div>
-                <p onClick={() => setIsModal2(!isModal2)}>Change</p>
+                <p onClick={editAccountDetails}>Change</p>
               </div>
               <div className='bottom_box_account_dashboardCompany'>
                 <p>Change your name, location, company type, etc. from here.</p>
@@ -218,20 +298,20 @@ const DashboardCompany = () => {
             <form>
               <div className="form_box_dashboardCompany">
                 <label>Linkedin*</label>
-                <input type="url" name="linkedinlink" placeholder="Linkedin Id" onChange={handleForm} />
+                <input type="url" name="linkedinlink" placeholder="Linkedin Id" defaultValue={companyInfoDetails.linkedin} onChange={handleForm} />
                 <p className="errors_msg_dashboardCompany">{formErrors.linkedinlink}</p>
               </div>
 
               <div className="form_box_dashboardCompany">
                 <label>Website Link</label>
-                <input type="url" name="websitelink" placeholder="Your Website Link" onChange={handleForm} />
+                <input type="url" name="websitelink" defaultValue={companyInfoDetails.websitelink} placeholder="Your Website Link" onChange={handleForm} />
                 <p className="errors_msg_dashboardCompany">{formErrors.websitelink}</p>
               </div>
 
               <div className="form_box_dashboardCompany">
                    <label>Location of Headquarters</label>
                    <select onChange={handleLocation} className="select_dashboardCompany">
-                    <option value="" disabled selected hidden>Enter Location</option> 
+                    <option value="" disabled selected hidden>{companyInfoDetails.headquaters}</option> 
                     {locationData.map(val => (
                       <option key={val} value={val}>{val}</option>
                     ))}
@@ -242,7 +322,7 @@ const DashboardCompany = () => {
               <div className="form_box_dashboardCompany">
                    <label>Type of Company*</label>
                    <select onChange={handleType} className="select_dashboardCompany">
-                    <option value="" disabled selected hidden>Choose Type of Company</option> 
+                    <option value="" disabled selected hidden>{companyInfoDetails.typeofcompany}</option> 
                     {typeData.map(val => (
                       <option key={val} value={val}>{val}</option>
                     ))}
@@ -253,12 +333,12 @@ const DashboardCompany = () => {
 
               <div className="form_box_dashboardCompany">
                 <label>Established In* (Year)</label>
-                <input readOnly type="number" name="year" placeholder="Year of Establishment" onChange={handleForm} />
+                <input readOnly type="number" name="year" placeholder="Year of Establishment" value={companyInfoDetails.established} />
               </div>
 
               <div className='form_box_dashboardCompany'>
                 <label>About Company*</label>
-                <textarea rows="7" name="about" onChange={handleForm} placeholder="Explain what your company does..."></textarea>
+                <textarea rows="7" name="about" onChange={handleForm} defaultValue={companyInfoDetails.description} placeholder="Explain what your company does..."></textarea>
                 <p className="errors_msg_dashboardCompany">{formErrors.about}</p>
               </div>
 
@@ -287,31 +367,31 @@ const DashboardCompany = () => {
             <form>
               <div className="form_box_dashboardCompany">
                 <label>Name</label>
-                <input type="text" name="name" placeholder="Enter Your Name" onChange={handleForm2} />
+                <input type="text" name="name" defaultValue={companydetails.name} placeholder="Enter Your Name" onChange={handleForm2} />
                 <p className="errors_msg_dashboardCompany">{formErrors2.name}</p>
               </div>
 
               <div className="form_box_dashboardCompany">
                 <label>Company Name</label>
-                <input type="text" name="companyname" placeholder="Enter Company Name" onChange={handleForm2} />
+                <input type="text" name="companyname" defaultValue={companydetails.companyname} placeholder="Enter Company Name" onChange={handleForm2} />
                 <p className="errors_msg_dashboardCompany">{formErrors2.companyname}</p>
               </div>
 
       <div className="form_box_dashboardCompany">
         <label>Designation</label>
-        <input type="text" name="designation" placeholder="Enter Your Designation" onChange={handleForm2} />
+        <input type="text" name="designation" defaultValue={companydetails.designation} placeholder="Enter Your Designation" onChange={handleForm2} />
         <p className="errors_msg_dashboardCompany">{formErrors2.designation}</p>
       </div>
 
          <div className="form_box_dashboardCompany">
            <label>Mobile Number</label>
-           <input type="number" name="mobile" placeholder="Enter Phone Number"/>
+           <input type="number" defaultValue={companydetails.phoneno}  name="mobile" placeholder="Enter Phone Number" onChange={handleForm2}/>
            <p className="errors_msg_dashboardCompany">{formErrors2.mobile}</p>
          </div>
 
          <div className='form_box_dashboardCompany'>
           <label>Email Address</label>
-          <input readOnly value="harshchopra467@gmail.com" type="email"></input>
+          <input readOnly value={companydetails.email} type="email"></input>
          </div>
 
          <div className='modal_bottom_section_dashboardCompany'>
@@ -322,7 +402,6 @@ const DashboardCompany = () => {
   </div>
  </div>
         </div>
-
       )}
     </div>
   )

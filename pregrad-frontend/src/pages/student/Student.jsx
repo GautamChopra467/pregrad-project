@@ -39,7 +39,7 @@ useEffect(()=>{
         removeCookie("jwt")
         navigate('/login')
       }else{
-        navigate(`/student/${id}`)
+        navigate(`/student/${id}/internships`)
         userHealthProfile()
       }
     }

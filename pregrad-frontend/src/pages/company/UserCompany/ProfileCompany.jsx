@@ -1,9 +1,69 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import "../../../components/company/css/UserCompany/ProfileCompanyStyles.css";
 import ProfileBackground from "../../../img/profile-background.jpg";
 import { BsLinkedin } from "react-icons/bs";
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
+import { useNavigate,useParams,Link } from 'react-router-dom';
 
 const ProfileCompany = () => {
+
+
+  const navigate = useNavigate();
+
+  const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const {id} = useParams()
+
+  const [companydetails,setCompanyDetails] = useState({})
+ 
+  const [companyInfoDetails,setCompanyInfoDetails] = useState({})
+
+  const getCompanyInfo = ()=>{
+    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    setCompanyDetails(data)
+})
+}
+
+const getCompanyDetails = ()=>{
+  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+   setCompanyInfoDetails(data)
+})
+}
+
+
+  useEffect(() => {
+
+    const verifyCompany = ()=>{
+
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        axios.post(`http://localhost:8000/company`,{},{
+          withCredentials:true,
+        }).then(({data})=>{
+
+          if(data.id != id){
+            removeCookie("jwt")
+            navigate('/login')
+          }else{
+             getCompanyInfo()
+             getCompanyDetails()
+            navigate(`/company/info/${data.id}/profile`)
+          } 
+        })
+      }
+    }
+  
+    verifyCompany()  
+  
+  },[cookies,setCookie,removeCookie,navigate]);
+
+  
+  const initials = companydetails.companyname
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+
+
   return (
     <div>
       <div className="main_container_profilecompany">
@@ -31,22 +91,22 @@ const ProfileCompany = () => {
 
           <div className="profile_user_details_profilecompany">
             <div className="user_image_profilecompany">
-              G
+              {name_initials}
             </div>
             <div className="profile_info_profilecompany">
               <div className="info_container_profilecompany">
                 <div className="info_left_section_profilecompany">
-                  <h5>Google</h5>
-                  <p>Private Organisation</p>
+                  <h5>{companydetails.companyname}</h5>
+                  <p>{companyInfoDetails.typeofcompany}</p>
                 </div>
                 <div className="info_middle_section_profilecompany">
-                  <h5>harshchopra467@gmail.com</h5>
+                  <h5>{companydetails.email}</h5>
                 </div>
               </div>
 
               <div className="profile_edit_container_profilecompany">
                 <div className="profile_edit_profilecompany">
-                  <BsLinkedin />
+                  <a href={companyInfoDetails.linkedin}><BsLinkedin /></a>
                 </div>
               </div>
             </div>
@@ -59,8 +119,8 @@ const ProfileCompany = () => {
               <h4>Representative</h4>
               <div className="line_profilecompany"></div>
               <div className='owner_details_container'>
-                <h3>Gautam Chopra</h3>
-                <p>H.R.</p>
+                <h3>{companydetails.name}</h3>
+                <p>{companydetails.designation}</p>
               </div>
             </div>
           </div>
@@ -71,7 +131,7 @@ const ProfileCompany = () => {
               <div className="line_profilecompany"></div>
               <div className='owner_details_container'>
                 <h3>Location | Established In</h3>
-                <p>Delhi, India | From 2002</p>
+                <p>{companyInfoDetails.headquaters} | {companyInfoDetails.established}</p>
               </div>
             </div>
           </div>
@@ -81,7 +141,7 @@ const ProfileCompany = () => {
               <h4>Description of Company</h4>
               <div className="line_profilecompany"></div>
               <div className='owner_details_container'>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                <p>{companyInfoDetails.description}.</p>
               </div>
             </div>
       </div>

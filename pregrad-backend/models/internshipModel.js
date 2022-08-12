@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 
 const internshipSchema = new mongoose.Schema({
+    id:{
+        type:String
+    },
     title:{
       type:String,
       trim:true
@@ -15,16 +18,16 @@ const internshipSchema = new mongoose.Schema({
         type:String
     },
     perks:{
-        type:Number
+        type:Object,
+        default:{}
     },
     stipend:{
-        type:Number
-    },
-    noofhours:{
-        type:Number
+        type:Object,
+        default:{}
     },
     skills:{
-        type:String
+        type:Array,
+        default:[]
     },
     createdAt:{
         type:Date,
@@ -38,8 +41,13 @@ const internshipSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        default:"Open",
-        enum:["Open","Closed"]
+        default:"Open"
+    },
+    startfrom:{
+        type:String
+    },
+    jobmode:{
+        type:String
     }
 
 })

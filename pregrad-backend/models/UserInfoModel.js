@@ -101,7 +101,8 @@ const UserInfoSchema = new mongoose.Schema({
    },
    video:{
     type:String,
-    trim: true
+    trim: true,
+    default:""
    }
 })
    
