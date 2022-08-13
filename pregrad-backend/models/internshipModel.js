@@ -48,6 +48,9 @@ const internshipSchema = new mongoose.Schema({
     },
     jobmode:{
         type:String
+    },
+    duration:{
+        type:String
     }
 
 })

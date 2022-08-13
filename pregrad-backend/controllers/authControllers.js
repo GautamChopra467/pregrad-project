@@ -59,28 +59,36 @@ const result = await transporter.sendMail(mailOptions)
 }
 
 module.exports.signup = async (req, res) => {
+
   const { name, email, password, mobile } = req.body;
 
-  UserRegister.findOne({ email: email }, async (err, user) => {
-    if (user) {
-      res.send({ message: "User Already Registered" });
-    } else {
-      const UserData = new UserRegister({
-        name: name,
-        email: email,
-        password: password,
-        mobile: mobile,
-      });
+  const company = await Company.findOne({email})
 
-      await UserData.save((err) => {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send({ message: "true" });
-        }
-      });
-    }
-  });
+  if(company){
+    res.send({ message: "User Already Registered" });
+  }else{
+    UserRegister.findOne({ email: email }, async (err, user) => {
+      if (user) {
+        res.send({ message: "User Already Registered" });
+      } else {
+        const UserData = new UserRegister({
+          name: name,
+          email: email,
+          password: password,
+          mobile: mobile,
+        });
+  
+        await UserData.save((err) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send({ message: "true" });
+          }
+        });
+      }
+    });
+  }
+
 };
 
 module.exports.verifyEmail=async(req,res)=>{

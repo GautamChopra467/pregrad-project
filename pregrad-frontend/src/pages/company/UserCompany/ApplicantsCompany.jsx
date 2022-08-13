@@ -4,6 +4,7 @@ import { FiFileText } from 'react-icons/fi';
 import { useNavigate } from "react-router-dom";
 
 const ApplicantsCompany = () => {
+  
     const navigate = useNavigate();
     
     const [isContent, setIsContent] = useState(true);

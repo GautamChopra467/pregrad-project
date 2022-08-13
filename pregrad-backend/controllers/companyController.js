@@ -2,7 +2,7 @@ const Company = require('../models/companyModel')
 const bcrypt = require("bcryptjs");
 const UserRegister = require("../models/userModel");
 const CompanyInfo = require("../models/companyInfoModel")
-
+const Internship = require('../models/internshipModel')
 module.exports.registerCompany = async(req,res)=>{
   try{
 
@@ -143,5 +143,24 @@ module.exports.editAccount = async(req,res)=>{
       phoneno:req.body.mobile
     }
   })
+
+}
+
+module.exports.getInternships = async(req,res)=>{
+try{
+  const {id} = req.params
+
+  const internship = await Internship.find({id})
+
+  if(internship){
+   
+    res.send(internship)
+  }else{
+    res.send("No Internships")
+  }
+}catch(err){
+  console.log(err)
+}
+  
 
 }
