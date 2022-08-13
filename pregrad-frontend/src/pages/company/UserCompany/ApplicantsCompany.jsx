@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ApplicantsCompany = () => {
     const navigate = useNavigate();
     
-    const [isContent, setIsContent] = useState(true);
+    const [isContent, setIsContent] = useState(false);
   return (
     <div>
       <div className='sub_header_applicantscompany'>

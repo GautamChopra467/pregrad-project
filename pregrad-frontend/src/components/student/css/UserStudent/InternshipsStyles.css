@@ -1,24 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 .sub_header_internships {
-    background-color: #fff;
+    width: 100%;
+    background-color: var(--header-bg);
     padding: 5px 40px;
     height: 3rem;
     display: flex;
-    background-color: #fff;
     align-items: center;
-    border-top: 1px solid #EEEEEE;
-}
-
-.sub_header_internships h5 {
-    font-family: 'Poppins', sans-serif;
+    border-top: 1px solid var(--background-secondary-hover);
+    border-bottom: 1px solid var(--background-secondary-hover);
+    position: fixed;
+    z-index: 110;
+  }
+  
+  .sub_header_internships h5 {
+    font-family: "Poppins", sans-serif;
     font-size: 18px;
     font-weight: 500;
-    color: #000;
+    color: var(--black-color);
     margin-bottom: 0;
-}
+  }
 
-.section_internships {
-    background-color: #f7f7f7;
-    height: 100vh;
-}
+  .current_page_section_internships {
+    background-color: var(--header-bg);
+    padding: 58px 15px 15px 15px;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
+    display: flex;
+    align-items: center;
+  }
+
+  .left_current_section_internships, .right_current_section_internships {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    padding: 5px 20px;
+    color: var(--primary-color);
+  }
+
+  .active_internships {
+    background-color: var(--background-secondary-hover);
+  }
+
+  .left_current_section_internships p, .right_current_section_internships p {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .left_current_section_internships:hover, .right_current_section_internships:hover {
+    background-color: var(--background-secondary-hover);
+    color: var(--primary-dark);
+  }
+
+  .main_container_internships {
+    width: 100%;
+    padding: 30px;
+  }
+
+  .line_internships {
+    width: 5px;
+    height: 100%;
+  }
