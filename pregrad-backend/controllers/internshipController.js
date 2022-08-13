@@ -4,17 +4,16 @@ module.exports.createInternship = async(req,res)=>{
 try{
      const {id} =req.params
 
-     console.log(req.body)
-
-     console.log(req.body.selectedOfficeType)
+    console.log(req.body)
 
     const newinternship = await Internship.create({
      id,
      title:req.body.selectedTitles,
-     noofemployees:req.body.info.position,
+     noofemployees:req.body.info.positions,
      jobtype:req.body.selectedOfficeType,
      jobmode:req.body.selectedMode,
      description:req.body.info.about,
+     duration:req.body.selectedDuration,
      perks:{
           letter:req.body.letterCheckbox,
           certificate:req.body.certiCheckbox,
@@ -31,9 +30,58 @@ try{
     })
 
     await newinternship.save()
-    console.log("done")
 
 }catch(err){
      console.log(err)
 }
+}
+
+module.exports.Internship = async(req,res)=>{
+try{ 
+     const {id} =req.params;
+
+     const internship = await Internship.findOne({_id:id});
+
+     if(internship){
+          res.send(internship);
+     }else{
+          res.send("No internship");
+     }
+}catch(err){
+     console.log(err)
+}
+     
+}
+
+
+module.exports.singleInternship = async(req,res)=>{
+     try{
+
+          const {id} = req.params
+
+          const internship = await Internship.findOne({_id:id}) 
+
+          if(internship){
+
+               res.send(internship)
+          }else{
+              res.send("No Internship")
+          }
+
+     }catch(err){
+       console.log(err)
+     }
+}
+
+module.exports.editInternship = async(req,res)=>{
+     try{
+
+          const {id} = req.params
+
+          console.log(req.body)
+
+     }catch(err){
+          console.log(err)
+     }
+
 }

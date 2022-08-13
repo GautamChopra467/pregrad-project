@@ -10,8 +10,10 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { FiClipboard } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 
-const InternshipContainerCompany = () => {
+const InternshipContainerCompany = ({internship}) => {
+
     const ref = useRef();
+
     const navigate = useNavigate();
 
     const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
@@ -19,6 +21,9 @@ const InternshipContainerCompany = () => {
     const [isModal, setIsModal] = useState(false);
 
     const [isModal2, setIsModal2] = useState(false);
+   
+    const [modalId,setModalId] = useState()
+
     const [isSubmit, setIsSubmit] = useState(false);
 
     const [info, setInfo] = useState({
@@ -44,7 +49,7 @@ const InternshipContainerCompany = () => {
       }
     })
 
-    const [option1, setOption1] = useState(false);
+  const [option1, setOption1] = useState(false);
   const [option2, setOption2] = useState(false);
   const [option3, setOption3] = useState(false);
   const [option4, setOption4] = useState(false);
@@ -63,123 +68,133 @@ const InternshipContainerCompany = () => {
       }
     }, [isModal])
 
+    const openModal = (id)=>{
+      setModalId(id)
+      setIsModal(!isModal)
+    }
+
   return (
-    <div>
-      <div className='internship_container_listingscompany'>
-              <div className='top_section_internship_listingscompany'>
-                <div className='left_section_internship_listingscompany'>
-                  <h2>Back-end Developer</h2>
-                  <h4>Google</h4>
+    <>
+    {
+      internship.map((intern)=>(
+    <div  key={intern._id}>
+          <div className='internship_container_listingscompany'>
+          <div className='top_section_internship_listingscompany'>
+            <div className='left_section_internship_listingscompany'>
+              <h2>{intern.title}</h2>
+              <h4>{intern.title}</h4>
+            </div>
+            <div className='right_section_internship_listingscompany'>
+              <div className='experience_icon_container_listingscompany'>
+                <BsFillBarChartFill className="experience_icon_listingscompany" />
+                <p>{intern.experience}</p>
+                <AiOutlineInfoCircle className="info_icon_listingscompany" />
+              </div>
+              <div className={(intern.status == "Open") ? 'active_icon_container' : 'false_icon_container'}>
+                <p>{(intern.status == "Open") ? "Active" : "Closed"}</p>
+              </div>
+              <div className='dots_icon_container_listingscompany' id={intern._id}>
+                <BiDotsVerticalRounded onClick={()=>openModal(intern._id)} id={intern._id}  className="dots_icon_listingscompany" />
+              </div>
+              {(modalId == intern._id && isModal) && (
+                <div className='modal_container_listingscompany'>
+                  <div className='modal_box_listingscompany'>
+                    <FiClipboard className="modal_icon_listingscompany" />
+                    <p onClick={() => navigate(`/company/internship/${intern._id}`)}>View Details</p>
+                  </div>
+                  <div className='modal_box_listingscompany' onClick={()=>navigate(`/company/info/${intern._id}/addinternship?type=editinternship`)}>
+                    <HiOutlinePencil className="modal_icon_listingscompany" />
+                    <p>Edit Internship</p>
+                  </div>
+                  <div className='modal_box_listingscompany'>
+                    <IoMdClose className="modal_icon_listingscompany" />
+                    <p onClick={() => setIsModal2(!isModal2)}>Close Internship</p>
+                  </div>
                 </div>
-                <div className='right_section_internship_listingscompany' ref={ref}>
-                  <div className='experience_icon_container_listingscompany'>
-                    <BsFillBarChartFill className="experience_icon_listingscompany" />
-                    <p>Beginner</p>
-                    <AiOutlineInfoCircle className="info_icon_listingscompany" />
-                  </div>
-                  <div className={false ? 'active_icon_container' : 'false_icon_container'}>
-                    <p>{false ? "Active" : "Closed"}</p>
-                  </div>
-                  <div className='dots_icon_container_listingscompany'>
-                    <BiDotsVerticalRounded onClick={() => setIsModal(!isModal)} className="dots_icon_listingscompany" />
-                  </div>
-                  {isModal && (
-                    <div className='modal_container_listingscompany'>
-                      <div className='modal_box_listingscompany'>
-                        <FiClipboard className="modal_icon_listingscompany" />
-                        <p onClick={() => navigate("/company/internship")}>View Details</p>
-                      </div>
+              )}
+            </div>
+          </div>
 
-                      <div className='modal_box_listingscompany'>
-                        <HiOutlinePencil className="modal_icon_listingscompany" />
-                        <p>Edit Internship</p>
-                      </div>
-
-                      <div className='modal_box_listingscompany'>
-                        <IoMdClose className="modal_icon_listingscompany" />
-                        <p onClick={() => setIsModal2(!isModal2)}>Close Internship</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
+          <div className='mid_section_internship_listingscompany'>
+            <div className='status_container_listingscompany'>
+              <div className='experience_icon_container2_listingscompany'>
+                <BsFillBarChartFill className="experience_icon_listingscompany" />
+                <p>{intern.experience}</p>
+                <AiOutlineInfoCircle className="info_icon_listingscompany" />
               </div>
 
-              <div className='mid_section_internship_listingscompany'>
-                <div className='status_container_listingscompany'>
-                  <div className='experience_icon_container2_listingscompany'>
-                    <BsFillBarChartFill className="experience_icon_listingscompany" />
-                    <p>Beginner</p>
-                    <AiOutlineInfoCircle className="info_icon_listingscompany" />
-                  </div>
-
-                  <div className={true ? 'active_icon2_container' : 'false_icon2_container'}>
-                    <p>{true ? "Active" : "Closed"}</p>
-                  </div>
-                </div>
-
-                <div className='upper_mid_section_listingscompany'>
-                  {skillsData.map((value) => (
-                  <div key={value} className="skill_section_listingscompany">
-                    <p>{value}</p>
-                  </div>
-                  ))}
-                </div>
-
-                <div className='lower_mid_section_listingscompany'>
-                  <div className='lower_top_listingscompany'>
-                    <HiOutlineLocationMarker className='general_icons_listingscompany' />
-                    <p>Delhi, India</p>
-                  </div>
-
-                  <div className='lower_bottom_listingscompany'>
-                    <div className='info_container_listingscompany'>
-                      <div className='info_upper_container_listingscompany'>
-                        <BsPlayCircle className='general_icons_listingscompany' />
-                        <p>START DATE</p>
-                      </div>
-                      <div className='info_lower_container_listingscompany'>
-                        <p>22 Aug' 2022</p>
-                      </div>
-                    </div>
-
-                    <div className='info_container_listingscompany'>
-                      <div className='info_upper_container_listingscompany'>
-                        <IoCalendarClearOutline className='general_icons_listingscompany' />
-                        <p>DURATION</p>
-                      </div>
-                      <div className='info_lower_container_listingscompany'>
-                        <p>6 months</p>
-                      </div>
-                    </div>
-
-                    <div className='info_container_listingscompany'>
-                      <div className='info_upper_container_listingscompany'>
-                        <FaRegMoneyBillAlt className='general_icons_listingscompany' />
-                        <p>STIPEND</p>
-                      </div>
-                      <div className='info_lower_container_listingscompany'>
-                        <p>6K - 10K</p>
-                      </div>
-                    </div>
-
-                    <div className='info_container_listingscompany'>
-                      <div className='info_upper_container_listingscompany'>
-                        <AiOutlineFieldTime className='general_icons_listingscompany' />
-                        <p>MODE</p>
-                      </div>
-                      <div className='info_lower_container_listingscompany'>
-                        <p>5-6 hours / day</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className='bottom_section_internship_listingscompany'>
-                <button onClick={() => navigate("/company/info/applicants")} className='btn_primary_listingscompany'>View Applications (0)</button>
-                <Link to="/company/internship">View details &gt;</Link>
+              <div className={true ? 'active_icon2_container' : 'false_icon2_container'}>
+                <p>{true ? "Active" : "Closed"}</p>
               </div>
             </div>
+
+            <div className='upper_mid_section_listingscompany'>
+              {intern.skills.map((value) => (
+              <div key={value} className="skill_section_listingscompany">
+                <p>{value}</p>
+              </div>
+              ))}
+            </div>
+
+            <div className='lower_mid_section_listingscompany'>
+              <div className='lower_top_listingscompany'>
+                <HiOutlineLocationMarker className='general_icons_listingscompany' />
+                <p>Delhi, India</p>
+              </div>
+
+              <div className='lower_bottom_listingscompany'>
+                <div className='info_container_listingscompany'>
+                  <div className='info_upper_container_listingscompany'>
+                    <BsPlayCircle className='general_icons_listingscompany' />
+                    <p>START DATE</p>
+                  </div>
+                  <div className='info_lower_container_listingscompany'>
+                    <p>{intern.startfrom}</p>
+                  </div>
+                </div>
+
+                <div className='info_container_listingscompany'>
+                  <div className='info_upper_container_listingscompany'>
+                    <IoCalendarClearOutline className='general_icons_listingscompany' />
+                    <p>DURATION</p>
+                  </div>
+                  <div className='info_lower_container_listingscompany'>
+                    <p>{intern.duration} months</p>
+                  </div>
+                </div>
+
+                <div className='info_container_listingscompany'>
+                  <div className='info_upper_container_listingscompany'>
+                    <FaRegMoneyBillAlt className='general_icons_listingscompany' />
+                    <p>STIPEND</p>
+                  </div>
+                  <div className='info_lower_container_listingscompany'>
+                    <p>{intern.stipend.minimum} - {intern.stipend.maximum}</p>
+                  </div>
+                </div>
+
+                <div className='info_container_listingscompany'>
+                  <div className='info_upper_container_listingscompany'>
+                    <AiOutlineFieldTime className='general_icons_listingscompany' />
+                    <p>MODE</p>
+                  </div>
+                  <div className='info_lower_container_listingscompany'>
+                    <p>{intern.jobmode}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='bottom_section_internship_listingscompany'>
+            <button onClick={() => navigate(`/company/info/${intern._id}/applicants`)} className='btn_primary_listingscompany'>View Applications (0)</button>
+            <Link to={`/company/internship/${intern._id}`}>View details &gt;</Link>
+          </div>
+
+        </div>
+      
+
+            
 
             {isModal2 && (
         
@@ -232,6 +247,10 @@ const InternshipContainerCompany = () => {
        
       )}
     </div>
+
+))
+}
+</>
   )
 }
 

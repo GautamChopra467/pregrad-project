@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import "../../../components/company/css/UserCompany/AddInternshipCompanyStyles.css";
 import { FaTimes } from "react-icons/fa";
 import axios from 'axios'
-import {useParams} from 'react-router-dom'
+import {useParams,useNavigate} from 'react-router-dom'
 const AddInternshipCompany = () => {
   // TITLES
 
+  const navigate = useNavigate()
+
   const {id} = useParams()
+
+  var query = window.location.search.substring(1).split("=")[1];
 
   const titleData = [
     "Front-End",
@@ -31,6 +35,7 @@ const AddInternshipCompany = () => {
   const [selectedTitles, setSelectedTitles] = useState("");
 
   const handleTitle = (event) => {
+    console.log(event.target.value)
     setSelectedTitles(event.target.value);
   };
 
@@ -41,9 +46,8 @@ const AddInternshipCompany = () => {
   const handleOfficeType = (event) => {
     setSelectedOfficeType(event.target.value);
   };
-
   // SKILLS
-  const skillsData = [
+ let skillsData = [
     "HTML",
     "CSS",
     "JS",
@@ -219,19 +223,52 @@ const AddInternshipCompany = () => {
     certiCheckbox,
     jobCheckbox,
     bonusCheckbox
-    }
+  }
+
+  const setEditInternship = ()=>{
+    axios.get(`http://localhost:8000/company/singleinternship/${id}`).then(({data})=>{
+      setInfo({...info,
+      positions: data.noofemployees,
+      startdate: data.startfrom,
+      minstipend: data.stipend.minimum,
+      maxstipend: data.stipend.maximum,
+      about:data.description
+    })
+    setSelectedExperience(data.experience)
+    setSelectedTitles(data.title)
+    setSelectedOfficeType(data.jobtype)
+    setSelectedSkills(data.skills)
+    setSelectedDuration(data.duration)
+    setSelectedMode(data.jobmode)
+    setLetterCheckbox(data.perks.letter)
+    setCertiCheckbox(data.perks.certificate)
+    setJobCheckbox(data.perks.job)
+    setBonusCheckbox(data.perks.bonus)
+    })
+  }  
   
 
   useEffect(() => {
-    if(Object.keys(formErrors).length === 0 && isSubmit){
-      axios.post(`http://localhost:8000/company/addinternships/${id}`,{
-        ...addInternship
-      }).then(({data})=>{
-        console.log(data)
-      })
-    }
-  }, [formErrors])
 
+    if(Object.keys(formErrors).length === 0 && isSubmit){
+      if(query == "editinternship"){
+        axios.put(`http://localhost:8000/company/editinternships/${id}`,{
+          ...addInternship
+        })
+      }else{
+        axios.post(`http://localhost:8000/company/addinternships/${id}`,{
+          ...addInternship
+        })
+      }  
+      // navigate(`/company/info/${id}/listings`)
+    }
+
+    if(query == "editinternship"){
+      setEditInternship()
+    } 
+
+  }, [formErrors])
+  
 
 
   return (
@@ -248,7 +285,7 @@ const AddInternshipCompany = () => {
                   <label>Internship Title*</label>
                   <select onChange={handleTitle}>
                     <option value="" disabled selected hidden>
-                      Choose Office Type
+                     Choose Internship Title
                     </option>
                     {titleData.map((val) => (
                       <option key={val} value={val}>
@@ -262,9 +299,10 @@ const AddInternshipCompany = () => {
                 <div className="form_box_addinternshipcompany">
                   <label>Office Type*</label>
                   <select onChange={handleOfficeType}>
-                    <option value="" disabled selected hidden>
-                      Choose Office Type
+                  <option value="" disabled selected hidden>
+                    Choose Office Type
                     </option>
+                
                     {officeTypeData.map((val) => (
                       <option key={val} value={val}>
                         {val}
@@ -278,11 +316,16 @@ const AddInternshipCompany = () => {
                   <label>Skills (upto 10 skills)*</label>
                   <select onChange={handleSkill}>
                     <option value="">Select</option>
-                    {skills.map((val) => (
+                    {
+                      (query== "editinternship")?(skillsData.filter((element)=>!selectedSkills.includes(element)).map((val) => (
+                      <option key={val} value={val}>
+                        {val}
+                      </option>))):(skills.map((val) => (
                       <option key={val} value={val}>
                         {val}
                       </option>
-                    ))}
+                      )))
+                  }
                   </select>
 
                   <div className="selected_domains_container_addinternshipcompany">
@@ -314,7 +357,7 @@ const AddInternshipCompany = () => {
                   <label>Duration* (months)</label>
                   <select onChange={handleDuration}>
                     <option value="" disabled selected hidden>
-                      Set Internship Duration
+                    Set Internship Duration
                     </option>
                     {durationData.map((val) => (
                       <option key={val} value={val}>
@@ -329,7 +372,7 @@ const AddInternshipCompany = () => {
                   <label>Internship Mode*</label>
                   <select onChange={handleMode}>
                     <option value="" disabled selected hidden>
-                      Choose Mode
+                     Choose Mode
                     </option>
                     {modeData.map((val) => (
                       <option key={val} value={val}>
@@ -344,7 +387,7 @@ const AddInternshipCompany = () => {
                   <label>Experience of Interns required*</label>
                   <select onChange={handleExperience}>
                     <option value="" disabled selected hidden>
-                      Choose Experience
+                    Choose Experience
                     </option>
                     {experienceData.map((val) => (
                       <option key={val} value={val}>
@@ -382,22 +425,22 @@ const AddInternshipCompany = () => {
                 <div className="form_box_addinternshipcompany checkbox_container_addinternshipcompany">
                   <label>Extra Benefits</label>
                   <div>
-                    <input type="checkbox" id="cb1" onClick={() => setLetterCheckbox(!letterCheckbox)} />
+                    <input type="checkbox" id="cb1" onClick={() => setLetterCheckbox(!letterCheckbox)} checked={letterCheckbox}/>
                     <label for="cb1"></label>
                     <p>Letter of Recommendation</p>
                   </div>
                   <div>
-                    <input type="checkbox" id="cb2" onClick={() => setCertiCheckbox(!certiCheckbox)} />
+                    <input type="checkbox" id="cb2" onClick={() => setCertiCheckbox(!certiCheckbox)} checked={certiCheckbox}/>
                     <label for="cb2"></label>
                     <p>Certificate</p>
                   </div>
                   <div>
-                    <input type="checkbox" id="cb3" onClick={() => setJobCheckbox(!jobCheckbox)} />
+                    <input type="checkbox" id="cb3" onClick={() => setJobCheckbox(!jobCheckbox)} checked={jobCheckbox}/>
                     <label for="cb3"></label>
                     <p>Job Offer</p>
                   </div>
                   <div>
-                    <input type="checkbox" id="cb4" onClick={() => setBonusCheckbox(!bonusCheckbox)} />
+                    <input type="checkbox" id="cb4" onClick={() => setBonusCheckbox(!bonusCheckbox)} checked={bonusCheckbox}/>
                     <label for="cb4"></label>
                     <p>Performance Bonus</p>
                   </div>
