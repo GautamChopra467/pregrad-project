@@ -376,11 +376,6 @@
     font-size: 0.8rem;
   }
 
-  .btn_light_projects, .btn_primary_projects {
-    font-size: 0.9rem;
-    padding: 5px 5px;
-  }
-
   .modal_container_projects {
     padding: 16px;
   }
@@ -418,5 +413,9 @@
 
   .content_logo_projects {
     padding: 2px 10px 0 10px;
+  }
+
+  .btn_light_projects, .btn_primary_projects {
+    font-size: 15px;
   }
 }

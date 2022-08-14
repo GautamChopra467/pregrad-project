@@ -316,7 +316,7 @@
     max-width: 360px;
   }
 
-  .btn_light_education {
+  .btn_light_education, .btn_primary_education {
     padding: 8px 10px;
   }
 }
@@ -330,10 +330,6 @@
 @media screen and (max-width: 660px) {
   .add_section2_details_education {
     max-width: 280px;
-  }
-
-  .btn_light_education {
-    padding: 6px 7px;
   }
 
   .add_section2_left_education {
@@ -359,9 +355,8 @@
     font-size: 0.8rem;
   }
 
-  .btn_light_education {
-    font-size: 0.9rem;
-    padding: 5px 5px;
+  .btn_light_education, .btn_primary_education {
+    font-size: 15px;
   }
 
   .modal_container_education {

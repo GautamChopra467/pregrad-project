@@ -307,7 +307,7 @@
     max-width: 360px;
   }
 
-  .btn_light_achievements {
+  .btn_light_achievements, .btn_primary_achievements {
     padding: 8px 10px;
   }
 }
@@ -321,10 +321,6 @@
 @media screen and (max-width: 660px) {
   .add_section2_details_achievements {
     max-width: 280px;
-  }
-
-  .btn_light_achievements {
-    padding: 6px 7px;
   }
 
   .add_section2_left_achievements {
@@ -350,9 +346,8 @@
     font-size: 0.8rem;
   }
 
-  .btn_light_achievements {
-    font-size: 0.9rem;
-    padding: 5px 5px;
+  .btn_light_achievements, .btn_primary_achievements {
+    font-size: 15px;
   }
 
   .bottom_section_content_achievements a {

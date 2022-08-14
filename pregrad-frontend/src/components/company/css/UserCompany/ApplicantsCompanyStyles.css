@@ -115,6 +115,90 @@
     transition: 0.2s all ease-in-out;
   }
 
+  .accept_applicantscompany {
+    background-color: var(--accept-color);
+  }
+
+  .reject_applicantscompany {
+    background-color: var(--reject-color);
+  }
+
+  .top_section_student_applicantscompany {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .top_section_student_applicantscompany h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--black-color);
+  }
+
+  .search_icon_container_applicantscompany {
+    width: 34px;
+    height: 34px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s all ease-in-out;
+    margin-right: 20px;
+    background-color: var(--primary-lightest);
+  }
+  
+  .search_icon_applicantscompany {
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--para-color);
+  }
+
+  .mid_top_section_applicantscompany {
+    display: flex;
+    align-items: center;
+    grid-gap: 20px;
+  }
+
+  .mid_top_section_applicantscompany div {
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+  }
+
+  .mid_top_section_applicantscompany p {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    letter-spacing: -0.02em;
+    color: var(--menu-link);
+  }
+
+  .mid_top_section_applicantscompany input + label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--menu-link);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .mid_top_section_applicantscompany input:checked + label:after {
+    position: relative;
+    top: -3px;
+    left: 2px;
+    content: "\2714";
+    color: var(--menu-link);
+    font-size: 14px;
+    font-weight: 800;
+  }
+  
+  .mid_top_section_applicantscompany input {
+    display: none;
+  }
+
+
+
+
+
 
 
 

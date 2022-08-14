@@ -5,6 +5,7 @@ import { BiHeading } from 'react-icons/bi';
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
+import AppliedInternshipContainer from '../../../components/company/jsx/AppliedInternshipContainer';
 
 
 
@@ -56,7 +57,7 @@ useEffect(()=>{
         )}
 
         {currentPage === "applied" && (
-          <HeaderAuth />
+          <AppliedInternshipContainer />
         )}
       </div>
       

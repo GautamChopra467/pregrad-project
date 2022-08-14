@@ -337,7 +337,7 @@
     max-width: 360px;
   }
 
-  .btn_light_workexperience {
+  .btn_light_workexperience, .btn_primary_workexperience {
     padding: 8px 10px;
   }
 }
@@ -351,10 +351,6 @@
 @media screen and (max-width: 660px) {
   .add_section2_details_workexperience {
     max-width: 280px;
-  }
-
-  .btn_light_workexperience {
-    padding: 6px 7px;
   }
 
   .add_section2_left_workexperience {
@@ -378,11 +374,6 @@
 
   .add_section2_details_workexperience p {
     font-size: 0.8rem;
-  }
-
-  .btn_light_workexperience {
-    font-size: 0.9rem;
-    padding: 5px 5px;
   }
 
   .modal_container_workexperience {
@@ -432,5 +423,9 @@
 
   .content_logo_workexperience {
     padding: 2px 10px 0 10px;
+  }
+
+  .btn_light_workexperience, .btn_primary_workexperience {
+    font-size: 15px;
   }
 }

@@ -72,9 +72,9 @@ const DetailsOne = ({theme, setTheme}) => {
         return domain !== event.target.value;
       }))
     }else{
-       console.log("errors")
+       setFormErrors({...formErrors,
+      domain: "Maximum 2 domains allowed"})
     }
-    
   }
 
   const deleteDomain = (value) => {
@@ -95,7 +95,8 @@ const DetailsOne = ({theme, setTheme}) => {
         return skill !== event.target.value;
       }))
     }else{
-      console.log("error")
+      setFormErrors({...formErrors,
+        skills: "Maximum 10 skills allowed"})
     }
   }
 
@@ -192,8 +193,28 @@ const DetailsOne = ({theme, setTheme}) => {
   const validate = (values) => {
     const errors = {};
 
+    if(!selectedCollege){
+      errors.college = "College name required"
+    }
+
+    if(!selectedYear){
+      errors.year = "Year of graduation required"
+    }
+
+    if(selectedDomains.length < 1){
+      errors.domain = "Minimum 1 domain required"
+    }
+
+    if(selectedSkills.length < 3){
+      errors.skills = "Minimum 3 skills required"
+    }
+
+    if(!selectedLocation){
+      errors.location = "Work location required"
+    }
+
     if(!values.linkedin){
-      errors.linkedin = "link required";
+      errors.linkedin = "Link required";
     }
 
     return errors;
@@ -230,6 +251,7 @@ const DetailsOne = ({theme, setTheme}) => {
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
+                <p className="errors_msg_detailsOne">{formErrors.college}</p>
               </div>
 
               <div className="form_box_detailsOne box2_detailsOne">
@@ -240,6 +262,7 @@ const DetailsOne = ({theme, setTheme}) => {
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
+                <p className="errors_msg_detailsOne">{formErrors.year}</p>
               </div>
 
               <div className="form_box_detailsOne box3_detailsOne">
@@ -260,6 +283,7 @@ const DetailsOne = ({theme, setTheme}) => {
                     </div>
                   ))}
                 </div>
+                <p className="errors_msg_detailsOne">{formErrors.domain}</p>
               </div>
 
               <div className="form_box_detailsOne box4_detailsOne">
@@ -280,6 +304,7 @@ const DetailsOne = ({theme, setTheme}) => {
                     </div>
                   ))}
                 </div>
+                <p className="errors_msg_detailsOne">{formErrors.skills}</p>
               </div>
 
               <div className="form_box_detailsOne box5_detailsOne">
@@ -290,19 +315,19 @@ const DetailsOne = ({theme, setTheme}) => {
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
+                <p className="errors_msg_detailsOne">{formErrors.location}</p>
               </div>
 
               <div className="form_box_detailsOne box6_detailsOne">
                 <label className="label_detailsOne">Q. Enter Your Introductory Video ( Optional) </label>
                 <input type="url" name="video" value={video} onChange={handleVideo} placeholder="Video Link" />
                 <p className="video_para_detailsOne">Add your Introductory video to increase your chances of getting selected.</p>
-                <p>{formErrors.video}</p>
               </div>
 
               <div className="form_box_detailsOne box7_detailsOne">
                 <label className="label_detailsOne">Q. Linkedin Link </label>
                 <input type="url" name="linkedin" value={socialLink.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
-                <p>{formErrors.linkedin}</p>
+                <p className="errors_msg_detailsOne">{formErrors.linkedin}</p>
               </div>
 
               <div className="form_box_detailsOne box8_detailsOne">

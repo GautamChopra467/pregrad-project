@@ -125,17 +125,15 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
 
   const submitForm = (e) => {
     e.preventDefault();
-    setFormErrors(validate());
+    setFormErrors(validate(data));
     setIsSubmit(true);
   }
 
   const validate = (values) => {
     const errors = {};
 
-    if(!values.title){
-      errors.title = "Name required";
-    }else if(values.title.length < 3){
-      errors.title = "Min 3 characters required";
+    if(!values.name){
+      errors.name = "Name required";
     }
 
     return errors;
@@ -459,7 +457,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                 <div className="form_box_studentprofile">
                   <label>Name</label>
                   <input type="text" name="name" placeholder="Your Name" defaultValue={user.name} onChange={handleForm} />
-                  <p className="errors_msg_studentprofile">{formErrors.title}</p>
+                  <p className="errors_msg_studentprofile">{formErrors.name}</p>
                 </div>
 
                 <div className="form_box_studentprofile">

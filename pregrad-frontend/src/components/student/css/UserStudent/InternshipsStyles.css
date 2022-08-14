@@ -61,3 +61,15 @@
     width: 5px;
     height: 100%;
   }
+
+  @media screen and (max-width: 660px) {
+    .main_container_internships {
+      padding: 30px 15px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    .main_container_internships {
+      padding: 20px 0;
+    }
+  }
