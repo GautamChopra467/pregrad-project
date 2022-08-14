@@ -14,6 +14,8 @@ const InternshipDetail = ({theme, setTheme}) => {
 
   const {i_id} = useParams()
 
+  var cid = window.location.search.substring(1).split("=")[1];
+
 
   const [internship,setInternship] = useState({})
 
@@ -23,17 +25,40 @@ const InternshipDetail = ({theme, setTheme}) => {
 
   const [internshipstipend,setInternshipStipend] = useState({})
 
+  const [companydetails,setCompanyDetails] = useState({})
+
+  const [companyInfoDetails,setCompanyInfoDetails] = useState({})
 
     const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
 
-    useEffect(()=>{
+    const getInternship = ()=>{
       axios.get(`http://localhost:8000/company/internship/${i_id}`).then(({data})=>{
+     
         setInternship(data) 
         setInternshipSkills(data.skills)
         setInternshipPerks(data.perks)
         setInternshipStipend(data.stipend)
 
       }) 
+    }
+
+    const getCompanyInfo = ()=>{
+      axios.get(`http://localhost:8000/company/getcompanyinfo/${cid}`).then(({data})=>{
+      setCompanyDetails(data)
+    })
+    }
+    
+     const getCompanyDetails = ()=>{
+      axios.get(`http://localhost:8000/company/getcompanydetails/${cid}`).then(({data})=>{
+        setCompanyInfoDetails(data)
+    }) 
+     }
+    
+
+    useEffect(()=>{
+      getInternship()
+      getCompanyInfo()
+      getCompanyDetails()
     },[]) 
  
   return ( 
@@ -43,7 +68,7 @@ const InternshipDetail = ({theme, setTheme}) => {
         <div className='main_container_internshipdetail'>
       <div className='details_container_internshipdetail'>
         <div className='top_section_internshipdetail'>
-            <h2>{internship.title} Developer Internship in Delhi at Google</h2>
+            <h2>{internship.title} Developer Internship in {companyInfoDetails.headquaters} at {companydetails.companyname}</h2>
         </div>
 
         <div className='main_internship_container_internshipdetail'>
@@ -51,7 +76,7 @@ const InternshipDetail = ({theme, setTheme}) => {
               <div className='top_section_internship_internshipdetail'>
                 <div className='left_section_internship_internshipdetail'>
                   <h2>{internship.title}</h2>
-                  <h4>Google</h4>
+                  <h4>{companydetails.companyname}</h4>
                 </div>
                 <div className='right_section_internship_internshipdetail'>
                   <div className='experience_icon_container_internshipdetail'>
@@ -89,7 +114,7 @@ const InternshipDetail = ({theme, setTheme}) => {
                 <div className='lower_mid_section_internshipdetail'>
                   <div className='lower_top_internshipdetail'>
                     <HiOutlineLocationMarker className='general_icons_internshipdetail' />
-                    <p>Delhi, India</p>
+                    <p>{companyInfoDetails.headquaters}</p>
                   </div>
 
                   <div className='lower_bottom_internshipdetail'>
@@ -200,15 +225,15 @@ const InternshipDetail = ({theme, setTheme}) => {
 
                     <h3>About the Company</h3>
                     <div className='para_internshipdetail'>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                   <p>{companyInfoDetails.description}</p>
                     </div>
 
                     <h4>Location</h4>
                     <div className='perks_container_internshipdetail'>
-                      <p>Delhi, India</p>
+                   <p>{companyInfoDetails.headquaters}</p>
                     </div>
                     <h4>Company Representative</h4>
-                    <p>Gautam Chopra&nbsp; |&nbsp; H.R</p>
+                    <p>{companydetails.name}&nbsp; |&nbsp; {companydetails.designation}</p>
                 </div>
               </div>
 

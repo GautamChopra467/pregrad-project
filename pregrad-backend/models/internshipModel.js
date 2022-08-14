@@ -40,8 +40,8 @@ const internshipSchema = new mongoose.Schema({
         type:Date
     },
     status:{
-        type:String,
-        default:"Open"
+        type:Boolean,
+        default:true
     },
     startfrom:{
         type:String

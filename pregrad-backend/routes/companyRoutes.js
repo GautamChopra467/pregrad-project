@@ -4,7 +4,7 @@ const router = express.Router()
 
 const { registerCompany,getCompanyInfo,companyDetails,getCompanyDetails,editProfile,editAccount,getInternships} = require('../controllers/companyController')
 
-const {createInternship,Internship,singleInternship,editInternship} = require('../controllers/internshipController')
+const {createInternship,Internship,singleInternship,editInternship,closeInternship} = require('../controllers/internshipController')
 
 // register 
 
@@ -29,5 +29,8 @@ router.route('/internship/:id').get(Internship)
 router.route('/singleinternship/:id').get(singleInternship)
 
 router.route('/editinternships/:id').put(editInternship)
+
+router.route('/closeinternship/:id').put(closeInternship)
+
 
 module.exports = router

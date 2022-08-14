@@ -67,6 +67,7 @@ const [studentachi,setStudentachi] = useState([])
     })
 
   }
+  
 
   useEffect(() => {
 

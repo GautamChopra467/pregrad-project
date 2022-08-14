@@ -96,7 +96,7 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
     }
       useEffect(()=>{
         getCompanyInfo()
-      })
+      },[])
 
 
   return (
