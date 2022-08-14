@@ -78,10 +78,53 @@ module.exports.editInternship = async(req,res)=>{
 
           const {id} = req.params
 
-          console.log(req.body)
+          const internship = await Internship.findOneAndUpdate({_id:id},{
+               $set:{
+                 title:req.body.selectedTitles,
+                 noofemployees:req.body.info.positions,
+                 jobtype:req.body.selectedOfficeType,
+                 jobmode:req.body.selectedMode,
+                 description:req.body.info.about,
+                 duration:req.body.selectedDuration,
+        perks:{
+           letter:req.body.letterCheckbox,
+           certificate:req.body.certiCheckbox,
+           job:req.body.jobCheckbox,
+           bonus:req.body.bonusCheckbox
+        },
+        stipend:{
+          maximum:req.body.info.maxstipend,
+          minimum:req.body.info.minstipend
+     },
+     skills:req.body.selectedSkills,
+     experience:req.body.selectedExperience,
+     startfrom:req.body.info.startdate
 
+               }
+          })
+          
      }catch(err){
           console.log(err)
      }
 
+}
+
+module.exports.closeInternship = async(req,res)=>{
+     try{
+          const {id} = req.params
+          
+          const internship = await Internship.findOneAndUpdate({_id:id},{
+               $set:{
+                    status:!req.body.status
+               }
+          },{
+               new:true
+          })
+
+          res.send({message:"true"})
+
+     }catch(err){
+          console.log(err)
+     }
+    
 }

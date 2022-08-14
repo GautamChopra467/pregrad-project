@@ -9,8 +9,9 @@ import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { FiClipboard } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
+import axios from 'axios'
 
-const InternshipContainerCompany = ({internship}) => {
+const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
     const ref = useRef();
 
@@ -24,12 +25,14 @@ const InternshipContainerCompany = ({internship}) => {
    
     const [modalId,setModalId] = useState()
 
-    const [isSubmit, setIsSubmit] = useState(false);
+    const [status,setStatus] = useState(true)
+
+
 
     const [info, setInfo] = useState({
       description: ""
     })
-  
+
     const handleForm = (event) => {
       const {name, value} = event.target;
       setInfo({
@@ -38,16 +41,6 @@ const InternshipContainerCompany = ({internship}) => {
       })
     }
   
-    const submitForm = (e) => {
-      e.preventDefault();
-      setIsSubmit(true);
-    }
-
-    useEffect(() => {
-      if(isSubmit){
-        console.log("submitted")
-      }
-    })
 
   const [option1, setOption1] = useState(false);
   const [option2, setOption2] = useState(false);
@@ -65,24 +58,46 @@ const InternshipContainerCompany = ({internship}) => {
   
       return () => {
         document.removeEventListener("click", checkIfClickedOutside)
-      }
-    }, [isModal])
+      }  
+    }, [isModal,isModal2]) 
 
     const openModal = (id)=>{
       setModalId(id)
       setIsModal(!isModal)
     }
 
+    const closeInternshipModal = (id)=>{
+      setModalId(id)
+      setIsModal2(!isModal2)
+    }
+
+    const internStatus = ()=>{
+        getinternship()
+        setIsModal2(!isModal2)
+      
+    }
+
+    const updateInternshipstatus = async(e,iid,status)=>{
+        e.preventDefault()   
+        const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
+          status
+        })
+        if(data.message){
+          internStatus()
+        }
+
+}
+
   return (
     <>
     {
       internship.map((intern)=>(
-    <div  key={intern._id}>
+      <div  key={intern._id}>
           <div className='internship_container_listingscompany'>
           <div className='top_section_internship_listingscompany'>
             <div className='left_section_internship_listingscompany'>
               <h2>{intern.title}</h2>
-              <h4>{intern.title}</h4>
+              <h4>{companydetail.companyname}</h4>
             </div>
             <div className='right_section_internship_listingscompany'>
               <div className='experience_icon_container_listingscompany'>
@@ -90,8 +105,8 @@ const InternshipContainerCompany = ({internship}) => {
                 <p>{intern.experience}</p>
                 <AiOutlineInfoCircle className="info_icon_listingscompany" />
               </div>
-              <div className={(intern.status == "Open") ? 'active_icon_container' : 'false_icon_container'}>
-                <p>{(intern.status == "Open") ? "Active" : "Closed"}</p>
+              <div className={(intern.status || (intern.status && status )) ? 'active_icon_container' : 'false_icon_container'}>
+                <p>{(intern.status || (intern.status && status )) ? "Active" : "Closed"}</p>
               </div>
               <div className='dots_icon_container_listingscompany' id={intern._id}>
                 <BiDotsVerticalRounded onClick={()=>openModal(intern._id)} id={intern._id}  className="dots_icon_listingscompany" />
@@ -100,15 +115,15 @@ const InternshipContainerCompany = ({internship}) => {
                 <div className='modal_container_listingscompany'>
                   <div className='modal_box_listingscompany'>
                     <FiClipboard className="modal_icon_listingscompany" />
-                    <p onClick={() => navigate(`/company/internship/${intern._id}`)}>View Details</p>
+                    <p onClick={() => navigate(`/company/internship/${intern._id}?cid=${intern.id}`)}>View Details</p>
                   </div>
-                  <div className='modal_box_listingscompany' onClick={()=>navigate(`/company/info/${intern._id}/addinternship?type=editinternship`)}>
+                  <div className='modal_box_listingscompany' onClick={()=>navigate(`/company/info/${intern.id}/addinternship?type=editinternship&iid=${intern._id}`)}>
                     <HiOutlinePencil className="modal_icon_listingscompany" />
                     <p>Edit Internship</p>
                   </div>
                   <div className='modal_box_listingscompany'>
                     <IoMdClose className="modal_icon_listingscompany" />
-                    <p onClick={() => setIsModal2(!isModal2)}>Close Internship</p>
+                    <p onClick={()=>closeInternshipModal(intern._id)}>Close Internship</p>
                   </div>
                 </div>
               )}
@@ -123,8 +138,8 @@ const InternshipContainerCompany = ({internship}) => {
                 <AiOutlineInfoCircle className="info_icon_listingscompany" />
               </div>
 
-              <div className={true ? 'active_icon2_container' : 'false_icon2_container'}>
-                <p>{true ? "Active" : "Closed"}</p>
+              <div className={(intern.status || (intern.status && status )) ? 'active_icon2_container' : 'false_icon2_container'}>
+                <p>{(intern.status || (intern.status && status )) ? "Active" : "Closed"}</p>
               </div>
             </div>
 
@@ -139,9 +154,9 @@ const InternshipContainerCompany = ({internship}) => {
             <div className='lower_mid_section_listingscompany'>
               <div className='lower_top_listingscompany'>
                 <HiOutlineLocationMarker className='general_icons_listingscompany' />
-                <p>Delhi, India</p>
+                <p>{companyinfodetail.headquaters}</p>
               </div>
-
+ 
               <div className='lower_bottom_listingscompany'>
                 <div className='info_container_listingscompany'>
                   <div className='info_upper_container_listingscompany'>
@@ -187,8 +202,8 @@ const InternshipContainerCompany = ({internship}) => {
           </div>
 
           <div className='bottom_section_internship_listingscompany'>
-            <button onClick={() => navigate(`/company/info/${intern._id}/applicants`)} className='btn_primary_listingscompany'>View Applications (0)</button>
-            <Link to={`/company/internship/${intern._id}`}>View details &gt;</Link>
+            <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications (0)</button>
+            <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
 
         </div>
@@ -196,13 +211,13 @@ const InternshipContainerCompany = ({internship}) => {
 
             
 
-            {isModal2 && (
+            {(modalId == intern._id && isModal2) && (
         
         <div className='modal_backgound_listingscompany'>
         <div className='modal_container2_listingscompany'>
           <div className='modal_top_section_listingscompany'>
-            <h2>Close “Back-end Developer” internship?</h2>
-            <p>We are sorry to hear that you are deleting your internship. Can you tell us why?</p>
+            <h2>Close “{intern.title}” internship?</h2>
+            <p>We are sorry to hear that you are Cancelling your internship. Can you tell us why?</p>
             {/* <p className="errors_msg_listingscompany">{formErrors.others}</p> */}
           </div>
  
@@ -211,34 +226,33 @@ const InternshipContainerCompany = ({internship}) => {
               <div className="form_box_listingscompany checkbox_container_listingscompany">
                   <div>
                     <input type="checkbox" id="cb1" onClick={() => setOption1(!option1)} />
-                    <label for="cb1"></label>
+                    <label htmlFor="cb1"></label>
                     <p>Filled this position on Pregrad</p>
                   </div>
                   <div>
                     <input type="checkbox" id="cb2" onClick={() => setOption2(!option2)} />
-                    <label for="cb2"></label>
+                    <label htmlFor="cb2"></label>
                     <p>Filled this position outside Pregrad</p>
                   </div>
                   <div>
                     <input type="checkbox" id="cb3" onClick={() => setOption3(!option3)} />
-                    <label for="cb3"></label>
+                    <label htmlFor="cb3"></label>
                     <p>We are not hiring for this role anymore</p>
                   </div>
                   <div>
                     <input type="checkbox" id="cb4" onClick={() => setOption4(!option4)} />
-                    <label for="cb4"></label>
+                    <label htmlFor="cb4"></label>
                     <p>Didn’t recieve good candidates for the internship</p>
                   </div>
                 </div>
 
                 <div className="form_box_listingscompany">
-                <textarea name="about" rows={4} placeholder="Anything you want to add" value={info.description} onChange={handleForm}></textarea>
-                
+                <textarea name="description" rows={4} placeholder="Anything you want to add" onChange={handleForm}></textarea>      
               </div>
 
               <div className='modal_bottom_section_listingscompany'>
                  <button onClick={() => setIsModal2(!isModal2)} className='btn_light_listingscompany'>Cancel</button>
-                 <button type='submit' onClick={submitForm} className='btn_primary_listingscompany'>Close Internship</button>
+                 <button type='submit' onClick={(e)=>updateInternshipstatus(e,intern._id,intern.status)} className='btn_primary_listingscompany'>Close Internship</button>
               </div>
             </form>
           </div>

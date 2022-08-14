@@ -10,8 +10,12 @@ const AddInternshipCompany = () => {
 
   const {id} = useParams()
 
-  var query = window.location.search.substring(1).split("=")[1];
+  var query = window.location.search.substring(1).split("&");
+  
+  const iid = query[1].split("=")[1]
 
+  const type = query[0].split("=")[1]
+ 
   const titleData = [
     "Front-End",
     "Back-End",
@@ -226,7 +230,7 @@ const AddInternshipCompany = () => {
   }
 
   const setEditInternship = ()=>{
-    axios.get(`http://localhost:8000/company/singleinternship/${id}`).then(({data})=>{
+    axios.get(`http://localhost:8000/company/singleinternship/${iid}`).then(({data})=>{
       setInfo({...info,
       positions: data.noofemployees,
       startdate: data.startfrom,
@@ -251,19 +255,21 @@ const AddInternshipCompany = () => {
   useEffect(() => {
 
     if(Object.keys(formErrors).length === 0 && isSubmit){
-      if(query == "editinternship"){
-        axios.put(`http://localhost:8000/company/editinternships/${id}`,{
+      if(type == "editinternship"){
+        axios.put(`http://localhost:8000/company/editinternships/${iid}`,{  
           ...addInternship
         })
+      
       }else{
         axios.post(`http://localhost:8000/company/addinternships/${id}`,{
           ...addInternship
         })
+        console.log("posting")
       }  
-      // navigate(`/company/info/${id}/listings`)
+      navigate(`/company/info/${id}/listings`)
     }
 
-    if(query == "editinternship"){
+    if(type == "editinternship"){
       setEditInternship()
     } 
 
@@ -285,7 +291,7 @@ const AddInternshipCompany = () => {
                   <label>Internship Title*</label>
                   <select onChange={handleTitle}>
                     <option value="" disabled selected hidden>
-                     Choose Internship Title
+                    { (type == "editinternship")?selectedTitles:"Choose Internship Title"}
                     </option>
                     {titleData.map((val) => (
                       <option key={val} value={val}>
@@ -300,7 +306,7 @@ const AddInternshipCompany = () => {
                   <label>Office Type*</label>
                   <select onChange={handleOfficeType}>
                   <option value="" disabled selected hidden>
-                    Choose Office Type
+                  { (type == "editinternship")?selectedOfficeType:"Choose Office Type"} 
                     </option>
                 
                     {officeTypeData.map((val) => (
@@ -317,7 +323,7 @@ const AddInternshipCompany = () => {
                   <select onChange={handleSkill}>
                     <option value="">Select</option>
                     {
-                      (query== "editinternship")?(skillsData.filter((element)=>!selectedSkills.includes(element)).map((val) => (
+                      (type == "editinternship")?(skillsData.filter((element)=>!selectedSkills.includes(element)).map((val) => (
                       <option key={val} value={val}>
                         {val}
                       </option>))):(skills.map((val) => (
@@ -356,9 +362,9 @@ const AddInternshipCompany = () => {
                 <div className="form_box_addinternshipcompany">
                   <label>Duration* (months)</label>
                   <select onChange={handleDuration}>
-                    <option value="" disabled selected hidden>
-                    Set Internship Duration
-                    </option>
+                    <option value=""  disabled selected hidden>
+                    {(type == "editinternship")?selectedDuration:"Set Internship Duration"}
+                    </option> 
                     {durationData.map((val) => (
                       <option key={val} value={val}>
                         {val}
@@ -372,7 +378,7 @@ const AddInternshipCompany = () => {
                   <label>Internship Mode*</label>
                   <select onChange={handleMode}>
                     <option value="" disabled selected hidden>
-                     Choose Mode
+                    { (type == "editinternship")?selectedMode:"Choose Mode"}   
                     </option>
                     {modeData.map((val) => (
                       <option key={val} value={val}>
@@ -387,7 +393,7 @@ const AddInternshipCompany = () => {
                   <label>Experience of Interns required*</label>
                   <select onChange={handleExperience}>
                     <option value="" disabled selected hidden>
-                    Choose Experience
+                    { (type == "editinternship")?selectedExperience:"Choose Experience"}   
                     </option>
                     {experienceData.map((val) => (
                       <option key={val} value={val}>
