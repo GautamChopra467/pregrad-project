@@ -103,6 +103,10 @@ const UserInfoSchema = new mongoose.Schema({
     type:String,
     trim: true,
     default:""
+   },
+   applied:{
+    type:Array,
+    default:[]
    }
 })
    
