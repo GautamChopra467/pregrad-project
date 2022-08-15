@@ -25,7 +25,9 @@ const {
     allStudentData,
     detailsOne,
     profileHealth,
-    editProfileDetails
+    editProfileDetails,
+    appliedInternship,
+    getappliedInternship
 
 } = require('../controllers/studentController')
 
@@ -95,5 +97,11 @@ router.route('/profilehealth/:id').get(profileHealth)
 //edit profile
 
 router.route('/editprofiledetails/:id').put(editProfileDetails)
+
+router.route('/appliedinternship/:id').post(appliedInternship)
+
+router.route('/getappliedinternship/:id').get(getappliedInternship)
+
+
 
 module.exports = router

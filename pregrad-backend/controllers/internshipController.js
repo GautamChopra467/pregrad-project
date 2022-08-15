@@ -128,3 +128,31 @@ module.exports.closeInternship = async(req,res)=>{
      }
     
 }
+
+module.exports.allInternship = async(req,res)=>{
+   try{
+
+     let {page,size} = req.query
+
+     const limit = parseInt(size)
+
+     const skip = (page-1)*size;
+
+     const internships = await Internship.find({}).limit(limit).skip(skip)
+
+     // internhips.id.length
+
+     // company companyinfo
+
+     //headquater , companyname  => internship
+
+     if(internships){
+          res.send(internships)
+     }else{
+          res.send("Server Error")
+     }
+   }catch(err){
+     console.log(err)
+   }  
+     
+}

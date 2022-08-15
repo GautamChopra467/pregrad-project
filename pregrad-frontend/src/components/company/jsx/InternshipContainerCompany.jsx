@@ -74,6 +74,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
     const internStatus = ()=>{
         getinternship()
         setIsModal2(!isModal2)
+        setIsModal(!isModal)
       
     }
 
