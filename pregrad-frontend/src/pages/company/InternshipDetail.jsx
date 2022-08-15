@@ -16,7 +16,6 @@ const InternshipDetail = ({theme, setTheme}) => {
 
   var cid = window.location.search.substring(1).split("=")[1];
 
-
   const [internship,setInternship] = useState({})
 
   const [internshipskills,setInternshipSkills] = useState([])
