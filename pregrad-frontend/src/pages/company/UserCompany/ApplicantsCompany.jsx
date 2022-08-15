@@ -3,6 +3,7 @@ import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css"
 import { FiFileText } from 'react-icons/fi';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
+import { FaTrashAlt } from "react-icons/fa";
 
 const ApplicantsCompany = () => {
   
@@ -78,6 +79,7 @@ const ApplicantsCompany = () => {
           <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Internship</button>
         </div>
         ) : (
+          <>
           <div className='main_box_applicantscompany'>
             <div className={statusClassName}>
                 <div className='top_section_student_applicantscompany'>
@@ -102,6 +104,11 @@ const ApplicantsCompany = () => {
                 </div>       
             </div>
           </div>
+          <div className='delete_box_applicantscompany'>
+            <FaTrashAlt className="delete_icon_applicantscompany" />
+            <p>Delete Rejected Ones (0)</p>
+          </div>
+          </>
           )
         }
       </div>

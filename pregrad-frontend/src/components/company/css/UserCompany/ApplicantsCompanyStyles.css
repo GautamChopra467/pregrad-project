@@ -29,6 +29,7 @@
     justify-content: center;
     grid-gap: 30px;
     padding: 78px 30px 30px 30px;
+    position: relative;
   }
   
   .add_section1_applicantscompany {
@@ -103,6 +104,12 @@
     background-color: var(--primary-light);
   }
 
+  .main_box_applicantscompany {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 20px;
+  }
+
   .student_box_applicantscompany {
     display: flex;
     flex-direction: column;
@@ -145,12 +152,20 @@
     transition: 0.2s all ease-in-out;
     margin-right: 20px;
     background-color: var(--primary-lightest);
+    color: var(--para-color);
+    transition: 0.2s all ease;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
+  }
+
+  .search_icon_container_applicantscompany:hover {
+    background-color: var(--primary-light);
+    color: var(--header-bg);
+    box-shadow: 0 0 12px 4px rgb(0 0 0 / 10%);
   }
   
   .search_icon_applicantscompany {
     font-size: 22px;
     cursor: pointer;
-    color: var(--para-color);
   }
 
   .mid_top_section_applicantscompany {
@@ -195,7 +210,37 @@
     display: none;
   }
 
+  .delete_box_applicantscompany {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 6%);
+    border-radius: 10px;
+    display: flex;
+    padding: 10px 12px;
+    cursor: pointer;
+    grid-gap: 10px;
+    width: 180px;
+    color: var(--para-color);
+    border: var(--input-border);
+    background-color: var(--input-border);
+    transition: 0.2s all ease;
+  }
 
+  .delete_box_applicantscompany:hover {
+    color: var(--menu-link);
+    box-shadow: 0 0 11px 4px rgb(0 0 0 / 6%);
+    border: 1px solid var(--input-hover);
+  }
+
+  .delete_icon_applicantscompany {
+    font-size: 20px;
+  }
+
+  .delete_box_applicantscompany p {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 
 
 
