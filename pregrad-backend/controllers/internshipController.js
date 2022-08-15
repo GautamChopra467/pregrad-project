@@ -1,4 +1,6 @@
 const Internship = require('../models/internshipModel')
+const Company = require('../models/companyModel')
+const CompanyInfo = require("../models/companyInfoModel")
 
 module.exports.createInternship = async(req,res)=>{
 try{
@@ -132,21 +134,28 @@ module.exports.closeInternship = async(req,res)=>{
 module.exports.allInternship = async(req,res)=>{
    try{
 
-     let {page,size} = req.query
+     // let {page,size} = req.query
 
-     const limit = parseInt(size)
+     // const limit = parseInt(size)
 
-     const skip = (page-1)*size;
+     // const skip = (page-1)*size;
 
-     const internships = await Internship.find({}).limit(limit).skip(skip)
+     // const internships = await Internship.find({}).limit(limit).skip(skip)
 
-     // internhips.id.length
+     const internships = await Internship.find()
 
-     // company companyinfo
+     for(let i=0;i<internships.length;i++){
 
-     //headquater , companyname  => internship
+          const company = await Company.findOne({_id:internships[i].id})
 
+          const companyinfo = await CompanyInfo.findOne({id:internships[i].id})
+      
+          internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
+          
+     }
+    
      if(internships){
+          
           res.send(internships)
      }else{
           res.send("Server Error")

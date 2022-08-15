@@ -18,48 +18,22 @@ const Internships = () => {
 
    const [internships,setInternships] = useState([])
 
-   const [appliedinternhsipid,setappliedInternshipId] = useState()
-
-  //  const [companydetails,setCompanyDetails] = useState({})
-
-  // const [companyInfoDetails,setCompanyInfoDetails] = useState({})
+   const [appliedinternship,setappliedInternship] = useState([])
 
   const [cookies,setCookie,removeCookie] = useCookies([]);
 
   const [currentPage, setCurrentPage] = useState("new-internships");
 
-//   const getInternship = ()=>{
-//     axios.get(`http://localhost:8000/company/getinternships/${id}`).then(({data})=>{
-//       console.log(data)
-//      setInternships(data)
-//     })
-//  }
-
-//  const getCompanyInfo = ()=>{
-//   axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
-//     console.log(data)
-
-//   setCompanyDetails(data)
-// })
-// }
-
-//  const getCompanyDetails = ()=>{
-//   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
-//     console.log(data)
-
-//     setCompanyInfoDetails(data)
-// }) 
-//  }
 
 const getAllInterships = ()=>{
-  axios.get(`http://localhost:8000/company/allinternships?page=1&size=2`).then(({data})=>{
+  axios.get(`http://localhost:8000/company/allinternships`).then(({data})=>{
     setInternships(data)
   })
 }
 
 const getAppliedInternship = ()=>{
-  axios.get(`http://localhost:8000/student/getappliedinternship/${id}`).then(({data})=>{
-    setappliedInternshipId(data)
+   axios.get(`http://localhost:8000/student/getappliedinternship/${id}`).then(({data})=>{
+    setappliedInternship(data)
   })
 }
 
@@ -78,9 +52,7 @@ useEffect(()=>{
         navigate(`/student/${id}/internships`)
         getAllInterships()
         getAppliedInternship()
-        // getCompanyInfo()
-        // getCompanyDetails()
-        // getInternship()
+
       }
     }
   }
@@ -103,15 +75,11 @@ useEffect(()=>{
       </div>
       <div className='main_container_internships'>
         {currentPage === "new-internships" && (
-          // "ha yhi hu"
-          <InternshipContainerStudent internship={internships} />
+          <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAppliedInternship={getAppliedInternship}/>
         )}
 
         {currentPage === "applied" && (
-          appliedinternhsipid.map((applied)=>(
-            // console.log(applied)
-            <AppliedInternshipContainer id={applied}/>
-          ))
+            <AppliedInternshipContainer appliedinternship={appliedinternship}/>
         )}
       </div>
       

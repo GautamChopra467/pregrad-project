@@ -1,6 +1,8 @@
 const StudentInfo = require('../models/UserInfoModel')
 const UserRegister = require("../models/userModel");
 const Internship = require("../models/internshipModel")
+const Company = require('../models/companyModel')
+
 //Achievement Functions
 
 module.exports.studentAchievement = async(req,res)=>{
@@ -703,15 +705,29 @@ module.exports.appliedInternship = async(req,res)=>{
 // update student and internship applied
 
 module.exports.getappliedInternship = async(req,res)=>{
+try{
 
     const {id} = req.params
 
     const internshipapplied = await StudentInfo.findOne({id})
 
-    if(internshipapplied){
-         res.send(internshipapplied.applied)
-    }else{
-        res.send("No internship")
+    var appliedintern = [];
+
+    for(let i=0;i<internshipapplied.applied.length;i++){
+
+        const internship = await Internship.findOne({_id:internshipapplied.applied[i]})
+
+        const company = await Company.findOne({_id:internship.id})
+
+        appliedintern.push({...internship,companyname:company.companyname})
+
     }
 
+    res.send(appliedintern)
+
+
+}catch(err){
+console.log(err)
+}
+    
 }
