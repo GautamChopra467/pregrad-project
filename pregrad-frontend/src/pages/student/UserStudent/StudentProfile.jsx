@@ -10,7 +10,7 @@ import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo, FaTimes } from "react-icons/fa";
-import { FiFileText } from "react-icons/fi";
+import { FiFileText, FiShare2 } from "react-icons/fi";
 
 const StudentProfile = () => {
 
@@ -251,6 +251,10 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
           <div className="profile_background_studentprofile">
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_studentprofile">
+                <div className="profile_edit5_studentprofile" onClick={() => navigate("/resume")} title="Share Resume">
+                  <FiShare2 size={20} />
+                </div>
+
                 <div className="profile_edit4_studentprofile" onClick={generatePDF} title="Download Resume">
                   <BiDownload size={20} />
                 </div>
@@ -286,6 +290,10 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               </div>
 
               <div className="profile_edit_container_studentprofile">
+                <div className="profile_edit_studentprofile" onClick={() => navigate("/resume")}>
+                  <FiShare2 />
+                </div>
+
                 <div className="profile_edit_studentprofile" onClick={(e)=>setEditDetails(e)}>
                   <BiEditAlt />
                 </div>
@@ -349,7 +357,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <div className='add_section1_logo_studentprofile'>
                     <FiFileText size={24} className="add_section1_icon_studentprofile" />
                   </div>
-                  <Link to="/">Add Education Details</Link>
+                  <Link to={`/student/${id}/education`}>Add Education Details</Link>
                   <p>Increase your <span>Profile Health</span></p>
                 </div>
               )} 
@@ -372,7 +380,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <div className='add_section1_logo_studentprofile'>
                     <FiFileText size={24} className="add_section1_icon_studentprofile" />
                   </div>
-                  <Link to="/">Add Achievement Details</Link>
+                  <Link to={`/student/${id}/achievements`}>Add Achievement Details</Link>
                   <p>Increase your <span>Profile Health</span></p>
                 </div>
               )} 
@@ -404,7 +412,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <div className='add_section1_logo_studentprofile'>
                     <FiFileText size={24} className="add_section1_icon_studentprofile" />
                   </div>
-                  <Link to="/">Add Work Experience Details</Link>
+                  <Link to={`/student/${id}/workexperience`}>Add Work Experience Details</Link>
                   <p>Increase your <span>Profile Health</span></p>
                 </div>
               )}              
@@ -436,7 +444,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <div className='add_section1_logo_studentprofile'>
                     <FiFileText size={24} className="add_section1_icon_studentprofile" />
                   </div>
-                  <Link to="/">Add Project Details</Link>
+                  <Link to={`/student/${id}/projects`}>Add Project Details</Link>
                   <p>Increase your <span>Profile Health</span></p>
                 </div>
               )}   

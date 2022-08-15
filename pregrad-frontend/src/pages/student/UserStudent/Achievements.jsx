@@ -143,7 +143,6 @@ const editAchievement = async(u_id,a_id)=>{
   const setStateValue = ()=>{
     setIsModal(!isModal)
     seteditform("addnew")
-
   }
 
 
@@ -160,6 +159,8 @@ const editAchievement = async(u_id,a_id)=>{
 
   const Cancel = ()=>{
     setIsModal(!isModal) 
+    setIsSubmit(false)
+    setFormErrors({})
   }
 
   return (

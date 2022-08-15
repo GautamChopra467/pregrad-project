@@ -55,6 +55,9 @@
   .main_container_internships {
     width: 100%;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 20px;
   }
 
   .line_internships {

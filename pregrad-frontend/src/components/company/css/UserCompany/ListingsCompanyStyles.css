@@ -172,6 +172,7 @@
   border-radius: 5px;
   border: 1px solid rgb(46, 201, 113);
   color: rgb(46, 201, 113);
+  cursor: default;
 }
 
 .experience_icon_container2_listingscompany {
@@ -183,6 +184,7 @@
   border-radius: 5px;
   border: 1px solid rgb(46, 201, 113);
   color: rgb(46, 201, 113);
+  cursor: default;
 }
 
 .status_container_listingscompany {
@@ -194,6 +196,7 @@
   background-color: #eafaf1;
   border-radius: 14px;
   color: rgb(46, 201, 113);
+  cursor: default;
 }
 
 .false_icon_container, .false_icon2_container {
@@ -528,6 +531,10 @@
 
 .checkbox_container_listingscompany input {
   display: none;
+}
+
+.toast-container-listingscompany {
+  background-color: var(--header-bg);
 }
 
 

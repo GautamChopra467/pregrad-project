@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from 'react';
 import "../../../components/student/css/UserStudent/InternshipsStyles.css";
-import HeaderAuth from "../../../components/student/jsx/HeaderAuth";
 import { BiHeading } from 'react-icons/bi';
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'

@@ -238,6 +238,10 @@
   color: var(--primary-color);
 }
 
+.bottom_section_content_workexperience a:hover {
+  color: var(--primary-light);
+}
+
 .skills_content_workexperience {
   padding-left: 20px;
 }

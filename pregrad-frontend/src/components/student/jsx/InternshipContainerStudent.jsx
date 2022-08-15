@@ -6,9 +6,8 @@ import { AiOutlineFieldTime, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineLocationMarker, HiOutlinePencil } from "react-icons/hi";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { FiClipboard } from "react-icons/fi";
-import { IoMdClose } from "react-icons/io";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
 const InternshipContainerStudent = ({internship}) => {
@@ -55,7 +54,16 @@ const applyInternship = (iid)=>{
     axios.post(`http://localhost:8000/student/appliedinternship/${id}`,{
         iid
     })
-
+    const notify = () => toast.success('Applied Successfully, You can see the internship in applied section.', {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+    notify();
 }
 
   return (
@@ -152,7 +160,8 @@ const applyInternship = (iid)=>{
             </div>
           </div>
           <div className='bottom_section_internship_listingscompany'>
-           {(intern.status)?<button className='btn_primary_listingscompany' onClick={()=>applyInternship(intern._id)}>Apply</button>:<button className='btn_primary_listingscompany'>Closed</button>} 
+           {(intern.status)?<button className='btn_primary_listingscompany' onClick={()=>applyInternship(intern._id)}>Apply Now</button>:<button className='btn_primary_listingscompany'>Closed</button>} 
+           
             <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
 

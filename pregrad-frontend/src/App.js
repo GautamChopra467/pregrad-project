@@ -10,6 +10,8 @@ import ForgotPassword from "./pages/student/ForgotPassword";
 import ResumeStudent from "./pages/student/UserStudent/ResumeStudent";
 import DetailsOne from "./pages/student/DetailsOne";
 import Resume from "./pages/student/Resume";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 // Company Routes
@@ -48,7 +50,9 @@ const App = () => {
         <Route exact path="/company/info/:id/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/:id/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/internship/:i_id" element={<InternshipDetail theme={theme} setTheme={setTheme}/>} />
+        
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 };
