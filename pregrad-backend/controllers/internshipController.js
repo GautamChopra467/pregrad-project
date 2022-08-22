@@ -1,6 +1,7 @@
 const Internship = require('../models/internshipModel')
 const Company = require('../models/companyModel')
 const CompanyInfo = require("../models/companyInfoModel")
+const UserRegister = require("../models/userModel");
 
 module.exports.createInternship = async(req,res)=>{
 try{
@@ -164,4 +165,69 @@ module.exports.allInternship = async(req,res)=>{
      console.log(err)
    }  
      
+}
+
+module.exports.getApplicants = async(req,res)=>{
+try{
+     const {id} = req.params
+
+    const internship = await Internship.findOne({_id:id})
+
+    let applicants = [];
+
+    let count = 0;
+
+    for(let i=0;i<internship.applied.length;i++){
+
+         const student = await UserRegister.findOne({_id:internship.applied[i].id})
+       
+          if(internship.applied[i].status === "Applied"){
+             ++count;
+          }
+         applicants.push({id:student._id,name:student.name,internshipstatus:internship.applied[i].status})
+    }
+ 
+    res.send({candidates:applicants,length:count})
+
+}catch(err){
+     console.log(err)
+}
+}
+
+module.exports.rejectedApplicants = async(req,res)=>{
+
+     const {id} = req.params;
+
+     let count = 0;
+     
+     const rejected = req.body.filter((e)=>e.status === true)
+
+
+     const accepted = req.body.filter((e)=>e.status === false)
+
+
+     rejected.map(async(e)=>{
+
+       const internship = await Internship.updateOne({_id:id,"applied.id":e.id},{
+          $set:{
+               "applied.$.status":"Rejected"
+          }
+       },{
+          new:true
+       })
+     })
+
+     accepted.map(async(e)=>{
+
+          const internship = await Internship.updateOne({_id:id,"applied.id":e.id},{
+             $set:{
+                  "applied.$.status":"Accepted"
+             }
+          },{
+             new:true
+          })
+        })
+
+     res.send({status:true})
+
 }

@@ -28,7 +28,7 @@ const App = () => {
     document.body.className = theme;
   },[theme]);
 
-  return (
+  return (  //home navigate('/home') 
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home theme={theme} setTheme={setTheme}/>} />
@@ -40,19 +40,19 @@ const App = () => {
         <Route exact path="/student/:id/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         {/* <Route exact path="/resume" element={<ResumeStudent />} /> */}
-        <Route exact path="/resume" element={<Resume theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/resume/:id" element={<Resume theme={theme} setTheme={setTheme}/>} />
 
-
+  // navbar home skills
 
         {/* Company Routes */}
-        <Route exact path="/company" element={<HomeCompany theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company" element={<HomeCompany theme={theme} setTheme={setTheme} />} />
         <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/info/:id/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/:id/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/internship/:i_id" element={<InternshipDetail theme={theme} setTheme={setTheme}/>} />
         
       </Routes>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </BrowserRouter>
   );
 };

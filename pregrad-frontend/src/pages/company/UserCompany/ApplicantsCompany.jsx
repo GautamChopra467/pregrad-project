@@ -1,69 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css";
 import { FiFileText } from 'react-icons/fi';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
+import axios from 'axios'
 
 const ApplicantsCompany = () => {
   
     const navigate = useNavigate();
+
+    var iid = window.location.search.substring(1).split("=")[1];
     
     const [isContent, setIsContent] = useState(true);
 
-    const [accepted, setAccepted] = useState(false);
-    const [rejected, setRejected] = useState(false);
+    const [showapplied,setShowApplied] = useState([])
 
-    const changeAccepted = () => {
-      setAccepted(!accepted) 
-      setRejected(false)
-      setStatusClassName("student_box_applicantscompany accept_applicantscompany")
-      if(accepted === true && rejected === false){
-        console.log("hii")
-        setStatusClassName("student_box_applicantscompany")
-      }
+    let [totalApplied,setTotalApplied] = useState(0)
+
+    let [count,setCount] = useState(0)
+ 
+    const changeAccepted = (id) => {
+      setShowApplied(showapplied.map((e)=>{
+        if(e.id === id){
+         if(e.status === true){
+          setCount(--count)
+           return {...e,status:false,class:"student_box_applicantscompany accept_applicantscompany"}
+         }else{
+           return {...e,status:false,class:"student_box_applicantscompany accept_applicantscompany"}
+         }
+        }else{
+           return e;
+        }
+    }))
+         }
+    
+         const showApplicants = async()=>{
+
+              const {data} = await  axios.get(`http://localhost:8000/company/application/${iid}`)
+                setShowApplied(data.candidates)
+                setTotalApplied(data.length)
+
+         }
+
+    useEffect(()=>{
+      showApplicants()
+},[])
 
 
-
-
-
-      // console.log("1",accepted, rejected)
-      // setAccepted(!accepted) 
-      // setRejected(false)
-      // setStatusClassName("student_box_applicantscompany accept_applicantscompany")
-      // if(rejected === true && accepted === false){
-      //   setStatusClassName("student_box_applicantscompany")
-      // }
+    const changeRejected = (id) => {
+      setShowApplied(showapplied.map((e)=>{
+         if(e.id === id){
+          if(e.status === true){
+            return {...e,status:undefined,class:"student_box_applicantscompany"}
+          }else{
+            setCount(++count)
+            return {...e,status:true,class:"student_box_applicantscompany reject_applicantscompany"}
+          }
+         }else{
+            return e;
+         }
+     }))
     }
 
-    const changeRejected = () => {
-      console.log("2",accepted, rejected)
-      setRejected(!rejected)
-      setAccepted(false)
-      setStatusClassName("student_box_applicantscompany reject_applicantscompany")
-      if(rejected === true && accepted === false){
-        setStatusClassName("student_box_applicantscompany")
-      }
-    }
+    const deleteRejectedApplicant = async()=>{
 
-    const [status, setStatus] = useState("none");
-    const [statusClassName, setStatusClassName] = useState("student_box_applicantscompany")
-
-    const checkStatusClassName = () => {
-      if(status == "none"){
-         setStatusClassName("student_box_applicantscompany")       
+        const {data} = await axios.put(`http://localhost:8000/company/rejectedapplicants/${iid}`,[
+          ...showapplied
+      ])
+      if(data.status){
+        showApplicants()
+        setCount(0)
       }
-      if(status == "accept"){
-        
-      }else {
-        
-      }
-    }
+}
 
   return (
     <div>
       <div className='sub_header_applicantscompany'>
-        <h5>Applicants <span>(1)</span></h5>
+        <h5>Applicants <span>({totalApplied})</span></h5>
       </div>
 
       <div className='main_container_applicantscompany'>
@@ -81,9 +95,12 @@ const ApplicantsCompany = () => {
         ) : (
           <>
           <div className='main_box_applicantscompany'>
-            <div className={statusClassName}>
+           {
+            showapplied.map((application)=>(
+              (application.internshipstatus === "Rejected"?"":(
+                <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
                 <div className='top_section_student_applicantscompany'>
-                  <h2>Gautam Chopra</h2>
+                  <h2>{application.name}</h2>
                   <div className='search_icon_container_applicantscompany'>
                     <AiOutlineFileSearch className="search_icon_applicantscompany" />
                   </div>
@@ -91,22 +108,25 @@ const ApplicantsCompany = () => {
                 <div className='mid_section_applicantscompany'>
                 <div className='mid_top_section_applicantscompany'>
                       <div>
-                        <input type="checkbox" id="cb1" onClick={changeAccepted} checked={accepted} />
-                        <label for="cb1"></label>
+                        <input type="radio" id={`accept${application.id}`} name={`${application.id}`} onClick={()=>changeAccepted(application.id)} value={`accept${application.id}`} />
+                        <label htmlFor={`accept${application.id}`}></label>
                         <p>Accept</p>
                       </div>
                       <div>
-                        <input type="checkbox" id="cb2" onClick={changeRejected} checked={rejected} />
-                        <label for="cb2"></label>
+                        <input type="radio" id={`reject${application.id}`} name={`${application.id}`} onClick={()=>changeRejected(application.id)} value={`reject${application.id}`} disabled={(application.status === undefined)?false:(application.status === true)?true:false}/>
+                        <label htmlFor={`reject${application.id}`}></label>
                         <p>Reject</p>
                       </div>
                     </div>
                 </div>       
             </div>
+              ))
+            ))
+            }
           </div>
-          <div className='delete_box_applicantscompany'>
+          <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
             <FaTrashAlt className="delete_icon_applicantscompany" />
-            <p>Delete Rejected Ones (0)</p>
+            <p>Delete Rejected Ones  ({count})</p>
           </div>
           </>
           )

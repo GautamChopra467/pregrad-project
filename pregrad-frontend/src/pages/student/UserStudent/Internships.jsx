@@ -75,11 +75,11 @@ useEffect(()=>{
       </div>
       <div className='main_container_internships'>
         {currentPage === "new-internships" && (
-          <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAppliedInternship={getAppliedInternship}/>
+          <InternshipContainerStudent internship={(internships==undefined)?"":internships}/>
         )}
 
         {currentPage === "applied" && (
-            <AppliedInternshipContainer appliedinternship={appliedinternship}/>
+            <AppliedInternshipContainer appliedinternship={appliedinternship} getAppliedInternship={getAppliedInternship}/>
         )}
       </div>
       
