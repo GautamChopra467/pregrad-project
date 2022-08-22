@@ -11,10 +11,8 @@ const AddInternshipCompany = () => {
   const {id} = useParams()
 
   var query = window.location.search.substring(1).split("&");
-  
-  const iid = query[1].split("=")[1]
 
-  const type = query[0].split("=")[1]
+  const type = query[0].split("=")[1];
  
   const titleData = [
     "Front-End",
@@ -230,6 +228,7 @@ const AddInternshipCompany = () => {
   }
 
   const setEditInternship = ()=>{
+    const iid = query[1].split("=")[1];
     axios.get(`http://localhost:8000/company/singleinternship/${iid}`).then(({data})=>{
       setInfo({...info,
       positions: data.noofemployees,
@@ -256,6 +255,7 @@ const AddInternshipCompany = () => {
 
     if(Object.keys(formErrors).length === 0 && isSubmit){
       if(type == "editinternship"){
+        const iid = query[1].split("=")[1];
         axios.put(`http://localhost:8000/company/editinternships/${iid}`,{  
           ...addInternship
         })
@@ -264,7 +264,6 @@ const AddInternshipCompany = () => {
         axios.post(`http://localhost:8000/company/addinternships/${id}`,{
           ...addInternship
         })
-        console.log("posting")
       }  
       navigate(`/company/info/${id}/listings`)
     }

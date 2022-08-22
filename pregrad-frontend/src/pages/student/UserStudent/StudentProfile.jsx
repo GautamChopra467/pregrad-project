@@ -39,6 +39,8 @@ const [studentDomain,setstudentDomain]= useState([])
 
 const [studentSocialLink,setStudentSocialLink]= useState({})
 
+const [video,setVideo] = useState()
+
   let skillsData = [
     "HTML",
     "CSS",
@@ -53,6 +55,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
   ];
 
   const getUserData = async()=>{
+
     const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
   
     if(data.message === "true"){
@@ -63,6 +66,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     setStudentSkills(data.skills)
     setstudentDomain(data.domain)
     setStudentSocialLink(data.socialLink)
+    setVideo(data.videolink)
   }
   }
 
@@ -290,7 +294,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                 </div>
 
                 <div className="profile_edit3_studentprofile" title="Video Resume">
-                  <FaRegFileVideo />
+                <a href={video} target="_blank"><FaRegFileVideo /></a>
                 </div>
 
               <div className="profile_edit2_studentprofile" onClick={(e)=>setEditDetails(e)}>
@@ -332,8 +336,8 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
                   <BiDownload />
                 </div>
 
-                <div className="profile_edit_studentprofile" onClick={generatePDF} title="Download Resume">
-                  <FaRegFileVideo />
+                <div className="profile_edit_studentprofile"  title="Video Resume">
+                <a href={video} target="_blank"><FaRegFileVideo /></a>
                 </div>
               </div>
 

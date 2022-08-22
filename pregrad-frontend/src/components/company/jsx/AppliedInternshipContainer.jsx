@@ -5,15 +5,18 @@ import { BsFillBarChartFill } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 
-const AppliedInternshipContainer = ({appliedinternship}) => {
-
-  console.log(appliedinternship)
+const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) => {
 
   const {id} = useParams()
 
     const navigate = useNavigate();
 
     const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
+
+    useEffect(()=>{
+      getAppliedInternship()
+    },[])
+
 
   return (
    <>

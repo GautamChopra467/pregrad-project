@@ -217,8 +217,6 @@ const InternshipDetail = ({theme, setTheme}) => {
                     <p>{internship.noofemployees}</p>
                 </div>
 
-
-
                 <div className='bottom_lower_section_internshipdetail'>
                     <div className='line_internshipdetail'></div>
 

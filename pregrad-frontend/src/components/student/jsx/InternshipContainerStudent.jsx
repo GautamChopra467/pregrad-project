@@ -21,11 +21,12 @@ const InternshipContainerStudent = ({internship,getAppliedInternship}) => {
     const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
 
 
-const applyInternship = (iid)=>{
+const applyInternship = async(iid)=>{
 
-    axios.post(`http://localhost:8000/student/appliedinternship/${id}`,{
+    const {data} = await axios.post(`http://localhost:8000/student/appliedinternship/${id}`,{
         iid
     })
+    console.log(data)
     const notify = () => toast.success('Applied Successfully, You can see the internship in applied section.', {
       position: "bottom-left",
       autoClose: 5000,
@@ -36,7 +37,6 @@ const applyInternship = (iid)=>{
       progress: undefined,
       });
     notify();
-    getAppliedInternship()
 }
 
   return (
