@@ -101,7 +101,7 @@ const ApplicantsCompany = () => {
                 <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
                 <div className='top_section_student_applicantscompany'>
                   <h2>{application.name}</h2>
-                  <div className='search_icon_container_applicantscompany'>
+                  <div className='search_icon_container_applicantscompany' onClick={()=>navigate(`/resume/${application.id}`)}>
                     <AiOutlineFileSearch className="search_icon_applicantscompany" />
                   </div>
                 </div>
