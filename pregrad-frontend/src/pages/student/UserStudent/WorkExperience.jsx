@@ -16,6 +16,7 @@ const WorkExperience = () => {
 
   const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
+  const [isModalDelete, setIsModalDelete] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -218,7 +219,7 @@ const Cancel = ()=>{
                 <div className='content_logo_workexperience' onClick={()=>editWorkExperience(id,work._id)}>
                   <BiEditAlt size={22} className="content_icon_workexperience" />
                 </div>
-                <div className='content_logo_workexperience' onClick={()=>deleteWorkExperience(id,work._id)}>
+                <div className='content_logo_workexperience' onClick={()=>setIsModalDelete(!isModalDelete)}>
                   <MdOutlineDelete size={22} color='#ef233c' />
                 </div>
                 </div>
@@ -236,6 +237,21 @@ const Cancel = ()=>{
                   <li>{work.skills}</li>
                 </ul>
               </div>
+
+              {/* {
+                  isModalDelete && (
+                    <div className='modal2_background_workexperience'>
+                      {console.log("hello")}
+                      <div className='modal2_box_workexperience'>
+                        <h3>Are you sure you want to delete this Education ?</h3>
+                        <div className='modal2_button_container_workexperience'>
+                          <button className='btn_light_workexperience' onClick={() => setIsModalDelete(!isModalDelete)}>Cancel</button>
+                          <button className='btn_cancel_workexperience'>Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                } */}
             </div>
   ))
             }
@@ -348,8 +364,12 @@ const Cancel = ()=>{
         </div>
         )}
 
+             
+
     </div>
   )
 }
 
 export default WorkExperience;
+
+// deleteWorkExperience(id,work._id)

@@ -541,6 +541,100 @@ background-color: var(--header-bg);
   background-color: var(--primary-light);
 }
 
+.modal2_background_studentprofile {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 39, 46, 0.95);
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal2_box_studentprofile {
+  background-color: var(--header-bg);
+    padding: 32px;
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    min-width: 580px;
+    margin-top: -80px;
+    position: relative;
+}
+
+.modal2_box_studentprofile h2 {
+  min-height: 29px;
+    height: 29px;
+    left: 427px;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--para-color);
+    margin-bottom: 15px;
+}
+
+.modal2_copy_container_studentprofile {
+  display: flex;
+  width: 100%;
+}
+
+.modal2_copy_container_studentprofile input {
+  height: 44px;
+    width: 72%;
+    font-style: normal;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    padding: 8px 0 8px 16px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: 0;
+    background: var(--white-color);
+}
+
+.modal2_copy_container_studentprofile button {
+  height: 44px;
+    width: 28%;
+    font-style: normal;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--para-color);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 10px;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.modal2_copy_container_studentprofile button:hover {
+  background-color: var(--background-secondary-hover);
+}
+
+.modal2_close_icon_studentprofile {
+  position: absolute;
+  top: 34px;
+  right: 35px;
+  font-size: 18px;
+  color: var(--para-color);
+  cursor: pointer;
+  transition: 0.2s all ease;
+}
+
+.modal2_close_icon_studentprofile:hover {
+  color: var(--black-color);
+}
+
 
 @media screen and (max-width: 1100px) {
   .main_container_studentprofile {
@@ -643,6 +737,33 @@ background-color: var(--header-bg);
 
   .btn_light_studentprofile {
     padding: 6px 7px;
+  }
+
+  .modal2_box_studentprofile {
+    padding: 15px;
+    min-width: 420px;
+  }
+
+  .modal2_copy_container_studentprofile {
+    flex-direction: column;
+    grid-gap: 15px;
+  }
+
+  .modal2_copy_container_studentprofile input {
+    width: 100%;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px
+  }
+
+  .modal2_copy_container_studentprofile button {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    width: max-content;
+  }
+
+  .modal2_close_icon_studentprofile {
+    top: 19px;
+    right: 18px;
   }
 }
 
@@ -803,6 +924,10 @@ background-color: var(--header-bg);
     font-size: 0.9rem;
     padding: 5px 5px;
   }
+
+  .modal2_box_studentprofile {
+    min-width: 380px;
+  }
 }
 
 @media screen and (max-width: 460px) {
@@ -852,6 +977,11 @@ background-color: var(--header-bg);
   .welcome_left_section_studentprofile p {
     font-size: 12px;
   }
+
+  .modal2_box_studentprofile {
+    min-width: 100%;
+    border-radius: 0;
+  }
 }
 
 @media screen and (max-width: 355px) {
@@ -882,5 +1012,9 @@ background-color: var(--header-bg);
   .card_studentprofile {
     grid-gap: 0.5rem;
     padding: 0.7rem;
+  }
+
+  .modal2_copy_container_studentprofile input {
+    padding: 8px;
   }
 }

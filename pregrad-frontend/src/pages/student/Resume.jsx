@@ -1,30 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HeaderAuth from '../../components/student/jsx/HeaderAuth';
 import "../../components/student/css/ResumeStyles.css";
 import "../../components/student/css/UserStudent/ResumeStudentStyles.css";
 import ProfileBackground from "../../img/profile-background.jpg";
 import { BiDownload, BiEditAlt, BiLink } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo, FaTimes } from "react-icons/fa";
-import { FiFileText } from "react-icons/fi";
+
 
 const Resume = ({theme, setTheme}) => {
-    let skillsData = [
-        "HTML",
-        "CSS",
-        "JS",
-        "React",
-        "Illustrator",
-        "PHP",
-        "JQuery",
-        "NodeJs",
-        "Figma",
-        "ExpressJs",
-      ];
+  const  [user,setUser] = useState({})
+
+  const [Achievement,setAchievement] = useState([])
+  const [WorkExperience,setWorkExperience] = useState([])
+  const [Project,setProject] = useState([])
+  const [Education,setEducation] = useState([])
+  const [studentSkill,setStudentSkills] = useState([])
+  const [studentDomain,setstudentDomain]= useState([])
+  const [studentSocialLink,setStudentSocialLink]= useState({})
+
+  const {id} = useParams()
+
+      useEffect(() => {
+        getUserDetails();
+        getUserData();
+      })
+
+      const getUserDetails= async()=>{
+        const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+        setUser(data)
+      }
+
+      const getUserData = async()=>{
+        const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
+      
+        if(data.message === "true"){
+        setAchievement(data.achievement)
+        setProject(data.project)
+        setWorkExperience(data.workexperience)
+        setEducation(data.education)
+        setStudentSkills(data.skills)
+        setstudentDomain(data.domain)
+        setStudentSocialLink(data.socialLink)
+      }
+      }
+    
+      const initials = user.name
+      const name_initials=typeof initials==="string" ?initials.split('')[0]:""
 
     const generatePDF = async () => {
         var doc = new jsPDF("p", "pt", "a4");
@@ -51,34 +78,30 @@ const Resume = ({theme, setTheme}) => {
                 <div className="profile_edit3_resume" title="Video Resume">
                   <FaRegFileVideo />
                 </div>
-
-              <div className="profile_edit2_resume">
-                  <BiEditAlt size={18} />
-              </div>
             </div>
 
           </div>
 
           <div className="profile_user_details_resume">
             <div className="user_image_resume">
-              G
+            {name_initials}
             </div>
             <div className="profile_info_resume">
               <div className="info_container_resume">
                 <div className="info_left_section_resume">
-                  <h5>Gautam Chopra</h5>
-                  <p>WEB DEVELOPER</p>
+                  <h5>{user.name}</h5>
+                  {
+                    studentDomain.map((domain)=>(
+                      <p>{domain}</p>
+                    ))
+                  }
                 </div>
                 <div className="info_middle_section_resume">
-                  <h5>harshchopra467@gmail.com</h5>
+                  <h5>{user.email}</h5>
                 </div>
               </div>
 
               <div className="profile_edit_container_resume">
-                <div className="profile_edit_resume">
-                  <BiEditAlt />
-                </div>
-
                 <div className="profile_edit_resume" onClick={generatePDF} title="Download Resume">
                   <BiDownload />
                 </div>
@@ -100,9 +123,10 @@ const Resume = ({theme, setTheme}) => {
               <div className="line_resume"></div>
               <div className="social_links_box_resume">
                 
-                <AiFillGithub className="social_links_resume" />
-                <AiFillLinkedin className="social_links_resume" />
-                <AiFillInstagram className="social_links_resume" />
+              {  studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_resume" />)}
+                {  studentSocialLink.linkedin == ""?(""): ( <AiFillLinkedin className="social_links_resume" />)}
+                {  studentSocialLink.instagram == ""?(""): (  <AiFillInstagram className="social_links_resume" />)}
+                  
               </div>
             </div>
 
@@ -110,7 +134,7 @@ const Resume = ({theme, setTheme}) => {
               <h4>Skills</h4>
               <div className="line_resume"></div>
               <div className="skills_box_resume">
-                {skillsData.map((value) => (
+              {studentSkill.map((value) => (
                   <div key={value} className="skill_section_resume">
                     <p>{value}</p>
                   </div>
@@ -122,11 +146,15 @@ const Resume = ({theme, setTheme}) => {
               <h4>Education</h4>
               <div className="line_resume"></div>
               
-              <div className="education_info_box_resume">
-                <h3>BVCOE</h3>
-                <h5>BTECH, CSE</h5>
-                <p>2020 - 2024</p>
+              {
+              Education.map((edu)=>(
+              <div className="education_info_box_resume" key={edu._id}>
+                <h3>{edu.university}</h3>
+                <h5>{edu.degree},{edu.field}</h5>
+                <p>{edu.start} - {edu.end}</p>
               </div>
+              ))   
+              }
             </div>
 
             <div className="achievements_container_resume card_resume">
@@ -134,10 +162,14 @@ const Resume = ({theme, setTheme}) => {
 
               <div className="line_resume"></div>
             
-                <div className="achievements_info_box_resume">
-                <h3>Hackathon</h3>
-                <a href="yo">Certificate Link</a>
-              </div> 
+              {
+              Achievement.map((achi)=>(
+                <div className="achievements_info_box_resume" key={achi._id}>
+                <h3>{achi.title}</h3>
+                <a href={achi.certificate}>Certificate Link</a>
+              </div>
+              ))
+              }
             </div>
           </div>
 
@@ -145,37 +177,45 @@ const Resume = ({theme, setTheme}) => {
             <div className="workexperience_container_resume card_resume">
               <h4>Work Experience</h4>
               <div className="line_resume"></div>
-              <div className="workexperience_details_box_resume">
-                <h3>Google</h3>
-                <h5>Web Developer | 2 months</h5>
+              {        
+              WorkExperience.map((work)=>(
+              <div className="workexperience_details_box_resume" key={work._id}>
+                <h3>{work.companyname}</h3>
+                <h5>{work.position} | {work.duration}</h5>
                 <p>
-                hkkkkkkkkk  
+                {work.role}  
                 </p>
                 <div className="skills_content_resume">
                   <ul>
-                    <li>HTML</li>
+                    <li>{work.skills}</li>
                   </ul>
                 </div>
-              </div>         
+              </div>
+              ))
+              }   
             </div>
 
             <div className="projects_container_resume card_resume">
               <h4>Projects</h4>
               <div className="line_resume"></div>
-              <div className="projects_details_box_resume">
-                <h3>Ambaram - Ecommerce Website</h3>
+              {          
+              Project.map((proj)=>(
+              <div className="projects_details_box_resume" key={proj._id}>
+                <h3>{proj.projecttitle}</h3>
                 <p>
-                Good project 
+                {proj.description}
                 </p>
-                <a href="yo">
+                <a href={proj.projectlink}>
                   <BiLink size={24} className="project_details_icon_resume" />
                 </a>
                 <div className="skills_content_resume">
                   <ul>
-                    <li>JS</li>
+                    <li>{proj.skills}</li>
                   </ul>
                 </div>
-              </div>  
+              </div>
+              ))
+              }
             </div>
           </div>
         </div>
@@ -187,7 +227,7 @@ const Resume = ({theme, setTheme}) => {
 
       {/* RESUME */}
 
-      {/* <div className='resumestudent'>
+       <div className='resumestudent'>
         <div className="main_container_resumestudent">
         <div className="profile_container_resumestudent">
 
@@ -340,7 +380,7 @@ const Resume = ({theme, setTheme}) => {
           </div>
         </div>
       </div>
-    </div> */}
+    </div> 
     </div>
   )
 }

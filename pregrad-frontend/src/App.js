@@ -40,7 +40,7 @@ const App = () => {
         <Route exact path="/student/:id/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         {/* <Route exact path="/resume" element={<ResumeStudent />} /> */}
-        <Route exact path="/resume" element={<Resume theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/resume/:id" element={<Resume theme={theme} setTheme={setTheme}/>} />
 
 
 

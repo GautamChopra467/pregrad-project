@@ -1,8 +1,7 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState, useRef} from "react";
 import "../../../components/student/css/UserStudent/StudentProfileStyles.css";
 import "../../../components/student/css/UserStudent/ResumeStudentStyles.css";
 import ProfileBackground from "../../../img/profile-background.jpg";
-import UserImage from "../../../img/profile-image.png";
 import { BiDownload, BiEditAlt, BiLink } from "react-icons/bi";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
@@ -10,11 +9,14 @@ import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo, FaTimes } from "react-icons/fa";
-import { FiFileText, FiShare2 } from "react-icons/fi";
+import { FiCopy, FiFileText, FiShare2 } from "react-icons/fi";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StudentProfile = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const ref = useRef();
 
   const {id} = useParams()
   
@@ -118,6 +120,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
   }
 
   const [isModal,  setIsModal ] = useState(false);
+  const [isModal2, setIsModal2] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -157,7 +160,21 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
       }
     }
     verifyUser()
-  },[cookies,removeCookie,navigate])
+
+    const checkIfClickedOutside = e => {
+      console.log("before reached", ref.current.contains(e.target))
+      console.log("reached 2", isModal2)
+      if (isModal2 && ref.current && !ref.current.contains(e.target)) {
+        console.log("reached")
+        setIsModal2(false)
+      }
+    }
+    document.addEventListener("click", checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside)
+    }  
+  },[cookies,removeCookie,navigate, setIsModal2])
 
   const generatePDF = async () => {
     var doc = new jsPDF("p", "pt", "a4");
@@ -227,6 +244,19 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
     })
   }
 
+  const copyLink = async () => {
+    await window.navigator.clipboard.writeText(`/resume/${id}`)
+    toast.success('Link copied successfully', {
+      position: "bottom-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+
 
   return (
     <div>
@@ -251,7 +281,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
           <div className="profile_background_studentprofile">
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_studentprofile">
-                <div className="profile_edit5_studentprofile" onClick={() => navigate("/resume")} title="Share Resume">
+                <div className="profile_edit5_studentprofile" onClick={() => setIsModal2(!isModal2)} title="Share Resume">
                   <FiShare2 size={20} />
                 </div>
 
@@ -290,7 +320,7 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
               </div>
 
               <div className="profile_edit_container_studentprofile">
-                <div className="profile_edit_studentprofile" onClick={() => navigate("/resume")}>
+                <div className="profile_edit_studentprofile" onClick={() => setIsModal2(!isModal2)}>
                   <FiShare2 />
                 </div>
 
@@ -451,6 +481,19 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
             </div>
           </div>
         </div>
+
+        {isModal2 && (
+      <div className='modal2_background_studentprofile'> 
+        <div className='modal2_box_studentprofile' ref={ref}>
+          <h2>Share Profile</h2>
+          <div className="modal2_copy_container_studentprofile">
+            <input type="text" disabled value={`/resume/${id}`} />
+            <button onClick={copyLink}><FiCopy /> Copy Link</button>
+          </div>
+          <FaTimes onClick={() => setIsModal2(!isModal2)} className="modal2_close_icon_studentprofile" />
+        </div>
+      </div>
+      )}
       </div>
 
       {isModal && (
@@ -543,6 +586,9 @@ const [studentSocialLink,setStudentSocialLink]= useState({})
           </div>
         </div>
         )}
+
+
+      
 
 
 
