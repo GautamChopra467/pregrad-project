@@ -23,10 +23,14 @@
 
   .current_page_section_internships {
     background-color: var(--header-bg);
-    padding: 58px 15px 15px 15px;
+    width: 100%;
+    padding: 58px 15px 10px 15px;
+    position: sticky;
+    top: 120px;
     box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
     display: flex;
     align-items: center;
+    z-index: 50;
   }
 
   .left_current_section_internships, .right_current_section_internships {
@@ -34,7 +38,7 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
-    padding: 5px 20px;
+    padding: 5px 0;
     color: var(--primary-color);
   }
 
@@ -55,6 +59,7 @@
   .main_container_internships {
     width: 100%;
     padding: 30px;
+    padding-top: 140px;
     display: flex;
     flex-direction: column;
     grid-gap: 20px;
@@ -67,12 +72,12 @@
 
   @media screen and (max-width: 660px) {
     .main_container_internships {
-      padding: 30px 15px;
+      padding: 125px 15px 30px 15px;
     }
   }
 
   @media screen and (max-width: 560px) {
     .main_container_internships {
-      padding: 20px 0;
+      padding: 125px 0 20px 0;
     }
   }

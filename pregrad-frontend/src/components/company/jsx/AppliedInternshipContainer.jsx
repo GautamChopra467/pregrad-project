@@ -35,7 +35,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 <p>{applied._doc.experience}</p>
                 <AiOutlineInfoCircle className="info_icon_appliedinternship" />
               </div>
-              <div className={(applied._doc.status) ? 'active_icon_container' : 'false_icon_container'}>
+              <div className={(applied._doc.status) ? 'active_icon_container_appliedinternship' : 'false_icon_container_appliedinternship'}>
                 <p>{(applied._doc.status) ? "Active" : "Closed"}</p>
               </div>
             </div>
@@ -49,7 +49,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 <AiOutlineInfoCircle className="info_icon_appliedinternship" />
               </div>
 
-              <div className={(applied._doc.status) ? 'active_icon2_container' : 'false_icon2_container'}>
+              <div className={(applied._doc.status) ? 'active_icon2_container_appliedinternship' : 'false_icon2_container'}>
                 <p>{(applied._doc.status) ? "Active" : "Closed"}</p>
               </div>
             </div>

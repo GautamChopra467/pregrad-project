@@ -172,10 +172,9 @@ const UpdatedWorExperience = async(e,u_id)=>{
 }
 
 const Cancel = ()=>{
-  // Object.keys(formErrors).forEach(key=>{
-  //   formErrors[key] = "";
-  // })
-  setIsModal(!isModal) 
+  setIsModal(!isModal)
+  setIsSubmit(false)
+  setFormErrors({}) 
 }
 
   return (

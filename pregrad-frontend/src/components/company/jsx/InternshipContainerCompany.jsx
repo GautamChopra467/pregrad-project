@@ -80,14 +80,22 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
       
     }
 
+    const [error, setError] = useState("");
+
     const updateInternshipstatus = async(e,iid,status)=>{
-        e.preventDefault()   
-        const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
-          status
-        })
-        if(data.message){
-          internStatus()
+        e.preventDefault()  
+        console.log(option1, ".",option2, ".",option3, ".",option4, ".",)
+        if(option1 || option2 || option3 || option4){
+          setError("")
+        }else {
+          setError("Reason required")
         }
+        // const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
+        //   status
+        // })
+        // if(data.message){
+        //   internStatus()
+        // }
 
 }
 
@@ -226,27 +234,28 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
  
           <div className='modal_mid_section_listingscompany'>
             <form>
-              <div className="form_box_listingscompany checkbox_container_listingscompany">
-                  <div>
+              <div className="form_box_listingscompany">
+                  <div className="checkbox_container_listingscompany">
                     <input type="checkbox" id="cb1" onClick={() => setOption1(!option1)} />
                     <label htmlFor="cb1"></label>
                     <p>Filled this position on Pregrad</p>
                   </div>
-                  <div>
+                  <div className="checkbox_container_listingscompany">
                     <input type="checkbox" id="cb2" onClick={() => setOption2(!option2)} />
                     <label htmlFor="cb2"></label>
                     <p>Filled this position outside Pregrad</p>
                   </div>
-                  <div>
+                  <div className="checkbox_container_listingscompany">
                     <input type="checkbox" id="cb3" onClick={() => setOption3(!option3)} />
                     <label htmlFor="cb3"></label>
                     <p>We are not hiring for this role anymore</p>
                   </div>
-                  <div>
+                  <div className="checkbox_container_listingscompany">
                     <input type="checkbox" id="cb4" onClick={() => setOption4(!option4)} />
                     <label htmlFor="cb4"></label>
                     <p>Didn’t recieve good candidates for the internship</p>
                   </div>
+                  <p className='errors_msg_listingscompany'>{error}</p>
                 </div>
 
                 <div className="form_box_listingscompany">

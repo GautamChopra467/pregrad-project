@@ -99,7 +99,7 @@ const AddInternshipCompany = () => {
   };
 
   // MODE OF INTERNSHIP
-  const modeData = ["Part-Time (3-4 hrs/day)", "Semi-Full-Time (5-6 hrs/day)", "Full-Time (7-8 hrs/day)"];
+  const modeData = ["Part-Time", "Full-Time"];
   const [selectedMode, setSelectedMode] = useState("");
 
   const handleMode = (event) => {
@@ -196,13 +196,13 @@ const AddInternshipCompany = () => {
 
     if(!values.minstipend){
       errors.minstipend = "Minimum stipend required"
-    }else if(values.minstipend < 5000){
-      errors.minstipend = "Minimum 5000 stipend required"
+    }else if(values.minstipend < 2000){
+      errors.minstipend = "Minimum 2000 stipend required"
     }
 
     if(!values.maxstipend){
       errors.maxstipend = "Maximum stipend required"
-    }else if(values.maxstipend >= values.minstipend){
+    }else if(parseFloat(values.maxstipend) <= parseFloat(values.minstipend)){
       errors.maxstipend = "Maximum stipend should be greater than minimum"
     }
 
@@ -422,7 +422,7 @@ const AddInternshipCompany = () => {
                 </div>
 
                 <div className="form_box_addinternshipcompany">
-                  <label>About Internship*</label>
+                  <label>Job Description*</label>
                   <textarea name="about" rows={7} value={info.about} placeholder="Responsibilities and Requirements" onChange={handleForm}></textarea>
                   <p className="errors_msg_addinternshipcompany">{formErrors.about}</p>
                 </div>
@@ -442,7 +442,7 @@ const AddInternshipCompany = () => {
                   <div>
                     <input type="checkbox" id="cb3" onClick={() => setJobCheckbox(!jobCheckbox)} checked={jobCheckbox}/>
                     <label for="cb3"></label>
-                    <p>Job Offer</p>
+                    <p>Job Offer / PPO</p>
                   </div>
                   <div>
                     <input type="checkbox" id="cb4" onClick={() => setBonusCheckbox(!bonusCheckbox)} checked={bonusCheckbox}/>

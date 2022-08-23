@@ -53,7 +53,7 @@ const App = () => {
         <Route exact path="/company/internship/:i_id" element={<InternshipDetail theme={theme} setTheme={setTheme}/>} />
         
       </Routes>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </BrowserRouter>
   );
 };

@@ -484,18 +484,13 @@
   background-color: var(--primary-lightest);
 }
 
-.errors_msg_listingscompany {
-  color: var(--warning-color);
-  font-size: 16px;
-}
-
 .modal_bottom_section_listingscompany {
   display: flex;
   justify-content: flex-end;
   grid-gap: 15px;
 }
 
-.checkbox_container_listingscompany div {
+.checkbox_container_listingscompany {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -533,10 +528,10 @@
   display: none;
 }
 
-.toast-container-listingscompany {
-  background-color: var(--header-bg);
+.errors_msg_listingscompany {
+  color: var(--warning-color);
+  font-size: 16px;
 }
-
 
 @media screen and (max-width: 1220px) {
   .lower_bottom_listingscompany {
