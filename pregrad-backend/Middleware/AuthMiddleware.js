@@ -7,7 +7,7 @@ module.exports.CheckUser = async(req,res,next)=>{
     {
         if(req.token)
         {
-            jwt.verify(req.token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
+            jwt.verify(req.token,process.env.JWT_SECRET,async(err,decodedToken)=>{   // header,payload,signature
                 if(err){
                     res.json({
                             status:false
@@ -33,7 +33,7 @@ module.exports.CheckUser = async(req,res,next)=>{
         }  
     }
     else if(token){
-        jwt.verify(token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
+        jwt.verify(token,process.env.JWT_SECRET,async(err,decodedToken)=>{   // header,payload,signature
             if(err){
                 
                 res.json({

@@ -74,6 +74,7 @@ useEffect(()=>{
         </div>
       </div>
       <div className='main_container_internships'>
+      {console.log(internships)}
         {currentPage === "new-internships" && (
           <InternshipContainerStudent internship={(internships==undefined)?"":internships}/>
         )}

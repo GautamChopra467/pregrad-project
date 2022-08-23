@@ -28,6 +28,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
     const [status,setStatus] = useState(true)
 
 
+    
 
     const [info, setInfo] = useState({
       description: ""
@@ -48,6 +49,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
   const [option4, setOption4] = useState(false);
 
 
+
     useEffect(() => {
       const checkIfClickedOutside = e => {
         if (isModal && ref.current && !ref.current.contains(e.target)) {
@@ -55,7 +57,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
         }
       }
       document.addEventListener("click", checkIfClickedOutside)
-  
+     
       return () => {
         document.removeEventListener("click", checkIfClickedOutside)
       }  
