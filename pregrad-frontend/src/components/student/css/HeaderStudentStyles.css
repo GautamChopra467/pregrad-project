@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1% 4% 1% 2%;
+  padding: 11px 4% 11px 2%;
   z-index: 500;
   position: sticky;
   top: 0;
@@ -212,7 +212,7 @@ img {
 
 @media screen and (max-width: 800px) {
   .headerStudent {
-    padding: 2% 3% 2% 2%;
+    padding: 10px 3% 10px 2%;
   }
 
   .intern_headerStudent {

@@ -176,7 +176,9 @@ const Cancel = ()=>{
   // Object.keys(formErrors).forEach(key=>{
   //   formErrors[key] = "";
   // })
-  setIsModal(!isModal) 
+  setIsModal(!isModal)
+  setIsSubmit(false)
+  setFormErrors({}) 
 }
 
   return (

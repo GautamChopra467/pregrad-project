@@ -1,10 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css";
 import { FiFileText } from 'react-icons/fi';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from 'axios'
+import NewApplicants from '../../../components/company/jsx/NewApplicants';
+import ShortlistedApplicants from '../../../components/company/jsx/ShortlistedApplicants';
+import HiredApplicants from '../../../components/company/jsx/HiredApplicants';
 
 const ApplicantsCompany = () => {
   
@@ -74,10 +77,26 @@ const ApplicantsCompany = () => {
       }
 }
 
+  const [currentPage, setCurrentPage] = useState("new");
+
   return (
     <div>
       <div className='sub_header_applicantscompany'>
         <h5>Applicants <span>({totalApplied})</span></h5>
+      </div>
+
+      <div className='current_page_section_applicantscompany'>
+        <div onClick={() => setCurrentPage("new")}  className={currentPage === "new" ? 'new_current_section_applicantscompany active_applicantscompany' : 'new_current_section_applicantscompany'}>
+          <p>Browse</p>
+        </div>
+        <div className='line_applicantscompany'></div>
+        <div onClick={() => setCurrentPage("shortlisted")} className={currentPage === "shortlisted" ? 'shortlisted_current_section_applicantscompany active_applicantscompany' : 'shortlisted_current_section_applicantscompany'}>
+          <p>Shortlisted</p>
+        </div>
+        <div className='line_applicantscompany'></div>
+        <div onClick={() => setCurrentPage("hired")} className={currentPage === "hired" ? 'hired_current_section_applicantscompany active_applicantscompany' : 'hired_current_section_applicantscompany'}>
+          <p>Hired</p>
+        </div>
       </div>
 
       <div className='main_container_applicantscompany'>
@@ -95,39 +114,19 @@ const ApplicantsCompany = () => {
         ) : (
           <>
           <div className='main_box_applicantscompany'>
-           {
-            showapplied.map((application)=>(
-              (application.internshipstatus === "Rejected"?"":(
-                <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
-                <div className='top_section_student_applicantscompany'>
-                  <h2>{application.name}</h2>
-                  <div className='search_icon_container_applicantscompany' onClick={()=>navigate(`/resume/${application.id}`)}>
-                    <AiOutlineFileSearch className="search_icon_applicantscompany" />
-                  </div>
-                </div>
-                <div className='mid_section_applicantscompany'>
-                <div className='mid_top_section_applicantscompany'>
-                      <div>
-                        <input type="radio" id={`accept${application.id}`} name={`${application.id}`} onClick={()=>changeAccepted(application.id)} value={`accept${application.id}`} />
-                        <label htmlFor={`accept${application.id}`}></label>
-                        <p>Accept</p>
-                      </div>
-                      <div>
-                        <input type="radio" id={`reject${application.id}`} name={`${application.id}`} onClick={()=>changeRejected(application.id)} value={`reject${application.id}`} disabled={(application.status === undefined)?false:(application.status === true)?true:false}/>
-                        <label htmlFor={`reject${application.id}`}></label>
-                        <p>Reject</p>
-                      </div>
-                    </div>
-                </div>       
-            </div>
-              ))
-            ))
-            }
+          {currentPage === "new" && (
+            <NewApplicants />
+          )}
+
+          {currentPage === "shortlisted" && (
+            <ShortlistedApplicants />
+          )}
+
+          {currentPage === "hired" && (
+            <HiredApplicants />
+          )}
           </div>
-          <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
-            <FaTrashAlt className="delete_icon_applicantscompany" />
-            <p>Delete Rejected Ones  ({count})</p>
-          </div>
+          
           </>
           )
         }
@@ -137,3 +136,42 @@ const ApplicantsCompany = () => {
 }
 
 export default ApplicantsCompany
+
+
+
+// {
+  // showapplied.map((application)=>(
+  //   (application.internshipstatus === "Rejected"?"":(
+  //     <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
+  //     <div className='top_section_student_applicantscompany'>
+  //       <h2>{application.name}</h2>
+  //       <Link target="_blank" to={`/resume/${application.id}`}>
+  //       <div className='search_icon_container_applicantscompany'>
+  //         <AiOutlineFileSearch className="search_icon_applicantscompany" />
+  //       </div>
+  //       </Link>
+  //     </div>
+  //     <div className='mid_section_applicantscompany'>
+  //     <div className='mid_top_section_applicantscompany'>
+  //           <div>
+  //             <input type="radio" id={`accept${application.id}`} name={`${application.id}`} onClick={()=>changeAccepted(application.id)} value={`accept${application.id}`} />
+  //             <label htmlFor={`accept${application.id}`}></label>
+  //             <p>Accept</p>
+  //           </div>
+  //           <div>
+  //             <input type="radio" id={`reject${application.id}`} name={`${application.id}`} onClick={()=>changeRejected(application.id)} value={`reject${application.id}`} disabled={(application.status === undefined)?false:(application.status === true)?true:false}/>
+  //             <label htmlFor={`reject${application.id}`}></label>
+  //             <p>Reject</p>
+  //           </div>
+  //         </div>
+  //     </div>       
+  // </div>
+  //   ))
+  // ))
+  // }
+
+
+  // <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
+  //           <FaTrashAlt className="delete_icon_applicantscompany" />
+  //           <p>Delete Rejected Ones  ({count})</p>
+  // </div>

@@ -161,6 +161,8 @@ const setStateValue = ()=>{
 
 const Cancel = ()=>{
   setIsModal(!isModal) 
+  setIsSubmit(false)
+  setFormErrors({})
 }
 
 
