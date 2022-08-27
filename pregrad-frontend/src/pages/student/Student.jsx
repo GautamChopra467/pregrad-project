@@ -19,15 +19,23 @@ const Student = ({theme, setTheme}) => {
 
 const {id} = useParams()
 
-const [profilehealth,setprofileHealth] = useState("20")
+const  [user,setUser] = useState({})
+
+const [profilehealth,setprofileHealth] = useState(20)
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
   const userHealthProfile = ()=>{
-    axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
-      setprofileHealth(data.profileHealth)
-    })
-  }
+   
+        axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
+          setprofileHealth(data.profileHealth)
+  }) 
+}
+
+const getUserDetails = async()=>{
+  const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+  setUser(data)
+}
 
 useEffect(()=>{
   const verifyUser = async()=>{
@@ -39,7 +47,7 @@ useEffect(()=>{
         removeCookie("jwt")
         navigate('/login')
       }else{
-        navigate(`/student/${id}/internships`)
+        getUserDetails()
         userHealthProfile()
       }
     }
@@ -47,15 +55,17 @@ useEffect(()=>{
   verifyUser()
 },[profilehealth])
 
-  return (
-    <Sidebar  profileHealth={profilehealth} userid={id} theme={theme} setTheme={setTheme}>
+console.log(user)
+
+  return ( 
+    <Sidebar profilehealth={profilehealth} userHealthProfile={userHealthProfile} userid={id} userinfo={user === undefined ?"":user} theme={theme} setTheme={setTheme}>
       <Routes>
-        <Route exact path="/internships" element={<Internships  />} />
-        <Route exact path="/workexperience" element={<WorkExperience />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/education" element={<Education />} />
-        <Route path="/profile" element={<StudentProfile />} />
+        <Route exact path="/internships" element={<Internships profilehealth={profilehealth}/>} />
+        <Route exact path="/workexperience" element={<WorkExperience profilehealth={profilehealth} userHealthProfile={userHealthProfile}/>} />
+        <Route exact path="/projects" element={<Projects />} />
+        <Route exact path="/achievements" element={<Achievements />} />
+        <Route exact path="/education" element={<Education />} />
+        <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user}/>} />
       </Routes>
     </Sidebar>
   );

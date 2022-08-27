@@ -32,7 +32,7 @@ router.route('/editinternships/:id').put(editInternship)
 
 router.route('/closeinternship/:id').put(closeInternship)
 
-router.route('/allinternships').get(allInternship)
+router.route('/allinternships/:id').get(allInternship)
 
 router.route('/application/:id').get(getApplicants)
 

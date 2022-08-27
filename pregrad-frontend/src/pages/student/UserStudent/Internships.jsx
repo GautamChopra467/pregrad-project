@@ -10,6 +10,7 @@ import InternshipContainerStudent from '../../../components/student/jsx/Internsh
 
 const Internships = () => {
 
+
   const navigate = useNavigate()
 
    const {id} = useParams()
@@ -26,7 +27,8 @@ const Internships = () => {
 
 
 const getAllInterships = ()=>{
-  axios.get(`http://localhost:8000/company/allinternships`).then(({data})=>{
+  axios.get(`http://localhost:8000/company/allinternships/${id}`).then(({data})=>{
+    console.log(data)
     setInternships(data)
   })
 }
@@ -74,9 +76,8 @@ useEffect(()=>{
         </div>
       </div>
       <div className='main_container_internships'>
-      {console.log(internships)}
         {currentPage === "new-internships" && (
-          <InternshipContainerStudent internship={(internships==undefined)?"":internships}/>
+          <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAllInterships={getAllInterships}/>
         )}
 
         {currentPage === "applied" && (

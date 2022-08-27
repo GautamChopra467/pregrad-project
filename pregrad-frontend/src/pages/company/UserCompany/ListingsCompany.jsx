@@ -39,11 +39,8 @@ const ListingsCompany = () => {
   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
     console.log(data)
     setCompanyInfoDetails(data)
-}) 
- }
-
-
-
+ }) 
+}
 
   useEffect(()=>{
     if(!cookies.jwt){

@@ -10,7 +10,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
-const InternshipContainerStudent = ({internship,getAppliedInternship}) => {
+const InternshipContainerStudent = ({internship,getAllInterships}) => {
+
+  console.log(internship)
 
     const ref = useRef();
 
@@ -26,7 +28,7 @@ const applyInternship = async(iid)=>{
     const {data} = await axios.post(`http://localhost:8000/student/appliedinternship/${id}`,{
         iid
     })
-    console.log(data)
+    getAllInterships()
     const notify = () => toast.success('Applied Successfully, You can see the internship in applied section.', {
       position: "bottom-left",
       autoClose: 5000,
@@ -45,21 +47,21 @@ const applyInternship = async(iid)=>{
       {
         (internship == undefined)?"":internship.map((intern)=>(
 
-          <div key={intern._doc._id}>
+          <div key={intern.main._id}>
               <div className='internship_container_listingscompany'>
               <div className='top_section_internship_listingscompany'>
                 <div className='left_section_internship_listingscompany'>
-                  <h2>{intern._doc.title}</h2>
+                  <h2>{intern.main.title}</h2>
                   <h4>{intern.companyname}</h4>
                 </div>
                 <div className='right_section_internship_listingscompany'>
                   <div className='experience_icon_container_listingscompany'>
                     <BsFillBarChartFill className="experience_icon_listingscompany" />
-                     <p>{intern._doc.experience}</p>
+                     <p>{intern.main.experience}</p>
                     <AiOutlineInfoCircle className="info_icon_listingscompany" />
                   </div>
-                  <div className={(intern._doc.status) ? 'active_icon_container' : 'false_icon_container'}>
-                    <p>{(intern._doc.status) ? "Active" : "Closed"}</p>
+                  <div className={(intern.main.status) ? 'active_icon_container' : 'false_icon_container'}>
+                    <p>{(intern.main.status) ? "Active" : "Closed"}</p>
                    </div>
                 </div>
               </div>
@@ -68,16 +70,16 @@ const applyInternship = async(iid)=>{
                 <div className='status_container_listingscompany'>
                   <div className='experience_icon_container2_listingscompany'>
                     <BsFillBarChartFill className="experience_icon_listingscompany" />
-                    <p>{intern._doc.experience}</p>
+                    <p>{intern.main.experience}</p>
                     <AiOutlineInfoCircle className="info_icon_listingscompany" />
                   </div>
-                  <div className={(intern._doc.status) ? 'active_icon2_container' : 'false_icon2_container'}>
-                    <p>{(intern._doc.status) ? "Active" : "Closed"}</p>
+                  <div className={(intern.main.status) ? 'active_icon2_container' : 'false_icon2_container'}>
+                    <p>{(intern.main.status) ? "Active" : "Closed"}</p>
                    </div>
                 </div>
     
                  <div className='upper_mid_section_listingscompany'>
-                  {intern._doc.skills.map((value) => (
+                  {intern.main.skills.map((value) => (
                   <div key={value} className="skill_section_listingscompany">
                     <p>{value}</p>
                   </div>
@@ -96,7 +98,7 @@ const applyInternship = async(iid)=>{
                         <p>START DATE</p>
                       </div>
                       <div className='info_lower_container_listingscompany'>
-                        <p>{intern._doc.startfrom}</p>
+                        <p>{intern.main.startfrom}</p>
                       </div>
                     </div>
     
@@ -106,7 +108,7 @@ const applyInternship = async(iid)=>{
                         <p>DURATION</p>
                       </div>
                       <div className='info_lower_container_listingscompany'>
-                        <p>{intern._doc.duration} months</p>
+                        <p>{intern.main.duration} months</p>
                       </div>
                     </div>
     
@@ -116,7 +118,7 @@ const applyInternship = async(iid)=>{
                         <p>STIPEND</p>
                       </div>
                       <div className='info_lower_container_listingscompany'>
-                        <p>{intern._doc.stipend.minimum} - {intern._doc.stipend.maximum}</p>
+                        <p>{intern.main.stipend.minimum} - {intern.main.stipend.maximum}</p>
                       </div>
                     </div>
     
@@ -126,7 +128,7 @@ const applyInternship = async(iid)=>{
                         <p>MODE</p>
                       </div>
                       <div className='info_lower_container_listingscompany'>
-                        <p>{intern._doc.jobmode}</p>
+                        <p>{intern.main.jobmode}</p>
                       </div>
                     </div>
                   </div>
@@ -134,8 +136,8 @@ const applyInternship = async(iid)=>{
               </div>
 
               <div className='bottom_section_internship_listingscompany'>
-               {(intern._doc.status)?<button className='btn_primary_listingscompany' onClick={()=>applyInternship(intern._doc._id)}>Apply</button>:<button className='btn_primary_listingscompany'>Closed</button>} 
-                <Link to={`/company/internship/${intern._doc._id}?cid=${intern._doc.id}`}>View details &gt;</Link>
+               {(intern.main.status)?<button className='btn_primary_listingscompany' onClick={()=>applyInternship(intern.main._id)}>Apply</button>:<button className='btn_primary_listingscompany'>Closed</button>} 
+                <Link to={`/company/internship/${intern.main._id}?cid=${intern.main.id}`}>View details &gt;</Link>
               </div>
     
             </div>        

@@ -6,19 +6,26 @@ import { MdOutlineDelete } from "react-icons/md"
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
-const WorkExperience = () => {
+
+const WorkExperience = ({profilehealth,userHealthProfile}) => {
+
 
   const navigate = useNavigate()
-   const {id} = useParams()
+
+  const {id} = useParams()
+
   const [cookies,setCookie,removeCookie] = useCookies([])
 
   const [editform,seteditform] = useState("")
 
   const [isContent, setIsContent] = useState(true);
+
   const [isModal, setIsModal] = useState(false);
+
   const [isModalDelete, setIsModalDelete] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
+
   const [isSubmit, setIsSubmit] = useState(false);
 
   const [editworkexperience,setEditWorkExperience] = useState({})
@@ -61,7 +68,8 @@ const WorkExperience = () => {
   const getWorkExperience = ()=>{
     axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
       if(res.data.message === "true"){  
-    setStudentwork(res.data.workexperience)
+        setStudentwork(res.data.workexperience)
+        userHealthProfile()
       }
     }).catch((err)=>{
       console.log(err)
@@ -71,7 +79,6 @@ const WorkExperience = () => {
   useEffect(() => {
     const verifyUser = async()=>{
       if(!cookies.jwt){
-        
         navigate('/login')
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
@@ -81,9 +88,10 @@ const WorkExperience = () => {
           navigate('/login')
           
         }else{
-         
+          // console.log("Profile from Experience",profilehealth)
           navigate(`/student/${id}/workexperience`)
           getWorkExperience()
+        
         }
       }
     }
@@ -96,12 +104,13 @@ const WorkExperience = () => {
       {
         setIsModal(!isModal)
         getWorkExperience()
+        // userHealthProfile()
       }else if(res.data.message === "You cannot add duplicate information"){
         setFormErrors(validate(res.data.message));
        }
      })
     }
-  }, [formErrors,cookies,removeCookie,navigate]);
+  }, [formErrors,cookies,removeCookie,navigate,profilehealth]);
 
   const validate = (values) => {
     const errors = {};
@@ -157,6 +166,7 @@ const deleteWorkExperience = async(u_id,w_id)=>{
   if(data.message === "true")
   {
    getWorkExperience()
+  //  userHealthProfile()
   }
 }
 
@@ -218,7 +228,7 @@ const Cancel = ()=>{
                 <div className='content_logo_workexperience' onClick={()=>editWorkExperience(id,work._id)}>
                   <BiEditAlt size={22} className="content_icon_workexperience" />
                 </div>
-                <div className='content_logo_workexperience' onClick={()=>setIsModalDelete(!isModalDelete)}>
+                <div className='content_logo_workexperience' onClick={()=>deleteWorkExperience(id,work._id)}>
                   <MdOutlineDelete size={22} color='#ef233c' />
                 </div>
                 </div>

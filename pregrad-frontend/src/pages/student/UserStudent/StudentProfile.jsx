@@ -13,7 +13,9 @@ import { FiCopy, FiFileText, FiShare2 } from "react-icons/fi";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const StudentProfile = () => {
+const StudentProfile = ({userinfo}) => {
+
+  console.log(userinfo)
 
   const navigate = useNavigate();
   const ref = useRef();
@@ -22,7 +24,7 @@ const StudentProfile = () => {
   
  const [cookies,setCookie,removeCookie] = useCookies([])
 
- const  [user,setUser] = useState({})
+//  const  [user,setUser] = useState({})
 
 
 const [Achievement,setAchievement] = useState([])
@@ -70,13 +72,13 @@ const [video,setVideo] = useState()
   }
   }
 
-  const getUserDetails= async()=>{
-    const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
-    setUser(data)
-  }
+  // const getUserDetails= async()=>{
+  //   const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+  //   setUser(data)
+  // }
 
-  const initials = user.name
-  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+  const initials = userinfo.name
+  const name_initials= typeof initials==="string" ?initials.split('')[0]:""
   //Edit Form
   let domainsData = ["Front-End" , "Back-End", "Full Stack Software", "Mobile Engineering", "Product Management", "Data Scientist", "BUSINESS OPERATIONS", "MARKETING", "SALES AND BUSINESS DEVELOPMENT", "MEDIA, COMMUNICATIONS, PUBLIC RELATIONS", "DATA ANALYTICS", "FINANCE", "ARTS AND DESIGN", "DATABASE ADMINISTRATION", "EVENT PLANNING", "ECONOMICS AND POLICY"]
   // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
@@ -158,7 +160,7 @@ const [video,setVideo] = useState()
           navigate('/login')
         }else{
           navigate(`/student/${id}/profile`)
-          getUserDetails()
+          // getUserDetails()
           getUserData()
         }
       }
@@ -230,7 +232,7 @@ const [video,setVideo] = useState()
     setSkills(skillsData)
     setSelectedDomains(studentDomain)
     setSelectedSkills(studentSkill)
-    setData({...data,name:user.name})
+    setData({...data,name:userinfo.name})
     setLinks({...links,github:studentSocialLink.github,linkedin:studentSocialLink.linkedin,instagram:studentSocialLink.instagram})
 
   }
@@ -242,7 +244,7 @@ const [video,setVideo] = useState()
     axios.put(`http://localhost:8000/student/editprofiledetails/${id}`,{
       ...editProfileObject
     }).then(({data})=>{
-      getUserDetails()
+      // getUserDetails()
       getUserData()
       setIsModal(!isModal)
     })
@@ -267,7 +269,6 @@ const [video,setVideo] = useState()
       <div className="sub_header_studentprofile">
         <h5>Profile</h5>
       </div>
-
       <div className="main_container_studentprofile">
         <div className="welcome_container_studentprofile">
           <div className="welcome_left_section_studentprofile">
@@ -311,15 +312,15 @@ const [video,setVideo] = useState()
             <div className="profile_info_studentprofile">
               <div className="info_container_studentprofile">
                 <div className="info_left_section_studentprofile">
-                  <h5>{user.name}</h5>
+                  <h5>{userinfo.name}</h5>
                   {
                     studentDomain.map((domain)=>(
-                      <p>{domain}</p>
+                      <p key={domain}>{domain}</p>
                     ))
                   }
                 </div>
                 <div className="info_middle_section_studentprofile">
-                  <h5>{user.email}</h5>
+                  <h5>{userinfo.email}</h5>
                 </div>
               </div>
 
@@ -511,7 +512,7 @@ const [video,setVideo] = useState()
               <form>
                 <div className="form_box_studentprofile">
                   <label>Name</label>
-                  <input type="text" name="name" placeholder="Your Name" defaultValue={user.name} onChange={handleForm} />
+                  <input type="text" name="name" placeholder="Your Name" defaultValue={userinfo.name} onChange={handleForm} />
                   <p className="errors_msg_studentprofile">{formErrors.name}</p>
                 </div>
 
@@ -612,15 +613,15 @@ const [video,setVideo] = useState()
             <div className="profile_info_resumestudent">
               <div className="info_container_resumestudent">
                 <div className="info_left_section_resumestudent">
-                  <h5>{user.name}</h5>
+                  <h5>{userinfo.name}</h5>
                   {
                     studentDomain.map((domain)=>(
-                      <p>{domain}</p>
+                      <p key={domain}>{domain}</p>
                     ))
                   }
                 </div>
                 <div className="info_middle_section_resumestudent">
-                  <h5>{user.email}</h5>
+                  <h5>{userinfo.email}</h5>
                 </div>
               </div>
             </div>
@@ -679,7 +680,7 @@ const [video,setVideo] = useState()
               <div className="line_resumestudent"></div>
              {
               Achievement.map((achi)=>(
-              <div className="achievements_info_box_resumestudent">
+              <div className="achievements_info_box_resumestudent" key={achi.title}>
                 <h3>{achi.title}</h3>
                 <a href={achi.certificate}>{achi.certificate}</a>
               </div>
@@ -700,7 +701,7 @@ const [video,setVideo] = useState()
   
            { 
            WorkExperience.map((work)=>(
-            <div className="workexperience_details_box_resumestudent">
+            <div className="workexperience_details_box_resumestudent" key={work.companyname}>
             <h3>{work.companyname}</h3>
             <h5>{work.position} | {work.duration}</h5>
           <p>
