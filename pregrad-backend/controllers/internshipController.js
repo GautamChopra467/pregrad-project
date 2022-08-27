@@ -140,24 +140,41 @@ module.exports.allInternship = async(req,res)=>{
      // const limit = parseInt(size)
 
      // const skip = (page-1)*size;
-
+ 
      // const internships = await Internship.find({}).limit(limit).skip(skip)
 
-     const internships = await Internship.find()
+     // console.log(req.params.id)
 
+     const internships = await Internship.find();
+
+     // console.log(internships)
+
+     const allInternship = [];
+
+     let j=0;
+     
      for(let i=0;i<internships.length;i++){
 
           const company = await Company.findOne({_id:internships[i].id})
 
           const companyinfo = await CompanyInfo.findOne({id:internships[i].id})
       
-          internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
-          
+          if(internships[i].applied.find(e=>e.id === req.params.id) === undefined){
+               // internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
+               allInternship[j] = {...allInternship[j],main:internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
+               j++;
+
+          }
+
+          // internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
+   
      }
-    
+
+     // console.log(allInternship)
+//   
      if(internships){
           
-          res.send(internships)
+          res.send(allInternship)
      }else{
           res.send("Server Error")
      }
@@ -173,21 +190,47 @@ try{
 
     const internship = await Internship.findOne({_id:id})
 
-    let applicants = [];
+    let appliedApplicants = [];
 
-    let count = 0;
+    let shortlistedApplicants = [];
+  
+    let hiredApplicants = [];
+   
+//     let countApplied = 0;
+
+//     let countShortlist = 0;
+
+//     let countHired = 0;
+    
 
     for(let i=0;i<internship.applied.length;i++){
 
          const student = await UserRegister.findOne({_id:internship.applied[i].id})
        
           if(internship.applied[i].status === "Applied"){
-             ++count;
+          //    ++countApplied;
+             appliedApplicants.push({id:student._id,name:student.name,internshipstatus:internship.applied[i].status})
           }
-         applicants.push({id:student._id,name:student.name,internshipstatus:internship.applied[i].status})
+          else if(internship.applied[i].status === "Shortlisted"){
+               // ++countShortlist;
+               shortlistedApplicants.push({id:student._id,name:student.name,internshipstatus:internship.applied[i].status})
+          }
+          else if(internship.applied[i].status === "Hired"){
+               // ++countHired;
+               hiredApplicants.push({id:student._id,name:student.name,internshipstatus:internship.applied[i].status})
+          }
     }
  
-    res.send({candidates:applicants,length:count})
+          res.send({
+
+               appliedCandidates:appliedApplicants,
+               shortlistedCandidates:shortlistedApplicants,
+               hiredCandidates:hiredApplicants,
+               // appliedLength:countApplied,
+               // shortlistLength:countShortlist,
+               // hiredLength:countHired,
+
+          })
 
 }catch(err){
      console.log(err)
@@ -198,12 +241,14 @@ module.exports.rejectedApplicants = async(req,res)=>{
 
      const {id} = req.params;
 
+   
+
      let count = 0;
      
      const rejected = req.body.filter((e)=>e.status === true)
 
 
-     const accepted = req.body.filter((e)=>e.status === false)
+     const shortlisted = req.body.filter((e)=>e.status === false)
 
 
      rejected.map(async(e)=>{
@@ -217,11 +262,11 @@ module.exports.rejectedApplicants = async(req,res)=>{
        })
      })
 
-     accepted.map(async(e)=>{
+     shortlisted.map(async(e)=>{
 
           const internship = await Internship.updateOne({_id:id,"applied.id":e.id},{
              $set:{
-                  "applied.$.status":"Accepted"
+                  "applied.$.status":req.query.type
              }
           },{
              new:true

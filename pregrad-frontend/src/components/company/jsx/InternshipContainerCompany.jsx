@@ -14,6 +14,9 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
+  console.log(internship)
+
+
     const ref = useRef();
 
     const navigate = useNavigate();
@@ -29,6 +32,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
     const [status,setStatus] = useState(true)
 
 
+    
 
     const [info, setInfo] = useState({
       description: ""
@@ -49,6 +53,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
   const [option4, setOption4] = useState(false);
 
 
+
     useEffect(() => {
       const checkIfClickedOutside = e => {
         if (isModal && ref.current && !ref.current.contains(e.target)) {
@@ -56,7 +61,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
         }
       }
       document.addEventListener("click", checkIfClickedOutside)
-  
+     
       return () => {
         document.removeEventListener("click", checkIfClickedOutside)
       }  
@@ -224,7 +229,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
           </div>
 
           <div className='bottom_section_internship_listingscompany'>
-            <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications ()</button>
+            <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications ({intern.applied.length})</button>
             <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
 

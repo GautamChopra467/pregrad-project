@@ -679,10 +679,10 @@ module.exports.appliedInternship = async(req,res)=>{
         
         const studentinfo = await StudentInfo.findOne({id});
        
-        if(studentinfo.applied.find((e)=>e === req.body.iid) !== undefined){
-          return res.send("Already Applied")
-        }
-        else{
+        // if(studentinfo.applied.find((e)=>e === req.body.iid) !== undefined){
+        //   return res.send("Already Applied")
+        // }
+        // else{
           
             const student = await StudentInfo.findOneAndUpdate({id},{
                 $push:{
@@ -703,7 +703,7 @@ module.exports.appliedInternship = async(req,res)=>{
                 new:true
             })
             res.send("Applied")
-        }
+        // }
     }catch(err){
         console.log(err)
     }

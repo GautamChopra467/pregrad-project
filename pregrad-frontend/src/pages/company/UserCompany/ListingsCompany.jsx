@@ -36,16 +36,17 @@ const ListingsCompany = () => {
 
  const getCompanyInfo = ()=>{
   axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    console.log(data)
   setCompanyDetails(data)
 })
 }
 
  const getCompanyDetails = ()=>{
   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+    console.log(data)
     setCompanyInfoDetails(data)
-}) 
- }
-
+ }) 
+}
 
   useEffect(()=>{
     if(!cookies.jwt){
@@ -94,7 +95,7 @@ const ListingsCompany = () => {
         ) : (
           <div className='main_box_listingscompany'>
             <div className='main_details_container_listingscompany'>
-              <InternshipContainerCompany internship={internships} companyinfodetail={companyInfoDetails} companydetail={companydetails} getinternship={getInternship}/>            
+              <InternshipContainerCompany internship={internships} companyinfodetail={companyInfoDetails} companydetail={companydetails} getinternship={getInternship} />            
             {/* <InternshipContainerCompany /> */}
           </div>
 

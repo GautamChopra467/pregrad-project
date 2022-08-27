@@ -11,6 +11,7 @@ import PageLoader from "../../../img/page-loader.gif";
 
 const Internships = () => {
 
+
   const navigate = useNavigate()
 
    const {id} = useParams()
@@ -29,7 +30,8 @@ const Internships = () => {
 
 
 const getAllInterships = ()=>{
-  axios.get(`http://localhost:8000/company/allinternships`).then(({data})=>{
+  axios.get(`http://localhost:8000/company/allinternships/${id}`).then(({data})=>{
+    console.log(data)
     setInternships(data)
     setTimeout(() => {
       setIsPageLoading(false)
@@ -88,7 +90,7 @@ useEffect(()=>{
       ) : (
         <div className='main_container_internships'>
         {currentPage === "new-internships" && (
-          <InternshipContainerStudent internship={(internships==undefined)?"":internships}/>
+          <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAllInterships={getAllInterships}/>
         )}
 
         {currentPage === "applied" && (

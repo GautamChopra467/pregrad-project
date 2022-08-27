@@ -19,59 +19,55 @@ import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
 
+const Sidebar = ({ children, userid,theme,userinfo, setTheme,profilehealth,userHealthProfile}) => {
 
-
-const Sidebar = ({ children, userid,theme, setTheme, profileHealth}) => {
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
   
   const [user,setUser] = useState({})
 
-  // const [profilehealth,setprofileHealth] = useState("20")
 
+  // console.log("Profile from sidebar : ",profilehealth)
 
+  
   const {id} = useParams()
 
-  const getUserDetails= async()=>{
-    const {data} = await axios.get(`http://localhost:8000/userDetails/${userid}`)
-    setUser(data)
-  }
-useEffect(()=>{ 
+  console.log(id)
 
-  getUserDetails()
-  
-  // const userHealthProfile = ()=>{
-  //   axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
-  //     setprofileHealth(data.profileHealth)
-  //   })
+  // console.log(userinfo)
+
+  // const getUserDetails = async()=>{
+  //   const {data} = await axios.get(`http://localhost:8000/userDetails/${userid}`)
+  //   setUser(data)
   // }
-  // userHealthProfile()
-  
+
+useEffect(()=>{ 
+  // getUserDetails()
 },[])
 
 
   const routes = [
     {
-      path: `/student/${userid}/internships`,
+      path: `/student/${id}/internships`,
       name: "internships",
       icon: <AiOutlineFileText size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: `/student/${userid}/workexperience`,
+      path: `/student/${id}/workexperience`,
       name: "work experience",
       icon: <BsBriefcase size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: `/student/${userid}/projects`,
+      path: `/student/${id}/projects`,
       name: "projects",
       icon: <MdOutlineDesignServices size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: `/student/${userid}/achievements`,
+      path: `/student/${id}/achievements`,
       name: "achievements",
       icon: <GiAchievement size={isOpenSidebar ? "20" : "24"} />,
     },
     {
-      path: `/student/${userid}/education`,
+      path: `/student/${id}/education`,
       name: "education",
       icon: <MdOutlineCastForEducation size={isOpenSidebar ? "20" : "24"} />,
     },
@@ -164,9 +160,9 @@ useEffect(()=>{
                 <img src={UserImage} alt="user" />
               </div>
               <h2>
-                Hello, <span>{user.name}</span>
+                Hello, <span>{userinfo.name}</span>
               </h2>
-              <h3>{user.email}</h3>
+              <h3>{userinfo.email}</h3>
             </motion.div>
           )}
         </AnimatePresence>
@@ -177,7 +173,7 @@ useEffect(()=>{
           exit="hidden"
           variants={scoreAnimation} className="score_section_sidebar">
           <div className="left_score_section_sidebar">
-            <p>{profileHealth} %</p>
+            <p>{profilehealth} %</p>
           </div>
 
           <div className="right_score_section_sidebar">
@@ -231,7 +227,7 @@ useEffect(()=>{
           setIsOpenSidebar={setIsOpenSidebar}
           theme={theme}
           setTheme={setTheme}
-          userid={userid}
+          userid={id}
           user={user}
         />
         {children}

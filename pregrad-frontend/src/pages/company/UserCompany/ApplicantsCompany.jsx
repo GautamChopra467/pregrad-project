@@ -19,83 +19,47 @@ const ApplicantsCompany = () => {
 
     const [showapplied,setShowApplied] = useState([])
 
+    const [showshortlisted,setShortlisted] =  useState([])
+
+    const [showhired,setHired] =  useState([])
+
+
     let [totalApplied,setTotalApplied] = useState(0)
 
     let [count,setCount] = useState(0)
  
-    const changeAccepted = (id) => {
-      setShowApplied(showapplied.map((e)=>{
-        if(e.id === id){
-         if(e.status === true){
-          setCount(--count)
-           return {...e,status:false,class:"student_box_applicantscompany accept_applicantscompany"}
-         }else{
-           return {...e,status:false,class:"student_box_applicantscompany accept_applicantscompany"}
-         }
-        }else{
-           return e;
-        }
-    }))
-         }
-    
          const showApplicants = async()=>{
-
               const {data} = await  axios.get(`http://localhost:8000/company/application/${iid}`)
-                setShowApplied(data.candidates)
+                setShowApplied(data.appliedCandidates)
+                setShortlisted(data.shortlistedCandidates)
+                setHired(data.hiredCandidates)
                 setTotalApplied(data.length)
-
          }
 
     useEffect(()=>{
       showApplicants()
 },[])
 
-
-    const changeRejected = (id) => {
-      setShowApplied(showapplied.map((e)=>{
-         if(e.id === id){
-          if(e.status === true){
-            return {...e,status:undefined,class:"student_box_applicantscompany"}
-          }else{
-            setCount(++count)
-            return {...e,status:true,class:"student_box_applicantscompany reject_applicantscompany"}
-          }
-         }else{
-            return e;
-         }
-     }))
-    }
-
-    const deleteRejectedApplicant = async()=>{
-
-        const {data} = await axios.put(`http://localhost:8000/company/rejectedapplicants/${iid}`,[
-          ...showapplied
-      ])
-      if(data.status){
-        showApplicants()
-        setCount(0)
-      }
-}
-
+ 
   const [currentPage, setCurrentPage] = useState("new");
 
   return (
     <div>
       <div className='sub_header_applicantscompany'>
-        <h5>Applicants <span>({totalApplied})</span></h5>
+        <h5>Applicants <span>({showapplied.appliedCandidates === undefined ?0:showapplied.appliedCandidates.length})</span></h5>
       </div>
 
       <div className='current_page_section_applicantscompany'>
         <div onClick={() => setCurrentPage("new")}  className={currentPage === "new" ? 'new_current_section_applicantscompany active_applicantscompany' : 'new_current_section_applicantscompany'}>
-          <p>Browse</p>
+          <p>Applied ({showapplied === undefined ?0:showapplied.length})</p>
         </div>
         <div className='line_applicantscompany'></div>
         <div onClick={() => setCurrentPage("shortlisted")} className={currentPage === "shortlisted" ? 'shortlisted_current_section_applicantscompany active_applicantscompany' : 'shortlisted_current_section_applicantscompany'}>
-          <p>Shortlisted</p>
+          <p>Shortlisted ({showshortlisted === undefined ?0:showshortlisted.length})</p>
         </div>
         <div className='line_applicantscompany'></div>
         <div onClick={() => setCurrentPage("hired")} className={currentPage === "hired" ? 'hired_current_section_applicantscompany active_applicantscompany' : 'hired_current_section_applicantscompany'}>
-          <p>Hired</p>
+          <p>Hired ({showhired === undefined ?0:showhired.length})</p>
         </div>
       </div>
 
@@ -115,18 +79,17 @@ const ApplicantsCompany = () => {
           <>
           <div className='main_box_applicantscompany'>
           {currentPage === "new" && (
-            <NewApplicants />
+            <NewApplicants appliedCandidates={showapplied === undefined ? "":showapplied} showApplicants={showApplicants} appliedState={setShowApplied}/>
           )}
 
           {currentPage === "shortlisted" && (
-            <ShortlistedApplicants />
+            <ShortlistedApplicants shortlistedCandidates={showshortlisted === undefined ? "":showshortlisted} showApplicants={showApplicants} shortlistedState={setShortlisted}/>
           )}
 
           {currentPage === "hired" && (
-            <HiredApplicants />
+            <HiredApplicants hiredCandidates={showhired === undefined ? "":showhired}/>
           )}
           </div>
-          
           </>
           )
         }
@@ -139,39 +102,3 @@ export default ApplicantsCompany
 
 
 
-// {
-  // showapplied.map((application)=>(
-  //   (application.internshipstatus === "Rejected"?"":(
-  //     <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
-  //     <div className='top_section_student_applicantscompany'>
-  //       <h2>{application.name}</h2>
-  //       <Link target="_blank" to={`/resume/${application.id}`}>
-  //       <div className='search_icon_container_applicantscompany'>
-  //         <AiOutlineFileSearch className="search_icon_applicantscompany" />
-  //       </div>
-  //       </Link>
-  //     </div>
-  //     <div className='mid_section_applicantscompany'>
-  //     <div className='mid_top_section_applicantscompany'>
-  //           <div>
-  //             <input type="radio" id={`accept${application.id}`} name={`${application.id}`} onClick={()=>changeAccepted(application.id)} value={`accept${application.id}`} />
-  //             <label htmlFor={`accept${application.id}`}></label>
-  //             <p>Accept</p>
-  //           </div>
-  //           <div>
-  //             <input type="radio" id={`reject${application.id}`} name={`${application.id}`} onClick={()=>changeRejected(application.id)} value={`reject${application.id}`} disabled={(application.status === undefined)?false:(application.status === true)?true:false}/>
-  //             <label htmlFor={`reject${application.id}`}></label>
-  //             <p>Reject</p>
-  //           </div>
-  //         </div>
-  //     </div>       
-  // </div>
-  //   ))
-  // ))
-  // }
-
-
-  // <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
-  //           <FaTrashAlt className="delete_icon_applicantscompany" />
-  //           <p>Delete Rejected Ones  ({count})</p>
-  // </div>
