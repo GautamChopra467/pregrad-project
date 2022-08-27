@@ -4,8 +4,10 @@ import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDelete } from "react-icons/md";
 import { useNavigate,useParams } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import {useCookies} from 'react-cookie';
+import PageLoader from "../../../img/page-loader.gif";
 
 const Projects = () => {
   const [isContent, setIsContent] = useState(true);
@@ -23,14 +25,39 @@ const Projects = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [cookies,setCookie,removeCookie] = useCookies([])
 
+  const [isPageLoading, setIsPageLoading] = useState(false);
+
   const [studentpro,setStudentpro] = useState([])
 
   const [getproject,setGetProject] = useState([])
 
+  // Skills
+  const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
+  const [skills, setSkills] = useState(skillsData);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const handleSkill = (event) => {
+    if(selectedSkills.length < 10){
+      setSelectedSkills(current => [...current, event.target.value])
+      setSkills(current => current.filter(skill => {
+        return skill !== event.target.value;
+      }))
+    }else{
+      setFormErrors({...formErrors,
+        skills: "Maximum 10 skills allowed"})
+    }
+  }
+
+  const deleteSkill = (value) => {
+    setSelectedSkills(current => current.filter(selectedSkill => {
+      return selectedSkill !== value;
+    }))
+    setSkills(current => [...current, value])
+  }
+
   const [project, setProject] = useState({
     projecttitle: "",
     description: "",
-    skills: "",
     projectlink: "",
     id
   });
@@ -64,6 +91,9 @@ const getProjects = async()=>{
   const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
   if(data.message==="true"){
   setGetProject(data.project)
+  setTimeout(() => {
+    setIsPageLoading(false)
+  },800)
   }
 } 
 
@@ -79,6 +109,7 @@ const getProjects = async()=>{
           navigate('/login')
         }else{
           navigate(`/student/${id}/projects`)
+          setIsPageLoading(true)
            getProjects()
         }
       }
@@ -110,8 +141,8 @@ const getProjects = async()=>{
       errors.description = "Description required";
     }
 
-    if(!values.skills){
-      errors.skills = "Skills required";
+    if(selectedSkills.length < 3){
+      errors.skills = "Minimum 3 skills required"
     }
 
     if(!values.projectlink){
@@ -172,7 +203,12 @@ const Cancel = ()=>{
         <h5>Projects</h5>
       </div>
 
-      <div className='main_container_projects'>
+      {isPageLoading ? (
+        <div className='page_loading_container_projects'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_projects'>
           {!isContent ? (
             <div className='add_section1_projects'>
               <div className='add_section1_logo_projects'>
@@ -248,6 +284,8 @@ const Cancel = ()=>{
 </>
           )}
         </div>
+      )}
+      
 
         {isModal && (
         
@@ -274,8 +312,23 @@ const Cancel = ()=>{
                    </div>
    
                    <div className="form_box_projects">
-                     <label>Skills Used</label>
-                     <input type="text" name="skills" placeholder="Enter skills"  onChange={handleForm} />
+                   <label className="label_projects">Skills Used</label>
+                
+                <select onChange={handleSkill} className="select_projects">
+                  <option value="">Select Skills</option>
+                  {skills.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_projects">
+                  {selectedSkills.map((val) => (
+                    <div className="selected_domains_box_projects" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_projects" />
+                    </div>
+                  ))}
+                </div>
                      <p className="errors_msg_projects">{formErrors.skills}</p>
                    </div>
    
@@ -308,8 +361,23 @@ const Cancel = ()=>{
                    </div>
    
                    <div className="form_box_projects">
-                     <label>Skills Used</label>
-                     <input type="text" name="skills" placeholder="Enter skills" value={editproject.skills || ''}  onChange={updateForm} />
+                   <label className="label_projects">Skills Used</label>
+                
+                <select onChange={handleSkill} className="select_projects">
+                  <option value="">Select Skills</option>
+                  {skills.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_projects">
+                  {selectedSkills.map((val) => (
+                    <div className="selected_domains_box_projects" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_projects" />
+                    </div>
+                  ))}
+                </div>
                      <p className="errors_msg_projects">{formErrors.skills}</p>
                    </div>
    

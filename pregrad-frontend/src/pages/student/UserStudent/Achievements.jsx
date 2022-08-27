@@ -6,6 +6,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie';
 import { MdOutlineDelete } from "react-icons/md";
+import PageLoader from "../../../img/page-loader.gif";
 
 const Achievements = () => {
   
@@ -15,6 +16,8 @@ const Achievements = () => {
 
 
   const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const [isPageLoading, setIsPageLoading] = useState(false);
   
   const [editform,seteditform] = useState("")
   
@@ -61,6 +64,9 @@ const [studentachi,setStudentachi] = useState([])
     axios.get(`http://localhost:8000/student/getachievements/${id}`).then((res)=>{
       if(res.data.message === "true"){
       setStudentachi(res.data.achievements)
+      setTimeout(() => {
+        setIsPageLoading(false)
+      },800)
       }
     }).catch((err)=>{
       console.log(err)
@@ -81,6 +87,7 @@ const [studentachi,setStudentachi] = useState([])
           navigate('/login')
         }else{
           navigate(`/student/${id}/achievements`)
+          setIsPageLoading(true)
           getAchievements()
         }
       }
@@ -169,7 +176,12 @@ const editAchievement = async(u_id,a_id)=>{
         <h5>Achievments</h5>
       </div>
 
-      <div className='main_container_achievements'>
+      {isPageLoading ? (
+        <div className='page_loading_container_achievements'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_achievements'>
       
           {!isContent ? (
             <div className='add_section1_achievements'>
@@ -221,6 +233,8 @@ const editAchievement = async(u_id,a_id)=>{
             </>
           )}
         </div>
+      )}
+      
 
         {isModal && (
           <div className='modal_backgound_achievements'>

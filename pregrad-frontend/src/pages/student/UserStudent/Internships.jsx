@@ -6,6 +6,7 @@ import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import AppliedInternshipContainer from '../../../components/company/jsx/AppliedInternshipContainer';
 import InternshipContainerStudent from '../../../components/student/jsx/InternshipContainerStudent';
+import PageLoader from "../../../img/page-loader.gif";
 
 
 const Internships = () => {
@@ -24,16 +25,24 @@ const Internships = () => {
 
   const [currentPage, setCurrentPage] = useState("new-internships");
 
+  const [isPageLoading, setIsPageLoading] = useState(false);
+
 
 const getAllInterships = ()=>{
   axios.get(`http://localhost:8000/company/allinternships`).then(({data})=>{
     setInternships(data)
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
   })
 }
 
 const getAppliedInternship = ()=>{
    axios.get(`http://localhost:8000/student/getappliedinternship/${id}`).then(({data})=>{
     setappliedInternship(data)
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
   })
 }
 
@@ -48,11 +57,10 @@ useEffect(()=>{
         removeCookie("jwt")
         navigate('/login')
       }else{
-       
+        setIsPageLoading(true)
         navigate(`/student/${id}/internships`)
         getAllInterships()
         getAppliedInternship()
-
       }
     }
   }
@@ -73,7 +81,12 @@ useEffect(()=>{
           <p>Applied</p>
         </div>
       </div>
-      <div className='main_container_internships'>
+      {isPageLoading ? (
+        <div className='page_loading_container_internships'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_internships'>
         {currentPage === "new-internships" && (
           <InternshipContainerStudent internship={(internships==undefined)?"":internships}/>
         )}
@@ -81,7 +94,8 @@ useEffect(()=>{
         {currentPage === "applied" && (
             <AppliedInternshipContainer appliedinternship={appliedinternship} getAppliedInternship={getAppliedInternship}/>
         )}
-      </div>
+        </div>
+      )}
       
     </div>
   )

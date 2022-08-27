@@ -11,6 +11,7 @@ import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo, FaTimes } from "react-icons/fa";
+import ReactTooltip from 'react-tooltip';
 
 
 const Resume = ({theme, setTheme}) => {
@@ -102,13 +103,19 @@ const Resume = ({theme, setTheme}) => {
               </div>
 
               <div className="profile_edit_container_resume">
-                <div className="profile_edit_resume" onClick={generatePDF} title="Download Resume">
+                <div className="profile_edit_resume" onClick={generatePDF} data-tip data-for="pdfDownload">
                   <BiDownload />
                 </div>
+                <ReactTooltip id="pdfDownload" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Download your pdf resume</span>
+                </ReactTooltip>
 
-                <div className="profile_edit_resume" title="Download Video">
+                <div className="profile_edit_resume" data-tip data-for="videoResume">
                   <FaRegFileVideo />
                 </div>
+                <ReactTooltip id="videoResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Video resume - An Introductory video for your resume</span>
+                </ReactTooltip>
               </div>
 
               
@@ -205,9 +212,12 @@ const Resume = ({theme, setTheme}) => {
                 <p>
                 {proj.description}
                 </p>
-                <a href={proj.projectlink}>
+                <a href={proj.projectlink} data-tip data-for="projectLink">
                   <BiLink size={24} className="project_details_icon_resume" />
                 </a>
+                <ReactTooltip id="projectLink" place="left" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click">
+                  <span>Project Link</span>
+                </ReactTooltip>
                 <div className="skills_content_resume">
                   <ul>
                     <li>{proj.skills}</li>

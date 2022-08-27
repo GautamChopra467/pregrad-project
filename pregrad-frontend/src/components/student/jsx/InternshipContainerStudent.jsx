@@ -3,12 +3,13 @@ import "../../company/css/UserCompany/ListingsCompanyStyles.css";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import { BsFillBarChartFill, BsPlayCircle } from "react-icons/bs";
 import { AiOutlineFieldTime, AiOutlineInfoCircle } from "react-icons/ai";
-import { HiOutlineLocationMarker, HiOutlinePencil } from "react-icons/hi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
+import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerStudent = ({internship,getAppliedInternship}) => {
 
@@ -53,10 +54,22 @@ const applyInternship = async(iid)=>{
                   <h4>{intern.companyname}</h4>
                 </div>
                 <div className='right_section_internship_listingscompany'>
-                  <div className='experience_icon_container_listingscompany'>
+                  <div className={intern._doc.experience === "Beginner" ? 'experience_icon_container_listingscompany beginner_listingscompany' : (intern._doc.experience === "Intermediate" ? 'experience_icon_container_listingscompany intermediate_listingscompany' : 'experience_icon_container_listingscompany expert_listingscompany')} >
                     <BsFillBarChartFill className="experience_icon_listingscompany" />
                      <p>{intern._doc.experience}</p>
-                    <AiOutlineInfoCircle className="info_icon_listingscompany" />
+                    {intern._doc.experience === "Beginner" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> atleast 1 project" />
+                    )}
+
+                    {intern._doc.experience === "Intermediate" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> either 1 work experience OR 2 projects" />
+                    )}
+                    
+                    {intern._doc.experience === "Expert" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> both 1 work experience AND 2 projects" />
+                    )}
+              
+                    <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
                   </div>
                   <div className={(intern._doc.status) ? 'active_icon_container' : 'false_icon_container'}>
                     <p>{(intern._doc.status) ? "Active" : "Closed"}</p>
@@ -66,7 +79,7 @@ const applyInternship = async(iid)=>{
     
               <div className='mid_section_internship_listingscompany'>
                 <div className='status_container_listingscompany'>
-                  <div className='experience_icon_container2_listingscompany'>
+                  <div className={intern._doc.experience === "Beginner" ? 'experience_icon_container2_listingscompany beginner_listingscompany' : (intern._doc.experience === "Intermediate" ? 'experience_icon_container2_listingscompany intermediate_listingscompany' : 'experience_icon_container2_listingscompany expert_listingscompany')}>
                     <BsFillBarChartFill className="experience_icon_listingscompany" />
                     <p>{intern._doc.experience}</p>
                     <AiOutlineInfoCircle className="info_icon_listingscompany" />

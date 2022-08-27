@@ -31,6 +31,14 @@
   padding: 78px 30px 30px 30px;
 }
 
+.page_loading_container_listingscompany {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
 .add_section1_listingscompany {
   display: flex;
   flex-direction: column;
@@ -170,9 +178,22 @@
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
+  cursor: default;
+}
+
+.beginner_listingscompany {
   border: 1px solid rgb(46, 201, 113);
   color: rgb(46, 201, 113);
-  cursor: default;
+}
+
+.intermediate_listingscompany {
+  border: 1px solid rgb(255, 145, 66);
+  color: rgb(255, 145, 66);
+}
+
+.expert_listingscompany {
+  border: 1px solid rgb(251, 94, 94);
+  color: rgb(251, 94, 94);
 }
 
 .experience_icon_container2_listingscompany {
@@ -182,8 +203,6 @@
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
-  border: 1px solid rgb(46, 201, 113);
-  color: rgb(46, 201, 113);
   cursor: default;
 }
 
@@ -637,6 +656,10 @@
 
   .modal_container2_listingscompany {
     padding: 10px;
+  }
+
+  .page_loading_container_listingscompany img {
+    width: 100px;
   }
 }
 

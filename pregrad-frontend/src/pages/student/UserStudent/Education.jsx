@@ -5,7 +5,8 @@ import { BiEditAlt } from "react-icons/bi";
 import { useNavigate,useParams } from "react-router-dom";
 import { MdOutlineDelete } from 'react-icons/md';
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import {useCookies} from 'react-cookie';
+import PageLoader from "../../../img/page-loader.gif";
 
 
 const Education = () => {
@@ -15,6 +16,8 @@ const Education = () => {
    const {id} = useParams()
 
   const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   const [isContent, setIsContent] = useState(true);
   const [isModal, setIsModal] = useState(false);
@@ -67,6 +70,9 @@ const Education = () => {
           if(data.message === "true")
           {  
            setStudentedu(data.education)
+           setTimeout(() => {
+            setIsPageLoading(false)
+          },800)
           }
 
   }
@@ -82,8 +88,8 @@ const Education = () => {
           removeCookie("jwt")
           navigate('/login')
         }else{
-       
           navigate(`/student/${id}/education`)
+          setIsPageLoading(true)
           getEducation()
         }
       }
@@ -126,10 +132,14 @@ const Education = () => {
 
     if(!values.start){
       errors.start = "Start year required";
+    }else if(values.start.length !== 4 || (!Number.isInteger(parseFloat(values.start))) || (isNaN(values.start))){
+      errors.start = "Invalid Year";
     }
 
     if(!values.end){
       errors.end = "End year required";
+    }else if(values.end.length !== 4 || (!Number.isInteger(parseFloat(values.end))) || (isNaN(values.end))){
+      errors.end = "Invalid Year";
     }
 
     return errors;
@@ -187,7 +197,12 @@ const Cancel = ()=>{
         <h5>Education</h5>
       </div>
 
-      <div className='main_container_education'>
+      {isPageLoading ? (
+        <div className='page_loading_container_education'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_education'>
           {!isContent ? (
             <div className='add_section1_education'>
               <div className='add_section1_logo_education'>
@@ -240,6 +255,8 @@ const Cancel = ()=>{
             </>
           )}
         </div>
+      )}
+      
 
         {isModal && (
           <div className='modal_backgound_education'>

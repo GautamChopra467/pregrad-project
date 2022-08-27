@@ -12,6 +12,8 @@ import { FaRegFileVideo, FaTimes } from "react-icons/fa";
 import { FiCopy, FiFileText, FiShare2 } from "react-icons/fi";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactTooltip from "react-tooltip";
+import PageLoader from "../../../img/page-loader.gif";
 
 const StudentProfile = () => {
 
@@ -21,6 +23,8 @@ const StudentProfile = () => {
   const {id} = useParams()
   
  const [cookies,setCookie,removeCookie] = useCookies([])
+
+ const [isPageLoading, setIsPageLoading] = useState(false);
 
  const  [user,setUser] = useState({})
 
@@ -67,6 +71,9 @@ const [video,setVideo] = useState()
     setstudentDomain(data.domain)
     setStudentSocialLink(data.socialLink)
     setVideo(data.videolink)
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
   }
   }
 
@@ -158,6 +165,7 @@ const [video,setVideo] = useState()
           navigate('/login')
         }else{
           navigate(`/student/${id}/profile`)
+          setIsPageLoading(true)
           getUserDetails()
           getUserData()
         }
@@ -165,19 +173,19 @@ const [video,setVideo] = useState()
     }
     verifyUser()
 
-    const checkIfClickedOutside = e => {
-      console.log("before reached", ref.current.contains(e.target))
-      console.log("reached 2", isModal2)
-      if (isModal2 && ref.current && !ref.current.contains(e.target)) {
-        console.log("reached")
-        setIsModal2(false)
-      }
-    }
-    document.addEventListener("click", checkIfClickedOutside)
+    // const checkIfClickedOutside = e => {
+    //   console.log("before reached", ref.current.contains(e.target))
+    //   console.log("reached 2", isModal2)
+    //   if (isModal2 && ref.current && !ref.current.contains(e.target)) {
+    //     console.log("reached")
+    //     setIsModal2(false)
+    //   }
+    // }
+    // document.addEventListener("click", checkIfClickedOutside)
 
-    return () => {
-      document.removeEventListener("click", checkIfClickedOutside)
-    }  
+    // return () => {
+    //   document.removeEventListener("click", checkIfClickedOutside)
+    // }  
   },[cookies,removeCookie,navigate, setIsModal2])
 
   const generatePDF = async () => {
@@ -268,7 +276,12 @@ const [video,setVideo] = useState()
         <h5>Profile</h5>
       </div>
 
-      <div className="main_container_studentprofile">
+      {isPageLoading ? (
+        <div className='page_loading_container_studentprofile'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className="main_container_studentprofile">
         <div className="welcome_container_studentprofile">
           <div className="welcome_left_section_studentprofile">
             <h4>Hi, welcome back!</h4>
@@ -285,11 +298,11 @@ const [video,setVideo] = useState()
           <div className="profile_background_studentprofile">
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_studentprofile">
-                <div className="profile_edit5_studentprofile" onClick={() => setIsModal2(!isModal2)} title="Share Resume">
-                  <FiShare2 size={20} />
+                <div className="profile_edit5_studentprofile" onClick={() => setIsModal2(!isModal2)}>
+                  <FiShare2 size={19} />
                 </div>
 
-                <div className="profile_edit4_studentprofile" onClick={generatePDF} title="Download Resume">
+                <div className="profile_edit4_studentprofile" onClick={generatePDF}>
                   <BiDownload size={20} />
                 </div>
 
@@ -324,21 +337,33 @@ const [video,setVideo] = useState()
               </div>
 
               <div className="profile_edit_container_studentprofile">
-                <div className="profile_edit_studentprofile" onClick={() => setIsModal2(!isModal2)}>
+                <div className="profile_edit_studentprofile" onClick={() => setIsModal2(!isModal2)} data-tip data-for="shareResume">
                   <FiShare2 />
                 </div>
+                <ReactTooltip id="shareResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Share your resume with your friends or company</span>
+                </ReactTooltip>
 
-                <div className="profile_edit_studentprofile" onClick={(e)=>setEditDetails(e)}>
+                <div className="profile_edit_studentprofile" onClick={(e)=>setEditDetails(e)} data-tip data-for="editProfile">
                   <BiEditAlt />
                 </div>
+                <ReactTooltip id="editProfile" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Edit your details</span>
+                </ReactTooltip>
 
-                <div className="profile_edit_studentprofile" onClick={generatePDF} title="Download Resume">
+                <div className="profile_edit_studentprofile" currentitem="false" onClick={generatePDF} data-tip data-for="pdfDownload">
                   <BiDownload />
                 </div>
+                <ReactTooltip id="pdfDownload" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Download your pdf resume</span>
+                </ReactTooltip>
 
-                <div className="profile_edit_studentprofile"  title="Video Resume">
-                <a href={video} target="_blank"><FaRegFileVideo /></a>
+                <div className="profile_edit_studentprofile" data-tip data-for="videoResume">
+                  <a href={video} target="_blank"><FaRegFileVideo /></a>
                 </div>
+                <ReactTooltip id="videoResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                  <span>Video resume - An Introductory video for your resume</span>
+                </ReactTooltip>
               </div>
 
               
@@ -429,7 +454,7 @@ const [video,setVideo] = useState()
               WorkExperience.map((work)=>(
               <div className="workexperience_details_box_studentprofile" key={work._id}>
                 <h3>{work.companyname}</h3>
-                <h5>{work.position} | {work.duration}</h5>
+                <h5>{work.position} | {work.duration} months</h5>
                 <p>
                 {work.role}  
                 </p>
@@ -462,9 +487,12 @@ const [video,setVideo] = useState()
                 <p>
                 {proj.description}
                 </p>
-                <a href={proj.projectlink}>
+                <a href={proj.projectlink} data-tip data-for="projectLink">
                   <BiLink size={24} className="project_details_icon_studentprofile" />
                 </a>
+                <ReactTooltip id="projectLink" place="left" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click">
+                  <span>Project Link</span>
+                </ReactTooltip>
                 <div className="skills_content_studentprofile">
                   <ul>
                     <li>{proj.skills}</li>
@@ -488,7 +516,7 @@ const [video,setVideo] = useState()
 
         {isModal2 && (
       <div className='modal2_background_studentprofile'> 
-        <div className='modal2_box_studentprofile' ref={ref}>
+        <div className='modal2_box_studentprofile'>
           <h2>Share Profile</h2>
           <div className="modal2_copy_container_studentprofile">
             <input type="text" disabled value={`/resume/${id}`} />
@@ -499,6 +527,7 @@ const [video,setVideo] = useState()
       </div>
       )}
       </div>
+      )}
 
       {isModal && (
           <div className='modal_backgound_studentprofile'>
@@ -702,7 +731,7 @@ const [video,setVideo] = useState()
            WorkExperience.map((work)=>(
             <div className="workexperience_details_box_resumestudent">
             <h3>{work.companyname}</h3>
-            <h5>{work.position} | {work.duration}</h5>
+            <h5>{work.position} | {work.duration} months</h5>
           <p>
          {work.role}
           </p>

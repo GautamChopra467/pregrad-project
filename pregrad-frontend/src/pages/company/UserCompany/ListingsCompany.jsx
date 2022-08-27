@@ -3,14 +3,17 @@ import "../../../components/company/css/UserCompany/ListingsCompanyStyles.css";
 import { FiFileText } from 'react-icons/fi';
 import { useNavigate,useParams } from "react-router-dom";
 import InternshipContainerCompany from '../../../components/company/jsx/InternshipContainerCompany';
-import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import axios from 'axios';
+import {useCookies} from 'react-cookie';
+import PageLoader from "../../../img/page-loader.gif";
 
 const ListingsCompany = () => {
 
   const navigate = useNavigate();
 
   const {id} = useParams()
+
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   const [internships,setInternships] = useState([])
 
@@ -25,6 +28,9 @@ const ListingsCompany = () => {
   const getInternship = ()=>{
     axios.get(`http://localhost:8000/company/getinternships/${id}`).then(({data})=>{
      setInternships(data)
+     setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
     })
  }
 
@@ -53,6 +59,7 @@ const ListingsCompany = () => {
           navigate('/login')
         }else{ 
            navigate(`/company/info/${id}/listings`)
+           setIsPageLoading(true)
            getCompanyInfo()
            getCompanyDetails()
            getInternship()
@@ -67,7 +74,12 @@ const ListingsCompany = () => {
         <h5>My Listings <span>({internships.length})</span></h5>
       </div>
 
-      <div className='main_container_listingscompany'>
+      {isPageLoading ? (
+        <div className='page_loading_container_projects'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_listingscompany'>
         {!isContent ? (
           <div className='add_section1_listingscompany'>
           <div className='add_section1_logo_listingscompany'>
@@ -96,6 +108,8 @@ const ListingsCompany = () => {
           </div>
         )}
       </div>
+      )}
+      
 
     </div>
   )

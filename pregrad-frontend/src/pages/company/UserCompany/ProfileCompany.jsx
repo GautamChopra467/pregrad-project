@@ -5,6 +5,7 @@ import { BsLinkedin } from "react-icons/bs";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import { useNavigate,useParams,Link } from 'react-router-dom';
+import PageLoader from "../../../img/page-loader.gif";
 
 const ProfileCompany = () => {
 
@@ -14,6 +15,8 @@ const ProfileCompany = () => {
   const [cookies,setCookie,removeCookie] = useCookies([])
 
   const {id} = useParams()
+
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   const [companydetails,setCompanyDetails] = useState({})
  
@@ -28,6 +31,9 @@ const ProfileCompany = () => {
 const getCompanyDetails = ()=>{
   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
    setCompanyInfoDetails(data)
+   setTimeout(() => {
+    setIsPageLoading(false)
+  },800)
 })
 }
 
@@ -47,6 +53,7 @@ const getCompanyDetails = ()=>{
             removeCookie("jwt")
             navigate('/login')
           }else{
+            setIsPageLoading(true)
              getCompanyInfo()
              getCompanyDetails()
             navigate(`/company/info/${data.id}/profile`)
@@ -66,7 +73,12 @@ const getCompanyDetails = ()=>{
 
   return (
     <div>
-      <div className="main_container_profilecompany">
+      {isPageLoading ? (
+        <div className='page_loading_container_profilecompany'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className="main_container_profilecompany">
         <div className="welcome_container_profilecompany">
           <div className="welcome_left_section_profilecompany">
             <h4>Hi, welcome back!</h4>
@@ -84,7 +96,7 @@ const getCompanyDetails = ()=>{
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_profilecompany">
               <div className="profile_edit2_profilecompany">
-                  <BsLinkedin size={18} />
+                <a href={companyInfoDetails.linkedin}><BsLinkedin size={18} /></a>
               </div>
             </div>
           </div>
@@ -145,6 +157,7 @@ const getCompanyDetails = ()=>{
               </div>
             </div>
       </div>
+      )}
     </div>
   )
 }

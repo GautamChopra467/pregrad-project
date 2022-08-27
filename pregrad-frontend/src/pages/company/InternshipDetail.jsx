@@ -9,6 +9,7 @@ import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { MdOutlinePeopleAlt, MdPeopleAlt } from "react-icons/md";
 import {useParams} from "react-router-dom"
 import axios from 'axios'
+import ReactTooltip from 'react-tooltip';
 
 const InternshipDetail = ({theme, setTheme}) => {
 
@@ -78,10 +79,22 @@ const InternshipDetail = ({theme, setTheme}) => {
                   <h4>{companydetails.companyname}</h4>
                 </div>
                 <div className='right_section_internship_internshipdetail'>
-                  <div className='experience_icon_container_internshipdetail'>
+                  <div className={internship.experience === "Beginner" ? 'experience_icon_container_internshipdetail beginner_internshipdetail' : (internship.experience === "Intermediate" ? 'experience_icon_container_internshipdetail intermediate_internshipdetail' : 'experience_icon_container_internshipdetail expert_internshipdetail')}>
                     <BsFillBarChartFill className="experience_icon_internshipdetail" />
                     <p>{internship.experience}</p>
-                    <AiOutlineInfoCircle className="info_icon_internshipdetail" />
+                    {internship.experience === "Beginner" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The applicant should have<br /> atleast 1 project" />
+                    )}
+
+                    {internship.experience === "Intermediate" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> atleast 1 work experience OR 2 projects" />
+                    )}
+                    
+                    {internship.experience === "Expert" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> atleast 1 work experience AND 2 projects" />
+                    )}
+              
+                    <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
                   </div>
                   <div className='remote_container_internshipdetail'>
                     <p>{internship.jobtype}</p>
@@ -91,7 +104,7 @@ const InternshipDetail = ({theme, setTheme}) => {
 
               <div className='mid_section_internship_internshipdetail'>
                 <div className='status_container_internship_internshipdetail'>
-                <div className='experience_icon_container2_internshipdetail'>
+                <div className={internship.experience === "Beginner" ? 'experience_icon_container2_internshipdetail beginner_internshipdetail' : (internship.experience === "Intermediate" ? 'experience_icon_container2_internshipdetail intermediate_internshipdetail' : 'experience_icon_container2_internshipdetail expert_internshipdetail')}>
                     <BsFillBarChartFill className="experience_icon_internshipdetail" />
                     <p>{internship.experience}</p>
                     <AiOutlineInfoCircle className="info_icon_internshipdetail" />
@@ -234,9 +247,9 @@ const InternshipDetail = ({theme, setTheme}) => {
                 </div>
               </div>
 
-              <div className='button_section_internshipdetail'>
+              {/* <div className='button_section_internshipdetail'>
                 <button className='btn_primary_internshipdetail'>Apply Now</button>
-              </div>
+              </div> */}
             </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import "../../../components/company/css/AppliedInternshipContainerStyles.css";
 import { Link, useNavigate,useParams } from "react-router-dom";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import ReactTooltip from 'react-tooltip';
 
 
 const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) => {
@@ -30,10 +31,24 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
               <h4>{applied.companyname}</h4>
             </div>
             <div className='right_section_internship_appliedinternship'>
-              <div className='experience_icon_container_appliedinternship'>
+              <div className={applied._doc.experience === "Beginner" ? 'experience_icon_container_appliedinternship beginner_appliedinternship' : (applied._doc.experience === "Intermediate" ? 'experience_icon_container_appliedinternship intermediate_appliedinternship' : 'experience_icon_container_appliedinternship expert_appliedinternship')}>
                 <BsFillBarChartFill className="experience_icon_appliedinternship" />
                 <p>{applied._doc.experience}</p>
-                <AiOutlineInfoCircle className="info_icon_appliedinternship" />
+                {applied._doc.experience === "Beginner" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> atleast 1 project" />
+                    )}
+
+                    {applied._doc.experience === "Intermediate" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> either 1 work experience OR 2 projects" />
+                    )}
+                    
+                    {applied._doc.experience === "Expert" && (
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> both 1 work experience AND 2 projects" />
+                    )}
+              
+                    <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
+                  
+
               </div>
               <div className={(applied._doc.status) ? 'active_icon_container_appliedinternship' : 'false_icon_container_appliedinternship'}>
                 <p>{(applied._doc.status) ? "Active" : "Closed"}</p>
@@ -43,7 +58,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
 
           <div className='mid_section_internship_appliedinternship'>
             <div className='status_container_appliedinternship'>
-              <div className='experience_icon_container2_appliedinternship'>
+              <div className={applied._doc.experience === "Beginner" ? 'experience_icon_container2_appliedinternship beginner_appliedinternship' : (applied._doc.experience === "Intermediate" ? 'experience_icon_container2_appliedinternship intermediate_appliedinternship' : 'experience_icon_container2_appliedinternship expert_appliedinternship')}>
                 <BsFillBarChartFill className="experience_icon_appliedinternship" />
                 <p>{applied._doc.experience}</p>
                 <AiOutlineInfoCircle className="info_icon_appliedinternship" />
@@ -55,13 +70,23 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
             </div>
 
             <div className='upper_mid_section_appliedinternship'>
-              <div className="skill_section_appliedinternship">
+              {/* <div className="skill_section_appliedinternship">
                 {
                 applied._doc.applied.map((value)=>(
                   <p>{(value.id == id)?value.status:""}</p>
                 ))
               }
-              </div>
+              </div> */}
+              {
+                applied._doc.applied.map((value)=>(
+                  (value.id === id) ? (<div className={value.status === "Applied" ? "skill_section_appliedinternship applied_status_appliedinternship" : (
+                    value.status === "Hired" ? "skill_section_appliedinternship accepted_status_appliedinternship" : (value.status === "Rejected" ? "skill_section_appliedinternship rejected_status_appliedinternship" : "skill_section_appliedinternship shortlisted_status_appliedinternship")
+                  ) }>
+                    <p>{value.status}</p>
+                  </div>) : ("")
+                  
+                ))
+              }
             </div>
           </div>
 

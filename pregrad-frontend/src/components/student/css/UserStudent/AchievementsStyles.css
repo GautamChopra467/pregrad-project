@@ -38,6 +38,14 @@
   padding: 78px 30px 30px 30px;
 }
 
+.page_loading_container_achievements {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
 .add_section1_achievements {
   display: flex;
   flex-direction: column;
@@ -356,6 +364,10 @@
 
   .modal_container_achievements {
     padding: 16px;
+  }
+
+  .page_loading_container_achievements img {
+    width: 100px;
   }
 }
 

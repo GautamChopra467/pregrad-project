@@ -9,7 +9,8 @@
     align-items: center;
     border-top: 1px solid var(--background-secondary-hover);
     border-bottom: 1px solid var(--background-secondary-hover);
-    position: fixed;
+    position: sticky;
+  top: 70px;
     z-index: 110;
   }
   
@@ -24,9 +25,9 @@
   .current_page_section_internships {
     background-color: var(--header-bg);
     width: 100%;
-    padding: 58px 15px 10px 15px;
+    padding: 12px 15px 10px 15px;
     position: sticky;
-    top: 120px;
+  top: 118px;
     box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
     display: flex;
     align-items: center;
@@ -59,7 +60,6 @@
   .main_container_internships {
     width: 100%;
     padding: 30px;
-    padding-top: 140px;
     display: flex;
     flex-direction: column;
     grid-gap: 20px;
@@ -70,14 +70,48 @@
     height: 100%;
   }
 
+  .page_loading_container_internships {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+  }
+
+  @media screen and (max-width: 800px) {
+    .sub_header_internships {
+      top: 66.19px;
+    }
+  
+    .current_page_section_internships {
+      top: 114.19px;
+    }
+  }
+
   @media screen and (max-width: 660px) {
     .main_container_internships {
-      padding: 125px 15px 30px 15px;
+      padding: 30px 15px 30px 15px;
     }
   }
 
   @media screen and (max-width: 560px) {
     .main_container_internships {
-      padding: 125px 0 20px 0;
+      padding: 25px 0 20px 0;
+    }
+
+    .page_loading_container_internships img {
+      width: 100px;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .sub_header_internships {
+      top: 59.33px;
+      padding: 3px 30px;
+      height: 44px;
+    }
+  
+    .current_page_section_internships {
+      top: 103.33px;
     }
   }

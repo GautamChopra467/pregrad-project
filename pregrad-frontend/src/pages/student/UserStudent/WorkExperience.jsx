@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import "../../../components/student/css/UserStudent/WorkExperienceStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
-import { MdOutlineDelete } from "react-icons/md"
+import { MdOutlineDelete } from "react-icons/md";
+import { FaTimes } from "react-icons/fa";
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import {useCookies} from 'react-cookie';
+import PageLoader from "../../../img/page-loader.gif";
+
 const WorkExperience = () => {
 
   const navigate = useNavigate()
@@ -18,6 +21,8 @@ const WorkExperience = () => {
   const [isModal, setIsModal] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
 
+  const [isPageLoading, setIsPageLoading] = useState(false);
+
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -25,13 +30,36 @@ const WorkExperience = () => {
 
   const [studentwork,setStudentwork] = useState([])
 
+  // Skills
+  const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
+  const [skills, setSkills] = useState(skillsData);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const handleSkill = (event) => {
+    if(selectedSkills.length < 10){
+      setSelectedSkills(current => [...current, event.target.value])
+      setSkills(current => current.filter(skill => {
+        return skill !== event.target.value;
+      }))
+    }else{
+      setFormErrors({...formErrors,
+        skills: "Maximum 10 skills allowed"})
+    }
+  }
+
+  const deleteSkill = (value) => {
+    setSelectedSkills(current => current.filter(selectedSkill => {
+      return selectedSkill !== value;
+    }))
+    setSkills(current => [...current, value])
+  }
+
   const [workexperience, setWorkExperience] = useState({
     companyname: "",
     position: "",
     role: "",
     duration: "",
     websitelink: "",
-    skills: "",
     id:id
   });
 
@@ -62,6 +90,9 @@ const WorkExperience = () => {
     axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
       if(res.data.message === "true"){  
     setStudentwork(res.data.workexperience)
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
       }
     }).catch((err)=>{
       console.log(err)
@@ -83,6 +114,7 @@ const WorkExperience = () => {
         }else{
          
           navigate(`/student/${id}/workexperience`)
+          setIsPageLoading(true)
           getWorkExperience()
         }
       }
@@ -125,14 +157,18 @@ const WorkExperience = () => {
 
     if(!values.duration){
       errors.duration = "Duration required";
+    }else if(parseInt(values.duration) < 1){
+      errors.duration = "Duration should be greater than 1"
+    }else if(!Number.isInteger(parseFloat(values.duration))){
+      errors.duration = "Duration should not be in decimal"
     }
 
     if(!values.websitelink){
       errors.websitelink = "Website Link required";
     }
 
-    if(!values.skills){
-      errors.skills = "Skills required";
+    if(selectedSkills.length < 3){
+      errors.skills = "Minimum 3 skills required"
     }
 
     return errors;
@@ -183,7 +219,12 @@ const Cancel = ()=>{
         <h5>Work Experience</h5>
       </div>
 
-      <div className='main_container_workexperience'>
+      {isPageLoading ? (
+        <div className='page_loading_container_workexperience'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_workexperience'>
           {!isContent ? (
             <div className='add_section1_workexperience'>
               <div className='add_section1_logo_workexperience'>
@@ -226,7 +267,7 @@ const Cancel = ()=>{
 
               <div className='bottom_section_content_workexperience'>
                 <h4>{work.position}</h4>
-                <h3>{work.duration}</h3>
+                <h3>{work.duration} months</h3>
                 <p>{work.role}</p>
                 <a href={work.websitelink}>Website Link</a>
               </div>
@@ -257,6 +298,8 @@ const Cancel = ()=>{
             </>
           )}
         </div>
+      )}
+      
 
         {isModal && (
           <div className='modal_backgound_workexperience'>
@@ -288,8 +331,8 @@ const Cancel = ()=>{
                 </div>
 
                 <div className="form_box_workexperience">
-                  <label>Duration</label>
-                  <input type="text" name="duration" placeholder="Enter duration" onChange={handleForm} />
+                  <label>Duration (in months)</label>
+                  <input type="number" name="duration" placeholder="Enter duration" onChange={handleForm} />
                   <p className="errors_msg_workexperience">{formErrors.duration}</p>
                 </div>
 
@@ -300,8 +343,23 @@ const Cancel = ()=>{
                 </div>
 
                 <div className="form_box_workexperience">
-                  <label>Skills Used</label>
-                  <input type="text" name="skills" placeholder="Enter your skills"   onChange={handleForm} />
+                <label className="label_workexperience">Skills Used</label>
+                
+                <select onChange={handleSkill} className="select_workexperience">
+                  <option value="">Select Skills</option>
+                  {skills.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_workexperience">
+                  {selectedSkills.map((val) => (
+                    <div className="selected_domains_box_workexperience" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_workexperience" />
+                    </div>
+                  ))}
+                </div>
                   <p className="errors_msg_workexperience">{formErrors.skills}</p>
                 </div>
 
@@ -333,8 +391,8 @@ const Cancel = ()=>{
                 </div>
 
                 <div className="form_box_workexperience">
-                  <label>Duration</label>
-                  <input type="text" name="duration" placeholder="Enter duration" value={editworkexperience.duration || ''}  onChange={updateForm} />
+                  <label>Duration (in months)</label>
+                  <input type="number" name="duration" placeholder="Enter duration" value={editworkexperience.duration || ''}  onChange={updateForm} />
                   <p className="errors_msg_workexperience">{formErrors.duration}</p>
                 </div>
 

@@ -30,6 +30,14 @@
   padding: 90px 35px 30px 35px;
 }
 
+.page_loading_container_studentprofile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
 .welcome_container_studentprofile {
   display: flex;
   align-items: center;
@@ -179,6 +187,13 @@
 .profile_edit4_studentprofile,
 .profile_edit5_studentprofile {
   display: none;
+}
+
+.profile_edit3_studentprofile a,
+.profile_edit_studentprofile a {
+  text-decoration: none;
+  color: var(--primary-dark);
+  margin-top: 4px;
 }
 
 .main_details_container_studentprofile {
@@ -927,6 +942,11 @@ background-color: var(--header-bg);
 
   .modal2_box_studentprofile {
     min-width: 380px;
+  }
+
+  
+  .page_loading_container_studentprofile img {
+    width: 100px;
   }
 }
 

@@ -5,7 +5,9 @@ import { MdOutlinePeopleAlt } from 'react-icons/md';
 import { useNavigate, Link,useParams } from 'react-router-dom';
 import "../../../components/company/css/UserCompany/DashboardCompanyStyles.css";
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
+import {useCookies} from 'react-cookie';
+import PageLoader from "../../../img/page-loader.gif";
+import ReactTooltip from 'react-tooltip';
 
 
 const DashboardCompany = () => {
@@ -13,6 +15,8 @@ const DashboardCompany = () => {
   const navigate = useNavigate();
 
   const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   const {id} = useParams()
   
@@ -154,6 +158,9 @@ const DashboardCompany = () => {
 const getCompanyDetails = ()=>{
   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
     setCompanyInfoDetails(data)
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
 }) 
 }
  
@@ -172,6 +179,7 @@ const getCompanyDetails = ()=>{
             removeCookie("jwt")
             navigate('/login')
           }else{
+            setIsPageLoading(true)
              getCompanyInfo()
              getCompanyDetails()
             navigate(`/company/info/${id}/dashboard`)
@@ -227,7 +235,12 @@ const getCompanyDetails = ()=>{
 
   return (
     <div>
-      <div className='main_container_dashboardCompany'>
+      {isPageLoading ? (
+        <div className='page_loading_container_dashboardCompany'>
+          <img src={PageLoader} alt="Loading" />
+        </div>
+      ) : (
+        <div className='main_container_dashboardCompany'>
         <div className='left_section_container_dashboardCompany'>
           <div className='top_details_section_dashboardCompany'>
             <div className='left_details_section_dashboardCompany'>
@@ -242,7 +255,10 @@ const getCompanyDetails = ()=>{
             </div>
 
             <div className='right_details_section_dashboardCompany'>
-              <HiOutlinePencil onClick={setEditProfile} className="edit_icon_dashboardCompany" />
+              <HiOutlinePencil onClick={setEditProfile} className="edit_icon_dashboardCompany" data-tip data-for="editProfile" />
+              <ReactTooltip id="editProfile" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
+                <span>Edit company's profile</span>
+              </ReactTooltip>
               <button onClick={() => navigate(`/company/info/${id}/profile`)} className='btn_primary_profile_dashboardCompany'>View Profile</button>
             </div>
           </div>
@@ -254,7 +270,10 @@ const getCompanyDetails = ()=>{
                   <FiSettings className='settings_icon_dashboardCompany' />
                   <h2>Account Settings</h2>
                 </div>
-                <p onClick={editAccountDetails}>Change</p>
+                <p onClick={editAccountDetails} data-tip data-for="editAccount">Change</p>
+                <ReactTooltip id="editAccount" place="bottom" data-background-color="#1E272E" effect="solid" delayShow={800}>
+                  <span>Edit account details</span>
+                </ReactTooltip>
               </div>
               <div className='bottom_box_account_dashboardCompany'>
                 <p>Change your name, location, company type, etc. from here.</p>
@@ -283,6 +302,8 @@ const getCompanyDetails = ()=>{
           </div>
         </div>
       </div>
+      )}
+      
 
 
       {isModal && (
