@@ -4,6 +4,7 @@ import { FiFileText } from 'react-icons/fi';
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
+import { BsFillPatchCheckFill } from "react-icons/bs";
 import axios from 'axios'
 
 const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlistedState}) => {
@@ -83,7 +84,7 @@ const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlisted
 
 
   return (
-    <div>
+    <div className='shortlistedapplicants_box_applicantscompany'>
      {
   showapplied.map((application)=>(
     (application.internshipstatus === "Shortlisted"?(
@@ -116,7 +117,7 @@ const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlisted
    }
 
    <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
-  <FaTrashAlt className="delete_icon_applicantscompany" />
+  <BsFillPatchCheckFill className="delete_icon_applicantscompany" />
            <p>Update Status (Rejected : {count})</p>
     </div>   
      </div>

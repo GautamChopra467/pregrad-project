@@ -3,7 +3,7 @@ import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css"
 import { FiFileText } from 'react-icons/fi';
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
-import { FaTrashAlt } from "react-icons/fa";
+import { BsFillPatchCheckFill } from "react-icons/bs";
 import axios from 'axios'
 
 const NewApplicants = ({appliedCandidates,showApplicants,appliedState}) => {
@@ -91,7 +91,7 @@ useEffect(()=>{
 }
 
   return (
-    <div>
+    <div className='newapplicants_box_applicantscompany'>
      {
       (showapplied === "")?"":
       showapplied.map((application)=>(
@@ -125,7 +125,7 @@ useEffect(()=>{
    }
 
    <div className='delete_box_applicantscompany' onClick={deleteRejectedApplicant}>
-  <FaTrashAlt className="delete_icon_applicantscompany" />
+  <BsFillPatchCheckFill className="delete_icon_applicantscompany" />
            <p>Update Status  (Rejected : {count})</p>
     </div>   
      </div>

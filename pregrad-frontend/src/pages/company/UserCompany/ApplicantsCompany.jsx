@@ -8,6 +8,7 @@ import axios from 'axios'
 import NewApplicants from '../../../components/company/jsx/NewApplicants';
 import ShortlistedApplicants from '../../../components/company/jsx/ShortlistedApplicants';
 import HiredApplicants from '../../../components/company/jsx/HiredApplicants';
+import PageLoader from "../../../img/page-loader.gif";
 
 const ApplicantsCompany = () => {
   
@@ -15,7 +16,9 @@ const ApplicantsCompany = () => {
 
     var iid = window.location.search.substring(1).split("=")[1];
     
-    const [isContent, setIsContent] = useState(true);
+    const [isAppliedContent, setIsAppliedContent] = useState(false);
+    const [isShortlistedContent, setIsShortlistedContent] = useState(false);
+    const [isHiredContent, setIsHiredContent] = useState(false);
 
     const [showapplied,setShowApplied] = useState([])
 
@@ -26,6 +29,8 @@ const ApplicantsCompany = () => {
 
     let [totalApplied,setTotalApplied] = useState(0)
 
+    const [isPageLoading, setIsPageLoading] = useState(false);
+
     let [count,setCount] = useState(0)
  
          const showApplicants = async()=>{
@@ -34,10 +39,14 @@ const ApplicantsCompany = () => {
                 setShortlisted(data.shortlistedCandidates)
                 setHired(data.hiredCandidates)
                 setTotalApplied(data.length)
+                setTimeout(() => {
+                  setIsPageLoading(false)
+                },800)
          }
 
     useEffect(()=>{
       showApplicants()
+      setIsPageLoading(true)
 },[])
 
  
@@ -63,37 +72,68 @@ const ApplicantsCompany = () => {
         </div>
       </div>
 
-      <div className='main_container_applicantscompany'>
-        {!isContent ? (
-          <div className='add_section1_applicantscompany'>
-          <div className='add_section1_logo_applicantscompany'>
-          <FiFileText size={30} className="add_section1_icon_applicantscompany" />
-          </div>
-          <div className='add_section1_details_applicantscompany'>
-            <h2>No applicants available</h2>
-            <p>No applicants have applied for this internship yet.</p>
-          </div>
-          <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Internship</button>
+      {isPageLoading ? (
+        <div className='page_loading_container_projects'>
+          <img src={PageLoader} alt="Loading" />
         </div>
-        ) : (
-          <>
+      ) : (
+        <div className='main_container_applicantscompany'>
           <div className='main_box_applicantscompany'>
+            
           {currentPage === "new" && (
-            <NewApplicants appliedCandidates={showapplied === undefined ? "":showapplied} showApplicants={showApplicants} appliedState={setShowApplied}/>
+            isAppliedContent ? (            
+              <NewApplicants appliedCandidates={showapplied === undefined ? "":showapplied} showApplicants={showApplicants} appliedState={setShowApplied}/>
+            ) : (
+              <div className='add_section1_applicantscompany'>
+              <div className='add_section1_logo_applicantscompany'>
+              <FiFileText size={30} className="add_section1_icon_applicantscompany" />
+              </div>
+              <div className='add_section1_details_applicantscompany'>
+                <h2>No new applicants available</h2>
+                <p>No applicants have applied for this internship yet.</p>
+              </div>
+              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+            </div>
+            )
           )}
 
           {currentPage === "shortlisted" && (
-            <ShortlistedApplicants shortlistedCandidates={showshortlisted === undefined ? "":showshortlisted} showApplicants={showApplicants} shortlistedState={setShortlisted}/>
+            isShortlistedContent ? (            
+              <ShortlistedApplicants shortlistedCandidates={showshortlisted === undefined ? "":showshortlisted} showApplicants={showApplicants} shortlistedState={setShortlisted}/>
+              ) : (
+              <div className='add_section1_applicantscompany'>
+              <div className='add_section1_logo_applicantscompany'>
+              <FiFileText size={30} className="add_section1_icon_applicantscompany" />
+              </div>
+              <div className='add_section1_details_applicantscompany'>
+                <h2>No shortlisted applicants available</h2>
+                <p>No applicants have been shortlisted yet.</p>
+              </div>
+              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+            </div>
+            )
           )}
 
           {currentPage === "hired" && (
-            <HiredApplicants hiredCandidates={showhired === undefined ? "":showhired}/>
+            isHiredContent ? (
+              <HiredApplicants hiredCandidates={showhired === undefined ? "":showhired}/>            
+              ) : (
+              <div className='add_section1_applicantscompany'>
+              <div className='add_section1_logo_applicantscompany'>
+              <FiFileText size={30} className="add_section1_icon_applicantscompany" />
+              </div>
+              <div className='add_section1_details_applicantscompany'>
+                <h2>No hired applicants available</h2>
+                <p>No applicants have been hired yet.</p>
+              </div>
+              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+            </div>
+            )
           )}
           </div>
-          </>
-          )
-        }
+         
       </div>
+      )}
     </div>
   )
 }

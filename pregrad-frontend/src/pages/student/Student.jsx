@@ -11,6 +11,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import StudentProfile from "./UserStudent/StudentProfile";
+import Error404 from "./Error404";
 
 
 const Student = ({theme, setTheme}) => {
@@ -66,6 +67,7 @@ console.log(user)
         <Route exact path="/achievements" element={<Achievements />} />
         <Route exact path="/education" element={<Education />} />
         <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user}/>} />
+        {/* <Route exact path="*" element={<Error404 />} /> */}
       </Routes>
     </Sidebar>
   );

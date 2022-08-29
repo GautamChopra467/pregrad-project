@@ -73,8 +73,6 @@ const applyInternship = async(iid)=>{
                     )}
               
                     <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
-                    <AiOutlineInfoCircle className="info_icon_listingscompany" />
-
                   </div>
                   <div className={(intern.main.status) ? 'active_icon_container' : 'false_icon_container'}>
                     <p>{(intern.main.status) ? "Active" : "Closed"}</p>
