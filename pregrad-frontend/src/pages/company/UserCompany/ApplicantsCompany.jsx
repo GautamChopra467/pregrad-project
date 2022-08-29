@@ -17,7 +17,9 @@ const ApplicantsCompany = () => {
     var iid = window.location.search.substring(1).split("=")[1];
     
     const [isAppliedContent, setIsAppliedContent] = useState(false);
+
     const [isShortlistedContent, setIsShortlistedContent] = useState(false);
+
     const [isHiredContent, setIsHiredContent] = useState(false);
 
     const [showapplied,setShowApplied] = useState([])
@@ -32,6 +34,27 @@ const ApplicantsCompany = () => {
     const [isPageLoading, setIsPageLoading] = useState(false);
 
     let [count,setCount] = useState(0)
+
+    const setContent = (data)=>{
+      if(data.appliedCandidates.length>0){
+        setIsAppliedContent(true)
+      }
+      else{
+        setIsAppliedContent(false)
+      }
+      if(data.shortlistedCandidates.length > 0){
+        setIsShortlistedContent(true)
+      }
+      else{
+        setIsShortlistedContent(false)
+      }
+      if(data.hiredCandidates.length > 0){
+        setIsHiredContent(true)
+      }
+      else{
+        setIsHiredContent(false)
+      }
+    }
  
          const showApplicants = async()=>{
               const {data} = await  axios.get(`http://localhost:8000/company/application/${iid}`)
@@ -39,6 +62,7 @@ const ApplicantsCompany = () => {
                 setShortlisted(data.shortlistedCandidates)
                 setHired(data.hiredCandidates)
                 setTotalApplied(data.length)
+                setContent(data)
                 setTimeout(() => {
                   setIsPageLoading(false)
                 },800)
@@ -92,7 +116,7 @@ const ApplicantsCompany = () => {
                 <h2>No new applicants available</h2>
                 <p>No applicants have applied for this internship yet.</p>
               </div>
-              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+              {/* <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button> */}
             </div>
             )
           )}
@@ -109,7 +133,7 @@ const ApplicantsCompany = () => {
                 <h2>No shortlisted applicants available</h2>
                 <p>No applicants have been shortlisted yet.</p>
               </div>
-              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+              {/* <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button> */}
             </div>
             )
           )}
@@ -126,7 +150,7 @@ const ApplicantsCompany = () => {
                 <h2>No hired applicants available</h2>
                 <p>No applicants have been hired yet.</p>
               </div>
-              <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button>
+              {/* <button className='btn_primary_applicantscompany' onClick={() => navigate("/company/info/addinternship")}>Post New Oppurtunity</button> */}
             </div>
             )
           )}
