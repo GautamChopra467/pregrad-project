@@ -36,7 +36,7 @@ const HiredApplicants = ({hiredCandidates}) => {
 
 
   return (
-    <div>
+    <div className='hiredapplicants_box_applicantscompany'>
      {
   showapplied.map((application)=>(
     (application.internshipstatus === "Hired"?(

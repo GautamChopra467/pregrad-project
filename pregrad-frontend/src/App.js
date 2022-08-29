@@ -20,6 +20,7 @@ import SignUpCompany from "./pages/company/SignUpCompany";
 import DetailsOneCompany from "./pages/company/DetailsOneCompany";
 import InfoCompany from "./pages/company/InfoCompany";
 import InternshipDetail from "./pages/company/InternshipDetail";
+import Error404 from "./pages/student/Error404";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -41,6 +42,7 @@ const App = () => {
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         {/* <Route exact path="/resume" element={<ResumeStudent />} /> */}
         <Route exact path="/resume/:id" element={<Resume theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="*" element={<Error404 />} />
 
 
   // navbar home skills

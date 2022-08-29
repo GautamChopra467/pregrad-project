@@ -235,7 +235,7 @@
 }
 
 .delete_icon_applicantscompany {
-  font-size: 20px;
+  font-size: 26px;
 }
 
 .delete_box_applicantscompany p {
@@ -294,6 +294,14 @@
     height: 100%;
 }
 
+.newapplicants_box_applicantscompany,
+.shortlistedapplicants_box_applicantscompany,
+.hiredapplicants_box_applicantscompany {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 15px;
+}
+
 @media screen and (max-width: 800px) {
   .sub_header_applicantscompany {
     top: 66.19px;
@@ -338,5 +346,12 @@
 
   .current_page_section_applicantscompany {
     top: 103.33px;
+    padding: 8px 5px;
+  }
+
+  .delete_box_applicantscompany {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
   }
 }
