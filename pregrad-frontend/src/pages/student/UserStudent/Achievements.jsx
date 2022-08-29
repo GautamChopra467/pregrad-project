@@ -21,7 +21,7 @@ const Achievements = () => {
   
   const [editform,seteditform] = useState("")
   
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -64,6 +64,12 @@ const [studentachi,setStudentachi] = useState([])
     axios.get(`http://localhost:8000/student/getachievements/${id}`).then((res)=>{
       if(res.data.message === "true"){
       setStudentachi(res.data.achievements)
+      if(res.data.achievements.length > 0){
+        setIsContent(true)
+      }
+    else{
+      setIsContent(false)
+    }
       setTimeout(() => {
         setIsPageLoading(false)
       },800)

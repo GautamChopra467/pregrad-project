@@ -20,7 +20,7 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
 
   const [editform,seteditform] = useState("")
 
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
 
   const [isModal, setIsModal] = useState(false);
 
@@ -96,6 +96,12 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
       if(res.data.message === "true"){  
     setStudentwork(res.data.workexperience)
+    if(res.data.workexperience.length > 0){
+      setIsContent(true)
+    }
+  else{
+    setIsContent(false)
+  }
     setTimeout(() => {
       setIsPageLoading(false)
     },800)

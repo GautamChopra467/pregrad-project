@@ -15,6 +15,8 @@ import axios from "axios"
 
 
 const HeaderStudent = (props) => {
+
+
   const toggleTheme = () => {
     if(props.theme === "light-theme"){
       props.setTheme("dark-theme");
@@ -23,8 +25,8 @@ const HeaderStudent = (props) => {
     }
   }
 
-  const initials = props.user.name
-  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+  const initials = props.userinfo.name
+  const name_initials= typeof initials==="string" ?initials.split('')[0]:""
 
 
   const [click, setClick] = useState(false);
@@ -72,7 +74,7 @@ const navigate = useNavigate()
 
           <div className="user_details_container_headerStudent" onClick={() => setIsLogoutMenu(!isLogoutMenu)}>
             <div className="user_avavtar_headerStudent">{name_initials}</div>
-            <p>{props.user.name}</p>
+            <p>{props.userinfo.name}</p>
             { isLogoutMenu ? <RiArrowDropUpLine size={29} className="user_avatar_logo_headerStudent" /> : <RiArrowDropDownLine size={29} className="user_avatar_logo_headerStudent" />}
           </div>
 

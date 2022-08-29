@@ -122,7 +122,9 @@ module.exports.updatedAchievement = async(req,res)=>{
 // Project Functions 
 
 module.exports.studentProject = async(req,res)=>{
-   const {id,projecttitle,description,skills,projectlink} = req.body
+  try{
+
+       const {id,projecttitle,description,skills,projectlink} = req.body
    
    const student = await StudentInfo.findOne({id})
 
@@ -168,6 +170,11 @@ module.exports.studentProject = async(req,res)=>{
 
 res.send({message:"true"})
 
+  }catch(err){
+    console.log(err)
+  }
+
+
 }
 
 module.exports.getProjectsInfo = async(req,res)=>{
@@ -206,8 +213,10 @@ module.exports.updatedProject = async(req,res)=>{
 
     try{
         const {u_id,id} = req.params
+
         const {projecttitle,description,projectlink,skills} = req.body
-    
+        
+        console.log(req.body)
 
     const user = await StudentInfo.findOne({id:u_id})
 
@@ -229,7 +238,8 @@ module.exports.updatedProject = async(req,res)=>{
 module.exports.updateProject = async(req,res)=>{
     try{
         const {u_id,id} = req.params
-    
+     
+
         const user = await StudentInfo.findOne({id:u_id})
     
         const data = await user.project.id(id)
@@ -253,23 +263,12 @@ if(student){
 
     const updateEducation = await StudentInfo.updateOne({
         id,
-        'education.university':{
-            '$ne':university
-        },
         'education.degree':{
             '$ne':degree
         },
         'education.field':{
             '$ne':field
-        },
-        'education.start':{
-            '$ne':start
-        },
-        'education.end':{
-            '$ne':end
         }
-
-
     },{$addToSet:{
       education:[{
         university,

@@ -55,17 +55,16 @@ useEffect(()=>{
   verifyUser()
 },[profilehealth])
 
-console.log(user)
 
   return ( 
-    <Sidebar profilehealth={profilehealth} userHealthProfile={userHealthProfile} userid={id} userinfo={user === undefined ?"":user} theme={theme} setTheme={setTheme}>
+    <Sidebar profilehealth={profilehealth} userHealthProfile={userHealthProfile} userinfo={user === undefined ?"":user} theme={theme} setTheme={setTheme}>
       <Routes>
         <Route exact path="/internships" element={<Internships profilehealth={profilehealth}/>} />
         <Route exact path="/workexperience" element={<WorkExperience profilehealth={profilehealth} userHealthProfile={userHealthProfile}/>} />
         <Route exact path="/projects" element={<Projects />} />
         <Route exact path="/achievements" element={<Achievements />} />
         <Route exact path="/education" element={<Education />} />
-        <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user}/>} />
+        <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user} getUserDetails={getUserDetails}/>} />
       </Routes>
     </Sidebar>
   );

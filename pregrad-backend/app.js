@@ -13,6 +13,11 @@ const passport = require('passport')
 const session = require('express-session')
 
 
+// middleware position - static , data parser , dynamic
+
+//query parameters are client side and params are used in backend
+
+
 const start = async()=>{
 try{
    await connectDb(process.env.MONGO_URI)
@@ -32,7 +37,8 @@ app.use(cors({
 })); 
 
 
-app.use(express.json());
+app.use(express.json());  //use is for installing the middlewares  //middleware are accessories of an app
+
 
 app.use(session({
     secret:'secret',
@@ -53,3 +59,6 @@ app.use("/student",studentInfoRoute)
 app.use('/company',companyRoute)
 
 
+// utils will contain the constants 
+
+// create an object and then put all the routes there 

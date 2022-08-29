@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from "react-tooltip";
 import PageLoader from "../../../img/page-loader.gif";
 
-const StudentProfile = ({userinfo}) => {
+const StudentProfile = ({userinfo,getUserDetails}) => {
 
   console.log(userinfo)
 
@@ -252,7 +252,7 @@ const [video,setVideo] = useState()
     axios.put(`http://localhost:8000/student/editprofiledetails/${id}`,{
       ...editProfileObject
     }).then(({data})=>{
-      // getUserDetails()
+      getUserDetails()
       getUserData()
       setIsModal(!isModal)
     })

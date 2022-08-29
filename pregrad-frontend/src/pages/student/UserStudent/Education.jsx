@@ -19,7 +19,7 @@ const Education = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
@@ -70,6 +70,12 @@ const Education = () => {
           if(data.message === "true")
           {  
            setStudentedu(data.education)
+           if(data.education.length > 0){
+            setIsContent(true)
+          }
+        else{
+          setIsContent(false)
+        }
            setTimeout(() => {
             setIsPageLoading(false)
           },800)

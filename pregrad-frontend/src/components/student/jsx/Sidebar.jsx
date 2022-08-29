@@ -19,30 +19,11 @@ import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
 
-const Sidebar = ({ children, userid,theme,userinfo, setTheme,profilehealth,userHealthProfile}) => {
+const Sidebar = ({ children,theme,userinfo, setTheme,profilehealth}) => {
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
-  
-  const [user,setUser] = useState({})
-
-
-  // console.log("Profile from sidebar : ",profilehealth)
-
-  
+    
   const {id} = useParams()
-
-  console.log(id)
-
-  // console.log(userinfo)
-
-  // const getUserDetails = async()=>{
-  //   const {data} = await axios.get(`http://localhost:8000/userDetails/${userid}`)
-  //   setUser(data)
-  // }
-
-useEffect(()=>{ 
-  // getUserDetails()
-},[])
 
 
   const routes = [
@@ -228,7 +209,7 @@ useEffect(()=>{
           theme={theme}
           setTheme={setTheme}
           userid={id}
-          user={user}
+          userinfo={userinfo}
         />
         {children}
       </motion.main>

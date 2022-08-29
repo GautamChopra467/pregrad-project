@@ -17,7 +17,8 @@ const projectSchema = new mongoose.Schema({
         type:String
     },
     skills:{
-        type:String
+        type:Array,
+        default:[]
     },
     projectlink:{
         type:String
@@ -42,7 +43,8 @@ const workSchema = new mongoose.Schema({
         type:String
     },
     skills:{
-        type:String
+        type:Array,
+        default:[]
     }
 })
 

@@ -10,7 +10,8 @@ import {useCookies} from 'react-cookie';
 import PageLoader from "../../../img/page-loader.gif";
 
 const Projects = () => {
-  const [isContent, setIsContent] = useState(true);
+  const [isContent, setIsContent] = useState(false);
+
   const [isModal, setIsModal] = useState(false);
 
   const [editform,seteditform] = useState("")
@@ -22,8 +23,10 @@ const Projects = () => {
    const {id} = useParams()
 
   const [formErrors, setFormErrors] = useState({});
+
   const [isSubmit, setIsSubmit] = useState(false);
-  const [cookies,setCookie,removeCookie] = useCookies([])
+
+  const [cookies,setCookie,removeCookie] = useCookies([]);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -32,8 +35,10 @@ const Projects = () => {
   const [getproject,setGetProject] = useState([])
 
   // Skills
-  const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
+  let skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
+
   const [skills, setSkills] = useState(skillsData);
+
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   const handleSkill = (event) => {
@@ -48,6 +53,7 @@ const Projects = () => {
     }
   }
 
+
   const deleteSkill = (value) => {
     setSelectedSkills(current => current.filter(selectedSkill => {
       return selectedSkill !== value;
@@ -60,7 +66,7 @@ const Projects = () => {
     description: "",
     projectlink: "",
     id
-  });
+  });   
 
   const updateForm = (e)=>{
     const {name, value} = e.target;
@@ -69,7 +75,7 @@ const Projects = () => {
       [name]: value
     })
   }
-
+  
 
   const handleForm = (e) => {
     const {name, value} = e.target;
@@ -90,6 +96,13 @@ const Projects = () => {
 const getProjects = async()=>{
   const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
   if(data.message==="true"){
+    console.log(data.project)
+    if(data.project.length > 0){
+      setIsContent(true)
+    }
+  else{
+    setIsContent(false)
+  }
   setGetProject(data.project)
   setTimeout(() => {
     setIsPageLoading(false)
@@ -151,7 +164,6 @@ const getProjects = async()=>{
 
     if(values == "You cannot add duplicate information"){
       errors.others = "You cannot add duplicate information";
-      return errors
     }
 
 
@@ -184,10 +196,13 @@ const editProject = async(u_id,p_id)=>{
   setEditProject(data)
 }
 
+
+
+
 const setStateValue = ()=>{
   setIsModal(!isModal)
   seteditform("addnew")
-
+  setSelectedSkills([])
 }
 
 const Cancel = ()=>{
@@ -240,7 +255,7 @@ const Cancel = ()=>{
  <div className='top_section_content_projects'>
    <h4>{proj.projecttitle}</h4>
    <div className='content_logo_container_projects'>
-     <div className='content_logo_projects' onClick={()=>editProject(id,proj._id)}>
+     <div className='content_logo_projects' onClick={()=>editProject(proj._id)}>
        <BiEditAlt size={22} className="content_icon_projects"/>
      </div>
      <div className='content_logo_projects' onClick={()=>deleteProject(id,proj._id)}>
@@ -274,7 +289,12 @@ const Cancel = ()=>{
  <div className='skills_content_projects'>
    <p style={{padding:"3px",marginLeft:"-20px"}}></p>
    <ul style={{marginLeft:"10px"}}>
-     <li>{proj.skills}</li>
+   {
+   proj.skills.map((skill)=>(
+     <li key={skill}>{skill}</li>
+   ))
+   
+   }
    </ul>
  </div>
 </div>
@@ -320,7 +340,6 @@ const Cancel = ()=>{
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
-
                 <div className="selected_domains_container_projects">
                   {selectedSkills.map((val) => (
                     <div className="selected_domains_box_projects" key={val}>
@@ -345,7 +364,6 @@ const Cancel = ()=>{
                  </form>
                </div>
    ):(
-
     <div className='modal_mid_section_projects'>
                  <form>
                    <div className="form_box_projects">
@@ -371,12 +389,13 @@ const Cancel = ()=>{
                 </select>
 
                 <div className="selected_domains_container_projects">
-                  {selectedSkills.map((val) => (
+                
+                  {/* {editproject.skills.map((val) => (
                     <div className="selected_domains_box_projects" key={val}>
                       <p>{val}</p>
                       <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_projects" />
-                    </div>
-                  ))}
+                    </div> */}
+                  {/* ))} */}
                 </div>
                      <p className="errors_msg_projects">{formErrors.skills}</p>
                    </div>
