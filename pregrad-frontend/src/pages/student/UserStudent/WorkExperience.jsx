@@ -37,9 +37,13 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
   const [studentwork,setStudentwork] = useState([])
 
   // Skills
-  const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
+  let skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs", "MongoDB", "C++/C", "Java", "Python", "Bootstrap", "Figma", "Photoshop", "Illustrator"];
   const [skills, setSkills] = useState(skillsData);
   const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const [editSkills,setEditSkills] = useState(skillsData)
+
+  const [editselectedSkills, seteditSelectedSkills] = useState([]);
 
   const handleSkill = (event) => {
     if(selectedSkills.length < 10){
@@ -53,12 +57,32 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     }
   }
 
+  const handleEditSkill = (event) => {
+    if(selectedSkills.length < 10){
+      seteditSelectedSkills(current => [...current, event.target.value])
+      setEditSkills(current => current.filter(editSkills => {
+        return editSkills !== event.target.value;
+      }))
+    }else{
+      setFormErrors({...formErrors,
+        skills: "Maximum 10 skills allowed"})
+    }
+  }
+
   const deleteSkill = (value) => {
     setSelectedSkills(current => current.filter(selectedSkill => {
       return selectedSkill !== value;
     }))
     setSkills(current => [...current, value])
   }
+
+  const deleteEditSkill = (value) => {
+    seteditSelectedSkills(current => current.filter(selectedSkill => {
+      return selectedSkill !== value;
+    }))
+    setEditSkills(current => [...current, value])
+  }
+
 
   const [workexperience, setWorkExperience] = useState({
     companyname: "",
@@ -138,7 +162,7 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
      axios.post(`http://localhost:8000/student/workexperience`,{
-      ...workexperience
+      ...workexperience,skills:selectedSkills
      }).then((res)=>{
       if(res.data.message === "true")
       {
@@ -157,7 +181,6 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
 
     if(values == "You cannot add duplicate information"){
       errors.others = "You cannot add duplicate information";
-      return errors
     }
 
     if(!values.companyname){
@@ -194,13 +217,17 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
   const setStateValue = ()=>{
     setIsModal(!isModal)
     seteditform("addnew")
-
+    setSelectedSkills([])
+    setSkills(skillsData)
   }
 
 const editWorkExperience = async(u_id,w_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
   const {data} = await axios.get(`http://localhost:8000/student/updateworkexperience/${u_id}/${w_id}`)
+  seteditSelectedSkills(data.skills)
+  skillsData = skillsData.filter((e)=> !data.skills.includes(e))
+  setEditSkills(skillsData)
   setEditWorkExperience(data)
 }
  
@@ -218,11 +245,19 @@ const UpdatedWorExperience = async(e,u_id)=>{
   e.preventDefault();
    
   const {data} = await axios.put(`http://localhost:8000/student/updatedworkexperience/${u_id}/${editworkexperience._id}`,{
-    ...editworkexperience
+    ...editworkexperience,skills:editselectedSkills
   })
-  setStudentwork(data.workexperience)
-   setIsModal(!isModal)
-   getWorkExperience()
+
+  if(Object.keys(data.errors).length !== 0 ){
+   
+    setFormErrors(data.errors)
+  }
+  else{
+    setStudentwork(data.workexperience)
+    setIsModal(!isModal)
+    getWorkExperience()
+  }
+ 
 }
 
 const Cancel = ()=>{
@@ -292,7 +327,11 @@ const Cancel = ()=>{
 
               <div className='skills_content_workexperience'>
                 <ul>
-                  <li>{work.skills}</li>
+                  {
+                     work.skills.map((skill)=>(
+                     <li key={skill}>{skill}</li>
+                     ))
+   }
                 </ul>
               </div>
 
@@ -422,7 +461,22 @@ const Cancel = ()=>{
 
                 <div className="form_box_workexperience">
                   <label>Skills Used</label>
-                  <input type="text" name="skills" placeholder="Enter your skills" value={editworkexperience.skills || ''}  onChange={updateForm} />
+                  <select onChange={handleEditSkill} className="select_projects">
+                  <option value="">Select Skills</option>
+                  {editSkills.map((val) => (
+                    <option key={val} value={val}>{val}</option>
+                  ))}
+                </select>
+
+                <div className="selected_domains_container_projects">
+                
+                  {editselectedSkills.map((val) => (
+                    <div className="selected_domains_box_projects" key={val}>
+                      <p>{val}</p>
+                      <FaTimes onClick={e => {deleteEditSkill(val)}} className="selected_domains_icon_projects" />
+                    </div>
+                  ))}
+                </div>
                   <p className="errors_msg_workexperience">{formErrors.skills}</p>
                 </div>
 

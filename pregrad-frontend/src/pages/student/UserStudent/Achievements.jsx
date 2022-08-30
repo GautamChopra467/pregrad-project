@@ -165,9 +165,16 @@ const editAchievement = async(u_id,a_id)=>{
     const {data} = await axios.put(`http://localhost:8000/student/updatedachievement/${u_id}/${editachievement._id}`,{
       ...editachievement
     })
-     setStudentachi(data.achievements)
-     setIsModal(!isModal)
-     getAchievements()
+    
+    if(Object.keys(data.errors).length !== 0 ){
+        setFormErrors(data.errors)
+    }
+    else{
+      setStudentachi(data.achievements)
+      setIsModal(!isModal)
+      getAchievements()
+    }
+    
   }
 
   const Cancel = ()=>{

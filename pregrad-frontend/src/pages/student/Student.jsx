@@ -67,7 +67,6 @@ useEffect(()=>{
         <Route exact path="/education" element={<Education />} />
         <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user} getUserDetails={getUserDetails}/>} />
         {/* <Route exact path="*" element={<Error404 />} /> */}
-
       </Routes>
     </Sidebar>
   );
