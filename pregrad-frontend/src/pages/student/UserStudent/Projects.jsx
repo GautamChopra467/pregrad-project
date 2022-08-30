@@ -41,11 +41,27 @@ const Projects = () => {
 
   const [selectedSkills, setSelectedSkills] = useState([]);
 
+  const [editSkills,setEditSkills] = useState(skillsData)
+
+  const [editselectedSkills, seteditSelectedSkills] = useState([]);
+
   const handleSkill = (event) => {
     if(selectedSkills.length < 10){
       setSelectedSkills(current => [...current, event.target.value])
       setSkills(current => current.filter(skill => {
         return skill !== event.target.value;
+      }))
+    }else{
+      setFormErrors({...formErrors,
+        skills: "Maximum 10 skills allowed"})
+    }
+  }
+
+  const handleEditSkill = (event) => {
+    if(selectedSkills.length < 10){
+      seteditSelectedSkills(current => [...current, event.target.value])
+      setEditSkills(current => current.filter(editSkills => {
+        return editSkills !== event.target.value;
       }))
     }else{
       setFormErrors({...formErrors,
@@ -59,6 +75,13 @@ const Projects = () => {
       return selectedSkill !== value;
     }))
     setSkills(current => [...current, value])
+  }
+
+  const deleteEditSkill = (value) => {
+    seteditSelectedSkills(current => current.filter(selectedSkill => {
+      return selectedSkill !== value;
+    }))
+    setEditSkills(current => [...current, value])
   }
 
   const [project, setProject] = useState({
@@ -96,14 +119,13 @@ const Projects = () => {
 const getProjects = async()=>{
   const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
   if(data.message==="true"){
-    console.log(data.project)
+    setGetProject(data.project)
     if(data.project.length > 0){
       setIsContent(true)
     }
   else{
     setIsContent(false)
   }
-  setGetProject(data.project)
   setTimeout(() => {
     setIsPageLoading(false)
   },800)
@@ -130,7 +152,7 @@ const getProjects = async()=>{
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post(`http://localhost:8000/student/projects`,{
-            ...project
+            ...project,skills:selectedSkills
       }).then(res=>{
         if(res.data.message==="true"){
           setIsModal(!isModal)
@@ -179,30 +201,40 @@ const deleteProject = async(u_id,p_id)=>{
 }
 
 const UpdatedProject = async(e,u_id)=>{
+
   e.preventDefault();
 
-  const {data} = await axios.put(`http://localhost:8000/student/updatedproject/${u_id}/${editproject._id}`,{
-      ...editproject
+    const {data} = await axios.put(`http://localhost:8000/student/updatedproject/${u_id}/${editproject._id}`,{
+      ...editproject,skills:editselectedSkills
     })
-    setStudentpro(data.project)
-    setIsModal(!isModal)
-    getProjects()
+
+    if(Object.keys(data.errors).length !== 0){
+      setFormErrors(data.errors)
+    }
+    else{
+      setStudentpro(data.project)
+      setIsModal(!isModal)
+      getProjects()
+    }
+ 
 }
 
 const editProject = async(u_id,p_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
   const {data} = await axios.get(`http://localhost:8000/student/updateproject/${u_id}/${p_id}`)
+  seteditSelectedSkills(data.skills)
+  skillsData = skillsData.filter((e)=> !data.skills.includes(e))
+  setEditSkills(skillsData)
   setEditProject(data)
 }
-
-
 
 
 const setStateValue = ()=>{
   setIsModal(!isModal)
   seteditform("addnew")
   setSelectedSkills([])
+  setSkills(skillsData)
 }
 
 const Cancel = ()=>{
@@ -255,7 +287,7 @@ const Cancel = ()=>{
  <div className='top_section_content_projects'>
    <h4>{proj.projecttitle}</h4>
    <div className='content_logo_container_projects'>
-     <div className='content_logo_projects' onClick={()=>editProject(proj._id)}>
+     <div className='content_logo_projects' onClick={()=>editProject(id,proj._id)}>
        <BiEditAlt size={22} className="content_icon_projects"/>
      </div>
      <div className='content_logo_projects' onClick={()=>deleteProject(id,proj._id)}>
@@ -368,34 +400,34 @@ const Cancel = ()=>{
                  <form>
                    <div className="form_box_projects">
                      <label>Project Title</label>
-                     <input type="text" name="projecttitle" placeholder="Enter project title" value={editproject.projecttitle || ''}  onChange={updateForm} />
+                     <input type="text" name="projecttitle" placeholder="Enter project title" value={editproject.projecttitle}  onChange={updateForm} />
                      <p className="errors_msg_projects">{formErrors.projecttitle}</p>
                    </div>
    
                    <div className="form_box_projects">
                      <label>Description of Project</label>
-                     <input type="text" name="description" placeholder="Enter projectdescription" value={editproject.description || ''}  onChange={updateForm} />
+                     <input type="text" name="description" placeholder="Enter projectdescription" value={editproject.description}  onChange={updateForm} />
                      <p className="errors_msg_projects">{formErrors.description}</p>
                    </div>
    
                    <div className="form_box_projects">
                    <label className="label_projects">Skills Used</label>
                 
-                <select onChange={handleSkill} className="select_projects">
+                <select onChange={handleEditSkill} className="select_projects">
                   <option value="">Select Skills</option>
-                  {skills.map((val) => (
+                  {editSkills.map((val) => (
                     <option key={val} value={val}>{val}</option>
                   ))}
                 </select>
 
                 <div className="selected_domains_container_projects">
                 
-                  {/* {editproject.skills.map((val) => (
+                  {editselectedSkills.map((val) => (
                     <div className="selected_domains_box_projects" key={val}>
                       <p>{val}</p>
-                      <FaTimes onClick={e => {deleteSkill(val)}} className="selected_domains_icon_projects" />
-                    </div> */}
-                  {/* ))} */}
+                      <FaTimes onClick={e => {deleteEditSkill(val)}} className="selected_domains_icon_projects" />
+                    </div>
+                  ))}
                 </div>
                      <p className="errors_msg_projects">{formErrors.skills}</p>
                    </div>

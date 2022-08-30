@@ -28,7 +28,6 @@ const ApplicantsCompany = () => {
 
     const [showhired,setHired] =  useState([])
 
-
     let [totalApplied,setTotalApplied] = useState(0)
 
     const [isPageLoading, setIsPageLoading] = useState(false);

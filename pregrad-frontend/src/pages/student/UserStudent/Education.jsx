@@ -121,7 +121,6 @@ const Education = () => {
 
     if(values == "You cannot add duplicate information"){
       errors.others = "You cannot add duplicate information";
-      return errors
     }
 
     if(!values.university){
@@ -169,9 +168,13 @@ const UpdatedEducation = async(e,u_id)=>{
   const {data} = await axios.put(`http://localhost:8000/student/updatededucation/${u_id}/${editeducation._id}`,{
     ...editeducation
   })
+  if(Object.keys(data.errors).length !== 0){
+   setFormErrors(data.errors)
+  }
+  else{
   setStudentedu(data.education)
    setIsModal(!isModal)
-   getEducation()
+   getEducation()}
 }
 
 const editEducation = async(u_id,e_id)=>{
