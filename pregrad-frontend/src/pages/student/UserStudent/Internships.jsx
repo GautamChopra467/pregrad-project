@@ -7,7 +7,7 @@ import {useCookies} from 'react-cookie'
 import AppliedInternshipContainer from '../../../components/company/jsx/AppliedInternshipContainer';
 import InternshipContainerStudent from '../../../components/student/jsx/InternshipContainerStudent';
 import PageLoader from "../../../img/page-loader.gif";
-
+import { FiFileText } from 'react-icons/fi';
 
 const Internships = () => {
 
@@ -27,6 +27,10 @@ const Internships = () => {
   const [currentPage, setCurrentPage] = useState("new-internships");
 
   const [isPageLoading, setIsPageLoading] = useState(false);
+
+  const [isNewInternshipContent, setIsNewInternshipContent] = useState(false);
+
+  const [isAppliedInternshipContent, setIsAppliedInternshipContent] = useState(false);
 
 
 const getAllInterships = ()=>{
@@ -90,11 +94,36 @@ useEffect(()=>{
       ) : (
         <div className='main_container_internships'>
         {currentPage === "new-internships" && (
-          <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAllInterships={getAllInterships}/>
+          isNewInternshipContent ? (
+            <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAllInterships={getAllInterships}/>
+          ) : (
+            <div className='add_section1_internships'>
+              <div className='add_section1_logo_internships'>
+              <FiFileText size={30} className="add_section1_icon_internships" />
+              </div>
+              <div className='add_section1_details_internships'>
+                <h2>No new internships available</h2>
+                <p>No internships available for this domain yet.</p>
+              </div>
+            </div>
+          )
         )}
 
+
         {currentPage === "applied" && (
+          isAppliedInternshipContent ? (
             <AppliedInternshipContainer appliedinternship={appliedinternship} getAppliedInternship={getAppliedInternship}/>
+          ) : (
+            <div className='add_section1_internships'>
+              <div className='add_section1_logo_internships'>
+              <FiFileText size={30} className="add_section1_icon_internships" />
+              </div>
+              <div className='add_section1_details_internships'>
+                <h2>No applied internships</h2>
+                <p>You have not applied any internship yet.</p>
+              </div>
+            </div>
+          )
         )}
         </div>
       )}
