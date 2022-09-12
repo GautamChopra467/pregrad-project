@@ -28,9 +28,9 @@ const Internships = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const [isNewInternshipContent, setIsNewInternshipContent] = useState(false);
+  const [isNewInternshipContent, setIsNewInternshipContent] = useState(true);
 
-  const [isAppliedInternshipContent, setIsAppliedInternshipContent] = useState(false);
+  const [isAppliedInternshipContent, setIsAppliedInternshipContent] = useState(true);
 
 
 const getAllInterships = ()=>{
