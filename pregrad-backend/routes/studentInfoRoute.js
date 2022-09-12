@@ -31,77 +31,87 @@ const {
 
 } = require('../controllers/studentController')
 
+const {PROFILE_DETAIL,PROFILEHEALTH,EDIT_PROFILE} = require("../utils/constants/app_constants").ROUTES.STUDENT.PROFILE;
+
+const {POST_ACHIEVEMENT,GET_ACHIEVEMENT,DELETE_ACHIEVEMENT,UPDATE_ACHIEVEMENT,UPDATED_ACHIEVEMENT} = require("../utils/constants/app_constants").ROUTES.STUDENT.ACHIEVEMENTS;
+
+const {POST_PROJECT,GET_PROJECT,DELETE_PROJECT,UPDATE_PROJECT,UPDATED_PROJECT} = require("../utils/constants/app_constants").ROUTES.STUDENT.PROJECTS;
+
+const {POST_EDUCATION,GET_EDUCATION,DELETE_EDUCATION,UPDATE_EDUCATION,UPDATED_EDUCATION} = require("../utils/constants/app_constants").ROUTES.STUDENT.EDUCATIONS;
+
+const {POST_WORKEXPERIENCE,GET_WORKEXPERIENCE,DELETE_WORKEXPERIENCE,UPDATE_WORKEXPERIENCE,UPDATED_WORKEXPERIENCE} = require("../utils/constants/app_constants").ROUTES.STUDENT.WORKEXPERIENCE;
+
+const {APPLIED,GET_APPLIED} = require("../utils/constants/app_constants").ROUTES.STUDENT.INTERNSHIPS;
+
+const {DETAILS} = require("../utils/constants/app_constants").ROUTES.STUDENT.DETAILSONE;
 
 // getAll Data
 
-router.route('/profile/:id').get(allStudentData)
-
+router.route(PROFILE_DETAIL).get(allStudentData);
 
 // achievement route
 
-router.route('/achievements').post(studentAchievement)
+router.route(POST_ACHIEVEMENT).post(studentAchievement)
 
-router.route('/getachievements/:id').get(getAchievementInfo)
+router.route(GET_ACHIEVEMENT).get(getAchievementInfo)
 
-router.route('/deleteachievement/:u_id/:id').delete(deleteAchievement)
+router.route(DELETE_ACHIEVEMENT).delete(deleteAchievement)
 
-router.route('/updateachievement/:u_id/:id').get(updateAchievement)
+router.route(UPDATE_ACHIEVEMENT).get(updateAchievement)
 
-router.route('/updatedachievement/:u_id/:id').put(updatedAchievement)
+router.route(UPDATED_ACHIEVEMENT).put(updatedAchievement)
 
 //project routes
 
-router.route('/projects').post(studentProject)
+router.route(POST_PROJECT).post(studentProject)
 
-router.route('/getprojects/:id').get(getProjectsInfo)
+router.route(GET_PROJECT).get(getProjectsInfo)
 
-router.route('/deleteproject/:u_id/:id').delete(deleteProject)
+router.route(DELETE_PROJECT).delete(deleteProject)
 
-router.route('/updateproject/:u_id/:id').get(updateProject)
+router.route(UPDATE_PROJECT).get(updateProject)
 
-router.route('/updatedproject/:u_id/:id').put(updatedProject)
+router.route(UPDATED_PROJECT).put(updatedProject)
 
  
-//student route
+//education route
 
-router.route('/education').post(studentEducation)
+router.route(POST_EDUCATION).post(studentEducation)
 
-router.route('/geteducation/:id').get(getEducationInfo)
+router.route(GET_EDUCATION).get(getEducationInfo)
 
-router.route('/deleteeducation/:u_id/:id').delete(deleteEducation)
+router.route(DELETE_EDUCATION).delete(deleteEducation)
 
-router.route('/updateeducation/:u_id/:id').get(updateEducation)
+router.route(UPDATE_EDUCATION).get(updateEducation)
 
-router.route('/updatededucation/:u_id/:id').put(updatedEducation)
+router.route(UPDATED_EDUCATION).put(updatedEducation)
 
 // workexperience route
 
-router.route('/workexperience').post(studentWorkExperience)
+router.route(POST_WORKEXPERIENCE).post(studentWorkExperience)
 
-router.route('/getworkexperience/:id').get(getWorkExperienceInfo)
+router.route(GET_WORKEXPERIENCE).get(getWorkExperienceInfo)
 
-router.route('/deleteworkexperience/:u_id/:id').delete(deleteWorkExperience)
+router.route(DELETE_WORKEXPERIENCE).delete(deleteWorkExperience)
 
-router.route('/updateworkexperience/:u_id/:id').get(updateWorkExperience)
+router.route(UPDATE_WORKEXPERIENCE).get(updateWorkExperience)
 
-router.route('/updatedworkexperience/:u_id/:id').put(updatedWorkExperience)
+router.route(UPDATED_WORKEXPERIENCE).put(updatedWorkExperience)
 
 //detailsone route
 
-router.route('/detailsone/:id').post(detailsOne)
+router.route(DETAILS).post(detailsOne)
 
 //profile health Route
 
-router.route('/profilehealth/:id').get(profileHealth)
+router.route(PROFILEHEALTH).get(profileHealth)
 
 //edit profile
 
-router.route('/editprofiledetails/:id').put(editProfileDetails)
+router.route(EDIT_PROFILE).put(editProfileDetails)
 
-router.route('/appliedinternship/:id').post(appliedInternship)
+router.route(APPLIED).post(appliedInternship)
 
-router.route('/getappliedinternship/:id').get(getappliedInternship)
-
-
+router.route(GET_APPLIED).get(getappliedInternship)
 
 module.exports = router

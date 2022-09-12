@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CONFIG = require("../utils/config/Schema");
 
 const achievementSchema = new mongoose.Schema({
     title:{
@@ -113,4 +114,4 @@ const UserInfoSchema = new mongoose.Schema({
 })
    
 
-module.exports = mongoose.model('StudentInfo',UserInfoSchema)
+module.exports = mongoose.model(CONFIG.STUDENTINFO,UserInfoSchema)

@@ -16,6 +16,21 @@ const session = require('express-session')
 // middleware position - static , data parser , dynamic
 
 //query parameters are client side and params are used in backend
+app.use(cors({
+    origin:["http://localhost:3000"],
+    method:["GET","POST","DELETE","PUT"],
+    credentials:true
+}));
+
+app.use(express.json());
+
+app.use(cookieParser());
+
+app.use("/", authRouter);
+
+app.use("/student",studentInfoRoute)
+
+app.use('/company',companyRoute)
 
 
 const start = async()=>{
@@ -28,16 +43,12 @@ try{
 }
 }
 
-start()
+start();
 
-app.use(cors({
-    origin:["http://localhost:3000"],
-    method:["GET","POST","DELETE","PUT"],
-    credentials:true
-})); 
+ 
 
 
-app.use(express.json());  //use is for installing the middlewares  //middleware are accessories of an app
+  //use is for installing the middlewares  //middleware are accessories of an app
 
 
 app.use(session({
@@ -50,15 +61,16 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 // app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser())
 
-app.use("/", authRouter);
 
-app.use("/student",studentInfoRoute)
-
-app.use('/company',companyRoute)
 
 
 // utils will contain the constants 
 
 // create an object and then put all the routes there 
+
+// routes -----> controller -----> repository -----> schemas ----> connection ----> db
+
+// authorization and authentication
+
+// create a folder named - repository in db.

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs");
+const CONFIG = require("../utils/config/Schema");
 
 const companySchema = new mongoose.Schema({
     name:{
@@ -52,4 +53,4 @@ companySchema.statics.login = async function(email,password){
 }
 
 
-module.exports = mongoose.model('Company',companySchema)
+module.exports = mongoose.model(CONFIG.COMPANY,companySchema);

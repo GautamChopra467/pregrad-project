@@ -152,52 +152,52 @@ try{
 
 module.exports.verifyOtp = async(req,res)=>{
 try{
-  const {email,otp1,otp2,otp3,otp4} = req.body 
+  const {email,otp1,otp2,otp3,otp4} = req.body; 
 
-const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`
+const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 
-  const user = await Otp.findOne({email})
+  const user = await Otp.findOne({email});
 
   if(user){
     if(user.expiredAt.getTime() < Date.now())
     {
-      res.send({message:"Code Expired"})
-      await Otp.deleteOne({email})
+      res.send({message:"Code Expired"});
+      await Otp.deleteOne({email});
 
     }else{
 
-      const validOtp = await bcrypt.compare(otp,user.otp)
+      const validOtp = await bcrypt.compare(otp,user.otp);
 
       if(!validOtp){
         res.send({message:"Invalid Otp"})
         await Otp.deleteOne({email})
       }else{
 
-        const student = await UserRegister.findOne({email})
+        const student = await UserRegister.findOne({email});
 
-        const company = await Company.findOne({email})
+        const company = await Company.findOne({email});
 
         if(student){
 
         await UserRegister.updateOne({email},{$set:{
           verified:true
         }})
-         await Otp.deleteOne({email})
-         res.send({message:"true"})
+         await Otp.deleteOne({email});
+         res.send({message:"true"});
      }else if(company){
       await Company.updateOne({email},{$set:{
         verified:true
       }})
-       await Otp.deleteOne({email})
-       res.send({message:"true"})
+       await Otp.deleteOne({email});
+       res.send({message:"true"});
     }
     }
   }
 }else{
-  res.send({message:"Invalid Email"})
+  res.send({message:"Invalid Email"});
 }
 }catch(err){
-  console.log(err)
+  console.log(err);
 }
 
 }

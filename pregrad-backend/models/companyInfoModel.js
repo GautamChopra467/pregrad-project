@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const CONFIG = require("../utils/config/Schema");
 
 const companyInfoSchema = new mongoose.Schema({
     id:{
@@ -24,6 +25,6 @@ const companyInfoSchema = new mongoose.Schema({
     }
 })
 
-const Info = mongoose.model('CompanyInfo',companyInfoSchema)
+const Info = mongoose.model(CONFIG.COMPANYINFO,companyInfoSchema)
 
 module.exports = Info
