@@ -7,9 +7,20 @@ require('../config/passportGoogle')
 
 const { signup, login,verifyEmail,verifyOtp,newPassword,getUserDetails} = require("../controllers/authControllers");
 
-const {CheckUser} = require('../Middleware/AuthMiddleware')
+const {CheckUser} = require('../Middleware/AuthMiddleware');
 
-const {CheckCompany} = require('../Middleware/AuthMiddlewareCompany')
+const {CheckCompany} = require('../Middleware/AuthMiddlewareCompany');
+
+const { 
+  SIGNUP,
+  LOGIN,
+  VERIFYEMAIL,
+  VERIFYOTP,
+  STUDENT,
+  COMPANY,
+  NEWPASSWORD,
+  USERDETAILS
+} = require("../utils/constants/app_constants").ROUTES.AUTH;
 
 const createToken =(id)=>{
 
@@ -18,21 +29,21 @@ const createToken =(id)=>{
     })  
   }
   
-router.route("/signup").post(signup);
+router.route(SIGNUP).post(signup);
 
-router.route("/login").post(login);
+router.route(LOGIN).post(login);
 
-router.route('/verifyemail').post(verifyEmail)
+router.route(VERIFYEMAIL).post(verifyEmail)
 
-router.route('/verifyOtp').post(verifyOtp)
+router.route(VERIFYOTP).post(verifyOtp)
 
-router.route('/student').post(CheckUser)
+router.route(STUDENT).post(CheckUser)
 
-router.route('/company').post(CheckCompany)
+router.route(COMPANY).post(CheckCompany)
 
-router.route('/newpassword').post(newPassword)
+router.route(NEWPASSWORD).post(newPassword)
 
-router.route('/userDetails/:id').get(getUserDetails)
+router.route(USERDETAILS).get(getUserDetails)
 
 router.route('/auth/google').get(passport.authenticate('google',{
     scope:['profile','email']

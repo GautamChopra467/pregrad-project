@@ -6,36 +6,54 @@ const { registerCompany,getCompanyInfo,companyDetails,getCompanyDetails,editProf
 
 const {createInternship,Internship,singleInternship,editInternship,closeInternship,allInternship,getApplicants,rejectedApplicants} = require('../controllers/internshipController')
 
+const {
+    REGISTER,
+    GETCOMPANYINFO,
+    POSTCOMPANYDETAILS,
+    GETCOMPANYDETAILS,
+    ADDINTERNSHIPS,
+    EDITPROFILE,
+    EDITACCOUNT,
+    GETINTERNSHIPS,
+    INTERNSHIP,
+    SINGLEINTERNSHIP,
+    EDITINTERNSHIP,
+    CLOSEINTERNSHIP,
+    ALLINTERNSHIP,
+    APPLICATIONS,
+    REJECTEDAPPLICANTS
+} = require("../utils/constants/app_constants").ROUTES.COMPANY;
+
 // register 
 
-router.route('/register').post(registerCompany)
+router.route(REGISTER).post(registerCompany)
 
-router.route('/getcompanyinfo/:id').get(getCompanyInfo)
+router.route(GETCOMPANYINFO).get(getCompanyInfo)
 
-router.route('/companydetails/:id').post(companyDetails)
+router.route(POSTCOMPANYDETAILS).post(companyDetails)
 
-router.route('/getcompanydetails/:id').get(getCompanyDetails)
+router.route(GETCOMPANYDETAILS).get(getCompanyDetails)
 
-router.route('/addinternships/:id').post(createInternship)
+router.route(ADDINTERNSHIPS).post(createInternship)
 
-router.route('/editprofile/:id').put(editProfile)
+router.route(EDITPROFILE).put(editProfile)
 
-router.route('/editaccount/:id').put(editAccount)
+router.route(EDITACCOUNT).put(editAccount)
 
-router.route('/getinternships/:id').get(getInternships)
+router.route(GETINTERNSHIPS).get(getInternships)
 
-router.route('/internship/:id').get(Internship)
+router.route(INTERNSHIP).get(Internship)
 
-router.route('/singleinternship/:id').get(singleInternship)
+router.route(SINGLEINTERNSHIP).get(singleInternship)
 
-router.route('/editinternships/:id').put(editInternship)
+router.route(EDITINTERNSHIP).put(editInternship)
 
-router.route('/closeinternship/:id').put(closeInternship)
+router.route(CLOSEINTERNSHIP).put(closeInternship)
 
-router.route('/allinternships/:id').get(allInternship)
+router.route(ALLINTERNSHIP).get(allInternship)
 
-router.route('/application/:id').get(getApplicants)
+router.route(APPLICATIONS).get(getApplicants)
 
-router.route('/rejectedapplicants/:id').put(rejectedApplicants)
+router.route(REJECTEDAPPLICANTS).put(rejectedApplicants)
 
 module.exports = router

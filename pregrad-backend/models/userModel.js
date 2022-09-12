@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const CONFIG = require("../utils/config/Schema");
+
 
 const userRegisterSchema = new mongoose.Schema({
     name: {
@@ -56,7 +58,7 @@ userRegisterSchema.statics.login = async function(email,password){
     }
 }
 
-const UserRegister =  mongoose.model("UserRegister", userRegisterSchema);
+const UserRegister =  mongoose.model(CONFIG.USERREGISTER, userRegisterSchema);
 
 module.exports = UserRegister;
 

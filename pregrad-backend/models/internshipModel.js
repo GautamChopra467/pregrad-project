@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const CONFIG = require("../utils/config/Schema");
 
 const internshipSchema = new mongoose.Schema({
     id:{
@@ -58,4 +59,4 @@ const internshipSchema = new mongoose.Schema({
        }
 })
 
-module.exports = mongoose.model('Internship',internshipSchema)
+module.exports = mongoose.model(CONFIG.INTERNSHIP,internshipSchema)
