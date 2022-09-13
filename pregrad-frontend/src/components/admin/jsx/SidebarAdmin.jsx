@@ -99,7 +99,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
     })
     }
       useEffect(()=>{
-        getCompanyInfo()
+        // getCompanyInfo()
       },[])
 
 

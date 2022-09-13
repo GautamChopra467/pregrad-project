@@ -163,47 +163,52 @@ const getCompanyDetails = ()=>{
     },800)
 }) 
 }
+
+useEffect(()=>{
+  navigate(`/admin/info/dashboard`);
+},[])
  
-  useEffect(() => {
+  // useEffect(() => {
 
-    const verifyCompany = ()=>{
+    
+    // const verifyCompany = ()=>{
 
-      if(!cookies.jwt){
-        navigate('/login')
-      }else{
-        axios.post(`http://localhost:8000/company`,{},{
-          withCredentials:true,
-        }).then(({data})=>{
+      // if(!cookies.jwt){
+      //   navigate('/login')
+      // }else{
+      //   axios.post(`http://localhost:8000/company`,{},{
+      //     withCredentials:true,
+      //   }).then(({data})=>{
 
-          if(data.id != id){
-            removeCookie("jwt")
-            navigate('/login')
-          }else{
-            setIsPageLoading(true)
-             getCompanyInfo()
-             getCompanyDetails()
-            navigate(`/company/info/${id}/dashboard`)
-          } 
-        })
-      }
-    }
+      //     if(data.id != id){
+      //       removeCookie("jwt")
+      //       navigate('/login')
+      //     }else{
+      //       setIsPageLoading(true)
+      //        getCompanyInfo()
+      //        getCompanyDetails()
+      //       navigate(`/company/info/${id}/dashboard`)
+      //     } 
+      //   })
+      // }
+    // }
   
-    verifyCompany()  
+    // verifyCompany()  
   
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-        axios.put(`http://localhost:8000/company/editprofile/${id}`,{
-          ...editDetailsProfile
-        })
-        setIsModal(!isModal)
-    }
+    // if( Object.keys(formErrors).length === 0 && isSubmit ){
+    //     axios.put(`http://localhost:8000/company/editprofile/${id}`,{
+    //       ...editDetailsProfile
+    //     })
+    //     setIsModal(!isModal)
+    // }
 
-    if(Object.keys(formErrors2).length == 0 && isSubmit2){
-      axios.put(`http://localhost:8000/company/editaccount/${id}`,{
-        ...accountInfo
-      })
-      setIsModal2(!isModal2)
-    } 
-  },[formErrors, formErrors2,cookies,setCookie,removeCookie]);
+    // if(Object.keys(formErrors2).length == 0 && isSubmit2){
+    //   axios.put(`http://localhost:8000/company/editaccount/${id}`,{
+    //     ...accountInfo
+    //   })
+    //   setIsModal2(!isModal2)
+    // } 
+  
 
   const initials = companydetails.companyname
   const name_initials=typeof initials==="string" ?initials.split('')[0]:""
@@ -253,7 +258,6 @@ const getCompanyDetails = ()=>{
               </div>
               <HiOutlinePencil onClick={setEditProfile} className="edit_icon2_dashboardAdmin" />
             </div>
-
             <div className='right_details_section_dashboardAdmin'>
               <HiOutlinePencil onClick={setEditProfile} className="edit_icon_dashboardAdmin" data-tip data-for="editProfile" />
               <ReactTooltip id="editProfile" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>

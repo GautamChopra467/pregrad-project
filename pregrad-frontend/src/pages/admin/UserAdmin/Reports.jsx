@@ -17,7 +17,7 @@ const Reports= () => {
       <div className='sub_header_verification'>
         <h5>New Reports <span>(0)</span></h5>
       </div>
-
+      
       {isPageLoading ? (
         <div className='page_loading_container_projects'>
           <img src={PageLoader} alt="Loading" />

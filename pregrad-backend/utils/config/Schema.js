@@ -5,5 +5,6 @@ module.exports ={
      INTERNSHIP:"Internship",
      OTP:'Otp',
      STUDENTINFO:'StudentInfo',
-     USERREGISTER:'UserRegister'
+     USERREGISTER:'UserRegister',
+     ADMIN:"Admin"
 }

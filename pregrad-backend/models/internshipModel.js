@@ -56,7 +56,7 @@ const internshipSchema = new mongoose.Schema({
     applied:{
         type:Array,
         default:[]
-       }
+    }
 })
 
 module.exports = mongoose.model(CONFIG.INTERNSHIP,internshipSchema)
