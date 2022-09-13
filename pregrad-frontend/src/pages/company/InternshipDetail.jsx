@@ -6,7 +6,7 @@ import { AiOutlineFieldTime, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
-import { MdOutlinePeopleAlt, MdPeopleAlt } from "react-icons/md";
+import { MdOutlinePeopleAlt, MdOutlineReportGmailerrorred, MdPeopleAlt, MdReport } from "react-icons/md";
 import {useParams} from "react-router-dom"
 import axios from 'axios'
 import ReactTooltip from 'react-tooltip';
@@ -53,7 +53,35 @@ const InternshipDetail = ({theme, setTheme}) => {
         setCompanyInfoDetails(data)
     }) 
      }
+
+     const [info, setInfo] = useState({
+      description: ""
+    })
+
+    const handleForm = (event) => {
+      const {name, value} = event.target;
+      setInfo({
+        ...info,
+        [name]: value
+      })
+    }
+  
+  const [isModal, setIsModal] = useState(false);
+  const [error, setError] = useState("");
+  const [option1, setOption1] = useState(false);
+  const [option2, setOption2] = useState(false);
+  const [option3, setOption3] = useState(false);
+  const [option4, setOption4] = useState(false);
     
+  const submitReport = async(e)=>{
+    e.preventDefault()  
+    console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
+    if(option1 || option2 || option3 || option4){
+      setError("")
+    }else {
+      setError("Reason required")
+    }
+  }
 
     useEffect(()=>{
       getInternship()
@@ -98,6 +126,9 @@ const InternshipDetail = ({theme, setTheme}) => {
                   </div>
                   <div className='remote_container_internshipdetail'>
                     <p>{internship.jobtype}</p>
+                  </div>
+                  <div className='report_icon_container_internshipdetail'>
+                    <MdOutlineReportGmailerrorred onClick={() => setIsModal(!isModal)} className="report_icon_internshipdetail" />
                   </div>
                 </div>
               </div>
@@ -254,6 +285,56 @@ const InternshipDetail = ({theme, setTheme}) => {
         </div>
       </div>
       </div>
+
+
+      {isModal && (
+        <div className='modal_backgound_internshipdetail'>
+          <div className='modal_container2_internshipdetail'>
+            <div className='modal_top_section_internshipdetail'>
+              <h2>Report “Front End” internship?</h2>
+              <p>We are sorry to hear that you are reporting an internship. Can you tell us why?</p>
+              {/* <p className="errors_msg_internshipdetail">{formErrors.others}</p> */}
+            </div>
+   
+            <div className='modal_mid_section_internshipdetail'>
+              <form>
+                <div className="form_box_internshipdetail">
+                    <div className="checkbox_container_internshipdetail">
+                      <input type="checkbox" id="cb1" onClick={() => setOption1(!option1)} />
+                      <label htmlFor="cb1"></label>
+                      <p>False Information</p>
+                    </div>
+                    <div className="checkbox_container_internshipdetail">
+                      <input type="checkbox" id="cb2" onClick={() => setOption2(!option2)} />
+                      <label htmlFor="cb2"></label>
+                      <p>Filled this position outside Pregrad</p>
+                    </div>
+                    <div className="checkbox_container_internshipdetail">
+                      <input type="checkbox" id="cb3" onClick={() => setOption3(!option3)} />
+                      <label htmlFor="cb3"></label>
+                      <p>We are not hiring for this role anymore</p>
+                    </div>
+                    <div className="checkbox_container_internshipdetail">
+                      <input type="checkbox" id="cb4" onClick={() => setOption4(!option4)} />
+                      <label htmlFor="cb4"></label>
+                      <p>Didn’t recieve good candidates for the internship</p>
+                    </div>
+                    <p className='errors_msg_internshipdetail'>{error}</p>
+                  </div>
+  
+                  <div className="form_box_internshipdetail">
+                  <textarea name="description" rows={4} placeholder="Anything you want to add" onChange={handleForm}></textarea>      
+                </div>
+  
+                <div className='modal_bottom_section_internshipdetail'>
+                   <button onClick={() => setIsModal(!isModal)} className='btn_light_internshipdetail'>Cancel</button>
+                   <button type='submit' onClick={submitReport} className='btn_primary_internshipdetail'>Close Internship</button>
+                </div>
+              </form>
+            </div>
+           </div>
+        </div>
+      )}
     </div>
   )
 }
