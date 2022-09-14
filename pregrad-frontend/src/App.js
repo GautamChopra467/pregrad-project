@@ -59,7 +59,6 @@ const App = () => {
         <Route exact path="/company/resume/:id" element={<CompanyResume theme={theme} setTheme={setTheme}/>} />
 
 
-
         {/* Admin Routes */}
         <Route exact path="/admin/info/*" element={<InfoAdmin theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/admin/signup" element={<SignUpAdmin theme={theme} setTheme={setTheme}/>} />              

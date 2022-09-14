@@ -7,6 +7,8 @@ const connectDb  = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
 const studentInfoRoute = require('./routes/studentInfoRoute')
 const companyRoute = require('./routes/companyRoutes')
+const internshipRoute = require("./routes/internshipRoute")
+
 const port = process.env.PORT || 8000;
 
 const passport = require('passport') 
@@ -28,14 +30,15 @@ app.use(cookieParser());
 
 app.use("/", authRouter);
 
-app.use("/student",studentInfoRoute)
+app.use("/student",studentInfoRoute);
 
-app.use('/company',companyRoute)
+app.use('/company',companyRoute);
 
+app.use('/internship',internshipRoute);
 
 const start = async()=>{
 try{
-   await connectDb(process.env.MONGO_URI)
+   await connectDb(process.env.MONGO_URI);
    app.listen(port, () => console.log(`Server running on port ${port}`));
 
 }catch(err){

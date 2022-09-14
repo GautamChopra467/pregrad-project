@@ -54,6 +54,43 @@ const InternshipDetail = ({theme, setTheme}) => {
     }) 
      }
 
+
+     const [info, setInfo] = useState({
+      description: ""
+    })
+
+    const handleForm = (event) => {
+      const {name, value} = event.target;
+      setInfo({
+        ...info,
+        [name]: value
+      })
+    }
+  
+  const [isModal, setIsModal] = useState(false);
+  const [error, setError] = useState("");
+  const [option1, setOption1] = useState(false);
+  const [option2, setOption2] = useState(false);
+  const [option3, setOption3] = useState(false);
+  const [option4, setOption4] = useState(false);
+    
+  const submitReport = async(e)=>{
+    e.preventDefault(); 
+    axios.post(`http://localhost:8000/internship/report/${i_id}`,
+      info
+    ).then(({data})=>{
+      if(data.success){
+        console.log("Reported !")
+      }
+    })
+    console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
+    if(option1 || option2 || option3 || option4){
+      setError("");
+    }else {
+      setError("Reason required")
+    }
+  }
+
     useEffect(()=>{
       getInternship()
       getCompanyInfo()
