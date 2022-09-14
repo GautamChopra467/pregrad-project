@@ -207,6 +207,161 @@
   }
   
 
+  .report_icon_container_appliedinternship {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .report_icon_appliedinternship {
+    font-size: 24px;
+    color: var(--warning-color);
+    cursor: pointer;
+  }
+
+  .modal_container_appliedinternship {
+    position: absolute;
+    bottom: -170px;
+    right: 0;
+    width: 200px;
+    border-radius: 5px;
+    background-color: var(--white-color);
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
+  }
+  
+  .modal_backgound_appliedinternship {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 39, 46, 0.95);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+    padding-bottom: 40px;
+    /* overflow: auto; */
+  }
+  
+  .modal_container2_appliedinternship {
+      /* height: 100%; */
+    background-color: var(--white-color);
+    padding: 32px;
+    border: 1px solid var(--input-border);
+    width: 727px;
+    min-width: 250px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 25px;
+    overflow-y: scroll;
+  }
+  
+  .modal_top_section_appliedinternship h2 {
+    color: var(--black-color);
+  }
+  
+  .modal_top_section_appliedinternship p {
+    color: var(--para-color);
+    margin-top: 5px;
+  }
+  
+  .modal_mid_section_appliedinternship form {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 25px;
+  }
+  
+  .form_box_appliedinternship {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 7px;
+  }
+  
+  .form_box_appliedinternship label {
+    font-weight: 700;
+    color: var(--para-color);
+    font-size: 1rem;
+    margin-left: 2px;
+  }
+  
+  .form_box_appliedinternship input, .form_box_appliedinternship textarea {
+    outline: none;
+    padding: 12px 10px;
+    width: 100%;
+    border: 1px solid var(--input-border);
+    color: var(--input-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 3px 0;
+    transition: 0.1s;
+    background-color: var(--header-bg);
+  }
+  
+  .form_box_appliedinternship input:hover, .form_box_appliedinternship textarea:hover {
+    border: 1px solid var(--input-hover);
+  }
+  
+  .form_box_appliedinternship input:focus, .form_box_appliedinternship textarea:focus {
+    border-color: var(--input-focus);
+  }
+  
+  .form_box_appliedinternship input:read-only {
+    background-color: var(--primary-lightest);
+  }
+  
+  .modal_bottom_section_appliedinternship {
+    display: flex;
+    justify-content: flex-end;
+    grid-gap: 15px;
+  }
+  
+  .checkbox_container_appliedinternship {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 5px 0;
+  }
+  
+  .checkbox_container_appliedinternship p {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    letter-spacing: -0.02em;
+    margin-left: 10px;
+    color: var(--menu-link);
+  }
+  
+  .checkbox_container_appliedinternship input + label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .checkbox_container_appliedinternship input:checked + label:after {
+    position: relative;
+    top: -3px;
+    left: 2px;
+    content: "\2714";
+    color: var(--para-color);
+    font-size: 14px;
+    font-weight: 800;
+  }
+  
+  .checkbox_container_appliedinternship input {
+    display: none;
+  }
+  
+  .errors_msg_appliedinternship {
+    color: var(--warning-color);
+    font-size: 16px;
+  }
+  
+
+
   @media screen and (max-width: 1110px) {
     .main_details_container_appliedinternship {
       width: 100%;
@@ -229,6 +384,10 @@
   
     .top_section_internship_appliedinternship {
       align-items: flex-start;
+    }
+
+    .modal_backgound_appliedinternship {
+      padding: 80px 20px 40px 20px;
     }
   }
   
@@ -269,6 +428,14 @@
   
     .left_section_internship_appliedinternship h2 {
       font-size: 20px;
+    }
+
+    .modal_backgound_appliedinternship {
+      padding: 60px 10px 40px 10px;
+    }
+  
+    .modal_container2_appliedinternship {
+      padding: 10px;
     }
   }
   

@@ -126,18 +126,6 @@
   color: var(--primary-color);
 }
 
-.report_icon_container_internshipdetail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.report_icon_internshipdetail {
-  font-size: 24px;
-  color: var(--warning-color);
-  cursor: pointer;
-}
-
 .mid_section_internship_internshipdetail {
   display: flex;
   flex-direction: column;
@@ -314,148 +302,6 @@
 
 
 
-.modal_container_internshipdetail {
-  position: absolute;
-  bottom: -170px;
-  right: 0;
-  width: 200px;
-  border-radius: 5px;
-  background-color: var(--white-color);
-  box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
-}
-
-.modal_backgound_internshipdetail {
-  width: 100vw;
-  height: 100vh;
-  background: rgba(30, 39, 46, 0.95);
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  z-index: 900;
-  display: flex;
-  justify-content: center;
-  padding-top: 80px;
-  padding-bottom: 40px;
-  /* overflow: auto; */
-}
-
-.modal_container2_internshipdetail {
-    /* height: 100%; */
-  background-color: var(--white-color);
-  padding: 32px;
-  border: 1px solid var(--input-border);
-  width: 727px;
-  min-width: 250px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  grid-gap: 25px;
-  overflow-y: scroll;
-}
-
-.modal_top_section_internshipdetail h2 {
-  color: var(--black-color);
-}
-
-.modal_top_section_internshipdetail p {
-  color: var(--para-color);
-  margin-top: 5px;
-}
-
-.modal_mid_section_internshipdetail form {
-  display: flex;
-  flex-direction: column;
-  grid-gap: 25px;
-}
-
-.form_box_internshipdetail {
-  display: flex;
-  flex-direction: column;
-  grid-gap: 7px;
-}
-
-.form_box_internshipdetail label {
-  font-weight: 700;
-  color: var(--para-color);
-  font-size: 1rem;
-  margin-left: 2px;
-}
-
-.form_box_internshipdetail input, .form_box_internshipdetail textarea {
-  outline: none;
-  padding: 12px 10px;
-  width: 100%;
-  border: 1px solid var(--input-border);
-  color: var(--input-color);
-  border-radius: 5px;
-  font-size: 1rem;
-  margin: 3px 0;
-  transition: 0.1s;
-  background-color: var(--header-bg);
-}
-
-.form_box_internshipdetail input:hover, .form_box_internshipdetail textarea:hover {
-  border: 1px solid var(--input-hover);
-}
-
-.form_box_internshipdetail input:focus, .form_box_internshipdetail textarea:focus {
-  border-color: var(--input-focus);
-}
-
-.form_box_internshipdetail input:read-only {
-  background-color: var(--primary-lightest);
-}
-
-.modal_bottom_section_internshipdetail {
-  display: flex;
-  justify-content: flex-end;
-  grid-gap: 15px;
-}
-
-.checkbox_container_internshipdetail {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 5px 0;
-}
-
-.checkbox_container_internshipdetail p {
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.75rem;
-  letter-spacing: -0.02em;
-  margin-left: 10px;
-  color: var(--menu-link);
-}
-
-.checkbox_container_internshipdetail input + label {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #cccccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.checkbox_container_internshipdetail input:checked + label:after {
-  position: relative;
-  top: -3px;
-  left: 2px;
-  content: "\2714";
-  color: var(--para-color);
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.checkbox_container_internshipdetail input {
-  display: none;
-}
-
-.errors_msg_internshipdetail {
-  color: var(--warning-color);
-  font-size: 16px;
-}
-
-
 @media screen and (max-width: 1220px) {
   .details_container_internshipdetail {
     width: 75%;
@@ -491,10 +337,6 @@
 
   .details_container_internshipdetail {
     width: 90%;
-  }
-
-  .modal_backgound_internshipdetail {
-    padding: 80px 20px 40px 20px;
   }
 }
 
@@ -563,14 +405,6 @@
 
   .left_section_internship_internshipdetail h2 {
     font-size: 20px;
-  }
-
-  .modal_backgound_internshipdetail {
-    padding: 60px 10px 40px 10px;
-  }
-
-  .modal_container2_internshipdetail {
-    padding: 10px;
   }
 }
 

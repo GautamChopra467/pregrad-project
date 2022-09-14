@@ -22,6 +22,8 @@ import InfoCompany from "./pages/company/InfoCompany";
 import InternshipDetail from "./pages/company/InternshipDetail";
 import Error404 from "./pages/student/Error404";
 import InfoAdmin from "./pages/admin/InfoAdmin";
+import CompanyResume from "./pages/company/CompanyResume";
+import SignUpAdmin from "./pages/admin/SignUpAdmin";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -54,11 +56,13 @@ const App = () => {
         <Route exact path="/company/info/:id/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/:id/detailsone" element={<DetailsOneCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/internship/:i_id" element={<InternshipDetail theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/company/resume/:id" element={<CompanyResume theme={theme} setTheme={setTheme}/>} />
 
 
 
         {/* Admin Routes */}
-        <Route exact path="/admin/info/*" element={<InfoAdmin theme={theme} setTheme={setTheme}/>} />       
+        <Route exact path="/admin/info/*" element={<InfoAdmin theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/admin/signup" element={<SignUpAdmin theme={theme} setTheme={setTheme}/>} />              
       </Routes>
       <ToastContainer />
     </BrowserRouter>
