@@ -74,10 +74,17 @@ const InternshipDetail = ({theme, setTheme}) => {
   const [option4, setOption4] = useState(false);
     
   const submitReport = async(e)=>{
-    e.preventDefault()  
+    e.preventDefault(); 
+    axios.post(`http://localhost:8000/internship/report/${i_id}`,
+      info
+    ).then(({data})=>{
+      if(data.success){
+        console.log("Reported !")
+      }
+    })
     console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
     if(option1 || option2 || option3 || option4){
-      setError("")
+      setError("");
     }else {
       setError("Reason required")
     }

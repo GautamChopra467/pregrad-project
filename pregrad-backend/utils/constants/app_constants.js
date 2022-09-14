@@ -70,6 +70,9 @@ module.exports = {
                 APPLIED:'/appliedinternship/:id',
                 GET_APPLIED:'/getappliedinternship/:id'
             }
+        },
+        INTERNSHIP:{
+            REPORT:"/report/:id"
         }
     }
 }

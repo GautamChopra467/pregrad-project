@@ -56,7 +56,6 @@ try{
      
 }
 
-
 module.exports.singleInternship = async(req,res)=>{
      try{
 
@@ -274,5 +273,21 @@ module.exports.rejectedApplicants = async(req,res)=>{
         })
 
      res.send({status:true})
+
+}
+
+module.exports.reportInternship = async(req,res)=>{
+     try{
+          const {id} = req.params;
+
+          const {description} = req.body;
+
+          console.log(id);
+      
+          res.send({success:true});
+     }catch(err){
+          console.log(err);
+     }
+   
 
 }
