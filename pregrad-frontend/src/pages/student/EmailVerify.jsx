@@ -52,7 +52,11 @@ const {type} = useParams()
       setLoading(!loading);
       axios.post(`http://localhost:8000/verifyemail/?type=${type}`, user)
       .then( res => {
-        if(res.data.message === "true"){
+        if(res.data.errors){
+          setLoading(!loading);
+          setFormErrors(res.data.errors);
+        }
+       else if(res.data.message === "true"){
           if(res.data.type === "register"){
           setLoading(!loading);
           navigate(`/otpverify/${user.email}/${res.data.type}`);

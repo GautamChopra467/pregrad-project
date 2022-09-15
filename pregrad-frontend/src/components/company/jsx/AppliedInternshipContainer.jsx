@@ -5,6 +5,7 @@ import { BsFillBarChartFill } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import ReactTooltip from 'react-tooltip';
 import { MdOutlineReportGmailerrorred } from 'react-icons/md';
+import axios from "axios";
 
 
 const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) => {
@@ -25,6 +26,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
       })
     }
   
+  const [reportingId,setReportingId] = useState("");
   const [isModal, setIsModal] = useState(false);
   const [error, setError] = useState("");
   const [option1, setOption1] = useState(false);
@@ -33,7 +35,14 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
   const [option4, setOption4] = useState(false);
     
   const submitReport = async(e)=>{
-    e.preventDefault()  
+    e.preventDefault(); 
+    axios.post(`http://localhost:8000/internship/report/${reportingId}/${id}`,
+      info
+    ).then(({data})=>{
+      if(data.success){
+        setIsModal(!isModal);
+      }
+    })
     console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
     if(option1 || option2 || option3 || option4){
       setError("")
@@ -46,6 +55,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
       getAppliedInternship()
     },[])
 
+    const getRepotingId = (id)=>{
+      setReportingId(id);
+      setIsModal(!isModal)
+    } 
 
   return (
    <>
@@ -82,9 +95,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 <p>{(applied._doc.status) ? "Active" : "Closed"}</p>
               </div>
 
-              <div className='report_icon_container_appliedinternship'>
-                <MdOutlineReportGmailerrorred onClick={() => setIsModal(!isModal)} className="report_icon_appliedinternship"/>
+              <div className='report_icon_container_appliedinternship' onClick={() => getRepotingId(applied._doc._id)}>
+                <MdOutlineReportGmailerrorred className="report_icon_appliedinternship"/>
               </div>
+              {/* setIsModal(!isModal) */}
             </div>
           </div>
 

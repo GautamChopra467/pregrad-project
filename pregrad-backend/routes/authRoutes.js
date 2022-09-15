@@ -11,6 +11,8 @@ const {CheckUser} = require('../Middleware/AuthMiddleware');
 
 const {CheckCompany} = require('../Middleware/AuthMiddlewareCompany');
 
+const Handler = require("../ErrorHandling/Authentication/AuthError");
+
 const { 
   SIGNUP,
   LOGIN,
@@ -29,19 +31,19 @@ const createToken =(id)=>{
     })  
   }
   
-router.route(SIGNUP).post(signup);
+router.route(SIGNUP).post(Handler.register,signup);
 
-router.route(LOGIN).post(login);
+router.route(LOGIN).post(Handler.login,login);
 
-router.route(VERIFYEMAIL).post(verifyEmail)
+router.route(VERIFYEMAIL).post(Handler.verifyEmail,verifyEmail)
 
-router.route(VERIFYOTP).post(verifyOtp)
+router.route(VERIFYOTP).post(Handler.otpVerify,verifyOtp)
 
 router.route(STUDENT).post(CheckUser)
 
 router.route(COMPANY).post(CheckCompany)
 
-router.route(NEWPASSWORD).post(newPassword)
+router.route(NEWPASSWORD).post(Handler.forgotPassword,newPassword)
 
 router.route(USERDETAILS).get(getUserDetails)
 

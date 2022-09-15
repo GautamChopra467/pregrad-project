@@ -45,13 +45,14 @@ const {APPLIED,GET_APPLIED} = require("../utils/constants/app_constants").ROUTES
 
 const {DETAILS} = require("../utils/constants/app_constants").ROUTES.STUDENT.DETAILSONE;
 
+const Handler = require("../ErrorHandling/StudentInfo/InfoError")
 // getAll Data
 
 router.route(PROFILE_DETAIL).get(allStudentData);
 
 // achievement route
 
-router.route(POST_ACHIEVEMENT).post(studentAchievement)
+router.route(POST_ACHIEVEMENT).post(Handler.achievement,studentAchievement)
 
 router.route(GET_ACHIEVEMENT).get(getAchievementInfo)
 
@@ -100,7 +101,7 @@ router.route(UPDATED_WORKEXPERIENCE).put(updatedWorkExperience)
 
 //detailsone route
 
-router.route(DETAILS).post(detailsOne)
+router.route(DETAILS).post(Handler.detailsOne,detailsOne)
 
 //profile health Route
 

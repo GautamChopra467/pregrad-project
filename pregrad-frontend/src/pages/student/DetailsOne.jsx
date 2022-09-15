@@ -180,7 +180,10 @@ const DetailsOne = ({theme, setTheme}) => {
      axios.post(`http://localhost:8000/student/detailsone/${id}`,{
       ...detailsOneStudent
      }).then(({data})=>{
-      if(data.message == "true" && data.verified == true)
+      if(data.errors){
+        setFormErrors(data.errors)
+      }
+      else if(data.message == "true" && data.verified == true)
       {
         navigate(`/student/${id}/internships`)
       }else{
