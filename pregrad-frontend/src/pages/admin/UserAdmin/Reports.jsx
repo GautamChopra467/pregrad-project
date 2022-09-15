@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../../../components/admin/css/UserAdmin/VerificationStyles.css";
+import "../../../components/admin/css/UserAdmin/ReportsStyles.css";
 import { FiFileText } from 'react-icons/fi';
 import PageLoader from "../../../img/page-loader.gif";
 import { Link } from 'react-router-dom';
@@ -19,7 +19,7 @@ const Reports= () => {
       </div>
       
       {isPageLoading ? (
-        <div className='page_loading_container_projects'>
+        <div className='page_loading_container_verification'>
           <img src={PageLoader} alt="Loading" />
         </div>
       ) : (
@@ -27,17 +27,22 @@ const Reports= () => {
           <div className='main_box_verification'>
             
           {isContent ?  (
-            <div className='student_box_applicantscompany'>
-            <div className='top_section_student_applicantscompany'>
+            <div className='student_box_verification'>
+            <div className='top_section_student_verification'>
               <h2>Google</h2>
-              <Link target="_blank" to={`/resume`}>
-              <div className='search_icon_container_applicantscompany'>
-                <AiOutlineFileSearch className="search_icon_applicantscompany" />
+              <div className='top_left_section_verification'>
+                <Link target="_blank" to="/" className='reports_link_verification'>
+                  <p>View Reports</p>
+                </Link>
+                <Link target="_blank" to={`/resume`}>
+                  <div className='search_icon_container_verification'>
+                    <AiOutlineFileSearch className="search_icon_verification" />
+                  </div>
+                </Link>
               </div>
-              </Link>
             </div>
-            <div className='mid_section_applicantscompany'>
-            <div className='mid_top_section_applicantscompany'>
+            <div className='mid_section_verification'>
+                <div className='mid_top_section_verification'>
                   <div>
                     <input type="radio" />
                     <label></label>
