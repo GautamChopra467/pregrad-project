@@ -179,7 +179,7 @@ const getCompanyDetails = ()=>{
             removeCookie("jwt")
             navigate('/login')
           }else{
-            setIsPageLoading(true)
+            // setIsPageLoading(true)
              getCompanyInfo()
              getCompanyDetails()
             navigate(`/company/info/${id}/dashboard`)

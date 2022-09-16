@@ -22,10 +22,6 @@ const companyInfoSchema = new mongoose.Schema({
     },
     description:{
         type:String
-    },
-    authorized:{
-        type: Boolean,
-        default: false
     }
 })
 

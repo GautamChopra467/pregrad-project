@@ -14,7 +14,9 @@ const CompanyResume = () => {
 
   const [cookies,setCookie,removeCookie] = useCookies([])
 
-  const {id} = useParams()
+  const {id} = useParams();
+
+  // console.log(id);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -42,27 +44,12 @@ const getCompanyDetails = ()=>{
 
     const verifyCompany = ()=>{
 
-      if(!cookies.jwt){
-        navigate('/login')
-      }else{
-        axios.post(`http://localhost:8000/company`,{},{
-          withCredentials:true,
-        }).then(({data})=>{
-
-          if(data.id != id){
-            removeCookie("jwt")
-            navigate('/login')
-          }else{
             setIsPageLoading(true)
              getCompanyInfo()
              getCompanyDetails()
-            navigate(`/company/info/${data.id}/profile`)
-          } 
-        })
+            // navigate(`/company/info/${data.id}/profile`)
       }
-    }
-  
-    // verifyCompany()  
+    verifyCompany()  
   
   },[cookies,setCookie,removeCookie,navigate]);
 
@@ -131,7 +118,7 @@ const getCompanyDetails = ()=>{
               <h4>Representative</h4>
               <div className="line_companyresume"></div>
               <div className='owner_details_container_companyresume'>
-                <h3>{companydetails.name} | <span>(9654086265)</span></h3>
+                <h3>{companydetails.name} | <span>({companydetails.phoneno})</span></h3>
                 <p>{companydetails.designation}</p>
               </div>
             </div>

@@ -20,7 +20,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
 
     const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
 
-    const [companydetails,setCompanyDetails] = useState({})
+    const [adminInfo,setAdminInfo] = useState({})
 
     const routes = [
         {
@@ -93,13 +93,13 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
         }
       }
 
-      const getCompanyInfo = ()=>{
-        axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
-        setCompanyDetails(data)
+      const getAdminInfo = ()=>{
+        axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
+        setAdminInfo(data)
     })
     }
       useEffect(()=>{
-        // getCompanyInfo()
+        getAdminInfo()
       },[])
 
 
@@ -137,9 +137,9 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
                 <img src={UserImage} alt="user" />
               </div>
               <h2>
-                Hello, <span>{companydetails.name}</span>
+                Hello, <span>{adminInfo.name}</span>
               </h2>
-              <h3>{companydetails.email}</h3>
+              <h3>{adminInfo.email}</h3>
             </motion.div>
           )}
         </AnimatePresence>
@@ -197,7 +197,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           setIsOpenSidebar={setIsOpenSidebar}
           theme={theme}
           setTheme={setTheme}
-          name={companydetails.name}
+          name={adminInfo.name}
         />
         {children}
       </motion.main>

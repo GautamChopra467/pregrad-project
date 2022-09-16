@@ -168,13 +168,16 @@ try{
 }
 
 module.exports.unAuthorizedCompany = async(req,res)=>{
+ 
+  try{
 
-   const company = await CompanyInfo.find({authorized:false});
+    const company = await Company.find({isAuthorized:"Applied"});
 
-   console.log(company);
-
-  //  if(company){
-     
-  //  }
-
+    res.send(company);
+    
+  }
+  catch(err){
+     console.log(err);
+  }
+  
 }

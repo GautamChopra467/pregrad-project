@@ -29,6 +29,10 @@ const companySchema = new mongoose.Schema({
     detailFlag:{
         type: Boolean,
         default: false
+    },
+    isAuthorized:{
+        type: String,
+        default: "Applied"
     }
 
 })

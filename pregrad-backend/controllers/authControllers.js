@@ -257,11 +257,12 @@ module.exports.login = async (req, res) => {
         res.send({usertype:"company",id:company._id,verified:company.detailFlag})
 
       }else{
+
         const admin = await Admin.login(email,password);
 
         if(admin){
 
-          const token = createToken(company._id)
+          const token = createToken(admin._id)
 
           res.cookie("jwt",token,{
             withCredentials:true,
