@@ -1,8 +1,9 @@
 const Company = require('../models/companyModel')
 const bcrypt = require("bcryptjs");
 const UserRegister = require("../models/userModel");
-const CompanyInfo = require("../models/companyInfoModel")
-const Internship = require('../models/internshipModel')
+const CompanyInfo = require("../models/companyInfoModel");
+const Internship = require('../models/internshipModel');
+
 module.exports.registerCompany = async(req,res)=>{
   try{
 
@@ -117,6 +118,7 @@ module.exports.getCompanyDetails = async(req,res)=>{
 }
 
 module.exports.editProfile = async(req,res)=>{
+  
   const {id} = req.params
 
   const profile = await CompanyInfo.findOneAndUpdate({id},{
@@ -163,4 +165,19 @@ try{
 }
   
 
+}
+
+module.exports.unAuthorizedCompany = async(req,res)=>{
+ 
+  try{
+
+    const company = await Company.find({isAuthorized:"Applied"});
+
+    res.send(company);
+    
+  }
+  catch(err){
+     console.log(err);
+  }
+  
 }

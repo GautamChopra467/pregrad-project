@@ -1,26 +1,25 @@
-const Company = require('../models/companyModel')
-const jwt  = require("jsonwebtoken")
+const Admin = require('../models/adminModel');
+const jwt  = require("jsonwebtoken");
 
-module.exports.CheckCompany = async(req,res,next)=>{
-   
+module.exports.CheckAdmin = async(req,res,next)=>{
     const token = req.cookies.jwt;
-   
+
     if(req.type === "google")
     {
         if(req.token)
         {
-            jwt.verify(req.token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
+            jwt.verify(req.token,process.env.JWT_SECRET,async(err,decodedToken)=>{   // header,payload,signature
                 if(err){
                     res.json({
                             status:false
                         });
                     next();
                 }else{
-                    const user = await Company.findById(decodedToken.id)
+                    const user = await Admin.findById(decodedToken.id)
 
                     if(user)
                     {
-                        res.redirect(`http://localhost:3000/company/${user._id}`)
+                        res.redirect(`http://localhost:3000/student/${user._id}`)
                     }
                 } 
             })
@@ -28,27 +27,29 @@ module.exports.CheckCompany = async(req,res,next)=>{
         }else{
             res.json(
                 {
-                    status:false
+                    status:false,
+                    message:"nothing found"
                 })
             next()
         }  
     }
     else if(token){
-        jwt.verify(token,"AnuragPandey",async(err,decodedToken)=>{   // header,payload,signature
+        jwt.verify(token,process.env.JWT_SECRET,async(err,decodedToken)=>{   // header,payload,signature
             if(err){
                 
                 res.json({
-                        status:false
+                        status:false,
+                        message:"token not found"
                     });
                 next();
             }else{
-                    const company = await Company.findById(decodedToken.id)
+                    const user = await Admin.findById(decodedToken.id)
                   
-                    if(company)
+                    if(user)
                     {  
                         res.json({
                             status:true,  
-                            company:company.email,
+                            user:user.email,
                             id:decodedToken.id
                         })
                     
@@ -56,7 +57,8 @@ module.exports.CheckCompany = async(req,res,next)=>{
                 else{
                     res.json(
                         {
-                            status:false
+                            status:false,
+                            message:"user not found"
                         })
                     next();
 
@@ -67,7 +69,8 @@ module.exports.CheckCompany = async(req,res,next)=>{
 
         res.json(
             {
-                status:false
+                status:false,
+                message:"nothing found"
             })
         next()
     }

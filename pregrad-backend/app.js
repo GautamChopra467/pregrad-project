@@ -8,6 +8,7 @@ const authRouter = require("./routes/authRoutes");
 const studentInfoRoute = require('./routes/studentInfoRoute')
 const companyRoute = require('./routes/companyRoutes')
 const internshipRoute = require("./routes/internshipRoute")
+const adminRoute = require("./routes/AdminRoutes");
 
 const port = process.env.PORT || 8000;
 
@@ -35,6 +36,8 @@ app.use("/student",studentInfoRoute);
 app.use('/company',companyRoute);
 
 app.use('/internship',internshipRoute);
+
+app.use('/admin',adminRoute);
 
 const start = async()=>{
 try{

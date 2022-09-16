@@ -14,9 +14,6 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
-  console.log(internship)
-
-
     const ref = useRef();
 
     const navigate = useNavigate();

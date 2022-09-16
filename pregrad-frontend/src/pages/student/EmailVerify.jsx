@@ -13,6 +13,7 @@ const EmailVerify = ({theme, setTheme}) => {
   const navigate = useNavigate();
 
 const {type} = useParams()
+
   const toggleTheme = () => {
     if(theme === "light-theme"){
       setTheme("dark-theme");

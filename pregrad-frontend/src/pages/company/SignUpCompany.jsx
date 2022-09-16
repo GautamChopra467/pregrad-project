@@ -49,7 +49,10 @@ const SignUp = ({theme, setTheme}) => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post("http://localhost:8000/company/register", user)
       .then( res => {
-        if(res.data.message === "true"){
+        if(res.data.errors){
+          setFormErrors(res.data.errors);
+        }
+        else if(res.data.message === "true"){
           navigate(`/emailverify/${type}`);
         }else {
           setFormErrors({final: res.data.message});

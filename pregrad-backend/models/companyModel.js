@@ -30,9 +30,9 @@ const companySchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    authorized:{
-        type: Boolean,
-        default: false
+    isAuthorized:{
+        type: String,
+        default: "Applied"
     }
 
 })

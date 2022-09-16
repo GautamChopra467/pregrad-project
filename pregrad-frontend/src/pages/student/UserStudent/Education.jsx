@@ -34,8 +34,7 @@ const Education = () => {
     field: "",
     degree: "",
     start: "",
-    end: "",
-    id:id
+    end: ""
   });
 
   const [studentedu,setStudentedu] = useState([])
@@ -47,7 +46,6 @@ const Education = () => {
       [name]: value
     })
   }
-
 
   const handleForm = (e) => {
     const {name, value} = e.target;
@@ -102,10 +100,13 @@ const Education = () => {
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-     axios.post(`http://localhost:8000/student/education`,{
+     axios.post(`http://localhost:8000/student/education/${id}`,{
        ...education
      }).then((res)=>{
-       if(res.data.message === "true")
+      if(res.data.errors){
+        setFormErrors(res.data.errors);
+      }
+      else if(res.data.message === "true")
        {
         setIsModal(!isModal);
         getEducation()
@@ -192,9 +193,6 @@ const setStateValue = ()=>{
 }
 
 const Cancel = ()=>{
-  // Object.keys(formErrors).forEach(key=>{
-  //   formErrors[key] = "";
-  // })
   setIsModal(!isModal)
   setIsSubmit(false)
   setFormErrors({}) 

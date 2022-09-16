@@ -89,8 +89,7 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     position: "",
     role: "",
     duration: "",
-    websitelink: "",
-    id:id
+    websitelink: ""
   });
 
   const handleForm = (e) => {
@@ -161,13 +160,16 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-     axios.post(`http://localhost:8000/student/workexperience`,{
+     axios.post(`http://localhost:8000/student/workexperience/${id}`,{
       ...workexperience,skills:selectedSkills
      }).then((res)=>{
-      if(res.data.message === "true")
+      if(res.data.errors){
+        setFormErrors(res.data.errors);
+      }
+     else if(res.data.message === "true")
       {
-        setIsModal(!isModal)
-        getWorkExperience()
+        setIsModal(!isModal);
+        getWorkExperience();
         // userHealthProfile()
       }else if(res.data.message === "You cannot add duplicate information"){
         setFormErrors(validate(res.data.message));

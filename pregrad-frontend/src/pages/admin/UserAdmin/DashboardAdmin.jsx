@@ -18,7 +18,7 @@ const DashboardAdmin = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const {id} = useParams()
+  const {id} = useParams();
   
   const [companydetails,setCompanyDetails] = useState({})
  
@@ -28,6 +28,7 @@ const DashboardAdmin = () => {
   const [isModal, setIsModal] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [adminInfo,setAdminInfo] = useState({})
 
   const locationData = ["Delhi, New Delhi", "Mumbai", "Chennai", "Jaipur", "Hyderabad"]
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -164,8 +165,32 @@ const getCompanyDetails = ()=>{
 }) 
 }
 
+const getAdminInfo = ()=>{
+  axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
+  setAdminInfo(data)
+})
+}
+
 useEffect(()=>{
-  navigate(`/admin/info/dashboard`);
+
+  const verifyUser = async()=>{
+    if(!cookies.jwt){
+      navigate('/login')
+    }else{
+
+      const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+      if(data.id !== id || data.status !== true){ 
+        removeCookie("jwt")
+        navigate('/login')
+      }else{
+        // setIsPageLoading(true);
+        getAdminInfo();
+        navigate(`/admin/info/${id}/dashboard`);
+      }
+    }
+  }
+  verifyUser()
+ 
 },[])
  
   // useEffect(() => {
@@ -187,7 +212,7 @@ useEffect(()=>{
       //       setIsPageLoading(true)
       //        getCompanyInfo()
       //        getCompanyDetails()
-      //       navigate(`/company/info/${id}/dashboard`)
+      //     
       //     } 
       //   })
       // }
@@ -210,7 +235,7 @@ useEffect(()=>{
     // } 
   
 
-  const initials = companydetails.companyname
+  const initials = adminInfo.name
   const name_initials=typeof initials==="string" ?initials.split('')[0]:""
 
 
@@ -253,8 +278,8 @@ useEffect(()=>{
                 {name_initials}
               </div>
               <div className='info_container_dashboardAdmin'>
-                <h2>{companydetails.companyname}</h2>
-                <p>{companyInfoDetails.typeofcompany} , {companyInfoDetails.headquaters}</p>
+                <h2>{adminInfo.name}</h2>
+                <p>{adminInfo.role}</p>
               </div>
               <HiOutlinePencil onClick={setEditProfile} className="edit_icon2_dashboardAdmin" />
             </div>

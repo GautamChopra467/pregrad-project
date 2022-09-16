@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "../../../components/admin/css/UserAdmin/ReportsStyles.css";
 import { FiFileText } from 'react-icons/fi';
 import PageLoader from "../../../img/page-loader.gif";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate,useParams } from 'react-router-dom';
 import { AiOutlineFileSearch } from 'react-icons/ai';
-
+import axios from "axios";
+import {useCookies} from 'react-cookie';
 
 const Reports= () => {
 
+  const navigate = useNavigate();
+
+  const {id} = useParams();
+
+  const [cookies,setCookie,removeCookie] = useCookies([]);
+
   const [isPageLoading, setIsPageLoading] = useState(false);
+  
   const [isContent, setIsContent] = useState(true);
 
+  useEffect(()=>{
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true){ 
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+          // getUnAuthorizedCompany();
+        }
+      }
+    }
+    verifyUser();
+  },[])
 
   return (
     <div>

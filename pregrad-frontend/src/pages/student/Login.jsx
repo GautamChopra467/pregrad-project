@@ -54,8 +54,10 @@ const Login = ({theme, setTheme}) => {
         if(data.errors){
           setFormErrors(data.errors);
         }
+        else if(data.usertype === "superadmin" || data.usertype === "admin"){
+            navigate(`/admin/info/${data.id}/dashboard`);
+        }
       else  if(data.usertype === "student" && data.verified == false){
-         
           navigate(`/student/${data.id}/detailsone`);
         }else if(data.usertype === "student" && data.verified == true){
          
