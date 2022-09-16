@@ -552,6 +552,21 @@
   font-size: 16px;
 }
 
+.report_section_listingscompany {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--warning-color);
+}
+
+.report_section_listingscompany p {
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: auto;
+  letter-spacing: 0.3px;
+}
+
 @media screen and (max-width: 1220px) {
   .lower_bottom_listingscompany {
     margin-right: 0px;
@@ -660,6 +675,10 @@
 
   .page_loading_container_listingscompany img {
     width: 100px;
+  }
+
+  .report_section_listingscompany p {
+    font-size: 14px;
   }
 }
 

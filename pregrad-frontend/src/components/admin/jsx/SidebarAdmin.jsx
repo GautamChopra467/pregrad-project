@@ -144,14 +144,14 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           )}
         </AnimatePresence>
 
-        {/* {isOpenSidebar && (
+        {isOpenSidebar && (
           <motion.div initial="hidden"
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship?type=newinternship`)}>Post Opportunity</button>
+          <button className="btn_light_sidebar" onClick={()=>navigate(`/admin/signup`)}>Create Admin</button>
         </motion.div>
-        )} */}
+        )}
 
         <section className="routes_container_sidebar">
           {routes.map((routes) => (

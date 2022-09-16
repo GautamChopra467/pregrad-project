@@ -187,7 +187,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
                 </div>
 
                 <button type="submit" onClick={submitForm} className="create-btn_signupadmin">
-                  Create New Account
+                  Create New Admin
                   <BsArrowRightShort size={27} className="create-btn-logo_signupadmin" />
                 </button> 
 

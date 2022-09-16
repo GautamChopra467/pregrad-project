@@ -233,6 +233,10 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
             <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
 
+          <div className='report_section_listingscompany'>
+            <p>This Internship has been blocked by Pregrad due to recurrent reports by students.</p>
+          </div>
+
         </div>
       
 

@@ -145,7 +145,8 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship?type=newinternship`)}>Post Opportunity</button>
+            <h6>You can not post oppurtunity until you are verified by Pregrad.</h6>
+          {/* <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship?type=newinternship`)}>Post Opportunity</button> */}
         </motion.div>
         )}
 

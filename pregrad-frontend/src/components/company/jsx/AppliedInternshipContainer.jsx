@@ -76,15 +76,15 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 <BsFillBarChartFill className="experience_icon_appliedinternship" />
                 <p>{applied._doc.experience}</p>
                 {applied._doc.experience === "Beginner" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> atleast 1 project" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_appliedinternship" data-tip="The candidate should have<br /> atleast 1 project" />
                     )}
 
                     {applied._doc.experience === "Intermediate" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> either 1 work experience OR 2 projects" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_appliedinternship" data-tip="The candidate should have<br /> either 1 work experience OR 2 projects" />
                     )}
                     
                     {applied._doc.experience === "Expert" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_listingscompany" data-tip="The candidate should have<br /> both 1 work experience AND 2 projects" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_appliedinternship" data-tip="The candidate should have<br /> both 1 work experience AND 2 projects" />
                     )}
               
                     <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
@@ -139,6 +139,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
           <div className='bottom_section_internship_appliedinternship'>
             <p>Applied on 2nd Aug' 2022</p>
             <button onClick={() => navigate(`/company/internship/${applied._doc._id}?cid=${applied._doc.id}`)} className='btn_primary_appliedinternship'>View Details</button>
+          </div>
+
+          <div className='report_section_appliedinternship'>
+            <p>This Internship has been blocked by Pregrad due to recurrent reports by students.</p>
           </div>
 
         </div>

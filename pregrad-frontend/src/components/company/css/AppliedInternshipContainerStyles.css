@@ -360,6 +360,20 @@
     font-size: 16px;
   }
   
+  .report_section_appliedinternship {
+    width: max-content;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--warning-color);
+  }
+  
+  .report_section_appliedinternship p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: auto;
+    letter-spacing: 0.3px;
+  }
 
 
   @media screen and (max-width: 1110px) {
@@ -436,6 +450,10 @@
   
     .modal_container2_appliedinternship {
       padding: 10px;
+    }
+
+    ._appliedinternship p {
+      font-size: 14px;
     }
   }
   
