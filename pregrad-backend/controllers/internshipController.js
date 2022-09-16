@@ -2,6 +2,7 @@ const Internship = require('../models/internshipModel')
 const Company = require('../models/companyModel')
 const CompanyInfo = require("../models/companyInfoModel")
 const UserRegister = require("../models/userModel");
+const StudentInfo = require("../models/UserInfoModel");
 
 module.exports.createInternship = async(req,res)=>{
 try{
@@ -278,16 +279,29 @@ module.exports.rejectedApplicants = async(req,res)=>{
 
 module.exports.reportInternship = async(req,res)=>{
      try{
-          const {id} = req.params;
+          
+          const {id,i_id} = req.params;
 
           const {description} = req.body;
+           
+          const internship = await Internship.findByIdAndUpdate({_id:i_id},{
+               $addToSet:{
+                  reports:{
+                    student_id:id,
+                    description:description
+                  }
+               }
+          });
+          
+        const student = await StudentInfo.findOneAndUpdate({id},{
+          $addToSet:{
+               reports:i_id
+          }
+        });
 
-          console.log(id);
-      
-          res.send({success:true});
+     res.send({success:true});
+
      }catch(err){
           console.log(err);
      }
-   
-
 }

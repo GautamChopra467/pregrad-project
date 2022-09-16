@@ -205,6 +205,7 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 module.exports.login = async (req, res) => {
   try{  
 
+    console.log("Welcome to Login");
    
   const {email, password} = req.body;
  

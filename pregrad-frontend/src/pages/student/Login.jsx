@@ -51,8 +51,10 @@ const Login = ({theme, setTheme}) => {
         withCredentials:true
       })
       .then( ({data}) => {
- 
-        if(data.usertype === "student" && data.verified == false){
+        if(data.errors){
+          setFormErrors(data.errors);
+        }
+      else  if(data.usertype === "student" && data.verified == false){
          
           navigate(`/student/${data.id}/detailsone`);
         }else if(data.usertype === "student" && data.verified == true){

@@ -33,7 +33,6 @@ const [editachievement,setEditAchievement] = useState({})
   const [achievements, setAchievements] = useState({
     title: "",
     certificate: "",
-    id:id
   });
 
 const [studentachi,setStudentachi] = useState([])
@@ -101,7 +100,7 @@ const [studentachi,setStudentachi] = useState([])
     verifyUser()
    
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/student/achievements",{
+      axios.post(`http://localhost:8000/student/achievements/${id}`,{
        ...achievements
       }).then(res=>{
         if(res.data.message === "true"){

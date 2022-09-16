@@ -44,10 +44,13 @@ const ForgotPassword = ({theme, setTheme}) => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post("http://localhost:8000/newpassword", user)
       .then( res => {
-        if(res.data.message === "true"){
+        if(res.data.errors){
+          setFormErrors(res.data.errors);
+        }
+        else if(res.data.message === "true"){
           navigate("/login");
         }else {
-          setFormErrors({final: res.data.message})
+          setFormErrors({final: res.data.message});
         }
       });
     }

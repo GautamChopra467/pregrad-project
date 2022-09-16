@@ -35,28 +35,28 @@ module.exports = {
                 EDIT_PROFILE:'/editprofiledetails/:id'
             },
             ACHIEVEMENTS:{
-               POST_ACHIEVEMENT:'/achievements',
+               POST_ACHIEVEMENT:'/achievements/:id',
                GET_ACHIEVEMENT:'/getachievements/:id',
                DELETE_ACHIEVEMENT:'/deleteachievement/:u_id/:id',
                UPDATE_ACHIEVEMENT:'/updateachievement/:u_id/:id',
                UPDATED_ACHIEVEMENT:'/updatedachievement/:u_id/:id'
             },
             PROJECTS:{
-                POST_PROJECT:'/projects',
+                POST_PROJECT:'/projects/:id',
                 GET_PROJECT:'/getprojects/:id',
                 DELETE_PROJECT:'/deleteproject/:u_id/:id',
                 UPDATE_PROJECT:'/updateproject/:u_id/:id',
                 UPDATED_PROJECT:'/updatedproject/:u_id/:id'
             },
             EDUCATIONS:{
-                POST_EDUCATION:'/education',
+                POST_EDUCATION:'/education/:id',
                 GET_EDUCATION:'/geteducation/:id',
                 DELETE_EDUCATION:'/deleteeducation/:u_id/:id',
                 UPDATE_EDUCATION:'/updateeducation/:u_id/:id',
                 UPDATED_EDUCATION:'/updatededucation/:u_id/:id'
             },
             WORKEXPERIENCE:{
-                POST_WORKEXPERIENCE:'/workexperience',
+                POST_WORKEXPERIENCE:'/workexperience/:id',
                 GET_WORKEXPERIENCE:'/getworkexperience/:id',
                 DELETE_WORKEXPERIENCE:'/deleteworkexperience/:u_id/:id',
                 UPDATE_WORKEXPERIENCE:'/updateworkexperience/:u_id/:id',
@@ -72,7 +72,7 @@ module.exports = {
             }
         },
         INTERNSHIP:{
-            REPORT:"/report/:id"
+            REPORT:"/report/:i_id/:id"
         }
     }
 }

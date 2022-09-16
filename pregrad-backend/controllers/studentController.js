@@ -7,7 +7,10 @@ const Company = require('../models/companyModel')
 
 module.exports.studentAchievement = async(req,res)=>{
 
-    const {id,title,certificate} = req.body
+    const {id} = req.params;
+
+    const {title,certificate} = req.body;
+    
   const student = await StudentInfo.findOne({id})
  if(student)
  {
