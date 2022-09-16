@@ -45,63 +45,66 @@ const {APPLIED,GET_APPLIED} = require("../utils/constants/app_constants").ROUTES
 
 const {DETAILS} = require("../utils/constants/app_constants").ROUTES.STUDENT.DETAILSONE;
 
-const Handler = require("../ErrorHandling/StudentInfo/InfoError")
+
+
+const Handler = require("../ErrorHandling/StudentInfo/InfoError");
+
 // getAll Data
 
 router.route(PROFILE_DETAIL).get(allStudentData);
 
 // achievement route
 
-router.route(POST_ACHIEVEMENT).post(Handler.achievement,studentAchievement)
+router.route(POST_ACHIEVEMENT).post(Handler.achievement,studentAchievement);
 
-router.route(GET_ACHIEVEMENT).get(getAchievementInfo)
+router.route(GET_ACHIEVEMENT).get(getAchievementInfo);
 
-router.route(DELETE_ACHIEVEMENT).delete(deleteAchievement)
+router.route(DELETE_ACHIEVEMENT).delete(deleteAchievement);
 
-router.route(UPDATE_ACHIEVEMENT).get(updateAchievement)
+router.route(UPDATE_ACHIEVEMENT).get(updateAchievement);
 
-router.route(UPDATED_ACHIEVEMENT).put(updatedAchievement)
+router.route(UPDATED_ACHIEVEMENT).put(Handler.updatedAchievement,updatedAchievement);
 
 //project routes
 
-router.route(POST_PROJECT).post(studentProject)
+router.route(POST_PROJECT).post(Handler.project,studentProject);
 
-router.route(GET_PROJECT).get(getProjectsInfo)
+router.route(GET_PROJECT).get(getProjectsInfo);
 
-router.route(DELETE_PROJECT).delete(deleteProject)
+router.route(DELETE_PROJECT).delete(deleteProject);
 
-router.route(UPDATE_PROJECT).get(updateProject)
+router.route(UPDATE_PROJECT).get(updateProject);
 
-router.route(UPDATED_PROJECT).put(updatedProject)
+router.route(UPDATED_PROJECT).put(Handler.updatedProject,updatedProject);
 
  
 //education route
 
-router.route(POST_EDUCATION).post(studentEducation)
+router.route(POST_EDUCATION).post(Handler.education,studentEducation);
 
-router.route(GET_EDUCATION).get(getEducationInfo)
+router.route(GET_EDUCATION).get(getEducationInfo);
 
 router.route(DELETE_EDUCATION).delete(deleteEducation)
 
 router.route(UPDATE_EDUCATION).get(updateEducation)
 
-router.route(UPDATED_EDUCATION).put(updatedEducation)
+router.route(UPDATED_EDUCATION).put(Handler.updatedEducation,updatedEducation)
 
 // workexperience route
 
-router.route(POST_WORKEXPERIENCE).post(studentWorkExperience)
+router.route(POST_WORKEXPERIENCE).post(Handler.workexperience,studentWorkExperience);
 
-router.route(GET_WORKEXPERIENCE).get(getWorkExperienceInfo)
+router.route(GET_WORKEXPERIENCE).get(getWorkExperienceInfo);
 
-router.route(DELETE_WORKEXPERIENCE).delete(deleteWorkExperience)
+router.route(DELETE_WORKEXPERIENCE).delete(deleteWorkExperience);
 
-router.route(UPDATE_WORKEXPERIENCE).get(updateWorkExperience)
+router.route(UPDATE_WORKEXPERIENCE).get(updateWorkExperience);
 
-router.route(UPDATED_WORKEXPERIENCE).put(updatedWorkExperience)
+router.route(UPDATED_WORKEXPERIENCE).put(Handler.updatedWorkexperience,updatedWorkExperience);
 
 //detailsone route
 
-router.route(DETAILS).post(Handler.detailsOne,detailsOne)
+router.route(DETAILS).post(Handler.detailsOne,detailsOne);
 
 //profile health Route
 
@@ -109,10 +112,10 @@ router.route(PROFILEHEALTH).get(profileHealth)
 
 //edit profile
 
-router.route(EDIT_PROFILE).put(editProfileDetails)
+router.route(EDIT_PROFILE).put(Handler.editProfiledetails,editProfileDetails);
 
-router.route(APPLIED).post(appliedInternship)
+router.route(APPLIED).post(appliedInternship);
 
-router.route(GET_APPLIED).get(getappliedInternship)
+router.route(GET_APPLIED).get(getappliedInternship);
 
 module.exports = router

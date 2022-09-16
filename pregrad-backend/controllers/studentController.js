@@ -10,7 +10,7 @@ module.exports.studentAchievement = async(req,res)=>{
     const {id} = req.params;
 
     const {title,certificate} = req.body;
-    
+
   const student = await StudentInfo.findOne({id})
  if(student)
  {
@@ -101,21 +101,10 @@ module.exports.updateAchievement = async(req,res)=>{
 
 module.exports.updatedAchievement = async(req,res)=>{
     try{
-        const {u_id,id} = req.params
 
-        const errors = {};
+    const {u_id,id} = req.params;
 
-    const {title,certificate} = req.body
-
-    if(!title){
-        errors.title = "Name required";
-    }else if(title.length < 3){
-        errors.title = "Min 3 characters required";
-    }
-    if(!certificate){
-        errors.certificate = "Certificate link required";
-    }
-    
+    const {title,certificate} = req.body;
 
     const user = await StudentInfo.findOne({id:u_id})
 
@@ -138,7 +127,9 @@ module.exports.updatedAchievement = async(req,res)=>{
 module.exports.studentProject = async(req,res)=>{
   try{
 
-       const {id,projecttitle,description,skills,projectlink} = req.body
+    const {id} = req.params;
+
+    const {projecttitle,description,skills,projectlink} = req.body;
    
    const student = await StudentInfo.findOne({id})
 
@@ -226,34 +217,20 @@ module.exports.deleteProject = async(req,res)=>{
 module.exports.updatedProject = async(req,res)=>{
 
     try{
-        const {u_id,id} = req.params
-        const errors = {}
-        const {projecttitle,description,projectlink,skills} = req.body
+
+    const {u_id,id} = req.params;
         
-         if(!projecttitle ){
-           errors.projecttitle = "Title Required";
-         }
-         if(!description){
-                errors.description = "Description required";
-         }
-         if(skills.length < 3){
-            errors.skills = "Minimum 3 skills required";
-         }
-         if(!projectlink){
-            errors.projectlink = "Project Link required";
-         }
+    const {projecttitle,description,projectlink,skills} = req.body;
 
-      
+    const user = await StudentInfo.findOne({id:u_id});
 
-    const user = await StudentInfo.findOne({id:u_id})
+    const data = await user.project.id(id);
 
-    const data = await user.project.id(id)
+    data.set(req.body);
 
-    data.set(req.body)
-
-    await user.save()
+    await user.save();
     
-    res.send({project:user.project,errors:errors})
+    res.send({project:user.project,errors:errors});
 
 }catch(err){
     console.log(err)
@@ -264,14 +241,13 @@ module.exports.updatedProject = async(req,res)=>{
 
 module.exports.updateProject = async(req,res)=>{
     try{
-        const {u_id,id} = req.params
-     
+        const {u_id,id} = req.params;
 
-        const user = await StudentInfo.findOne({id:u_id})
+        const user = await StudentInfo.findOne({id:u_id});
     
-        const data = await user.project.id(id)
+        const data = await user.project.id(id);
     
-        res.send(data)
+        res.send(data);
     
     }catch(err){
         console.log(err)
@@ -282,7 +258,9 @@ module.exports.updateProject = async(req,res)=>{
 
 module.exports.studentEducation = async(req,res)=>{
 
-const {id,university,field,start,end,degree} = req.body
+const {id} = req.params;
+
+const {university,field,start,end,degree} = req.body;
 
 const student =await StudentInfo.findOne({id})
 
@@ -336,7 +314,7 @@ res.send({message:"true"})
 
 module.exports.getEducationInfo = async(req,res)=>{
     
-    const {id} = req.params
+    const {id} = req.params;
 
     const  student = await StudentInfo.findOne({id})
 
@@ -370,34 +348,9 @@ module.exports.deleteEducation = async(req,res)=>{
 module.exports.updatedEducation = async(req,res)=>{
 
     try{
-        const {u_id,id} = req.params
+    const {u_id,id} = req.params
 
-        const errors = {};
-
-        const {university,field,end,start,degree} = req.body
-    
-        if(!university){
-            errors.university = "Name required";
-        }
-        if(!field){
-                errors.field = "Field of study required";
-        }
-        if(!end){
-            errors.end = "End year required";
-        }
-        else if(end.length !== 4 || (!Number.isInteger(parseFloat(end))) || (isNaN(end))){
-            errors.end = "Invalid Year";
-          }
-        if(!start){
-            errors.start = "Start year required";
-        }
-        else if(start.length !== 4 || (!Number.isInteger(parseFloat(start))) || (isNaN(start))){
-            errors.start = "Invalid Year";
-          }
-        if(!degree){
-            errors.degree = "Degree required";
-        }
-       
+    const {university,field,end,start,degree} = req.body;
 
     const user = await StudentInfo.findOne({id:u_id})
 
@@ -437,9 +390,11 @@ module.exports.updateEducation = async(req,res)=>{
 
 module.exports.studentWorkExperience = async(req,res)=>{
 
-    const {id,companyname,websitelink,position,skills,role,duration} = req.body
+    const {id} = req.params;
 
-const student =await StudentInfo.findOne({id})
+    const {companyname,websitelink,position,skills,role,duration} = req.body
+
+ const student =await StudentInfo.findOne({id})
 
     if(student){
 
@@ -526,33 +481,10 @@ module.exports.deleteWorkExperience = async(req,res)=>{
 
 module.exports.updatedWorkExperience = async(req,res)=>{
     try{
-        const {u_id,id} = req.params
-        const errors = {}
-        const {companyname,websitelink,position,skills,role,duration} = req.body
 
-        if(!companyname){
-            errors.companyname = "Name required";
-          }
-          if(!websitelink){
-                 errors.websitelink = "Website Link required";
-          }
-          if(skills.length < 3){
-             errors.skills = "Minimum 3 skills required";
-          }
-          if(!position){
-             errors.position = "Position of responsibility required";
-          }
-          if(!role){
-            errors.role = "Description of role required";
-          }
-          if(!duration){
-            errors.duration = "Duration required";
-          }
-          else if(duration < 1){
-            errors.duration = "Duration should be greater than 1"
-          }else if(!Number.isInteger(parseFloat(duration))){
-            errors.duration = "Duration should not be in decimal"
-          }
+    const {u_id,id} = req.params
+        
+    const {companyname,websitelink,position,skills,role,duration} = req.body
 
     const user = await StudentInfo.findOne({id:u_id})
 
@@ -713,8 +645,9 @@ module.exports.profileHealth = async(req,res)=>{
 
 module.exports.editProfileDetails = async(req,res)=>{
   try{
-    const {id} = req.params
-     console.log(req.body.links)
+
+    const {id} = req.params;
+
     const student = await StudentInfo.findOne({id})
 
     if(student){

@@ -18,7 +18,7 @@ const DashboardAdmin = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const {id} = useParams()
+  const {id} = useParams();
   
   const [companydetails,setCompanyDetails] = useState({})
  
@@ -165,7 +165,7 @@ const getCompanyDetails = ()=>{
 }
 
 useEffect(()=>{
-  navigate(`/admin/info/dashboard`);
+  navigate(`/admin/info/${id}/dashboard`);
 },[])
  
   // useEffect(() => {

@@ -39,7 +39,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
     axios.post(`http://localhost:8000/internship/report/${reportingId}/${id}`,
       info
     ).then(({data})=>{
-      if(data.success){
+      if(data.error){
+        setError(data.error);
+      }
+     else{
         setIsModal(!isModal);
       }
     })

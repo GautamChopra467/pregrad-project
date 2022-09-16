@@ -5,6 +5,8 @@ const {reportInternship} = require("../controllers/internshipController")
 
 const {REPORT} = require("../utils/constants/app_constants").ROUTES.INTERNSHIP;
 
-router.route(REPORT).post(reportInternship);
+const Handler = require("../ErrorHandling/CompanyInfo/InfoError");
+
+router.route(REPORT).post(Handler.report,reportInternship);
 
 module.exports = router;

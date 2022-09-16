@@ -193,16 +193,28 @@ const getCompanyDetails = ()=>{
     if( Object.keys(formErrors).length === 0 && isSubmit ){
         axios.put(`http://localhost:8000/company/editprofile/${id}`,{
           ...editDetailsProfile
+        }).then(({data})=>{
+          if(data.errors){
+            setFormErrors(data.errors);
+          }
+          else{
+            setIsModal(!isModal)
+          }
         })
-        setIsModal(!isModal)
     }
 
     if(Object.keys(formErrors2).length == 0 && isSubmit2){
       axios.put(`http://localhost:8000/company/editaccount/${id}`,{
         ...accountInfo
-      })
-      setIsModal2(!isModal2)
-    } 
+      }).then(({data})=>{
+        if(data.errors){
+          setFormErrors(data.errors);
+        }
+        else{
+          setIsModal2(!isModal)
+        }
+    })
+  }
   },[formErrors, formErrors2,cookies,setCookie,removeCookie]);
 
   const initials = companydetails.companyname

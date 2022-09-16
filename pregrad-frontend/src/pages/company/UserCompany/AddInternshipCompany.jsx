@@ -258,18 +258,29 @@ const AddInternshipCompany = () => {
         const iid = query[1].split("=")[1];
         axios.put(`http://localhost:8000/company/editinternships/${iid}`,{  
           ...addInternship
-        })
-      
-      }else{
+        }).then(({data})=>{
+          if(data.errors){
+            setFormErrors(data.errors);
+          }else{
+            navigate(`/company/info/${id}/listings`)
+          }
+      })
+    }
+    else{
         axios.post(`http://localhost:8000/company/addinternships/${id}`,{
           ...addInternship
+        }).then(({data})=>{
+          if(data.errors){
+            setFormErrors(data.errors);
+          }else{
+            navigate(`/company/info/${id}/listings`)
+          }
         })
       }  
-      navigate(`/company/info/${id}/listings`)
     }
 
     if(type == "editinternship"){
-      setEditInternship()
+      setEditInternship();
     } 
 
   }, [formErrors])

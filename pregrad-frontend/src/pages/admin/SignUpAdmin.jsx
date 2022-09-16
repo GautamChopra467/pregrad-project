@@ -24,11 +24,9 @@ const SignUpAdmin = ({theme, setTheme}) => {
 
   const [user, setUser] = useState({
     name: "",
-    companyname: "",
-    designation: "",
     email: "",
     password: "",
-    mobile: "",
+    confirmpassword:""
   });
 
   const handleForm = (e) => {
@@ -47,18 +45,22 @@ const SignUpAdmin = ({theme, setTheme}) => {
 
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/company/register", user)
+      axios.post("http://localhost:8000/admin/register", user)
       .then( res => {
-        if(res.data.message === "true"){
+        if(res.data.errors){
+          setFormErrors(res.data.errors);
+        }
+        else if(res.data.message === "true"){
           navigate(`/emailverify/${type}`);
         }else {
           setFormErrors({final: res.data.message});
-        }
+        } 
       });
     }
   }, [formErrors]);
 
   const validate = (values) => {
+
     const errors = {};
     const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -187,7 +189,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
                 </div>
 
                 <button type="submit" onClick={submitForm} className="create-btn_signupadmin">
-                  Create New Account
+                  Create Admin
                   <BsArrowRightShort size={27} className="create-btn-logo_signupadmin" />
                 </button> 
 
@@ -201,7 +203,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
 
               <div className="bottom-part_signupadmin">
                 <p>Have an account ? </p>
-                <Link to="/login">&nbsp;Login Now</Link>
+                <Link to="/login">&nbsp;Sign In Now</Link>
               </div>
             </div>
           </div>

@@ -87,8 +87,7 @@ const Projects = () => {
   const [project, setProject] = useState({
     projecttitle: "",
     description: "",
-    projectlink: "",
-    id
+    projectlink: ""
   });   
 
   const updateForm = (e)=>{
@@ -151,10 +150,13 @@ const getProjects = async()=>{
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/student/projects`,{
+      axios.post(`http://localhost:8000/student/projects/${id}`,{
             ...project,skills:selectedSkills
       }).then(res=>{
-        if(res.data.message==="true"){
+        if(res.data.errors){
+          setFormErrors(res.data.errors);
+        }
+        else if(res.data.message==="true"){
           setIsModal(!isModal)
            getProjects()
         }else if(res.data.message === "You cannot add duplicate information"){

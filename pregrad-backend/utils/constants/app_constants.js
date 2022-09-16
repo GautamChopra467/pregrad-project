@@ -8,6 +8,7 @@ module.exports = {
             VERIFYOTP:"/verifyOtp",
             STUDENT:'/student',
             COMPANY:'/company',
+            ADMIN:'/checkadmin',
             NEWPASSWORD:'/newpassword',
             USERDETAILS:'/userDetails/:id'
         },
@@ -73,6 +74,9 @@ module.exports = {
         },
         INTERNSHIP:{
             REPORT:"/report/:i_id/:id"
+        },
+        ADMIN:{
+            ADMINREGISTER:"/register"
         }
     }
 }

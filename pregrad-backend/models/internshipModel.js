@@ -60,6 +60,10 @@ const internshipSchema = new mongoose.Schema({
     reports:{
         type:Array,
         default:[]
+    },
+    isBlocked:{
+        type:Boolean,
+        default:false
     }
 })
 

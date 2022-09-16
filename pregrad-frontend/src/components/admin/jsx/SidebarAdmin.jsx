@@ -24,17 +24,17 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
 
     const routes = [
         {
-          path: `/admin/info/dashboard`,
+          path: `/admin/info/${id}/dashboard`,
           name: "dashboard",
           icon: <IoIosStats size={isOpenSidebar ? "20" : "24"} />,
         },
         {
-          path: `/admin/info/verification`,
+          path: `/admin/info/${id}/verification`,
           name: "verification",
           icon: <MdOutlineVerified size={isOpenSidebar ? "20" : "24"} />,
         },
         {
-          path: `/admin/info/reports`,
+          path: `/admin/info/${id}/reports`,
           name: "reports",
           icon: <TbReportSearch size={isOpenSidebar ? "20" : "24"} />,
         }

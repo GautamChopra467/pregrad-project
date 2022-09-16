@@ -1,8 +1,9 @@
 const UserRegister = require("../models/userModel");
-const Otp = require('../models/OtpVerifyModel')
-const Company = require('../models/companyModel')
-const nodemailer = require('nodemailer')
-const {google} = require('googleapis')
+const Otp = require('../models/OtpVerifyModel');
+const Company = require('../models/companyModel');
+const Admin = require("../models/adminModel");
+const nodemailer = require('nodemailer');
+const {google} = require('googleapis');
 const bcrypt = require('bcryptjs')
 
 
@@ -65,7 +66,7 @@ module.exports.signup = async (req, res) => {
   const company = await Company.findOne({email})
 
   if(company){
-    res.send({ message: "User Already Registered" });
+   return res.send({ message: "User Already Registered" });
   }else{
     UserRegister.findOne({ email: email }, async (err, user) => {
       if (user) {
@@ -98,7 +99,8 @@ try{
 
   const user = await UserRegister.findOne({email})
  const company = await Company.findOne({email})
- 
+ const admin = await Admin.findOne({email});
+
   if(user)
   { 
 
@@ -142,6 +144,27 @@ try{
     }
     }
   }
+  else if(admin){
+
+    if(req.query.type == 'register')
+    {
+      if(admin.verified == false)
+      {
+      sendOtpToVerify(admin);
+      res.send({ message: "true",type:"register" });
+    }else{
+      res.send({ message: "Already Verified" });
+    }
+    }else{
+      if(admin.verified == true)
+      {
+        sendOtpToVerify(admin);
+        res.send({ message: "true",type:"forgotpassword" });
+    }else{
+      res.send({ message: "Invalid" });
+    }
+    }
+  }
   else{
     res.send({ message: "Please Enter a register Email Id" });
 }
@@ -177,6 +200,8 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 
         const company = await Company.findOne({email});
 
+        const admin = await Admin.findOne({email});
+
         if(student){
 
         await UserRegister.updateOne({email},{$set:{
@@ -186,6 +211,12 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
          res.send({message:"true"});
      }else if(company){
       await Company.updateOne({email},{$set:{
+        verified:true
+      }})
+       await Otp.deleteOne({email});
+       res.send({message:"true"});
+    }else if(admin){
+      await Admin.updateOne({email},{$set:{
         verified:true
       }})
        await Otp.deleteOne({email});
@@ -204,10 +235,8 @@ const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 
 module.exports.login = async (req, res) => {
   try{  
-
-    console.log("Welcome to Login");
    
-  const {email, password} = req.body;
+    const {email, password} = req.body;
  
     const user = await UserRegister.login(email,password)
 
@@ -228,7 +257,23 @@ module.exports.login = async (req, res) => {
         res.send({usertype:"company",id:company._id,verified:company.detailFlag})
 
       }else{
-       res.send({message:"Invalid Credentials"})
+        const admin = await Admin.login(email,password);
+
+        if(admin){
+
+          const token = createToken(company._id)
+
+          res.cookie("jwt",token,{
+            withCredentials:true,
+            httpOnly:false,
+            maxAge:maxAge*1000
+          })
+
+          res.send({usertype:admin.role,id:admin._id});
+        }else{
+
+          return res.send({message:"Invalid Credentials"})
+        }
     }
   }
 else{

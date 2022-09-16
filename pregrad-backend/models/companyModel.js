@@ -29,10 +29,6 @@ const companySchema = new mongoose.Schema({
     detailFlag:{
         type: Boolean,
         default: false
-    },
-    authorized:{
-        type: Boolean,
-        default: false
     }
 
 })

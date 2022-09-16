@@ -103,18 +103,22 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
       axios.post(`http://localhost:8000/company/companydetails/${id}`,{
         ...companyDetails
        }).then(({data})=>{
-        if(data.message == "true" && data.verified == true)
+        if(data.errors){
+          setFormErrors(data.errors);
+        }
+        else if(data.message == "true" && data.verified == true)
         {
           navigate(`/company/info/${id}/dashboard`)
         }else{
           navigate(`/company/${id}/detailsone`)
         }
-       }) 
+       });
   }
 
 },[formErrors,cookies,navigate,removeCookie])
 
   const validate = (values) => {
+    
     const errors = {};
 
     if(!values.linkedin){

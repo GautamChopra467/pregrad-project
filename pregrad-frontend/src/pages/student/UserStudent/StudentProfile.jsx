@@ -246,15 +246,19 @@ const [video,setVideo] = useState()
   }
 
 
-
   const editProfileDetails = (e)=>{
     e.preventDefault()
     axios.put(`http://localhost:8000/student/editprofiledetails/${id}`,{
       ...editProfileObject
     }).then(({data})=>{
-      getUserDetails()
-      getUserData()
-      setIsModal(!isModal)
+      if(data.errors){
+        setFormErrors(data.errors);
+      }
+      else{
+        // getUserDetails();
+        getUserData();
+        setIsModal(!isModal);
+      }
     })
   }
 
@@ -570,6 +574,7 @@ const [video,setVideo] = useState()
                     </div>
                   ))}
                 </div>
+                <p className="errors_msg_studentprofile">{formErrors.domain}</p>
               </div>
 
               <div className="form_box_studentprofile">
@@ -589,7 +594,7 @@ const [video,setVideo] = useState()
                     </div>
                   ))}
                 </div>
-              
+                <p className="errors_msg_studentprofile">{formErrors.skills}</p>
               </div>
 
 
@@ -597,7 +602,7 @@ const [video,setVideo] = useState()
                 <label> Linkedin Link *</label>
 
                 <input type="url" name="linkedin" defaultValue={studentSocialLink.linkedin} onChange={handleLinks} placeholder="Enter your linkedin link" />
-                <p>{formErrors.linkedin}</p>
+                <p className="errors_msg_studentprofile">{formErrors.linkedin}</p>
               </div>
 
               <div className="form_box_studentprofile">

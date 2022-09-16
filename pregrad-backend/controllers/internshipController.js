@@ -33,7 +33,9 @@ try{
      startfrom:req.body.info.startdate
     })
 
-    await newinternship.save()
+    await newinternship.save();
+
+    res.send({message:true});
 
 }catch(err){
      console.log(err)
@@ -105,6 +107,8 @@ module.exports.editInternship = async(req,res)=>{
 
                }
           })
+
+          res.send({message:true});
           
      }catch(err){
           console.log(err)
@@ -240,8 +244,6 @@ try{
 module.exports.rejectedApplicants = async(req,res)=>{
 
      const {id} = req.params;
-
-   
 
      let count = 0;
      
