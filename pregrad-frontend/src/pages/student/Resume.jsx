@@ -24,6 +24,7 @@ const Resume = ({theme, setTheme}) => {
   const [studentSkill,setStudentSkills] = useState([])
   const [studentDomain,setstudentDomain]= useState([])
   const [studentSocialLink,setStudentSocialLink]= useState({})
+  const [videoLink,setVideoLink]= useState("")
 
   const {id} = useParams()
 
@@ -48,6 +49,7 @@ const Resume = ({theme, setTheme}) => {
         setStudentSkills(data.skills)
         setstudentDomain(data.domain)
         setStudentSocialLink(data.socialLink)
+        setVideoLink(data.videolink)
       }
       }
     
@@ -77,7 +79,7 @@ const Resume = ({theme, setTheme}) => {
                 </div>
 
                 <div className="profile_edit3_resume" title="Video Resume">
-                  <FaRegFileVideo />
+                  <a href={videoLink} target="_blank"><FaRegFileVideo /></a>
                 </div>
             </div>
 
@@ -111,7 +113,7 @@ const Resume = ({theme, setTheme}) => {
                 </ReactTooltip>
 
                 <div className="profile_edit_resume" data-tip data-for="videoResume">
-                  <FaRegFileVideo />
+                  <a href={videoLink} target="_blank"><FaRegFileVideo /></a>
                 </div>
                 <ReactTooltip id="videoResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
                   <span>Video resume - An Introductory video for your resume</span>
@@ -130,9 +132,9 @@ const Resume = ({theme, setTheme}) => {
               <div className="line_resume"></div>
               <div className="social_links_box_resume">
                 
-              {  studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_resume" />)}
-                {  studentSocialLink.linkedin == ""?(""): ( <AiFillLinkedin className="social_links_resume" />)}
-                {  studentSocialLink.instagram == ""?(""): (  <AiFillInstagram className="social_links_resume" />)}
+              {  studentSocialLink.github == ""?(""): (<a href={studentSocialLink.github} target="_blank"><AiFillGithub className="social_links_resume" /></a>)}
+                {  studentSocialLink.linkedin == ""?(""): (<a href={studentSocialLink.linkedin} target="_blank"><AiFillLinkedin className="social_links_resume" /></a>)}
+                {  studentSocialLink.instagram == ""?(""): (<a href={studentSocialLink.instagram} target="_blank"><AiFillInstagram className="social_links_resume" /></a>)}
                   
               </div>
             </div>
@@ -173,7 +175,7 @@ const Resume = ({theme, setTheme}) => {
               Achievement.map((achi)=>(
                 <div className="achievements_info_box_resume" key={achi._id}>
                 <h3>{achi.title}</h3>
-                <a href={achi.certificate}>Certificate Link</a>
+                <a href={achi.certificate} target="_blank">Certificate Link</a>
               </div>
               ))
               }
@@ -188,13 +190,15 @@ const Resume = ({theme, setTheme}) => {
               WorkExperience.map((work)=>(
               <div className="workexperience_details_box_resume" key={work._id}>
                 <h3>{work.companyname}</h3>
-                <h5>{work.position} | {work.duration}</h5>
+                <h5>{work.position} | {work.duration} months</h5>
                 <p>
                 {work.role}  
                 </p>
                 <div className="skills_content_resume">
                   <ul>
-                    <li>{work.skills}</li>
+                    {work.skills.map((skill) => (
+                      <li>{skill}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -212,7 +216,7 @@ const Resume = ({theme, setTheme}) => {
                 <p>
                 {proj.description}
                 </p>
-                <a href={proj.projectlink} data-tip data-for="projectLink">
+                <a href={proj.projectlink} target="_blank" data-tip data-for="projectLink">
                   <BiLink size={24} className="project_details_icon_resume" />
                 </a>
                 <ReactTooltip id="projectLink" place="left" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click">
@@ -220,7 +224,9 @@ const Resume = ({theme, setTheme}) => {
                 </ReactTooltip>
                 <div className="skills_content_resume">
                   <ul>
-                    <li>{proj.skills}</li>
+                  {proj.skills.map((skill) => (
+                      <li>{skill}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -338,13 +344,15 @@ const Resume = ({theme, setTheme}) => {
            WorkExperience.map((work)=>(
             <div className="workexperience_details_box_resumestudent">
             <h3>{work.companyname}</h3>
-            <h5>{work.position} | {work.duration}</h5>
+            <h5>{work.position} | {work.duration} months</h5>
           <p>
          {work.role}
           </p>
           <div className="skills_content_resumestudent">
               <ul>
-                  <li>{work.skills}</li>
+                {work.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
               </ul>
           </div>
           </div>
@@ -378,7 +386,9 @@ const Resume = ({theme, setTheme}) => {
               </a>
               <div className="skills_content_resumestudent">
                 <ul>
-                  <li>{proj.skills}</li>
+                {proj.skills.map((skill) => (
+                      <li>{skill}</li>
+                    ))}
                 </ul>
               </div>
             </div>))

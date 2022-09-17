@@ -2,7 +2,6 @@ module.exports = {
 
     detailsOne(req,res,next){
         const errors = {};
-  
         if(!req.body.selectedCollege){
           errors.college = "College name required"
         }
@@ -23,7 +22,7 @@ module.exports = {
           errors.location = "Work location required"
         }
     
-        if(!req.body.linkedin){
+        if(!req.body.socialLink.linkedin){
           errors.linkedin = "Link required";
         }
 

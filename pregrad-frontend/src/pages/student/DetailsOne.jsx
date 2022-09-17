@@ -125,11 +125,7 @@ const DetailsOne = ({theme, setTheme}) => {
   }
 
   const handleVideo = (e) => {
-    const {name, value} = e.target;
-    setVideo({
-      ...video,
-      [name]: value
-    })
+    setVideo(e.target.value)
   }
 
   const detailsOneStudent= {
@@ -155,6 +151,7 @@ const DetailsOne = ({theme, setTheme}) => {
         navigate(`/student/${id}/internships`)
       }else{
         navigate(`/student/${id}/detailsone`)
+        setUser(data);
        } 
     })
   }
@@ -328,7 +325,7 @@ const DetailsOne = ({theme, setTheme}) => {
               </div>
 
               <div className="form_box_detailsOne box7_detailsOne">
-                <label className="label_detailsOne">Q. Linkedin Link </label>
+                <label className="label_detailsOne">Q. Linkedin Link</label>
                 <input type="url" name="linkedin" value={socialLink.linkedin} onChange={handleForm} placeholder="Enter your linkedin link" />
                 <p className="errors_msg_detailsOne">{formErrors.linkedin}</p>
               </div>

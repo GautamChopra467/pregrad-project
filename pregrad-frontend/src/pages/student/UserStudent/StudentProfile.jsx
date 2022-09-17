@@ -263,7 +263,7 @@ const [video,setVideo] = useState()
   }
 
   const copyLink = async () => {
-    await window.navigator.clipboard.writeText(`/resume/${id}`)
+    await window.navigator.clipboard.writeText(`localhost:3000/resume/${id}`)
     toast.success('Link copied successfully', {
       position: "bottom-left",
       autoClose: 3000,
@@ -313,6 +313,7 @@ const [video,setVideo] = useState()
                 </div>
 
                 <div className="profile_edit3_studentprofile" title="Video Resume">
+                  
                 <a href={video} target="_blank"><FaRegFileVideo /></a>
                 </div>
 
@@ -384,9 +385,9 @@ const [video,setVideo] = useState()
               <div className="line_studentprofile"></div>
               <div className="social_links_box_studentprofile">
                 
-                {  studentSocialLink.github == ""?(""): (<AiFillGithub className="social_links_studentprofile" />)}
-                {  studentSocialLink.linkedin == ""?(""): ( <AiFillLinkedin className="social_links_studentprofile" />)}
-                {  studentSocialLink.instagram == ""?(""): (  <AiFillInstagram className="social_links_studentprofile" />)}
+                {  studentSocialLink.github == ""?(""): (<a target="_blank" href={studentSocialLink.github}><AiFillGithub className="social_links_studentprofile" /></a>)}
+                {  studentSocialLink.linkedin == ""?(""): (<a target="_blank" href={studentSocialLink.linkedin}><AiFillLinkedin className="social_links_studentprofile" /></a>)}
+                {  studentSocialLink.instagram == ""?(""): (<a target="_blank" href={studentSocialLink.instagram}><AiFillInstagram className="social_links_studentprofile" /></a>)}
                   
                 
                 
@@ -466,7 +467,10 @@ const [video,setVideo] = useState()
                 </p>
                 <div className="skills_content_studentprofile">
                   <ul>
-                    <li>{work.skills}</li>
+                    {work.skills.map((skill) => (
+                      <li>{skill}</li>
+                    ))}
+                    
                   </ul>
                 </div>
               </div>
@@ -501,7 +505,9 @@ const [video,setVideo] = useState()
                 </ReactTooltip>
                 <div className="skills_content_studentprofile">
                   <ul>
-                    <li>{proj.skills}</li>
+                    {proj.skills.map((skill) => (
+                      <li>{skill}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -525,7 +531,7 @@ const [video,setVideo] = useState()
         <div className='modal2_box_studentprofile'>
           <h2>Share Profile</h2>
           <div className="modal2_copy_container_studentprofile">
-            <input type="text" disabled value={`/resume/${id}`} />
+            <input type="text" disabled value={`localhost:3000/resume/${id}`} />
             <button onClick={copyLink}><FiCopy /> Copy Link</button>
           </div>
           <FaTimes onClick={() => setIsModal2(!isModal2)} className="modal2_close_icon_studentprofile" />
@@ -744,7 +750,9 @@ const [video,setVideo] = useState()
           </p>
           <div className="skills_content_resumestudent">
               <ul>
-                  <li>{work.skills}</li>
+                {work.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
               </ul>
           </div>
           </div>
@@ -778,7 +786,9 @@ const [video,setVideo] = useState()
               </a>
               <div className="skills_content_resumestudent">
                 <ul>
-                  <li>{proj.skills}</li>
+                {proj.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
                 </ul>
               </div>
             </div>))

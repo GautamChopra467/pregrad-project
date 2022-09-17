@@ -7,7 +7,6 @@ import Student from "./pages/student/Student";
 import EmailVerify from "./pages/student/EmailVerify";
 import OTPVerify from "./pages/student/OTPVerify";
 import ForgotPassword from "./pages/student/ForgotPassword";
-import ResumeStudent from "./pages/student/UserStudent/ResumeStudent";
 import DetailsOne from "./pages/student/DetailsOne";
 import Resume from "./pages/student/Resume";
 import { ToastContainer } from 'react-toastify';
@@ -43,7 +42,6 @@ const App = () => {
         <Route exact path="/otpverify/:email/:type" element={<OTPVerify theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/student/:id/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
-        {/* <Route exact path="/resume" element={<ResumeStudent />} /> */}
         <Route exact path="/resume/:id" element={<Resume theme={theme} setTheme={setTheme}/>} />
         <Route exact path="*" element={<Error404 />} />
 

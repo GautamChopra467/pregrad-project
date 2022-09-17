@@ -568,7 +568,8 @@ module,exports.detailsOne = async(req,res)=>{
                 skills:req.body.selectedSkills,
                 domain:req.body.selectedDomains,
                 socialLinks:req.body.socialLink,
-                location:req.body.selectedLocation
+                location:req.body.selectedLocation,
+                video:req.body.video
             })
 
             await newStudent.save()
