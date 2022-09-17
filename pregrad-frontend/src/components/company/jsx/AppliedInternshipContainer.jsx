@@ -27,6 +27,8 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
     }
   
   const [reportingId,setReportingId] = useState("");
+  const [reportingTitle,setReportingTitle] = useState("");
+
   const [isModal, setIsModal] = useState(false);
   const [error, setError] = useState("");
   const [option1, setOption1] = useState(false);
@@ -58,9 +60,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
       getAppliedInternship()
     },[])
 
-    const getRepotingId = (id)=>{
+    const getRepotingId = (id,title)=>{
       setReportingId(id);
-      setIsModal(!isModal)
+      setReportingTitle(title);
+      setIsModal(!isModal);
     } 
 
   return (
@@ -98,7 +101,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 <p>{(applied._doc.status) ? "Active" : "Closed"}</p>
               </div>
 
-              <div className='report_icon_container_appliedinternship' onClick={() => getRepotingId(applied._doc._id)}>
+              <div className='report_icon_container_appliedinternship' onClick={() => getRepotingId(applied._doc._id,applied._doc.title)}>
                 <MdOutlineReportGmailerrorred className="report_icon_appliedinternship"/>
               </div>
               {/* setIsModal(!isModal) */}
@@ -128,12 +131,11 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
               </div> */}
               {
                 applied._doc.applied.map((value)=>(
-                  (value.id === id) ? (<div className={value.status === "Applied" ? "skill_section_appliedinternship applied_status_appliedinternship" : (
+                  (value.id === id) ? (<div key={value.id} className={value.status === "Applied" ? "skill_section_appliedinternship applied_status_appliedinternship" : (
                     value.status === "Hired" ? "skill_section_appliedinternship accepted_status_appliedinternship" : (value.status === "Rejected" ? "skill_section_appliedinternship rejected_status_appliedinternship" : "skill_section_appliedinternship shortlisted_status_appliedinternship")
                   ) }>
                     <p>{value.status}</p>
                   </div>) : ("")
-                  
                 ))
               }
             </div>
@@ -144,9 +146,13 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
             <button onClick={() => navigate(`/company/internship/${applied._doc._id}?cid=${applied._doc.id}`)} className='btn_primary_appliedinternship'>View Details</button>
           </div>
 
-          <div className='report_section_appliedinternship'>
-            <p>This Internship has been blocked by Pregrad due to recurrent reports by students.</p>
-          </div>
+{
+  (applied._doc.isBlocked)?
+  <div className='report_section_appliedinternship'>
+     <p>This Internship has been blocked by us due to recurrent reports by students.</p>
+  </div>:""
+}
+          
 
         </div>
 
@@ -157,7 +163,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
         <div className='modal_backgound_appliedinternship'>
           <div className='modal_container2_appliedinternship'>
             <div className='modal_top_section_appliedinternship'>
-              <h2>Report “Front End” internship?</h2>
+              <h2>Report “{reportingTitle}” internship?</h2>
               <p>We are sorry to hear that you are reporting an internship. Can you tell us why?</p>
               {/* <p className="errors_msg_appliedinternship">{formErrors.others}</p> */}
             </div>

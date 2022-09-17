@@ -683,7 +683,9 @@ module.exports.editProfileDetails = async(req,res)=>{
 module.exports.appliedInternship = async(req,res)=>{
     try{
 
-        const {id} = req.params
+        const {id} = req.params;
+
+        const date = new Date();
         
         const studentinfo = await StudentInfo.findOne({id});
        
@@ -694,7 +696,9 @@ module.exports.appliedInternship = async(req,res)=>{
           
             const student = await StudentInfo.findOneAndUpdate({id},{
                 $push:{
-                    applied:req.body.iid
+                    applied:req.body.iid,
+                    applied_date: date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear(),
+                    applied_time:date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
                 }
             },{
                 new:true
@@ -704,7 +708,9 @@ module.exports.appliedInternship = async(req,res)=>{
                 $push:{
                     applied:{
                         id,
-                        status:"Applied"
+                        status:"Applied",
+                        applied_date: date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear(),
+                        applied_time:date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
                     }
                 }
             },{

@@ -8,7 +8,7 @@ import Header2Company from "../jsx/Header2Company";
 import { IoIosStats } from "react-icons/io";
 import { IoDocumentOutline } from "react-icons/io5"
 import { BsBriefcase } from "react-icons/bs";
-import axios from 'axios'
+import axios from 'axios';
 import { TbFileCertificate } from "react-icons/tb";
 import { NavLink, useNavigate,useParams } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
@@ -91,7 +91,7 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
 
       const getCompanyInfo = ()=>{
         axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
-        setCompanyDetails(data)
+        setCompanyDetails(data);
     })
     }
       useEffect(()=>{
@@ -145,8 +145,17 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-            <h6>You can not post oppurtunity until you are verified by Pregrad.</h6>
-          {/* <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship?type=newinternship`)}>Post Opportunity</button> */}
+            {
+              (companydetails.isAuthorized === "Applied")?(
+                <h6>You can not post oppurtunity until you are verified by Us.</h6>
+              ):(companydetails.isAuthorized === "Verified" ? (
+                <button className="btn_light_sidebar" onClick={()=>navigate(`/company/info/${id}/addinternship?type=newinternship`)}>Post Opportunity</button> 
+              ): (
+              <h6>You can not post oppurtunity as you are blocked by us.</h6>)
+              )
+            }
+          
+          {/**/}
         </motion.div>
         )}
 

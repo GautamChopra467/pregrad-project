@@ -51,7 +51,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           width: "100%",
           opacity: 1,
           transition: {
-            duration: 0.1,
+            duration: 0.1,  
           },
         },
       };
@@ -95,7 +95,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
 
       const getAdminInfo = ()=>{
         axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
-        setAdminInfo(data)
+        setAdminInfo(data);
     })
     }
       useEffect(()=>{
@@ -149,7 +149,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          <button className="btn_light_sidebar" onClick={()=>navigate(`/admin/signup`)}>Create Admin</button>
+          { adminInfo.role === "superadmin"? (<button className="btn_light_sidebar" onClick={()=>navigate(`/admin/signup`)}>Create Admin</button>):""}
         </motion.div>
         )}
 

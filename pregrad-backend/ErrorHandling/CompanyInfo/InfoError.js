@@ -75,13 +75,13 @@ module.exports = {
     
         if(!req.body.info.minstipend){
           errors.minstipend = "Minimum stipend required"
-        }else if(values.minstipend < 2000){
+        }else if(req.body.minstipend < 2000){
           errors.minstipend = "Minimum 2000 stipend required"
         }
     
         if(!req.body.info.maxstipend){
           errors.maxstipend = "Maximum stipend required"
-        }else if(parseFloat(values.maxstipend) <= parseFloat(values.minstipend)){
+        }else if(parseFloat(req.body.maxstipend) <= parseFloat(req.body.minstipend)){
           errors.maxstipend = "Maximum stipend should be greater than minimum"
         }
     

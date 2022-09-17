@@ -6,8 +6,9 @@ import { Link,useNavigate,useParams } from 'react-router-dom';
 import { AiOutlineFileSearch } from 'react-icons/ai';
 import axios from "axios";
 import {useCookies} from 'react-cookie';
+import { BsFillPatchCheckFill } from "react-icons/bs";
 
-const Reports= () => {
+const Reports = () => {
 
   const navigate = useNavigate();
 
@@ -19,6 +20,76 @@ const Reports= () => {
   
   const [isContent, setIsContent] = useState(true);
 
+  const [reportedInternships,setReportedInternships] = useState([]);
+
+  let [count,setCount] = useState(0);
+
+  const [showapplied,setShowApplied] = useState([]);
+
+  const getReportedInternships = ()=>{
+      axios.get("http://localhost:8000/admin/reportedinternships").then(({data})=>{
+        if(data){
+          setReportedInternships(data);
+          setShowApplied(data);
+        }
+      })
+  }
+
+  const changeAccepted = (id) => {
+    setShowApplied(showapplied.map((e)=>{
+      if(e._id === id){
+       if(e.status === true){
+        setCount(--count)
+         return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
+       }else{
+         return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
+       }
+      }else{
+         return e;
+      }
+  }))
+       }
+ 
+  
+  const countApplied= ()=>{
+        let applied_count = 0;
+        showapplied.map((e)=>{
+            if(e.flag){
+              setCount(++applied_count);
+            }
+        })
+    }
+
+
+  console.log(showapplied);
+
+  const changeRejected = (id) => {
+    
+    setShowApplied(showapplied.map((e)=>{
+      if(e._id === id){
+          setCount(++count)
+          return {...e,flag:true,class:"student_box_applicantscompany reject_applicantscompany"}
+       }else{
+          return e;
+       }
+   }))
+  }
+
+  const deleteRejectedApplicant = async()=>{
+    
+      const {data} = await axios.put(`http://localhost:8000/admin/verifiedreportedinternship/${id}`,[
+        ...showapplied
+    ])
+    if(data.status){
+      getReportedInternships(); 
+      setCount(0);
+    }
+}
+
+useEffect(()=>{
+  countApplied();
+},[count])
+
   useEffect(()=>{
     const verifyUser = async()=>{
       if(!cookies.jwt){
@@ -26,10 +97,11 @@ const Reports= () => {
       }else{
         const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){ 
-          removeCookie("jwt")
-          navigate('/login')
+          removeCookie("jwt");
+          navigate('/login');
         }else{
-          // getUnAuthorizedCompany();
+          getReportedInternships();
+         
         }
       }
     }
@@ -39,10 +111,10 @@ const Reports= () => {
   return (
     <div>
       <div className='sub_header_verification'>
-        <h5>New Reports <span>(0)</span></h5>
+        <h5>New Reports <span>({reportedInternships.length})</span></h5>
       </div>
       
-      {isPageLoading ? (
+      { isPageLoading ? (
         <div className='page_loading_container_verification'>
           <img src={PageLoader} alt="Loading" />
         </div>
@@ -50,15 +122,16 @@ const Reports= () => {
         <div className='main_container_verification'>
           <div className='main_box_verification'>
             
-          {isContent ?  (
-            <div className='student_box_verification'>
+          {isContent && reportedInternships ?  (
+            reportedInternships.map((reported)=>(
+      <div className='student_box_verification' key={reported._id}>
             <div className='top_section_student_verification'>
-              <h2>Google</h2>
+              <h2>{reported.title}</h2>
               <div className='top_left_section_verification'>
-                <Link target="_blank" to="/" className='reports_link_verification'>
+                <Link target="_blank" to={`/admin/info/${id}/reports/candidates/${reported._id}`} className='reports_link_verification'>
                   <p>View Reports</p>
                 </Link>
-                <Link target="_blank" to={`/resume`}>
+                <Link target="_blank" to={`/company/internship/${reported._id}?cid=${reported.id}`}>
                   <div className='search_icon_container_verification'>
                     <AiOutlineFileSearch className="search_icon_verification" />
                   </div>
@@ -67,19 +140,21 @@ const Reports= () => {
             </div>
             <div className='mid_section_verification'>
                 <div className='mid_top_section_verification'>
-                  <div>
-                    <input type="radio" />
-                    <label></label>
-                    <p>Allow</p>
-                  </div>
-                  <div>
-                    <input type="radio" />
-                    <label></label>
-                    <p>Block</p>
-                  </div>
+                <div>
+              <input type="radio" id={`accept${reported._id}`} name={`${reported._id}`} value={`accept${reported._id}`} onClick={()=>changeAccepted(reported._id)}/>
+              <label htmlFor={`accept${reported._id}`}></label>
+              <p>Allow</p>
+            </div>
+            <div>
+              <input type="radio" id={`reject${reported._id}`} name={`${reported._id}`} value={`reject${reported._id}`} onClick={()=>changeRejected(reported._id)}/>
+              <label htmlFor={`reject${reported._id}`}></label>
+              <p>Block</p>
+            </div>
                 </div>
             </div>       
         </div>
+            ))
+            
           ) : (
             <div className='add_section1_verification'>
               <div className='add_section1_logo_verification'>
@@ -95,6 +170,10 @@ const Reports= () => {
          
       </div>
       )}
+       <div className='delete_box_applicantscompany'  onClick={deleteRejectedApplicant}>
+          <BsFillPatchCheckFill className="delete_icon_applicantscompany" />
+           <p>Update Status (Block : {count})</p>
+    </div> 
     </div>
   )
 }
