@@ -6,9 +6,11 @@ import {useParams,useNavigate} from 'react-router-dom'
 const AddInternshipCompany = () => {
   // TITLES
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {id} = useParams()
+  const {id} = useParams();
+
+  const [companydetails,setCompanyDetails] = useState({})
 
   var query = window.location.search.substring(1).split("&");
 
@@ -249,9 +251,21 @@ const AddInternshipCompany = () => {
     setBonusCheckbox(data.perks.bonus)
     })
   }  
-  
+
+  const getCompanyInfo = ()=>{
+    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+      if(data.isAuthorized === "Verified"){
+        setCompanyDetails(data);
+      }
+      else{
+        navigate(`/company/info/${id}/dashboard`);
+      }
+})
+}
 
   useEffect(() => {
+
+    getCompanyInfo();
 
     if(Object.keys(formErrors).length === 0 && isSubmit){
       if(type == "editinternship"){
@@ -289,7 +303,8 @@ const AddInternshipCompany = () => {
 
   return (
     <div>
-      <div className="main_box_addinternshipcompany">
+      
+        <div className="main_box_addinternshipcompany">
         <div className="main_container_addinternshipcompany">
           <div className="top_section_addinternshipcompany">
             <h2>New Internship</h2>

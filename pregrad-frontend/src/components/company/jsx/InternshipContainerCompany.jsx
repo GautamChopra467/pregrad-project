@@ -14,6 +14,8 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
+  console.log(internship);
+
     const ref = useRef();
 
     const navigate = useNavigate();
@@ -85,18 +87,18 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
 
     const updateInternshipstatus = async(e,iid,status)=>{
         e.preventDefault()  
-        console.log(option1, ".",option2, ".",option3, ".",option4, ".",)
-        if(option1 || option2 || option3 || option4){
-          setError("")
-        }else {
-          setError("Reason required")
-        }
-        // const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
-        //   status
-        // })
-        // if(data.message){
-        //   internStatus()
+        // console.log(option1, ".",option2, ".",option3, ".",option4, ".",)
+        // if(option1 || option2 || option3 || option4){
+        //   setError("")
+        // }else {
+        //   setError("Reason required")
         // }
+        const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
+          status
+        })
+        if(data.message){
+          internStatus()
+        }
 
 }
 
@@ -229,10 +231,13 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
             <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications ({intern.applied.length})</button>
             <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
-
-          <div className='report_section_listingscompany'>
-            <p>This Internship has been blocked by Pregrad due to recurrent reports by students.</p>
-          </div>
+          {
+            (intern.isBlocked)?
+            <div className='report_section_listingscompany'>
+            <p>This Internship has been blocked by us due to recurrent reports by students.</p>
+          </div>:""
+          }
+          
 
         </div>
       

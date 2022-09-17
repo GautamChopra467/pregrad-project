@@ -55,7 +55,7 @@ const Verification = () => {
     }
 
     const changeRejected = (id) => {
-     console.log(id);
+    
       setShowApplied(showapplied.map((e)=>{
         if(e._id === id){
             setCount(++count)

@@ -58,7 +58,8 @@ module.exports.getCompanyInfo = async(req,res)=>{
           verified:company.detailFlag,
           email:company.email,
           designation:company.designation,
-          phoneno:company.phoneno
+          phoneno:company.phoneno,
+          isAuthorized:company.isAuthorized
        })
     }else{
       res.send({

@@ -281,14 +281,14 @@ useEffect(()=>{
                 <h2>{adminInfo.name}</h2>
                 <p>{adminInfo.role}</p>
               </div>
-              <HiOutlinePencil onClick={setEditProfile} className="edit_icon2_dashboardAdmin" />
+              {/* <HiOutlinePencil onClick={setEditProfile} className="edit_icon2_dashboardAdmin" /> */}
             </div>
-            <div className='right_details_section_dashboardAdmin'>
+            {/* <div className='right_details_section_dashboardAdmin'>
               <HiOutlinePencil onClick={setEditProfile} className="edit_icon_dashboardAdmin" data-tip data-for="editProfile" />
               <ReactTooltip id="editProfile" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
                 <span>Edit your profile</span>
               </ReactTooltip>
-            </div>
+            </div> */}
           </div>
 
           <div className='mid_details_section_dashboardAdmin'>
@@ -298,7 +298,7 @@ useEffect(()=>{
                   <FiSettings className='settings_icon_dashboardAdmin' />
                   <h2>Company Verification</h2>
                 </div>
-                <p onClick={editAccountDetails}>View</p>
+                <p onClick={()=>navigate(`/admin/info/${id}/verification`)}>View</p>
               </div>
               <div className='bottom_box_account_dashboardAdmin'>
                 <p>Block or Allow access to companies to post their Internships.</p>
@@ -311,7 +311,7 @@ useEffect(()=>{
                   <MdOutlinePeopleAlt className='people_icon_dashboardAdmin' />
                   <h2>New Reports&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
                 </div>
-                <Link to="/">View</Link>
+                <Link to={`/admin/info/${id}/reports`}>View</Link>
               </div>
               <div className='bottom_box_applicants_dashboardAdmin'>
                 <p>Check new reports applied for different internships.&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -331,7 +331,7 @@ useEffect(()=>{
       
 
 
-      {isModal && (
+      {/* {isModal && (
         
         <div className='modal_backgound_dashboardAdmin'>
         <div className='modal_container_dashboardAdmin'>
@@ -397,10 +397,10 @@ useEffect(()=>{
          </div>
       </div>
        
-      )}
+      )} */}
 
 
-      {isModal2 && (
+      {/* {isModal2 && (
 
         <div className='modal_backgound_dashboardAdmin'>
           <div className='modal_container_dashboardAdmin'>
@@ -448,7 +448,7 @@ useEffect(()=>{
   </div>
  </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

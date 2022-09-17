@@ -13,6 +13,8 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerStudent = ({internship,getAllInterships}) => {
 
+    console.log(internship);
+
     const ref = useRef();
 
     const navigate = useNavigate();
@@ -45,8 +47,8 @@ const applyInternship = async(iid)=>{
 
       {
         (internship == undefined)?"":internship.map((intern)=>(
-
-          <div key={intern.main._id}>
+            (intern.isBlocked)?"":
+         ( <div key={intern.main._id}>
               <div className='internship_container_listingscompany'>
               <div className='top_section_internship_listingscompany'>
                 <div className='left_section_internship_listingscompany'>
@@ -154,6 +156,7 @@ const applyInternship = async(iid)=>{
     
             </div>        
         </div>
+        )
         ))
       }
 

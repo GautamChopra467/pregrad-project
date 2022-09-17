@@ -14,7 +14,7 @@ const InfoAdmin = ({theme, setTheme}) => {
             <Route exact path="/dashboard" element={<DashboardAdmin />}  />
             <Route exact path="/reports" element={<Reports />} />
             <Route exact path="/verification" element={<Verification />} />
-            <Route exact path="/reports/candidates" element={<ReportCandidates  />} />
+            <Route exact path="/reports/candidates/:i_id" element={<ReportCandidates  />} />
         </Routes>
     </SidebarAdmin>
   )

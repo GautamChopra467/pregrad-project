@@ -161,11 +161,12 @@ module.exports.allInternship = async(req,res)=>{
 
           const company = await Company.findOne({_id:internships[i].id})
 
-          const companyinfo = await CompanyInfo.findOne({id:internships[i].id})
+          const companyinfo = await CompanyInfo.findOne({id:internships[i].id});
       
           if(internships[i].applied.find(e=>e.id === req.params.id) === undefined){
                // internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
-               allInternship[j] = {...allInternship[j],main:internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
+               allInternship[j] = {...allInternship[j],main:internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters
+                    }
                j++;
 
           }
@@ -286,7 +287,12 @@ module.exports.reportInternship = async(req,res)=>{
 
           const {description} = req.body;
            
-          const internship = await Internship.findByIdAndUpdate({_id:i_id},{
+          const internship = await Internship.updateOne({
+               _id:i_id,
+               'reports.student_id':{
+                    '$ne':id
+               }
+          },{
                $addToSet:{
                   reports:{
                     student_id:id,

@@ -8,12 +8,6 @@ import AddInternshipCompany from "./UserCompany/AddInternshipCompany";
 
 import ApplicantsCompany from "./UserCompany/ApplicantsCompany";
 
-import { useEffect } from "react";
-import axios from 'axios'
-import {useCookies} from 'react-cookie'
-import { useNavigate,useParams } from 'react-router-dom';
-
-
 const InfoCompany = ({theme, setTheme}) => {
 
   return (
