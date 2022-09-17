@@ -194,7 +194,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
   
                 <div className='modal_bottom_section_appliedinternship'>
                    <button onClick={() => setIsModal(!isModal)} className='btn_light_appliedinternship'>Cancel</button>
-                   <button type='submit' onClick={submitReport} className='btn_primary_appliedinternship'>Close Internship</button>
+                   <button type='submit' onClick={submitReport} className='btn_primary_appliedinternship'>Report Internship</button>
                 </div>
               </form>
             </div>
