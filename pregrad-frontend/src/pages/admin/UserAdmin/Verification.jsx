@@ -80,8 +80,13 @@ const Verification = () => {
 
   const getUnAuthorizedCompany = ()=>{
      axios.get(`http://localhost:8000/company/unauthorized`).then(({data})=>{
-      setUnAuthorized(data);
-      setShowApplied(data);
+      if(data.length === 0){
+        setIsContent(false);
+      }
+      else if(data){
+        setUnAuthorized(data);
+        setShowApplied(data);
+      }
      })
   }
 
@@ -159,10 +164,15 @@ const Verification = () => {
       </div>
       )}
       {/* */}
-       <div className='delete_box_applicantscompany'  onClick={deleteRejectedApplicant}>
+      {
+        (unAuthorized.length > 0)?(
+          <div className='delete_box_applicantscompany'  onClick={deleteRejectedApplicant}>
           <BsFillPatchCheckFill className="delete_icon_applicantscompany" />
            <p>Update Status (Block : {count})</p>
-    </div>   
+          </div>  
+        ):null
+      }
+       
     </div>
   )
 }

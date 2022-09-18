@@ -181,10 +181,10 @@ const Login = ({theme, setTheme}) => {
                   <BsArrowRightShort size={27} className="create-btn-logo_login" />
                 </button> 
 
-                <a className="google-btn_login" onClick={googleAuth}>
+                {/* <a className="google-btn_login" onClick={googleAuth}>
                 <img src={GoogleLogo} alt="" />
                   Login with Google
-                </a> 
+                </a>  */}
               </form>
 
               <div className="line_login"></div>

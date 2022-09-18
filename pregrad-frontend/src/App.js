@@ -59,7 +59,7 @@ const App = () => {
 
         {/* Admin Routes */}
         <Route exact path="/admin/info/:id/*" element={<InfoAdmin theme={theme} setTheme={setTheme}/>} />
-        <Route exact path="/admin/signup" element={<SignUpAdmin theme={theme} setTheme={setTheme}/>} />              
+        <Route exact path="/admin/:id/signup" element={<SignUpAdmin theme={theme} setTheme={setTheme}/>} />              
       </Routes>
       <ToastContainer />
     </BrowserRouter>

@@ -86,20 +86,17 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
     const [error, setError] = useState("");
 
     const updateInternshipstatus = async(e,iid,status)=>{
-        e.preventDefault()  
-        // console.log(option1, ".",option2, ".",option3, ".",option4, ".",)
-        // if(option1 || option2 || option3 || option4){
-        //   setError("")
-        // }else {
-        //   setError("Reason required")
-        // }
-        const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
-          status
-        })
-        if(data.message){
-          internStatus()
+        e.preventDefault();
+        if(option1 || option2 || option3 || option4){
+          const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
+            status
+          })
+          if(data.message){
+            internStatus()
+          }
+        }else {
+          setError("Reason required");
         }
-
 }
 
   return (

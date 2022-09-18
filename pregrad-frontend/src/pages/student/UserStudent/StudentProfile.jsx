@@ -17,7 +17,7 @@ import PageLoader from "../../../img/page-loader.gif";
 
 const StudentProfile = ({userinfo,getUserDetails}) => {
 
-  console.log(userinfo)
+  console.log(userinfo);
 
   const navigate = useNavigate();
   const ref = useRef();
@@ -79,7 +79,7 @@ const [video,setVideo] = useState()
   }
   }
 
-  // const getUserDetails= async()=>{
+  // const getUserDetail = async()=>{
   //   const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
   //   setUser(data)
   // }
@@ -125,6 +125,10 @@ const [video,setVideo] = useState()
     }
   }
 
+  const handleVideo = (e) => {
+    setVideo(e.target.value)
+  }
+
   const deleteSkill = (value) => {
     setSelectedSkills(current => current.filter(selectedSkill => {
       return selectedSkill !== value;
@@ -168,7 +172,7 @@ const [video,setVideo] = useState()
         }else{
           navigate(`/student/${id}/profile`)
           setIsPageLoading(true)
-          // getUserDetails()
+          getUserDetails()
           getUserData()
         }
       }
@@ -229,7 +233,8 @@ const [video,setVideo] = useState()
     data, 
     selectedSkills,
     selectedDomains,
-    links
+    links,
+    video
   }
 
   const setEditDetails = (event)=>{
@@ -255,7 +260,7 @@ const [video,setVideo] = useState()
         setFormErrors(data.errors);
       }
       else{
-        // getUserDetails();
+        getUserDetails();
         getUserData();
         setIsModal(!isModal);
       }
@@ -558,7 +563,7 @@ const [video,setVideo] = useState()
 
                 <div className="form_box_studentprofile">
                   <label>Enter Your Introductory Video</label>
-                  <input type="text" name="name" placeholder="Video Link" onChange={handleForm} />
+                  <input type="text" name="video" placeholder="Video Link" defaultValue={video} onChange={handleVideo} />
                   <p className="video_para_studentprofile">Add your Introductory video to increase your chances of getting selected.</p>
                   <p className="errors_msg_studentprofile">{formErrors.title}</p>
                 </div>

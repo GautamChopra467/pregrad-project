@@ -120,32 +120,46 @@ module.exports.getCompanyDetails = async(req,res)=>{
 
 module.exports.editProfile = async(req,res)=>{
   
-  const {id} = req.params
+  try{
+    const {id} = req.params
 
-  const profile = await CompanyInfo.findOneAndUpdate({id},{
-    $set:{
-      linkedin:req.body.companyInfo.linkedinlink,
-      typeofcompany:req.body.selectedType,
-      headquaters:req.body.selectedLocation,
-      description:req.body.companyInfo.about,
-      websitelink:req.body.companyInfo.websitelink
-    }
-  })
+    const profile = await CompanyInfo.findOneAndUpdate({id},{
+      $set:{
+        linkedin:req.body.companyInfo.linkedinlink,
+        typeofcompany:req.body.selectedType,
+        headquaters:req.body.selectedLocation,
+        description:req.body.companyInfo.about,
+        websitelink:req.body.companyInfo.websitelink
+      }
+    })
+
+    res.send({message:true});
+
+  }catch(err){
+    console.log(err)
+  } 
 
 }
 
 module.exports.editAccount = async(req,res)=>{
 
-  const {id} = req.params
+  try{
+    const {id} = req.params
 
-  const company = await Company.findOneAndUpdate({id},{
-    $set:{
-      name:req.body.name,
-      companyname:req.body.companyname,
-      designation:req.body.designation,
-      phoneno:req.body.mobile
-    }
-  })
+    const company = await Company.findOneAndUpdate({id},{
+      $set:{
+        name:req.body.name,
+        companyname:req.body.companyname,
+        designation:req.body.designation,
+        phoneno:req.body.mobile
+      }
+    })
+    
+    res.send({message:true});
+  }catch(err){
+    console.log(err);
+  }
+  
 
 }
 

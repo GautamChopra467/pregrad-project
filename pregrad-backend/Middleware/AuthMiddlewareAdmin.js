@@ -50,7 +50,8 @@ module.exports.CheckAdmin = async(req,res,next)=>{
                         res.json({
                             status:true,  
                             user:user.email,
-                            id:decodedToken.id
+                            id:decodedToken.id,
+                            role:user.role
                         })
                     
                     }

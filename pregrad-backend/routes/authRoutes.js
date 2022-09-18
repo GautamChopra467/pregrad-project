@@ -47,38 +47,38 @@ router.route(NEWPASSWORD).post(Handler.forgotPassword,newPassword);
 
 router.route(USERDETAILS).get(getUserDetails);
 
-router.route('/auth/google').get(passport.authenticate('google',{
-    scope:['profile','email']
-}))
+// router.route('/auth/google').get(passport.authenticate('google',{
+//     scope:['profile','email']
+// }))
 
-router.route('/auth/google/callback').get(passport.authenticate('google',{
-    successRedirect:`/auth/google/success`,
-    failureRedirect:"http://localhost:3000/login"
-})) 
+// router.route('/auth/google/callback').get(passport.authenticate('google',{
+//     successRedirect:`/auth/google/success`,
+//     failureRedirect:"http://localhost:3000/login"
+// })) 
 
-router.route('/auth/google/success').get((req,res,next)=>{
+// router.route('/auth/google/success').get((req,res,next)=>{
 
-    const token = createToken(req.user._id)
-    res.cookie("jwt",token,{
-      withCredentials:true,
-      httpOnly:false,
-      maxAge:maxAge*1000
-    })
-    req.type = "google"
-    req.token = token
-next()
+//     const token = createToken(req.user._id)
+//     res.cookie("jwt",token,{
+//       withCredentials:true,
+//       httpOnly:false,
+//       maxAge:maxAge*1000
+//     })
+//     req.type = "google"
+//     req.token = token
+// next()
 
-},CheckUser)
+// },CheckUser)
 
 
-router.get('/logout', (req, res, next) => {
+// router.get('/logout', (req, res, next) => {
   
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    } 
-    res.status(202).clearCookie('jwt',{path:'/'}).send("cookie cleared")
-  });
-});
+//   req.logout(function (err) {
+//     if (err) {
+//       return next(err);
+//     } 
+//     res.status(202).clearCookie('jwt',{path:'/'}).send("cookie cleared")
+//   });
+// });
 
 module.exports = router;

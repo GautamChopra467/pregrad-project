@@ -165,7 +165,7 @@ module.exports = {
 
     register(req,res,next){
 
-      const {name,designation,email,companyname,mobile,password} = req.body
+      const {name,designation,email,companyname,mobile,password,confirmpassword} = req.body
 
       const errors = {};
 

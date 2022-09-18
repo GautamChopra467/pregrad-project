@@ -209,14 +209,13 @@ const UpdatedProject = async(e,u_id)=>{
     const {data} = await axios.put(`http://localhost:8000/student/updatedproject/${u_id}/${editproject._id}`,{
       ...editproject,skills:editselectedSkills
     })
-
-    if(Object.keys(data.errors).length !== 0){
-      setFormErrors(data.errors)
-    }
-    else{
+    if(data.project){
       setStudentpro(data.project)
       setIsModal(!isModal)
       getProjects()
+    }
+    else{
+      setFormErrors(data.errors);
     }
  
 }

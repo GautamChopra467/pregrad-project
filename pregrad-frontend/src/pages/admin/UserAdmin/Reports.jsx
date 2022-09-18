@@ -28,7 +28,10 @@ const Reports = () => {
 
   const getReportedInternships = ()=>{
       axios.get("http://localhost:8000/admin/reportedinternships").then(({data})=>{
-        if(data){
+        if(data.length === 0){
+          setIsContent(false);
+        }
+       else if(data){
           setReportedInternships(data);
           setShowApplied(data);
         }
@@ -156,13 +159,13 @@ useEffect(()=>{
             ))
             
           ) : (
-            <div className='add_section1_verification'>
+                <div className='add_section1_verification'>
               <div className='add_section1_logo_verification'>
                 <FiFileText size={30} className="add_section1_icon_verification" />
               </div>
               <div className='add_section1_details_verification'>
-                <h2>No new companies available</h2>
-                <p>No companies have been registered yet.</p>
+                <h2>No new reports available</h2>
+                <p>No internship have been reported yet.</p>
               </div>
             </div>
           )}
@@ -170,10 +173,15 @@ useEffect(()=>{
          
       </div>
       )}
-       <div className='delete_box_applicantscompany'  onClick={deleteRejectedApplicant}>
+      {
+         (reportedInternships.length > 0)?(
+          <div className='delete_box_applicantscompany'  onClick={deleteRejectedApplicant}>
           <BsFillPatchCheckFill className="delete_icon_applicantscompany" />
            <p>Update Status (Block : {count})</p>
-    </div> 
+        </div> 
+    ):null
+      }
+       
     </div>
   )
 }

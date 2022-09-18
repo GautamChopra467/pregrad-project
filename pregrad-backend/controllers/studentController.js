@@ -114,7 +114,7 @@ module.exports.updatedAchievement = async(req,res)=>{
 
     await user.save()
     
-    res.send({achievements:user.achievements,errors:errors})
+    res.send({achievements:user.achievements})
 
 }catch(err){
     console.log(err)
@@ -230,7 +230,7 @@ module.exports.updatedProject = async(req,res)=>{
 
     await user.save();
     
-    res.send({project:user.project,errors:errors});
+    res.send({project:user.project});
 
 }catch(err){
     console.log(err)
@@ -359,8 +359,10 @@ module.exports.updatedEducation = async(req,res)=>{
     data.set(req.body)
 
     await user.save()
+
+    console.log(user.education);
     
-    res.send({education:user.education,errors:errors})
+    res.send({education:user.education})
 
 }catch(err){
     console.log(err)
@@ -494,7 +496,7 @@ module.exports.updatedWorkExperience = async(req,res)=>{
 
     await user.save()
     
-    res.send({workexperience:user.workexperience,errors:errors})
+    res.send({workexperience:user.workexperience})
 
 }catch(err){
     console.log(err)
@@ -649,7 +651,7 @@ module.exports.editProfileDetails = async(req,res)=>{
 
     const {id} = req.params;
 
-    const student = await StudentInfo.findOne({id})
+    const student = await StudentInfo.findOne({id});
 
     if(student){
         const upadateStudentInfo = await StudentInfo.updateOne({id},{
@@ -657,7 +659,7 @@ module.exports.editProfileDetails = async(req,res)=>{
                 socialLinks:req.body.links,
                 skills:req.body.selectedSkills,
                 domain:req.body.selectedDomains,
-
+                video:req.body.video
             }
         })
     }

@@ -169,13 +169,14 @@ const UpdatedEducation = async(e,u_id)=>{
   const {data} = await axios.put(`http://localhost:8000/student/updatededucation/${u_id}/${editeducation._id}`,{
     ...editeducation
   })
-  if(Object.keys(data.errors).length !== 0){
-   setFormErrors(data.errors)
+  if(data.education){
+    setStudentedu(data.education);
+    setIsModal(!isModal)
+    getEducation()
   }
   else{
-  setStudentedu(data.education)
-   setIsModal(!isModal)
-   getEducation()}
+    setFormErrors(data.errors);
+  }
 }
 
 const editEducation = async(u_id,e_id)=>{

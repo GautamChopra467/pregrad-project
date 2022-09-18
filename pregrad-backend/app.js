@@ -51,10 +51,7 @@ try{
 
 start();
 
- 
-
-
-  //use is for installing the middlewares  //middleware are accessories of an app
+//use is for installing the middlewares  //middleware are accessories of an app
 
 
 app.use(session({

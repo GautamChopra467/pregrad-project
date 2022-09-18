@@ -250,14 +250,13 @@ const UpdatedWorExperience = async(e,u_id)=>{
     ...editworkexperience,skills:editselectedSkills
   })
 
-  if(Object.keys(data.errors).length !== 0 ){
-   
-    setFormErrors(data.errors)
-  }
-  else{
+  if(data.workexperience){
     setStudentwork(data.workexperience)
     setIsModal(!isModal)
     getWorkExperience()
+  }
+  else{
+    setFormErrors(data.errors);
   }
  
 }

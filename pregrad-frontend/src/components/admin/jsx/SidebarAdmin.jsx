@@ -149,7 +149,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           animate="show"
           exit="hidden"
           variants={scoreAnimation} className="score_section2_sidebar">
-          { adminInfo.role === "superadmin"? (<button className="btn_light_sidebar" onClick={()=>navigate(`/admin/signup`)}>Create Admin</button>):""}
+          { adminInfo.role === "superadmin"? (<button className="btn_light_sidebar" onClick={()=>navigate(`/admin/${id}/signup`)}>Create Admin</button>):""}
         </motion.div>
         )}
 

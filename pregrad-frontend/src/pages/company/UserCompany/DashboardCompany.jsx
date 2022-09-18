@@ -121,7 +121,7 @@ const DashboardCompany = () => {
     if(!values.name){
       errors.name = "Name Required"
     }else if(values.name.length < 3){
-      errors.name = "Minimum 3 characters required"
+      errors.name = "Minimum 3 characters required" 
     }else if(values.name.length > 18){
       errors.name = "Maximum 18 characters required";
     }
@@ -194,11 +194,11 @@ const getCompanyDetails = ()=>{
         axios.put(`http://localhost:8000/company/editprofile/${id}`,{
           ...editDetailsProfile
         }).then(({data})=>{
-          if(data.errors){
-            setFormErrors(data.errors);
+          if(data.message){
+            setIsModal(!isModal)
           }
           else{
-            setIsModal(!isModal)
+            setFormErrors(data.errors);
           }
         })
     }
@@ -207,11 +207,11 @@ const getCompanyDetails = ()=>{
       axios.put(`http://localhost:8000/company/editaccount/${id}`,{
         ...accountInfo
       }).then(({data})=>{
-        if(data.errors){
-          setFormErrors(data.errors);
+        if(data.message){
+          setIsModal2(!isModal2)
         }
         else{
-          setIsModal2(!isModal)
+          setFormErrors(data.errors);
         }
     })
   }
@@ -244,6 +244,20 @@ const getCompanyDetails = ()=>{
     mobile: companydetails.phoneno
   })
   }
+
+  const closeForm2 = ()=>{
+
+    setIsModal2(!isModal2);
+    setIsSubmit2(false);
+    setFormErrors2({});
+  } 
+
+  const closeForm = ()=>{
+    setIsModal(!isModal);
+    setIsSubmit(false);
+    setFormErrors({});
+  } 
+
 
   return (
     <div>
@@ -298,7 +312,7 @@ const getCompanyDetails = ()=>{
                   <MdOutlinePeopleAlt className='people_icon_dashboardCompany' />
                   <h2>New Applicants&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
                 </div>
-                <Link to="/">View</Link>
+                <Link to={`/company/info/${id}/listings`}>View</Link>
               </div>
               <div className='bottom_box_applicants_dashboardCompany'>
                 <p>Check new applicants applied for your internship post.&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -376,7 +390,7 @@ const getCompanyDetails = ()=>{
               </div>
 
                  <div className='modal_bottom_section_dashboardCompany'>
-                   <button onClick={() => setIsModal(!isModal)} className='btn_light_dashboardCompany'>Cancel</button>
+                   <button onClick={closeForm} className='btn_light_dashboardCompany'>Cancel</button>
                    <button type='submit' onClick={submitForm} className='btn_primary_dashboardCompany'>Save Details</button>
                  </div>
                </form>
@@ -428,7 +442,7 @@ const getCompanyDetails = ()=>{
          </div>
 
          <div className='modal_bottom_section_dashboardCompany'>
-           <button onClick={() => setIsModal2(!isModal2)} className='btn_light_dashboardCompany'>Cancel</button>
+           <button onClick={closeForm2} className='btn_light_dashboardCompany'>Cancel</button>
            <button type='submit' onClick={submitForm2} className='btn_primary_dashboardCompany'>Save Details</button>
          </div>
        </form>

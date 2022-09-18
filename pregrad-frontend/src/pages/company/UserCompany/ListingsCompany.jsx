@@ -27,7 +27,10 @@ const ListingsCompany = () => {
 
   const getInternship = ()=>{
     axios.get(`http://localhost:8000/company/getinternships/${id}`).then(({data})=>{
-     setInternships(data)
+      if(data.length > 0){
+        setIsContent(false);
+        setInternships(data)
+      }
      setTimeout(() => {
       setIsPageLoading(false)
     },800)
@@ -36,14 +39,14 @@ const ListingsCompany = () => {
 
  const getCompanyInfo = ()=>{
   axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
-    console.log(data)
+   
   setCompanyDetails(data)
 })
 }
 
  const getCompanyDetails = ()=>{
   axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
-    console.log(data)
+   
     setCompanyInfoDetails(data)
  }) 
 }
@@ -81,7 +84,7 @@ const ListingsCompany = () => {
         </div>
       ) : (
         <div className='main_container_listingscompany'>
-        {!isContent ? (
+        {isContent ? (
           <div className='add_section1_listingscompany'>
           <div className='add_section1_logo_listingscompany'>
           <FiFileText size={30} className="add_section1_icon_listingscompany" />

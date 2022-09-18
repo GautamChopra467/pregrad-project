@@ -205,10 +205,10 @@ const SignUp = ({theme, setTheme}) => {
                   <BsArrowRightShort size={27} className="create-btn-logo_signup" />
                 </button> 
 
-                <a className="google-btn_signup" href="youtube.com">
+                {/* <a className="google-btn_signup" href="youtube.com">
                 <img src={GoogleLogo} alt="" />
                   Signup with Google
-                </a> 
+                </a>  */}
               </form>
 
               <div className="line_signup"></div>

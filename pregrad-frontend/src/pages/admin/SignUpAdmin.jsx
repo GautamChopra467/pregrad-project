@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate,useParams} from "react-router-dom";
 import SignUpLogo from "../../img/signupcompany-image.png";
 import InstaLogo from "../../img/instagram-logo.svg";
 import LinkedinLogo from "../../img/linkedin-logo.svg";
@@ -8,11 +8,16 @@ import GoogleLogo from "../../img/google-logo.svg";
 import "../../components/admin/css/SignUpAdminStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
+import {useCookies} from 'react-cookie';
 import HeaderAuth from "../../components/student/jsx/HeaderAuth";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const SignUpAdmin = ({theme, setTheme}) => {
   const navigate = useNavigate();
+
+  const {id} = useParams();
+
+  const [cookies,setCookie,removeCookie] = useCookies([]);
 
   const [showPassword, setShowPassword] = useState(true);
 
@@ -44,6 +49,23 @@ const SignUpAdmin = ({theme, setTheme}) => {
   }
 
   useEffect(() => {
+
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role !== "superadmin"){ 
+          removeCookie("jwt")
+          navigate('/login')
+        }else{
+          // setIsPageLoading(true);
+       
+        }
+      }
+    }
+    verifyUser()
+
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       axios.post("http://localhost:8000/admin/register", user)
       .then( res => {

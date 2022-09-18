@@ -67,8 +67,8 @@ const getCompanyDetails = ()=>{
   },[cookies,setCookie,removeCookie,navigate]);
 
   
-  const initials = companydetails.companyname
-  const name_initials=typeof initials==="string" ?initials.split('')[0]:""
+  const initials = companydetails.companyname;
+  const name_initials=typeof initials==="string" ?initials.split('')[0]:"";
 
 
   return (
@@ -96,7 +96,7 @@ const getCompanyDetails = ()=>{
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_profilecompany">
               <div className="profile_edit2_profilecompany">
-                <a href={companyInfoDetails.linkedin}><BsLinkedin size={18} /></a>
+                <a href={companyInfoDetails.linkedin} target="_blank"><BsLinkedin size={18} /></a>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ const getCompanyDetails = ()=>{
 
               <div className="profile_edit_container_profilecompany">
                 <div className="profile_edit_profilecompany">
-                  <a href={companyInfoDetails.linkedin}><BsLinkedin /></a>
+                  <a href={companyInfoDetails.linkedin} target="_blank"><BsLinkedin /></a>
                 </div>
               </div>
             </div>
