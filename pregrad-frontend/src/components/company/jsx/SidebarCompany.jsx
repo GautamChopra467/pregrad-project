@@ -7,9 +7,7 @@ import UserImage from "../../../img/user3.png";
 import Header2Company from "../jsx/Header2Company";
 import { IoIosStats } from "react-icons/io";
 import { IoDocumentOutline } from "react-icons/io5"
-import { BsBriefcase } from "react-icons/bs";
 import axios from 'axios';
-import { TbFileCertificate } from "react-icons/tb";
 import { NavLink, useNavigate,useParams } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 

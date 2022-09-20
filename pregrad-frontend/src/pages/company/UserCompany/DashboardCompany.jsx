@@ -112,7 +112,6 @@ const DashboardCompany = () => {
     e.preventDefault();
     setFormErrors2(validate2(accountInfo));
     setIsSubmit2(true);
-   
   }
 
   const validate2 = (values) => {
@@ -142,8 +141,8 @@ const DashboardCompany = () => {
 
     if(!values.mobile){
       errors.mobile = "Mobile number required"
-    }else if(values.mobile.length !== 10){
-      errors.mobile = "Mobile number is Invalid";
+    }else if(values.mobile.toString().length !== 10){
+      errors.mobile = "Mobile number is Invalid 2";
     }
 
     return errors;
@@ -171,6 +170,7 @@ const getCompanyDetails = ()=>{
       if(!cookies.jwt){
         navigate('/login')
       }else{
+        setIsPageLoading(true)
         axios.post(`http://localhost:8000/company`,{},{
           withCredentials:true,
         }).then(({data})=>{
@@ -179,10 +179,10 @@ const getCompanyDetails = ()=>{
             removeCookie("jwt")
             navigate('/login')
           }else{
-            // setIsPageLoading(true)
+            
              getCompanyInfo()
              getCompanyDetails()
-            navigate(`/company/info/${id}/dashboard`)
+            // navigate(`/company/info/${id}/dashboard`)
           } 
         })
       }
@@ -196,6 +196,7 @@ const getCompanyDetails = ()=>{
         }).then(({data})=>{
           if(data.message){
             setIsModal(!isModal)
+            setIsSubmit(false)
           }
           else{
             setFormErrors(data.errors);
@@ -207,11 +208,15 @@ const getCompanyDetails = ()=>{
       axios.put(`http://localhost:8000/company/editaccount/${id}`,{
         ...accountInfo
       }).then(({data})=>{
+        console.log(data)
         if(data.message){
           setIsModal2(!isModal2)
+          setIsSubmit2(false)
         }
         else{
+          console.log("reached")
           setFormErrors(data.errors);
+          setIsSubmit2(false)
         }
     })
   }

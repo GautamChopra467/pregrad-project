@@ -5,7 +5,6 @@ import DashboardCompany from "./UserCompany/DashboardCompany";
 import ListingsCompany from "./UserCompany/ListingsCompany";
 import ProfileCompany from "./UserCompany/ProfileCompany";
 import AddInternshipCompany from "./UserCompany/AddInternshipCompany";
-
 import ApplicantsCompany from "./UserCompany/ApplicantsCompany";
 
 const InfoCompany = ({theme, setTheme}) => {

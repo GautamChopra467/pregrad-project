@@ -127,6 +127,7 @@ module.exports = {
     account(req,res,next){
 
         const errors = {};
+        console.log(req.body)
 
         if(!req.body.name){
           errors.name = "Name Required"
@@ -152,7 +153,7 @@ module.exports = {
     
         if(!req.body.mobile){
           errors.mobile = "Mobile number required"
-        }else if(req.body.mobile.length !== 10){
+        }else if(req.body.mobile.toString().length !== 10){
           errors.mobile = "Mobile number is Invalid";
         }
      

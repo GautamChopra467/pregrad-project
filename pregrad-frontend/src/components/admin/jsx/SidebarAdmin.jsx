@@ -10,7 +10,9 @@ import axios from 'axios'
 import { TbReportSearch } from "react-icons/tb";
 import { NavLink, useNavigate,useParams } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
-import { MdOutlineVerified } from "react-icons/md";
+import { MdCastForEducation, MdOutlineVerified } from "react-icons/md";
+import { BsCalendar3 } from "react-icons/bs";
+import { RiUserStarLine } from "react-icons/ri";
 
 const SidebarAdmin = ({ children, theme, setTheme }) => {
 
@@ -37,6 +39,21 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           path: `/admin/info/${id}/reports`,
           name: "reports",
           icon: <TbReportSearch size={isOpenSidebar ? "20" : "24"} />,
+        },
+        {
+          path: `/admin/info/${id}/events`,
+          name: "events",
+          icon: <BsCalendar3 size={isOpenSidebar ? "19" : "24"} />,
+        },
+        {
+          path: `/admin/info/${id}/testimonials`,
+          name: "testimonials",
+          icon: <RiUserStarLine size={isOpenSidebar ? "20" : "24"} />,
+        },
+        {
+          path: `/admin/info/${id}/courses`,
+          name: "courses",
+          icon: <MdCastForEducation size={isOpenSidebar ? "19" : "24"} />,
         }
       ];
     
