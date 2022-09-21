@@ -42,11 +42,11 @@ const TestimonialsAdmin = () => {
     }
 
     if(!values.imagelink){
-        errors.imagelink = "Image Link required"
+        errors.imagelink = "Image link required"
     }
 
     if(!values.college){
-      errors.college = "Company name required";
+      errors.college = "College name required";
     }else if(values.college.length < 2){
       errors.college = "Minimum 2 characters required";
     }else if(values.college.length > 18){
@@ -78,25 +78,25 @@ const TestimonialsAdmin = () => {
               <div className="form_container_testimonialsadmin">
                 <div className="form_box_testimonialsadmin">
                   <label>Name*</label>
-                  <input type="text" name="name" value="" onChange={handleForm} placeholder="Enter Testimonial Name" />
+                  <input type="text" name="name" value={info.name} onChange={handleForm} placeholder="Enter Testimonial Name" />
                   <p className="errors_msg_testimonialsadmin">{formErrors.name}</p>
                 </div>
 
                 <div className="form_box_testimonialsadmin">
                   <label>Image Link*</label>
-                  <input type="url" name="imagelink" value="" onChange={handleForm} placeholder="Enter Image Link" />
+                  <input type="url" name="imagelink" value={info.imagelink} onChange={handleForm} placeholder="Enter Image Link" />
                   <p className="errors_msg_testimonialsadmin">{formErrors.imagelink}</p>
                 </div>
                 
                 <div className="form_box_testimonialsadmin">
                   <label>College Name*</label>
-                  <input type="text" name="college" value="" onChange={handleForm} placeholder="Enter College Name" />
+                  <input type="text" name="college" value={info.college} onChange={handleForm} placeholder="Enter College Name" />
                   <p className="errors_msg_testimonialsadmin">{formErrors.college}</p>
                 </div>
 
                 <div className="form_box_testimonialsadmin">
                   <label>Description*</label>
-                  <textarea rows={5} name="description" value="" onChange={handleForm} placeholder="Enter Description ..."></textarea>
+                  <textarea rows={5} name="description" value={info.description} onChange={handleForm} placeholder="Enter Description ..."></textarea>
                   <p className="errors_msg_testimonialsadmin">{formErrors.description}</p>
                 </div>
               </div>

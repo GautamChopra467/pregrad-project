@@ -137,6 +137,7 @@ grid-row-gap: 15px;
   letter-spacing: -.02em;
   max-width: 406px;
   text-align: left;
+  text-transform: uppercase;
 }
 
 .testimonial_details_testimonialsadmin h2 {
@@ -145,6 +146,7 @@ grid-row-gap: 15px;
   font-size: 1.3rem;
   letter-spacing: -.02em;
   text-align: left;
+  text-transform: capitalize;
 }
 
 .testimonial_details_testimonialsadmin p {
