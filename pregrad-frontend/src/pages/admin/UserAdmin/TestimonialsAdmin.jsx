@@ -121,24 +121,14 @@ const TestimonialsAdmin = () => {
 
                 <div className="form_box_testimonialsadmin">
                   <label>Image Link*</label>
-<<<<<<< HEAD
                   <input type="url" name="image_link" value={info.image_link} onChange={handleForm} placeholder="Enter Image Link" />
                   <p className="errors_msg_testimonialsadmin">{formErrors.image_link}</p>
-=======
-                  <input type="url" name="imagelink" value={info.imagelink} onChange={handleForm} placeholder="Enter Image Link" />
-                  <p className="errors_msg_testimonialsadmin">{formErrors.imagelink}</p>
->>>>>>> 8c81fed56bbf57d89a5755c0f9da4c2e2f64b19a
                 </div>
                 
                 <div className="form_box_testimonialsadmin">
                   <label>College Name*</label>
-<<<<<<< HEAD
                   <input type="text" name="college_name" value={info.college_name} onChange={handleForm} placeholder="Enter College Name" />
                   <p className="errors_msg_testimonialsadmin">{formErrors.college_name}</p>
-=======
-                  <input type="text" name="college" value={info.college} onChange={handleForm} placeholder="Enter College Name" />
-                  <p className="errors_msg_testimonialsadmin">{formErrors.college}</p>
->>>>>>> 8c81fed56bbf57d89a5755c0f9da4c2e2f64b19a
                 </div>
 
                 <div className="form_box_testimonialsadmin">
