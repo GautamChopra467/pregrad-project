@@ -100,6 +100,7 @@
   }
   
   .testimonial_container_coursesadmin {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 20px;
@@ -122,7 +123,7 @@
   }
 
   .testimonial_box_coursesadmin:hover {
-    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 15%);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 10%);
   }
   
   .testimonial_box_upper_section_coursesadmin {

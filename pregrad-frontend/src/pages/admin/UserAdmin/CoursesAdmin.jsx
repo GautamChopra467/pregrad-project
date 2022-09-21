@@ -60,10 +60,10 @@ const CoursesAdmin = () => {
 
     if(!values.instructordetail){
       errors.instructordetail = "Instructor detail required"
-    }else if(values.instructor.length < 2){
-      errors.instructor = "Minimum 2 characters required";
-    }else if(values.instructor.length > 28){
-      errors.instructor = "Maximum 28 characters required";
+    }else if(values.instructordetail.length < 2){
+      errors.instructordetail = "Minimum 2 characters required";
+    }else if(values.instructordetail.length > 28){
+      errors.instructordetail = "Maximum 28 characters required";
     }
 
     if(!values.rating){
