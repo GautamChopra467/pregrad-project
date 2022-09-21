@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Company = require("../models/companyModel");
 const Internship = require("../models/internshipModel");
 const Student = require("../models/userModel");
+const AppContent = require("../models/AppModel");
 
 module.exports.registerAdmin = async(req,res)=>{
 
@@ -198,5 +199,103 @@ module.exports.VerifiedRepotedInternship = async(req,res)=>{
   }catch(err){
      console.log(err);
   }
+
+}
+
+module.exports.createTestimoials = async(req,res)=>{
+
+  try{
+
+
+    const {name,college_name,image_link,description} = req.body;
+    
+    const {id} = req.params;
+
+    const adminTestimonials = await AppContent.findOne({id:id});
+
+    if(adminTestimonials){
+
+      const updateadminTestimonials = await AppContent.updateOne({
+        $push:{
+          testimonials:{
+            name,
+            college_name,
+            image_link,
+            description
+        }
+        }
+        
+      })
+  
+
+    }else{
+
+      const createadminTestimonials = await AppContent.create({
+        id,
+        testimonials:{
+          name,
+          college_name,
+          image_link,
+          description
+        }
+      })
+
+      await createadminTestimonials.save();
+
+    }
+  
+  res.send({message:true});
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+module.exports.getTestimonials = async(req,res)=>{
+
+  try{
+
+    const {id} = req.params;
+
+    const appTestimonials = await AppContent.findOne({id:id});
+
+    if(appTestimonials){
+
+      res.send({message:true,testimonials:appTestimonials.testimonials});
+    }
+    else{
+      res.send({message:false});
+    }
+
+ 
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+module.exports.deleteTestimonial = async(req,res)=>{
+
+  try{
+
+    const {id,t_id}= req.params;
+    
+    const deleteTestimonial = await AppContent.updateOne({id:id},{
+      $pull:{
+       testimonials:{ 
+        _id:t_id
+      }
+      }
+    });
+
+    res.send({message:true});
+  
+
+  }catch(err){
+    console.log(err);
+  }
+ 
 
 }
