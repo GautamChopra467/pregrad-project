@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../../../components/admin/css/UserAdmin/TestimonialsAdminStyles.css";
+import "../../../components/admin/css/UserAdmin/CoursesAdminStyles.css";
 import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
+import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 
-const TestimonialsAdmin = () => {
+const CoursesAdmin = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -11,8 +12,12 @@ const TestimonialsAdmin = () => {
   const [info, setInfo] = useState({
     name: "",
     imagelink: "",
-    college: "",
-    description: "",
+    instructor: "",
+    instructordetail: "",
+    fee: "",
+    rating: "",
+    enrolled: "",
+    courselink: ""
   });
 
   const handleForm = (e) => {
@@ -42,19 +47,43 @@ const TestimonialsAdmin = () => {
     }
 
     if(!values.imagelink){
-        errors.imagelink = "Image Link required"
+        errors.imagelink = "Image link required"
     }
 
-    if(!values.college){
-      errors.college = "Company name required";
-    }else if(values.college.length < 2){
-      errors.college = "Minimum 2 characters required";
-    }else if(values.college.length > 18){
-      errors.college = "Maximum 18 characters required";
+    if(!values.instructor){
+      errors.instructor = "Instructor name required";
+    }else if(values.instructor.length < 2){
+      errors.instructor = "Minimum 2 characters required";
+    }else if(values.instructor.length > 18){
+      errors.instructor = "Maximum 18 characters required";
     }
 
-    if(!values.description){
-      errors.description = "Description required"
+    if(!values.instructordetail){
+      errors.instructordetail = "Instructor detail required"
+    }else if(values.instructor.length < 2){
+      errors.instructor = "Minimum 2 characters required";
+    }else if(values.instructor.length > 28){
+      errors.instructor = "Maximum 28 characters required";
+    }
+
+    if(!values.rating){
+      errors.rating = "Course rating required"
+    }else if(values.rating < 1){
+      errors.rating = "Rating should be greater than 1"
+    }else if(values.rating > 5){
+      errors.rating = "Rating should be less than 5"
+    }
+
+    if(!values.fee){
+      errors.fee = "Course fee required"
+    }
+
+    if(!values.enrolled){
+      errors.enrolled = "Students enrolled required"
+    }
+
+    if(!values.courselink){
+      errors.courselink = "Course link required"
     }
 
     return errors;
@@ -68,102 +97,131 @@ const TestimonialsAdmin = () => {
 
   return (
     <div>
-      <div className="main_box_testimonialsadmin">
-        <div className="main_container_testimonialsadmin">
-          <div className="top_section_testimonialsadmin">
+      <div className="main_box_coursesadmin">
+        <div className="main_container_coursesadmin">
+          <div className="top_section_coursesadmin">
             <h2>New Course</h2>
           </div>
-          <div className="mid_section_testimonialsadmin">
+          <div className="mid_section_coursesadmin">
             <form>
-              <div className="form_container_testimonialsadmin">
-                <div className="form_box_testimonialsadmin">
+              <div className="form_container_coursesadmin">
+                <div className="form_box_coursesadmin">
                   <label>Name*</label>
-                  <input type="text" name="name" value="" onChange={handleForm} placeholder="Enter Testimonial Name" />
-                  <p className="errors_msg_testimonialsadmin">{formErrors.name}</p>
+                  <input type="text" name="name" value={info.name} onChange={handleForm} placeholder="Enter Course Name" />
+                  <p className="errors_msg_coursesadmin">{formErrors.name}</p>
                 </div>
 
-                <div className="form_box_testimonialsadmin">
+                <div className="form_box_coursesadmin">
                   <label>Image Link*</label>
-                  <input type="url" name="imagelink" value="" onChange={handleForm} placeholder="Enter Image Link" />
-                  <p className="errors_msg_testimonialsadmin">{formErrors.imagelink}</p>
+                  <input type="url" name="imagelink" value={info.imagelink} onChange={handleForm} placeholder="Enter Image Link" />
+                  <p className="errors_msg_coursesadmin">{formErrors.imagelink}</p>
                 </div>
                 
-                <div className="form_box_testimonialsadmin">
-                  <label>College Name*</label>
-                  <input type="text" name="college" value="" onChange={handleForm} placeholder="Enter College Name" />
-                  <p className="errors_msg_testimonialsadmin">{formErrors.college}</p>
+                <div className="form_box_coursesadmin">
+                  <label>Instructor Name*</label>
+                  <input type="text" name="instructor" value={info.instructor} onChange={handleForm} placeholder="Enter Instructor Name" />
+                  <p className="errors_msg_coursesadmin">{formErrors.instructor}</p>
                 </div>
 
-                <div className="form_box_testimonialsadmin">
-                  <label>Description*</label>
-                  <textarea rows={5} name="description" value="" onChange={handleForm} placeholder="Enter Description ..."></textarea>
-                  <p className="errors_msg_testimonialsadmin">{formErrors.description}</p>
+                <div className="form_box_coursesadmin">
+                  <label>Instructor Detail*</label>
+                  <input type="text" name="instructordetail" value={info.instructordetail} onChange={handleForm} placeholder="Enter Instructor Detail" />
+                  <p className="errors_msg_coursesadmin">{formErrors.instructordetail}</p>
                 </div>
+
+                <div className="form_box_coursesadmin">
+                  <label>Course Rating*</label>
+                  <input type="number" name="rating" value={info.rating} onChange={handleForm} placeholder="Enter Course Rating" />
+                  <p className="errors_msg_coursesadmin">{formErrors.rating}</p>
+                </div>
+
+                <div className="form_box_coursesadmin">
+                  <label>Course Fee*</label>
+                  <input type="number" name="fee" value={info.fee} onChange={handleForm} placeholder="Enter Course Fee" />
+                  <p className="errors_msg_coursesadmin">{formErrors.fee}</p>
+                </div>
+
+                <div className="form_box_coursesadmin">
+                  <label>Students Enrolled*</label>
+                  <input type="number" name="enrolled" value={info.enrolled} onChange={handleForm} placeholder="Enter Students Enrolled" />
+                  <p className="errors_msg_coursesadmin">{formErrors.enrolled}</p>
+                </div>
+
+                <div className="form_box_coursesadmin">
+                  <label>Course Link*</label>
+                  <input type="url" name="courselink" value={info.courselink} onChange={handleForm} placeholder="Enter Course Link" />
+                  <p className="errors_msg_coursesadmin">{formErrors.courselink}</p>
+                </div>
+
               </div>
             </form>
           </div>
-          <div className="bottom_section_testimonialsadmin">
+          <div className="bottom_section_coursesadmin">
             <button
               onClick={submitForm}
-              className="btn_primary_testimonialsadmin"
+              className="btn_primary_coursesadmin"
             >
-              Post Testimonial
+              Post Course
             </button>
           </div>
         </div>
 
-        <div className="main_container_testimonialsadmin">
-          <div className="top_section_testimonialsadmin">
-            <h2>Previous Testimonials</h2>
+        <div className="main_container_coursesadmin">
+          <div className="top_section_coursesadmin">
+            <h2>Previous Courses</h2>
           </div>
 
-          <div className="testimonial_container_testimonialsadmin">
-            <div className="testimonial_box_testimonialsadmin">
-              <div className="testimonial_box_upper_section_testimonialsadmin">
+          <div className="testimonial_container_coursesadmin">
+            <a href="www.google.com" target="_blank">
+             <div className="testimonial_box_coursesadmin">
+              <div className="testimonial_box_upper_section_coursesadmin">
                 <img src={Student1} alt="testimonial" />
-                <div className="testimonial_details_testimonialsadmin">
-                  <h2>Gautam hopra</h2>
-                  <h3>BVCOE DELHI</h3>
-                  <p>Though the journey from applying for an internship to getting selected is quite exhausting but the Pregrad Team made the whole process smooth by always being available for any issues and proper guidance.</p>
+                <div className="testimonial_details_coursesadmin">
+                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
+                  <h3>Dr. Angela Yu, AWS Expert</h3>
+                  <div className="course_info_coursesadmin">
+                    <p>4.7</p>
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarHalf className="star_icon_courseadmin" />
+                    <h6>(138,476)</h6>
+                  </div>
+                  <p>&#8377; 790</p>
                 </div>
               </div>
-              <div className="testimonial_box_bottom_section_testimonialsadmin">
-                <button className="btn_delete_testimonialsadmin">
-                  <FaTrashAlt classNmae="delete_icon_testimonialsadmin" />
+              <div className="testimonial_box_bottom_section_coursesadmin">
+                <button className="btn_delete_coursesadmin">
+                  <FaTrashAlt classNmae="delete_icon_coursesadmin" />
                   Delete
                 </button>
               </div>
-            </div>
+            </div>    
+              </a>
 
-            <div className="testimonial_box_testimonialsadmin">
-              <div className="testimonial_box_upper_section_testimonialsadmin">
+
+            <div className="testimonial_box_coursesadmin">
+              <div className="testimonial_box_upper_section_coursesadmin">
                 <img src={Student1} alt="testimonial" />
-                <div className="testimonial_details_testimonialsadmin">
-                  <h2>Gautam hopra</h2>
-                  <h3>BVCOE DELHI</h3>
-                  <p>Though the journey from applying for an internship to getting selected is quite exhausting but the Pregrad Team made the whole process smooth by always being available for any issues and proper guidance.</p>
+                <div className="testimonial_details_coursesadmin">
+                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
+                  <h3>Dr. Angela Yu, AWS Expert</h3>
+                  <div className="course_info_coursesadmin">
+                    <p>4.7</p>
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarHalf className="star_icon_courseadmin" />
+                    <h6>(138,476)</h6>
+                  </div>
+                  <p>&#8377; 790</p>
                 </div>
               </div>
-              <div className="testimonial_box_bottom_section_testimonialsadmin">
-                <button className="btn_delete_testimonialsadmin">
-                  <FaTrashAlt classNmae="delete_icon_testimonialsadmin" />
-                  Delete
-                </button>
-              </div>
-            </div>
-
-            <div className="testimonial_box_testimonialsadmin">
-              <div className="testimonial_box_upper_section_testimonialsadmin">
-                <img src={Student1} alt="testimonial" />
-                <div className="testimonial_details_testimonialsadmin">
-                  <h2>Gautam hopra</h2>
-                  <h3>BVCOE DELHI</h3>
-                  <p>Though the journey from applying for an internship to getting selected is quite exhausting but the Pregrad Team made the whole process smooth by always being available for any issues and proper guidance.</p>
-                </div>
-              </div>
-              <div className="testimonial_box_bottom_section_testimonialsadmin">
-                <button className="btn_delete_testimonialsadmin">
-                  <FaTrashAlt classNmae="delete_icon_testimonialsadmin" />
+              <div className="testimonial_box_bottom_section_coursesadmin">
+                <button className="btn_delete_coursesadmin">
+                  <FaTrashAlt classNmae="delete_icon_coursesadmin" />
                   Delete
                 </button>
               </div>
@@ -176,4 +234,4 @@ const TestimonialsAdmin = () => {
   );
 };
 
-export default TestimonialsAdmin;
+export default CoursesAdmin;
