@@ -92,6 +92,11 @@ const EventsAdmin = () => {
           <div className="top_section_eventsadmin">
             <h2>New Event</h2>
           </div>
+
+          <div className="main_msg_eventsadmin">
+            <p>Maximum limit reached, first delete previous events to add a new one.</p>
+          </div>
+
           <div className="mid_section_eventsadmin">
             <form>
               <div className="form_container_eventsadmin">
