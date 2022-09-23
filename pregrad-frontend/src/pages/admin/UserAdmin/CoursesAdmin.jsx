@@ -145,6 +145,11 @@ const CoursesAdmin = () => {
           <div className="top_section_coursesadmin">
             <h2>New Course</h2>
           </div>
+
+          <div className="main_msg_coursesadmin">
+            <p>Maximum limit reached, first delete previous courses to add a new one.</p>
+          </div>
+
           <div className="mid_section_coursesadmin">
             <form>
               <div className="form_container_coursesadmin">

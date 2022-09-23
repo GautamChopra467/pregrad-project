@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import "../css/SliderCompaniesStyles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination, Navigation } from "swiper";
+import { Autoplay, Navigation } from "swiper";
 import Company1 from "../../../img/home-banner/company1.png";
 import Company2 from "../../../img/home-banner/company2.png";
 import Company3 from "../../../img/home-banner/company3.png";

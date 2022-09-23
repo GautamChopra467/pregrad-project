@@ -112,6 +112,11 @@ const TestimonialsAdmin = () => {
           <div className="top_section_testimonialsadmin">
             <h2>New Testimonial</h2>
           </div>
+
+          <div className="main_msg_eventsadmin">
+            <p>Maximum limit reached, first delete previous testimonials to add a new one.</p>
+          </div>
+
           <div className="mid_section_testimonialsadmin">
             <form>
               <div className="form_container_testimonialsadmin">
