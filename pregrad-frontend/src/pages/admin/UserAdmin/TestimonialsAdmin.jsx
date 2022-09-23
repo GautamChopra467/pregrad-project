@@ -81,7 +81,6 @@ const TestimonialsAdmin = () => {
   const getTestimonials = ()=>{
     axios.get(`http://localhost:8000/admin/gettestimonials/${id}`).then(({data})=>{
       if(data.message){
-        console.log(data.testimonials);
         setTestimonials(data.testimonials); 
       }
     })
@@ -96,6 +95,9 @@ const TestimonialsAdmin = () => {
           setIsSubmit(false); 
           setInfo({...info,name:"",college_name:"",description:"",image_link:""}); 
           getTestimonials();
+        }
+        else{
+          setFormErrors(data.errors);
         }
       })  
     } 

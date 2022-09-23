@@ -3,11 +3,16 @@ import "../../../components/admin/css/UserAdmin/EventsAdminStyles.css";
 import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
+import axios from "axios";
 
 const EventsAdmin = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const [Events,setEvents] = useState()
+
+  const {id} = useParams();
 
   const [info, setInfo] = useState({
     name: "",
@@ -79,10 +84,46 @@ const EventsAdmin = () => {
     return errors;
   };
 
+  const getEvents = ()=>{
+    axios.get(`http://localhost:8000/admin/getevents/${id}`).then(({data})=>{
+      if(data.message){ 
+        setEvents(data.events);
+      }
+    })
+  }
+
+  const deleteEvent = (id,e_id)=>{
+
+    axios.put(`http://localhost:8000/admin/deleteevent/${id}/${e_id}`).then(({data})=>{
+      if(data.message){
+        getEvents();
+      }
+    })
+  }
+
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log("Submitted");
+      axios.post(`http://localhost:8000/admin/events/${id}`,{
+        ...info
+      }).then(({data})=>{
+        if(data.message){
+          setIsSubmit(false);
+          setInfo({...info, 
+            name: "",
+            imagelink: "",
+            speaker: "",
+            organisation: "",
+            date: "",
+            time: "",
+            eventlink: ""
+          })
+          getEvents();
+        }else{
+          setFormErrors(data.errors);
+        }
+      })
     }
+    getEvents();
   }, [formErrors]);
 
   return (
@@ -102,7 +143,7 @@ const EventsAdmin = () => {
                     name="name"
                     value={info.name}
                     onChange={handleForm}
-                    placeholder="Enter Course Name"
+                    placeholder="Enter Event Name"
                   />
                   <p className="errors_msg_eventsadmin">{formErrors.name}</p>
                 </div>
@@ -189,7 +230,7 @@ const EventsAdmin = () => {
           </div>
           <div className="bottom_section_eventsadmin">
             <button onClick={submitForm} className="btn_primary_eventsadmin">
-              Post Course
+              Post Event
             </button>
           </div>
         </div>
@@ -199,19 +240,21 @@ const EventsAdmin = () => {
             <h2>Previous Events</h2>
           </div>
 
-          <div className="testimonial_container_eventsadmin">
-            <a href="https://www.google.com" target="_blank">
+          {
+               (Events !== undefined)?Events.map((event)=>(
+    <div className="testimonial_container_eventsadmin">
+            <a href={event.eventlink} target="_blank">
               <div className="testimonial_box_eventsadmin">
                 <div className="testimonial_box_upper_section_eventsadmin">
-                  <img src={Student1} alt="testimonial" />
+                  <img src={event.imagelink} alt="eventimage" />
                   <div className="testimonial_details_eventsadmin">
-                    <h2>Women and Leadership</h2>
-                    <h3>Dr. Angela Yu, AWS Expert</h3>
-                    <p>Sep 21, 2022 - 8:00</p>
+                    <h2>{event.name}</h2>
+                    <h3>{event.speaker}, {event.organisation}</h3>
+                    <p>{event.date} - {event.time}</p>
                   </div>
                 </div>
                 <div className="testimonial_box_bottom_section_eventsadmin">
-                  <button className="btn_delete_eventsadmin">
+                  <button className="btn_delete_eventsadmin" onClick={()=>deleteEvent(id,event._id)}>
                     <FaTrashAlt classNmae="delete_icon_eventsadmin" />
                     Delete
                   </button>
@@ -219,6 +262,11 @@ const EventsAdmin = () => {
               </div>
             </a>
           </div>
+         )):""
+
+          
+
+          }
         </div>
       </div>
     </div>

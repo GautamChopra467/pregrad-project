@@ -20,11 +20,11 @@ const testimonialSchema = new mongoose.Schema({
 })
 
 const eventsSchema = new mongoose.Schema({
-    image_link:{
+    imagelink:{
         type:String,
         trim:true
     },
-    title:{
+    name:{
       type:String,
       trim:true
     },
@@ -32,7 +32,7 @@ const eventsSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    organization:{
+    organisation:{
         type:String,
         trim:true
     },
@@ -44,32 +44,27 @@ const eventsSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-  event_link:{
+  eventlink:{
     type:String,
     trim:true
-},
-   
-description:{
-        type:String,
-        trim:true
-    }
+}
 })
 
 
 const courseSchema = new mongoose.Schema({
-    course_link:{
+    courselink:{
         type:String,
         trim:true
     },
-    course_name:{
+    name:{
         type:String,
         trim:true
     },
-    instructor_name:{
+    instructordetail:{
         type:String,
         trim:true
     },
-    instructor_details:{
+    instructor:{
         type:String,
         trim:true
     },
@@ -79,8 +74,12 @@ const courseSchema = new mongoose.Schema({
     fee:{
         type:Number
     },
-    total_students:{
+    enrolled:{
         type:Number
+    },
+    imagelink:{
+        type:String,
+        trim:true
     }
 })
 
