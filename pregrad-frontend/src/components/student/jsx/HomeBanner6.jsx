@@ -12,10 +12,9 @@ const HomeBanner6 = () => {
     <div>
       <div className="main_container_homebanner6">
         <div className="main_top_section_homebanner6">
-          <h2>Upskill and get hired </h2>
+          <h2>Join Now </h2>
           <div className="main_top_lower_section_homebanner6">
-            <p>Courses</p>
-            <button className="btn_primary_homebanner6">All Courses</button>
+            <p>Events</p>
           </div>
         </div>
 
@@ -50,20 +49,11 @@ const HomeBanner6 = () => {
              <div className="course_box_homebanner6">
               <div className="course_box_upper_section_homebanner6">
                 <img src={Student1} alt="course" />
-                <div className="course_details_homebanner6">
-                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
-                  <h3>Dr. Angela Yu, AWS Expert</h3>
-                  <div className="course_info_homebanner6">
-                    <p>4.7</p>
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>(138,476)</h6>
+                <div className="testimonial_details_eventsadmin">
+                    <h2>Women and Leadership</h2>
+                    <h3>Dr. Angela Yu, AWS Expert</h3>
+                    <p>Sep 21, 2022 - 8:00</p>
                   </div>
-                  <p>&#8377; 790</p>
-                </div>
               </div>
             </div>    
               </a>

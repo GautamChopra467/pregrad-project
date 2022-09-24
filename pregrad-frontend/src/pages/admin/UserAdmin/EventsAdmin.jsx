@@ -205,7 +205,6 @@ const EventsAdmin = () => {
           </div>
 
           <div className="testimonial_container_eventsadmin">
-            <a href="https://www.google.com" target="_blank">
               <div className="testimonial_box_eventsadmin">
                 <div className="testimonial_box_upper_section_eventsadmin">
                   <img src={Student1} alt="testimonial" />
@@ -216,13 +215,13 @@ const EventsAdmin = () => {
                   </div>
                 </div>
                 <div className="testimonial_box_bottom_section_eventsadmin">
+                  <a href="https//www.google.com">Event Link</a>
                   <button className="btn_delete_eventsadmin">
                     <FaTrashAlt classNmae="delete_icon_eventsadmin" />
                     Delete
                   </button>
                 </div>
               </div>
-            </a>
           </div>
         </div>
       </div>
