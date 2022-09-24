@@ -276,8 +276,12 @@ const EventsAdmin = () => {
 
           {
                (Events !== undefined)?Events.map((event)=>(
+<<<<<<< HEAD
     <div className="testimonial_container_eventsadmin" key={event._id}>
             <a href={event.eventlink} target="_blank">
+=======
+    <div className="testimonial_container_eventsadmin">
+>>>>>>> a8d57a3c0db87c8383b1497adaa66e05c1cea03e
               <div className="testimonial_box_eventsadmin">
                 <div className="testimonial_box_upper_section_eventsadmin">
                   <img src={event.imagelink} alt="eventimage" />
@@ -288,13 +292,13 @@ const EventsAdmin = () => {
                   </div>
                 </div>
                 <div className="testimonial_box_bottom_section_eventsadmin">
+                  <a href={event.eventlink}>Event Link</a>
                   <button className="btn_delete_eventsadmin" onClick={()=>deleteEvent(id,event._id)}>
                     <FaTrashAlt className="delete_icon_eventsadmin" />
                     Delete
                   </button>
                 </div>
               </div>
-            </a>
           </div>
          )):""
 

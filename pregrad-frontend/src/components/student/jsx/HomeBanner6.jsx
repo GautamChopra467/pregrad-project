@@ -29,10 +29,9 @@ const HomeBanner6 = () => {
     <div>
       <div className="main_container_homebanner6">
         <div className="main_top_section_homebanner6">
-          <h2>Upskill and get hired </h2>
+          <h2>Join Now </h2>
           <div className="main_top_lower_section_homebanner6">
-            <p>Courses</p>
-            <button className="btn_primary_homebanner6">All Courses</button>
+            <p>Events</p>
           </div>
         </div>
 
@@ -70,6 +69,7 @@ const HomeBanner6 = () => {
           <a href={cource.courcelink} target="_blank">
              <div className="course_box_homebanner6">
               <div className="course_box_upper_section_homebanner6">
+<<<<<<< HEAD
                 <img src={cource.imagelink} alt="course" />
                 <div className="course_details_homebanner6">
                   <h2>{cource.name}</h2>
@@ -85,6 +85,14 @@ const HomeBanner6 = () => {
                   </div>
                   <p>&#8377; {cource.fee}</p>
                 </div>
+=======
+                <img src={Student1} alt="course" />
+                <div className="testimonial_details_eventsadmin">
+                    <h2>Women and Leadership</h2>
+                    <h3>Dr. Angela Yu, AWS Expert</h3>
+                    <p>Sep 21, 2022 - 8:00</p>
+                  </div>
+>>>>>>> a8d57a3c0db87c8383b1497adaa66e05c1cea03e
               </div>
             </div>    
               </a>
