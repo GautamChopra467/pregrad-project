@@ -3,16 +3,19 @@ import "../../../components/admin/css/UserAdmin/EventsAdminStyles.css";
 import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import { Link,useParams } from "react-router-dom";
+import { Link,useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import {useCookies} from "react-cookie";
 const EventsAdmin = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [cookies,setCookie,removeCookie] = useCookies([]);
 
   const [Events,setEvents] = useState()
 
   const {id} = useParams();
+
+  const navigate = useNavigate();
 
   const [info, setInfo] = useState({
     name: "",
@@ -87,7 +90,11 @@ const EventsAdmin = () => {
   const getEvents = ()=>{
     axios.get(`http://localhost:8000/admin/getevents/${id}`).then(({data})=>{
       if(data.message){ 
+        if(data.events.length < 7 ){
         setEvents(data.events);
+      }else{
+        setFormErrors({other:"Maximum limit reached, first delete previous events to add a new one."})
+      }
       }
     })
   }
@@ -102,7 +109,22 @@ const EventsAdmin = () => {
   }
 
   useEffect(() => {
+
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+          removeCookie("jwt")
+          navigate('/login')
+        }
+      }
+    }
+    verifyUser();
+
     if (Object.keys(formErrors).length === 0 && isSubmit) {
+      if(Events.length < 7){
       axios.post(`http://localhost:8000/admin/events/${id}`,{
         ...info
       }).then(({data})=>{
@@ -122,7 +144,12 @@ const EventsAdmin = () => {
           setFormErrors(data.errors);
         }
       })
+    } 
+    else{
+        setFormErrors({other:"Maximum limit reached, first delete previous events to add a new one."});
+      }
     }
+   
     getEvents();
   }, [formErrors]);
 
@@ -134,10 +161,12 @@ const EventsAdmin = () => {
             <h2>New Event</h2>
           </div>
 
+{
+  (formErrors.other)?
           <div className="main_msg_eventsadmin">
-            <p>Maximum limit reached, first delete previous events to add a new one.</p>
-          </div>
-
+            <p>{formErrors.other}</p>
+          </div>:""
+}
           <div className="mid_section_eventsadmin">
             <form>
               <div className="form_container_eventsadmin">
@@ -247,7 +276,7 @@ const EventsAdmin = () => {
 
           {
                (Events !== undefined)?Events.map((event)=>(
-    <div className="testimonial_container_eventsadmin">
+    <div className="testimonial_container_eventsadmin" key={event._id}>
             <a href={event.eventlink} target="_blank">
               <div className="testimonial_box_eventsadmin">
                 <div className="testimonial_box_upper_section_eventsadmin">
@@ -260,7 +289,7 @@ const EventsAdmin = () => {
                 </div>
                 <div className="testimonial_box_bottom_section_eventsadmin">
                   <button className="btn_delete_eventsadmin" onClick={()=>deleteEvent(id,event._id)}>
-                    <FaTrashAlt classNmae="delete_icon_eventsadmin" />
+                    <FaTrashAlt className="delete_icon_eventsadmin" />
                     Delete
                   </button>
                 </div>
@@ -268,8 +297,6 @@ const EventsAdmin = () => {
             </a>
           </div>
          )):""
-
-          
 
           }
         </div>

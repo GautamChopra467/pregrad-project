@@ -499,3 +499,20 @@ module.exports.deleteEvents = async(req,res)=>{
     console.log(err);
   }
 }
+
+module.exports.homeCources = async(req,res)=>{
+  try{
+
+    const extras = await AppContent.find({});
+
+    if(extras){
+      res.send({data:extras});
+    }
+    else{
+       res.send({message:false});
+    }
+
+  }catch(err){
+    console.log(err);
+  }
+}

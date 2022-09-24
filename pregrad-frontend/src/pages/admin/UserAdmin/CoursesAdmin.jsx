@@ -4,15 +4,22 @@ import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const CoursesAdmin = () => {
 
   const [formErrors, setFormErrors] = useState({});
+
   const [isSubmit, setIsSubmit] = useState(false);
 
+  const [cookies,setCookie,removeCookie] = useCookies([]);
+
   const [Cources,setCources] = useState([]);
+
   const {id} = useParams();
+
+  const navigate = useNavigate();
 
   const [info, setInfo] = useState({
     name: "",
@@ -97,8 +104,12 @@ const CoursesAdmin = () => {
   const getCources = ()=>{
     axios.get(`http://localhost:8000/admin/getcources/${id}`).then(({data})=>{
       if(data.message){ 
-        setCources(data.cources);
-      }
+        if(data.cources.length < 7){
+          setCources(data.cources);
+        }else{
+          setFormErrors({other:"Maximum limit reached, first delete previous courses to add a new one."})
+        }
+      } 
     })
   }
 
@@ -112,28 +123,47 @@ const CoursesAdmin = () => {
   }
 
   useEffect(() => {
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/admin/cources/${id}`,{
-        ...info
-      }).then(({data})=>{
-        if(data.message){
-          setIsSubmit(false);
-          setInfo({...info, name: "",
-          imagelink: "",
-          instructor: "",
-          instructordetail: "",
-          fee: "",
-          rating: "",
-          enrolled: "",
-          courselink: ""
-        })
 
-          getCources();
-
-        }else{
-          setFormErrors(data.errors);
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+          removeCookie("jwt");
+          navigate('/login');
         }
-      })
+      }
+    }
+    verifyUser();
+
+    if( Object.keys(formErrors).length === 0 && isSubmit ){
+      if( Cources.length < 7){
+        axios.post(`http://localhost:8000/admin/cources/${id}`,{
+          ...info
+        }).then(({data})=>{
+          if(data.message){
+            setIsSubmit(false);
+            setInfo({...info, name: "",
+            imagelink: "",
+            instructor: "",
+            instructordetail: "",
+            fee: "",
+            rating: "",
+            enrolled: "",
+            courselink: ""
+          })
+  
+            getCources();
+  
+          }else{
+            setFormErrors(data.errors);
+          }
+        })
+      } 
+      else{
+        setFormErrors({other:"Maximum limit reached, first delete previous courses to add a new one."})
+      }
     }
     getCources();
   }, [formErrors]);
@@ -146,10 +176,12 @@ const CoursesAdmin = () => {
             <h2>New Course</h2>
           </div>
 
-          <div className="main_msg_coursesadmin">
-            <p>Maximum limit reached, first delete previous courses to add a new one.</p>
-          </div>
-
+          {
+  (formErrors.other)?
+          <div className="main_msg_eventsadmin">
+            <p>{formErrors.other}</p>
+          </div>:""
+}
           <div className="mid_section_coursesadmin">
             <form>
               <div className="form_container_coursesadmin">
@@ -222,7 +254,7 @@ const CoursesAdmin = () => {
           <div className="testimonial_container_coursesadmin">
             {
              ( Cources !== undefined) ? Cources.map((cource)=>(
-            <a href={cource.courselink} target="_blank">
+            <a href={cource.courselink} target="_blank" key={cource._id}>
              <div className="testimonial_box_coursesadmin">
               <div className="testimonial_box_upper_section_coursesadmin">
                 <img src={cource.imagelink} alt="testimonial" />
@@ -243,7 +275,7 @@ const CoursesAdmin = () => {
               </div>
               <div className="testimonial_box_bottom_section_coursesadmin" >
                 <button className="btn_delete_coursesadmin" onClick={()=>deleteCources(id,cource._id)}>
-                  <FaTrashAlt classNmae="delete_icon_coursesadmin" />
+                  <FaTrashAlt className="delete_icon_coursesadmin" />
                   Delete
                 </button>
               </div>

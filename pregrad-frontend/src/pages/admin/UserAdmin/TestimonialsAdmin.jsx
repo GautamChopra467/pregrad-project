@@ -3,13 +3,15 @@ import "../../../components/admin/css/UserAdmin/TestimonialsAdminStyles.css";
 import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const TestimonialsAdmin = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const navigate = useNavigate();
   const {id} = useParams();
 
   const [testimonials,setTestimonials] = useState([]);
@@ -70,9 +72,7 @@ const TestimonialsAdmin = () => {
 
     axios.put(`http://localhost:8000/admin/deletetestimonial/${id}/${t_id}`).then(({data})=>{
       if(data.message){
-        console.log(data);
         getTestimonials();
-
       }
     })
 
@@ -81,25 +81,50 @@ const TestimonialsAdmin = () => {
   const getTestimonials = ()=>{
     axios.get(`http://localhost:8000/admin/gettestimonials/${id}`).then(({data})=>{
       if(data.message){
-        setTestimonials(data.testimonials); 
+    
+        if(data.testimonials.length < 7){
+        setTestimonials(data.testimonials);
+      }else{
+        setTestimonials(data.testimonials);
+        setFormErrors({other:"Maximum limit reached, first delete previous testimonials to add a new one."})
+      } 
       }
     })
   }
 
   useEffect(() => {
+
+    const verifyUser = async()=>{
+      if(!cookies.jwt){
+        navigate('/login')
+      }else{
+        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+          removeCookie("jwt")
+          navigate('/login')
+        }
+      }
+    }
+    verifyUser();
+
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/admin/testimonials/${id}`,{
-        ...info
-      }).then(({data})=>{
-        if(data.message){
-          setIsSubmit(false); 
-          setInfo({...info,name:"",college_name:"",description:"",image_link:""}); 
-          getTestimonials();
-        }
-        else{
-          setFormErrors(data.errors);
-        }
-      })  
+      if(testimonials.length < 7){
+        axios.post(`http://localhost:8000/admin/testimonials/${id}`,{
+          ...info
+        }).then(({data})=>{
+          if(data.message){
+            setIsSubmit(false); 
+            setInfo({...info,name:"",college_name:"",description:"",image_link:""}); 
+            getTestimonials();
+          }
+          else{
+            setFormErrors(data.errors);
+          }
+        })
+      }
+      else{
+        setFormErrors({other:"Maximum limit reached, first delete previous testimonials to add a new one."});
+      }
     } 
 
     getTestimonials();
@@ -113,10 +138,12 @@ const TestimonialsAdmin = () => {
             <h2>New Testimonial</h2>
           </div>
 
+          {
+  (formErrors.other)?
           <div className="main_msg_eventsadmin">
-            <p>Maximum limit reached, first delete previous testimonials to add a new one.</p>
-          </div>
-
+            <p>{formErrors.other}</p>
+          </div>:""
+}
           <div className="mid_section_testimonialsadmin">
             <form>
               <div className="form_container_testimonialsadmin">
@@ -167,7 +194,7 @@ const TestimonialsAdmin = () => {
   (testimonials !== undefined )?
   
     testimonials.map((testimonial)=>(
-                <div className="testimonial_box_testimonialsadmin">
+                <div className="testimonial_box_testimonialsadmin" key={testimonial._id}>
                 <div className="testimonial_box_upper_section_testimonialsadmin">
                   <img src={testimonial.image_link} alt="testimonial" />
                   <div className="testimonial_details_testimonialsadmin">
@@ -178,7 +205,7 @@ const TestimonialsAdmin = () => {
                 </div>
                 <div className="testimonial_box_bottom_section_testimonialsadmin">
                   <button className="btn_delete_testimonialsadmin" onClick={()=>deleteTestimonial(id,testimonial._id)}>
-                    <FaTrashAlt classNmae="delete_icon_testimonialsadmin" />
+                    <FaTrashAlt className="delete_icon_testimonialsadmin" />
                     Delete
                   </button>
                 </div>
