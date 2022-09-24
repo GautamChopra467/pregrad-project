@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../../../components/admin/css/UserAdmin/CoursesAdminStyles.css";
-import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 import axios from "axios";
@@ -222,7 +221,6 @@ const CoursesAdmin = () => {
           <div className="testimonial_container_coursesadmin">
             {
              ( Cources !== undefined) ? Cources.map((cource)=>(
-            <a href={cource.courselink} target="_blank">
              <div className="testimonial_box_coursesadmin">
               <div className="testimonial_box_upper_section_coursesadmin">
                 <img src={cource.imagelink} alt="testimonial" />
@@ -236,50 +234,23 @@ const CoursesAdmin = () => {
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>{(cource.enrolled)}</h6>
+                    <h6>({cource.enrolled})</h6>
                   </div>
                   <p>&#8377;{cource.fee}</p>
                 </div>
               </div>
-              <div className="testimonial_box_bottom_section_coursesadmin" >
+              <div className="testimonial_box_bottom_section_coursesadmin">
+              <a href={cource.courselink}>Event Link</a>
                 <button className="btn_delete_coursesadmin" onClick={()=>deleteCources(id,cource._id)}>
                   <FaTrashAlt classNmae="delete_icon_coursesadmin" />
                   Delete
                 </button>
               </div>
             </div>    
-               </a>
+               
              ))
               :""
             }
-            
-
-
-            {/* <div className="testimonial_box_coursesadmin">
-              <div className="testimonial_box_upper_section_coursesadmin">
-                <img src={Student1} alt="testimonial" />
-                <div className="testimonial_details_coursesadmin">
-                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
-                  <h3>Dr. Angela Yu, AWS Expert</h3>
-                  <div className="course_info_coursesadmin">
-                    <p>4.7</p>
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>(138,476)</h6>
-                  </div>
-                  <p>&#8377; 790</p>
-                </div>
-              </div>
-              <div className="testimonial_box_bottom_section_coursesadmin">
-                <button className="btn_delete_coursesadmin">
-                  <FaTrashAlt classNmae="delete_icon_coursesadmin" />
-                  Delete
-                </button>
-              </div>
-            </div> */}
             
           </div>
         </div>

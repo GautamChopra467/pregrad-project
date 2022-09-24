@@ -8,6 +8,7 @@ import Student1 from "../../../img/home-banner/student1.png";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 
 const HomeBanner6 = () => {
+  const flag = true;
   return (
     <div>
       <div className="main_container_homebanner6">
@@ -41,21 +42,21 @@ const HomeBanner6 = () => {
               },
             }}
             modules={[Navigation]}
-            loop={true}
+            loop={flag ? false : true}
             className="mySwiper"
           >
             <SwiperSlide className="swiper_homebanner6">
-            <a href="www.google.com" target="_blank">
-             <div className="course_box_homebanner6">
-              <div className="course_box_upper_section_homebanner6">
-                <img src={Student1} alt="course" />
-                <div className="testimonial_details_eventsadmin">
-                    <h2>Women and Leadership</h2>
-                    <h3>Dr. Angela Yu, AWS Expert</h3>
-                    <p>Sep 21, 2022 - 8:00</p>
+              <a href="www.google.com" target="_blank">
+                <div className="course_box_homebanner6">
+                  <div className="course_box_upper_section_homebanner6">
+                    <img src={Student1} alt="course" />
+                    <div className="testimonial_details_eventsadmin">
+                      <h2>Women and Leadership</h2>
+                      <h3>Dr. Angela Yu, AWS Expert</h3>
+                      <p>Sep 21, 2022 - 8:00</p>
+                    </div>
                   </div>
-              </div>
-            </div>    
+                </div>    
               </a>
             </SwiperSlide>
             

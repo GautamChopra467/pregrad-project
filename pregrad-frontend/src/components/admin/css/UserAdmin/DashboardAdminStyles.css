@@ -176,7 +176,8 @@
   }
   
   .top_box_account_dashboardAdmin h2,
-  .top_box_applicants_dashboardAdmin h2 {
+  .top_box_applicants_dashboardAdmin h2,
+  .bottom_details_upper_section_dashboardAdmin h2 {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--menu-link);
@@ -210,11 +211,102 @@
   }
   
   .settings_icon_dashboardAdmin,
-  .people_icon_dashboardAdmin {
+  .people_icon_dashboardAdmin,
+  .admin_icon_dashboardAdmin {
     font-size: 22px;
     color: var(--info-color-dark);
   }
+
+  .bottom_details_section_dashboardAdmin {
+    width: 100%;
+  }
+
+  .admin_container_dashboardAdmin {
+    width: 100%;
+    height: -moz-fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    background-color: var(--header-bg);
+  }
+
+  .bottom_details_upper_section_dashboardAdmin {
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+  }
+
+  .bottom_details_lower_section_dashboardAdmin {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 15px;
+  }
+
+  .admin_box_dashboardAdmin {
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    border: 1px solid var(--input-border);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    /* grid-gap: 10px; */
+    background-color: var(--background-secondary);
+  }
+
+  .admin_box_dashboardAdmin h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black-color);
+  }
+
+  .admin_box_dashboardAdmin h5 {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--para-color);
+  }
+
+  .admin_box_upper_section_dashboardAdmin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .delete_admin_box_dashboardAdmin {
+    width: 34px;
+    height: 34px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s all ease-in-out;
+    margin-right: 20px;
+    background-color: var(--primary-lightest);
+    color: var(--para-color);
+    transition: 0.2s all ease;
+    box-shadow: 0 0 8px 2px rgb(0 0 0 / 5%);
+  }
+
+  .delete_admin_box_dashboardAdmin:hover {
+    background-color: var(--primary-light);
+  color: var(--header-bg);
+  box-shadow: 0 0 12px 4px rgb(0 0 0 / 10%);
+  }
+
+  .delete_admin_icon_dashboardAdmin {
+    font-size: 22px;
+  cursor: pointer;
+  }
+
+
+
   
+
+
   .modal_backgound_dashboardAdmin {
       width: 100vw;
       height: 100vh;
@@ -374,10 +466,19 @@
     }
   
     .top_box_account_dashboardAdmin h2,
-    .top_box_applicants_dashboardAdmin h2 {
+    .top_box_applicants_dashboardAdmin h2,
+    .bottom_details_upper_section_dashboardAdmin h2 {
       font-size: 1rem;
     }
+
+    .admin_box_dashboardAdmin h3 {
+      font-size: 15px;
+    }
   
+    .admin_box_dashboardAdmin h5 {
+      font-size: 13px;
+    }
+
     .left_details_section_dashboardAdmin {
       grid-gap: 15px;
     }
@@ -395,7 +496,8 @@
     }
   
     .account_container_dashboardAdmin,
-    .applicants_container_dashboardAdmin {
+    .applicants_container_dashboardAdmin,
+    .admin_container_dashboardAdmin {
       padding: 15px;
     }
   
@@ -428,6 +530,10 @@
     .logo_container_dashboardAdmin {
       width: 60px;
       height: 60px;
+    }
+
+    .delete_admin_box_dashboardAdmin {
+      margin-right: 0px;
     }
   }
   
@@ -462,6 +568,10 @@
   
     .mid_details_section_dashboardAdmin {
       flex-direction: column;
+      padding: 0 15px;
+    }
+
+    .bottom_details_section_dashboardAdmin {
       padding: 0 15px;
     }
   
@@ -551,7 +661,7 @@
       height: 42px;
     }
   
-    .mid_details_section_dashboardAdmin {
+    .mid_details_section_dashboardAdmin, .bottom_details_section_dashboardAdmin {
       padding: 0 10px;
     }
   

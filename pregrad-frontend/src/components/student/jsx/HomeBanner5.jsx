@@ -8,6 +8,7 @@ import Student1 from "../../../img/home-banner/student1.png";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 
 const HomeBanner5 = () => {
+  const flag = true;
   return (
     <div>
       <div className="main_container_homebanner5">
@@ -42,32 +43,34 @@ const HomeBanner5 = () => {
               },
             }}
             modules={[Navigation]}
-            loop={true}
+            loop={flag ? false : true}
             className="mySwiper"
           >
             <SwiperSlide className="swiper_homebanner5">
-            <a href="www.google.com" target="_blank">
-             <div className="course_box_homebanner5">
-              <div className="course_box_upper_section_homebanner5">
-                <img src={Student1} alt="course" />
-                <div className="course_details_homebanner5">
-                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
-                  <h3>Dr. Angela Yu, AWS Expert</h3>
-                  <div className="course_info_homebanner5">
-                    <p>4.7</p>
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>(138,476)</h6>
+              <a href="www.google.com" target="_blank">
+                <div className="course_box_homebanner5">
+                  <div className="course_box_upper_section_homebanner5">
+                    <img src={Student1} alt="course" />
+                    <div className="course_details_homebanner5">
+                      <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
+                      <h3>Dr. Angela Yu, AWS Expert</h3>
+                      <div className="course_info_homebanner5">
+                        <p>4.7</p>
+                        <BsStarFill className="star_icon_courseadmin" />
+                        <BsStarFill className="star_icon_courseadmin" />
+                        <BsStarFill className="star_icon_courseadmin" />
+                        <BsStarFill className="star_icon_courseadmin" />
+                        <BsStarHalf className="star_icon_courseadmin" />
+                        <h6>(138,476)</h6>
+                      </div>
+                      <p>&#8377; 790</p>
+                    </div>
                   </div>
-                  <p>&#8377; 790</p>
-                </div>
-              </div>
-            </div>    
+                </div>    
               </a>
             </SwiperSlide>
+
+            
             
           </Swiper>
         </div>

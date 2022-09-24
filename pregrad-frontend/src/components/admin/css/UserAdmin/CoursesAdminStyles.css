@@ -123,7 +123,7 @@
   }
 
   .testimonial_box_coursesadmin:hover {
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 10%);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 15%);
   }
   
   .testimonial_box_upper_section_coursesadmin {
@@ -133,7 +133,7 @@
   }
   
   .testimonial_box_upper_section_coursesadmin img {
-    width: 300px;
+    width: 100%;
     height: 250px;
     object-fit: cover;
     border-radius: 5px;
@@ -203,8 +203,22 @@
   
   .testimonial_box_bottom_section_coursesadmin {
     display: flex;
+    grid-gap: 10px;
+    align-items: center;
     justify-content: flex-end;
     margin-top: auto;
+  }
+
+  .testimonial_box_bottom_section_coursesadmin a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .testimonial_box_bottom_section_coursesadmin a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
   }
   
   .btn_delete_coursesadmin {
@@ -249,18 +263,16 @@
   }
   
   @media screen and (max-width: 1090px) {
-    .testimonial_box_upper_section_coursesadmin img {
-      width: 260px;
-    }
-  
-    .testimonial_container_coursesadmin {
-      display: flex;
-      flex-direction: column;
-      grid-gap: 15px;
-    }
-  
     .main_msg_coursesadmin p {
       font-size: 16px;
+    }
+
+    .testimonial_box_upper_section_coursesadmin img {
+      height: 230px;
+    }
+
+    .testimonial_box_bottom_section_coursesadmin a {
+      font-size: 15px;
     }
   }
   
@@ -278,6 +290,12 @@
       display: flex;
       flex-direction: column;
       grid-row-gap: 20px;
+    }
+
+    .testimonial_container_coursesadmin {
+      display: flex;
+      flex-direction: column;
+      grid-gap: 15px;
     }
   }
   
@@ -308,10 +326,6 @@
   
     .errors_msg_coursesadmin {
       font-size: 15px;
-    }
-  
-    .testimonial_box_upper_section_coursesadmin img {
-      width: 100%
     }
   }
   

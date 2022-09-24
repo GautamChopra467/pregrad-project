@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { HiOutlinePencil } from "react-icons/hi";
-import { MdOutlinePeopleAlt } from 'react-icons/md';
+import { MdOutlineAdminPanelSettings, MdOutlinePeopleAlt } from 'react-icons/md';
+import { BiTrash } from "react-icons/bi";
 import { useNavigate, Link,useParams } from 'react-router-dom';
 import "../../../components/admin/css/UserAdmin/DashboardAdminStyles.css";
 import axios from 'axios'
@@ -314,8 +315,39 @@ useEffect(()=>{
                 <Link to={`/admin/info/${id}/reports`}>View</Link>
               </div>
               <div className='bottom_box_applicants_dashboardAdmin'>
-                <p>Check new reports applied for different internships.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p>Check new reports applied for different internships.</p>
               </div>
+            </div>
+          </div>
+
+          <div className='bottom_details_section_dashboardAdmin'>
+            <div className='admin_container_dashboardAdmin'>
+            <div className='bottom_details_upper_section_dashboardAdmin'>
+              <MdOutlineAdminPanelSettings className="admin_icon_dashboardAdmin" />
+              <h2>Admins</h2>
+            </div>
+
+            <div className='bottom_details_lower_section_dashboardAdmin'>
+              <div className='admin_box_dashboardAdmin'>
+                <div className='admin_box_upper_section_dashboardAdmin'>
+                  <h3>Gautam Chopra</h3>
+                  <div className='delete_admin_box_dashboardAdmin'>
+                    <BiTrash className="delete_admin_icon_dashboardAdmin" />
+                  </div>
+                </div>
+                <h5>harshchopra467@gmail.com</h5>
+              </div>
+              
+              <div className='admin_box_dashboardAdmin'>
+                <div className='admin_box_upper_section_dashboardAdmin'>
+                  <h3>Gautam Chopra</h3>
+                  <div className='delete_admin_box_dashboardAdmin'>
+                    <BiTrash className="delete_admin_icon_dashboardAdmin" />
+                  </div>
+                </div>
+                <h5>harshchopra467@gmail.com</h5>
+              </div>
+            </div>
             </div>
           </div>
         </div>
