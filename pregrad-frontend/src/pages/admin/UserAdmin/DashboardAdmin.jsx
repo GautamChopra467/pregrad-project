@@ -19,6 +19,9 @@ const DashboardAdmin = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
+
+  const [admins,setAdmins] = useState([]);
+
   const {id} = useParams();
   
   const [companydetails,setCompanyDetails] = useState({})
@@ -172,6 +175,26 @@ const getAdminInfo = ()=>{
 })
 }
 
+const getAllAdmins = ()=>{
+
+  axios.get(`http://localhost:8000/admin/alladmins`).then(({data})=>{
+    if(data){
+      setAdmins(data.admin);
+    }
+  })
+
+}
+
+const deleteAdmin = (a_id)=>{
+
+  axios.delete(`http://localhost:8000/admin/deleteadmin/${a_id}`).then(({data})=>{
+    if(data.message){
+      getAllAdmins();
+    }
+  })
+
+}
+
 useEffect(()=>{
 
   const verifyUser = async()=>{
@@ -186,6 +209,7 @@ useEffect(()=>{
       }else{
         // setIsPageLoading(true);
         getAdminInfo();
+        getAllAdmins();
         navigate(`/admin/info/${id}/dashboard`);
       }
     }
@@ -328,25 +352,22 @@ useEffect(()=>{
             </div>
 
             <div className='bottom_details_lower_section_dashboardAdmin'>
-              <div className='admin_box_dashboardAdmin'>
-                <div className='admin_box_upper_section_dashboardAdmin'>
-                  <h3>Gautam Chopra</h3>
-                  <div className='delete_admin_box_dashboardAdmin'>
-                    <BiTrash className="delete_admin_icon_dashboardAdmin" />
-                  </div>
-                </div>
-                <h5>harshchopra467@gmail.com</h5>
-              </div>
-              
-              <div className='admin_box_dashboardAdmin'>
-                <div className='admin_box_upper_section_dashboardAdmin'>
-                  <h3>Gautam Chopra</h3>
-                  <div className='delete_admin_box_dashboardAdmin'>
-                    <BiTrash className="delete_admin_icon_dashboardAdmin" />
-                  </div>
-                </div>
-                <h5>harshchopra467@gmail.com</h5>
-              </div>
+             { 
+             (admins != undefined)?
+      admins.map((admin)=>(
+        <div className='admin_box_dashboardAdmin' key={admin._id}>
+        <div className='admin_box_upper_section_dashboardAdmin'>
+          <h3>{admin.name}</h3>
+          <div className='delete_admin_box_dashboardAdmin' onClick={()=>deleteAdmin(admin._id)}>
+            <BiTrash className="delete_admin_icon_dashboardAdmin" />
+          </div>
+        </div>
+        <h5>{admin.email}</h5>
+      </div>
+      )):""
+            
+              }
+          
             </div>
             </div>
           </div>

@@ -32,8 +32,8 @@ const HomeBanner5 = () => {
         <div className="main_top_section_homebanner5">
           <h2>Upskill and get hired </h2>
           <div className="main_top_lower_section_homebanner5">
-            <p>Events</p>
-            <button className="btn_primary_homebanner5">All Events</button>
+            <p>Courses</p>
+            <button className="btn_primary_homebanner5">All Courses</button>
           </div>
         </div>
 
