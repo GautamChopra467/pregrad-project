@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../../../components/admin/css/UserAdmin/TestimonialsAdminStyles.css";
-import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 import {useParams,useNavigate} from "react-router-dom";

@@ -4,27 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper";
-import Student1 from "../../../img/home-banner/student1.png";
-import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 import axios from "axios";
 
 const HomeBanner6 = () => {
   const flag = true;
-
-
-  const [cources,setCources] = useState([]);
+  
+  const [events,setEvents] = useState([]);
 
   const getExtra = ()=>{
     axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
       if(data){
-        setCources(data.data[0].cources);
+        setEvents(data.data[0].events);
+    
       }
     })
   }
 
-  useEffect(()=>{
-    getExtra();
-  },[])
+ useEffect(()=>{
+  getExtra();
+ },[])
 
   return (
     <div>
@@ -63,26 +61,17 @@ const HomeBanner6 = () => {
             className="mySwiper"
           >
            { 
-
-           (cources != undefined)?cources.map((cource)=>(
-            <SwiperSlide className="swiper_homebanner6" key={cource._id}>
-          <a href={cource.courcelink} target="_blank">
+(events != undefined)?events.map((event)=>(
+           
+            <SwiperSlide className="swiper_homebanner6" key={event._id}>
+          <a href={event.eventlink} target="_blank">
              <div className="course_box_homebanner6">
               <div className="course_box_upper_section_homebanner6">
-                <img src={cource.imagelink} alt="course" />
+                <img src={event.imagelink} alt="course" />
                 <div className="course_details_homebanner6">
-                  <h2>{cource.name}</h2>
-                  <h3>{cource.instructor}, {cource.instructordetail}</h3>
-                  <div className="course_info_homebanner6">
-                    <p>{cource.rating}</p>
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarFill className="star_icon_courseadmin" />
-                    <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>({cource.enrolled})</h6>
-                  </div>
-                  <p>&#8377; {cource.fee}</p>
+                  <h2>{event.name}</h2>
+                  <h3>{event.speaker} | {event.organisation}</h3>
+                  <p>{event.date} | {event.time}</p>
                 </div>
 
               </div>
