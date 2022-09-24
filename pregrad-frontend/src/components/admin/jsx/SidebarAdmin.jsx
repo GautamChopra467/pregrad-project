@@ -39,7 +39,10 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
           path: `/admin/info/${id}/reports`,
           name: "reports",
           icon: <TbReportSearch size={isOpenSidebar ? "20" : "24"} />,
-        },
+        }
+      ];
+
+      const routes2 = [
         {
           path: `/admin/info/${id}/events`,
           name: "events",
@@ -200,6 +203,40 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
             </NavLink>
           ))}
         </section>
+
+        { adminInfo.role === "superadmin"? (
+          <section className="routes_container_sidebar">
+          {routes2.map((routes) => (
+            <NavLink
+              className={(navData) =>
+                navData.isActive
+                  ? "routes_link_sidebar active_sidebar"
+                  : "routes_link_sidebar"
+              }
+              to={routes.path}
+              key={routes.name}
+              style={{ padding: isOpenSidebar ? "13px 20px" : "20px" }}
+              onClick={closeSidebar}
+            >
+              <div className="side_menu_icon_sidebar">{routes.icon}</div>
+              <AnimatePresence>
+                {isOpenSidebar && (
+                  <motion.div
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    variants={menuTextAnimation}
+                    className="side_menu_text_sidebar"
+                  >
+                    {routes.name}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </NavLink>
+          ))}
+        </section>
+        ) : "" }
+        
       </motion.div>
       <motion.main
         className="children_container_sidebar"

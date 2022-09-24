@@ -11,20 +11,20 @@ import axios from "axios";
 const HomeBanner5 = () => {
   const flag = true;
 
-  const [events,setEvents] = useState([]);
+  const [courses,setCourses] = useState([]);
 
   const getExtra = ()=>{
     axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
       if(data){
-        setEvents(data.data[0].events);
-    
+        setCourses(data.data[0].cources);
       }
     })
   }
 
- useEffect(()=>{
-  getExtra();
- },[])
+  useEffect(()=>{
+    getExtra();
+  },[])
+
 
   return (
     <div>
@@ -66,25 +66,25 @@ const HomeBanner5 = () => {
           
               {
 
-                  (events != undefined)?events.map((event)=>(
-                    <SwiperSlide className="swiper_homebanner5" key={event._id}>
-                    <a href={event.eventlink} target="_blank">
+                  (courses != undefined)?courses.map((course)=>(
+                    <SwiperSlide className="swiper_homebanner5" key={course._id}>
+                    <a href={course.courselink} target="_blank">
                     <div className="course_box_homebanner5">
                      <div className="course_box_upper_section_homebanner5">
-                       <img src={event.imagelink} alt="course" />
+                       <img src={course.imagelink} alt="course" />
                        <div className="course_details_homebanner5">
-                         <h2>{event.name}</h2>
-                         <h3>{event.speaker}, {event.organisation}</h3>
+                         <h2>{course.name}</h2>
+                         <h3>{course.instructor} | {course.instructordetail}</h3>
                          <div className="course_info_homebanner5">
-                           <p>{event.date} | {event.time}</p>
-                           {/* <BsStarFill className="star_icon_courseadmin" />
+                           <p>{course.rating}</p>
                            <BsStarFill className="star_icon_courseadmin" />
                            <BsStarFill className="star_icon_courseadmin" />
                            <BsStarFill className="star_icon_courseadmin" />
-                           <BsStarHalf className="star_icon_courseadmin" /> */}
-                           {/* <h6>(138,476)</h6> */}
+                           <BsStarFill className="star_icon_courseadmin" />
+                           <BsStarHalf className="star_icon_courseadmin" />
+                           <h6>({course.enrolled})</h6>
                          </div>
-                         {/* <p>&#8377; 790</p> */}
+                         <p>&#8377; {course.fee}</p>
                        </div>
                      </div>
                    </div>    

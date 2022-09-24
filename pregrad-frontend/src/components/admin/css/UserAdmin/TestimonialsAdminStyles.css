@@ -125,7 +125,7 @@ grid-row-gap: 15px;
 }
 
 .testimonial_box_upper_section_testimonialsadmin img {
-  width: 300px;
+  width: 100%;
   height: 250px;
   object-fit: cover;
   border-radius: 5px;
@@ -205,10 +205,6 @@ grid-row-gap: 15px;
 }
 
 @media screen and (max-width: 1090px) {
-  .testimonial_box_upper_section_testimonialsadmin img {
-    width: 260px;
-  }
-
   .testimonial_container_testimonialsadmin {
     display: flex;
     flex-direction: column;

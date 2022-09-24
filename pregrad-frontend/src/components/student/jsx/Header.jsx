@@ -42,12 +42,12 @@ const Header = ({theme, setTheme}) => {
             <img src={Logo2} alt="pregrad" />
           )}
           </Link>
-        <Link to="/" className="intern_header">Top Internships</Link>
+        {/* <Link to="/" className="intern_header">Top Internships</Link> */}
       </div>
 
       <div className={click ? "right_section_header active_header" : "right_section_header"}>
         <div className="abc">
-          <Link to="/" className="intern2_header">Top Internships</Link>
+          {/* <Link to="/" className="intern2_header">Top Internships</Link> */}
         </div>
         <Link to="/company">Are you a Company ?</Link>
         <div className="button_container_header">
