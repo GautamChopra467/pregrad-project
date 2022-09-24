@@ -6,6 +6,7 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { Link,useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import {useCookies} from "react-cookie";
+
 const EventsAdmin = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -16,7 +17,7 @@ const EventsAdmin = () => {
   const {id} = useParams();
 
   const navigate = useNavigate();
-
+ 
   const [info, setInfo] = useState({
     name: "",
     imagelink: "",
@@ -276,12 +277,9 @@ const EventsAdmin = () => {
 
           {
                (Events !== undefined)?Events.map((event)=>(
-<<<<<<< HEAD
+
     <div className="testimonial_container_eventsadmin" key={event._id}>
             <a href={event.eventlink} target="_blank">
-=======
-    <div className="testimonial_container_eventsadmin">
->>>>>>> a8d57a3c0db87c8383b1497adaa66e05c1cea03e
               <div className="testimonial_box_eventsadmin">
                 <div className="testimonial_box_upper_section_eventsadmin">
                   <img src={event.imagelink} alt="eventimage" />
@@ -299,6 +297,7 @@ const EventsAdmin = () => {
                   </button>
                 </div>
               </div>
+          </a>
           </div>
          )):""
 
