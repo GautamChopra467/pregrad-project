@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import "../css/HomeBanner6Styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -6,9 +6,29 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import Student1 from "../../../img/home-banner/student1.png";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
+import axios from "axios";
 
 const HomeBanner6 = () => {
+<<<<<<< HEAD
   const flag = true;
+=======
+
+  const [cources,setCources] = useState([]);
+
+  const getExtra = ()=>{
+    axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
+      if(data){
+        setCources(data.data[0].cources);
+      }
+    })
+  }
+
+  useEffect(()=>{
+    getExtra();
+  },[])
+
+  
+>>>>>>> 8a809b28d9c742156e5691a94fc96f79d5734030
   return (
     <div>
       <div className="main_container_homebanner6">
@@ -45,6 +65,7 @@ const HomeBanner6 = () => {
             loop={flag ? false : true}
             className="mySwiper"
           >
+<<<<<<< HEAD
             <SwiperSlide className="swiper_homebanner6">
               <a href="www.google.com" target="_blank">
                 <div className="course_box_homebanner6">
@@ -57,8 +78,40 @@ const HomeBanner6 = () => {
                     </div>
                   </div>
                 </div>    
+=======
+           
+           { 
+
+           (cources != undefined)?cources.map((cource)=>(
+            <SwiperSlide className="swiper_homebanner6" key={cource._id}>
+          <a href={cource.courcelink} target="_blank">
+             <div className="course_box_homebanner6">
+              <div className="course_box_upper_section_homebanner6">
+                <img src={cource.imagelink} alt="course" />
+                <div className="course_details_homebanner6">
+                  <h2>{cource.name}</h2>
+                  <h3>{cource.instructor}, {cource.instructordetail}</h3>
+                  <div className="course_info_homebanner6">
+                    <p>{cource.rating}</p>
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarFill className="star_icon_courseadmin" />
+                    <BsStarHalf className="star_icon_courseadmin" />
+                    <h6>({cource.enrolled})</h6>
+                  </div>
+                  <p>&#8377; {cource.fee}</p>
+                </div>
+
+              </div>
+            </div>    
+>>>>>>> 8a809b28d9c742156e5691a94fc96f79d5734030
               </a>
             </SwiperSlide>
+           )):""
+           
+              }
+            
             
           </Swiper>
         </div>

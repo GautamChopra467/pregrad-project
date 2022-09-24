@@ -9,7 +9,11 @@ import HomeBanner5 from '../../components/student/jsx/HomeBanner5';
 import HomeBanner6 from '../../components/student/jsx/HomeBanner6';
 import SliderCompanies from '../../components/student/jsx/SliderCompanies';
 
+
+
 const Home = ({theme, setTheme}) => {
+
+
   return (
     <div>
       <Header theme={theme} setTheme={setTheme} />
