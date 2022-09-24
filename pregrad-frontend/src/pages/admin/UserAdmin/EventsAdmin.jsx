@@ -275,12 +275,11 @@ const EventsAdmin = () => {
             <h2>Previous Events</h2>
           </div>
 
+
+    <div className="testimonial_container_eventsadmin" >
           {
                (Events !== undefined)?Events.map((event)=>(
-
-    <div className="testimonial_container_eventsadmin" key={event._id}>
-            <a href={event.eventlink} target="_blank">
-              <div className="testimonial_box_eventsadmin">
+              <div className="testimonial_box_eventsadmin" key={event._id}>
                 <div className="testimonial_box_upper_section_eventsadmin">
                   <img src={event.imagelink} alt="eventimage" />
                   <div className="testimonial_details_eventsadmin">
@@ -297,11 +296,11 @@ const EventsAdmin = () => {
                   </button>
                 </div>
               </div>
-          </a>
-          </div>
-         )):""
+          )):""
 
-          }
+        }
+          </div>
+         
         </div>
       </div>
     </div>

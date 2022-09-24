@@ -9,9 +9,8 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import axios from "axios";
 
 const HomeBanner6 = () => {
-<<<<<<< HEAD
   const flag = true;
-=======
+
 
   const [cources,setCources] = useState([]);
 
@@ -27,8 +26,6 @@ const HomeBanner6 = () => {
     getExtra();
   },[])
 
-  
->>>>>>> 8a809b28d9c742156e5691a94fc96f79d5734030
   return (
     <div>
       <div className="main_container_homebanner6">
@@ -65,21 +62,6 @@ const HomeBanner6 = () => {
             loop={flag ? false : true}
             className="mySwiper"
           >
-<<<<<<< HEAD
-            <SwiperSlide className="swiper_homebanner6">
-              <a href="www.google.com" target="_blank">
-                <div className="course_box_homebanner6">
-                  <div className="course_box_upper_section_homebanner6">
-                    <img src={Student1} alt="course" />
-                    <div className="testimonial_details_eventsadmin">
-                      <h2>Women and Leadership</h2>
-                      <h3>Dr. Angela Yu, AWS Expert</h3>
-                      <p>Sep 21, 2022 - 8:00</p>
-                    </div>
-                  </div>
-                </div>    
-=======
-           
            { 
 
            (cources != undefined)?cources.map((cource)=>(
@@ -105,7 +87,6 @@ const HomeBanner6 = () => {
 
               </div>
             </div>    
->>>>>>> 8a809b28d9c742156e5691a94fc96f79d5734030
               </a>
             </SwiperSlide>
            )):""
