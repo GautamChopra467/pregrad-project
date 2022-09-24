@@ -6,7 +6,7 @@ const {ADMINREGISTER} = require("../utils/constants/app_constants").ROUTES.ADMIN
 
 const {ADMIN} = require("../utils/constants/app_constants").ROUTES.AUTH;
 
-const {registerAdmin,AdminInfo,verifiedCompany,reportedInternship,reports,VerifiedRepotedInternship,createTestimoials,getTestimonials,deleteTestimonial} = require("../controllers/AdminController");
+const {registerAdmin,AdminInfo,verifiedCompany,reportedInternship,reports,VerifiedRepotedInternship,createTestimoials,getTestimonials,deleteTestimonial,addCources,showCources,deleteCources,addEvents,showEvents,deleteEvents} = require("../controllers/AdminController");
 
 const {CheckAdmin} = require("../Middleware/AuthMiddlewareAdmin");
 
@@ -31,5 +31,17 @@ router.route("/testimonials/:id").post(createTestimoials);
 router.route("/gettestimonials/:id").get(getTestimonials);
 
 router.route("/deletetestimonial/:id/:t_id").put(deleteTestimonial);
+
+router.route("/cources/:id").post(addCources);
+
+router.route("/getcources/:id").get(showCources);
+
+router.route("/deletecources/:id/:c_id").put(deleteCources);
+
+router.route("/events/:id").post(addEvents);
+
+router.route("/getevents/:id").get(showEvents);
+
+router.route("/deleteevent/:id/:e_id").put(deleteEvents);
 
 module.exports = router;

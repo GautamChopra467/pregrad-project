@@ -3,11 +3,16 @@ import "../../../components/admin/css/UserAdmin/CoursesAdminStyles.css";
 import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
+import axios from "axios";
+import {useParams} from "react-router-dom";
 
 const CoursesAdmin = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const [Cources,setCources] = useState([]);
+  const {id} = useParams();
 
   const [info, setInfo] = useState({
     name: "",
@@ -89,10 +94,48 @@ const CoursesAdmin = () => {
     return errors;
   }
 
+  const getCources = ()=>{
+    axios.get(`http://localhost:8000/admin/getcources/${id}`).then(({data})=>{
+      if(data.message){ 
+        setCources(data.cources);
+      }
+    })
+  }
+
+  const deleteCources = (id,c_id)=>{
+
+    axios.put(`http://localhost:8000/admin/deletecources/${id}/${c_id}`).then(({data})=>{
+      if(data.message){
+        getCources();
+      }
+    })
+  }
+
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      console.log("Submitted")
+      axios.post(`http://localhost:8000/admin/cources/${id}`,{
+        ...info
+      }).then(({data})=>{
+        if(data.message){
+          setIsSubmit(false);
+          setInfo({...info, name: "",
+          imagelink: "",
+          instructor: "",
+          instructordetail: "",
+          fee: "",
+          rating: "",
+          enrolled: "",
+          courselink: ""
+        })
+
+          getCources();
+
+        }else{
+          setFormErrors(data.errors);
+        }
+      })
     }
+    getCources();
   }, [formErrors]);
 
   return (
@@ -177,36 +220,42 @@ const CoursesAdmin = () => {
           </div>
 
           <div className="testimonial_container_coursesadmin">
-            <a href="www.google.com" target="_blank">
+            {
+             ( Cources !== undefined) ? Cources.map((cource)=>(
+            <a href={cource.courselink} target="_blank">
              <div className="testimonial_box_coursesadmin">
               <div className="testimonial_box_upper_section_coursesadmin">
-                <img src={Student1} alt="testimonial" />
+                <img src={cource.imagelink} alt="testimonial" />
                 <div className="testimonial_details_coursesadmin">
-                  <h2>The Complete 2022 Web Development BootcampBecome a Full-Stack Web Developer.</h2>
-                  <h3>Dr. Angela Yu, AWS Expert</h3>
+                  <h2>{cource.name}</h2>
+                  <h3>{cource.instructor},{cource.instructordetail}</h3>
                   <div className="course_info_coursesadmin">
-                    <p>4.7</p>
+                    <p>{cource.rating}</p>
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarFill className="star_icon_courseadmin" />
                     <BsStarHalf className="star_icon_courseadmin" />
-                    <h6>(138,476)</h6>
+                    <h6>{(cource.enrolled)}</h6>
                   </div>
-                  <p>&#8377; 790</p>
+                  <p>&#8377;{cource.fee}</p>
                 </div>
               </div>
-              <div className="testimonial_box_bottom_section_coursesadmin">
-                <button className="btn_delete_coursesadmin">
+              <div className="testimonial_box_bottom_section_coursesadmin" >
+                <button className="btn_delete_coursesadmin" onClick={()=>deleteCources(id,cource._id)}>
                   <FaTrashAlt classNmae="delete_icon_coursesadmin" />
                   Delete
                 </button>
               </div>
             </div>    
-              </a>
+               </a>
+             ))
+              :""
+            }
+            
 
 
-            <div className="testimonial_box_coursesadmin">
+            {/* <div className="testimonial_box_coursesadmin">
               <div className="testimonial_box_upper_section_coursesadmin">
                 <img src={Student1} alt="testimonial" />
                 <div className="testimonial_details_coursesadmin">
@@ -230,7 +279,7 @@ const CoursesAdmin = () => {
                   Delete
                 </button>
               </div>
-            </div>
+            </div> */}
             
           </div>
         </div>

@@ -299,3 +299,203 @@ module.exports.deleteTestimonial = async(req,res)=>{
  
 
 }
+
+module.exports.addCources = async(req,res)=>{
+  try{
+
+
+    const {name,enrolled,instructor,instructordetail,fee,rating,courselink,imagelink} = req.body;
+
+    const {id} = req.params;
+
+    const adminCources = await AppContent.findOne({id:id});
+
+    if(adminCources){
+
+      const updateadminCources = await AppContent.updateOne({
+        $push:{
+          cources:{
+            name,
+            enrolled,
+            instructor,
+            instructordetail,
+            fee,
+            rating,
+            courselink,
+            imagelink
+        }
+        }
+        
+      })
+  
+
+    }else{
+
+      const createadminCources = await AppContent.create({
+        id,
+        cources:{
+            name,
+            enrolled,
+            instructor,
+            instructordetail,
+            fee,
+            rating,
+            courselink,
+            imagelink
+        }
+      })
+
+      await createadminCources.save();
+
+    }
+  
+  res.send({message:true});
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+module.exports.showCources = async(req,res)=>{
+  try{
+
+    const {id} = req.params;
+
+    const appCources = await AppContent.findOne({id:id});
+
+    if(appCources){
+
+      res.send({message:true,cources
+        :appCources.cources
+      });
+    }
+    else{
+      res.send({message:false});
+    }
+
+ 
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+module.exports.deleteCources = async(req,res)=>{
+  try{
+
+    const {id,c_id}= req.params;
+    
+    const deleteCources = await AppContent.updateOne({id:id},{
+      $pull:{
+       cources:{ 
+        _id:c_id
+      }
+      }
+    });
+
+    res.send({message:true});
+
+  }catch(err){
+      console.log(err);
+  }
+}
+
+module.exports.addEvents = async(req,res)=>{
+
+  try{
+
+    const {name,imagelink,speaker,organisation,date,eventlink,time} = req.body;
+
+    const {id} = req.params;
+
+    const createEvent = await AppContent.findOne({id:id});
+
+    if(createEvent){
+
+      const updatecreateEvent = await AppContent.updateOne({
+        $push:{
+          events:{
+            name,
+            imagelink,
+            speaker,
+            organisation,
+            date,
+            eventlink,
+            time
+        }
+        }
+        
+      })
+  
+
+    }else{
+
+      const createcreateEvent = await AppContent.create({
+        id,
+        events:{
+          name,
+          imagelink,
+          speaker,
+          organisation,
+          date,
+          eventlink,
+          time
+        }
+      })
+
+      await createcreateEvent.save();
+
+    }
+  
+  res.send({message:true});
+
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+module.exports.showEvents = async(req,res)=>{
+
+  try{
+
+    const {id} = req.params;
+
+    const appEvent = await AppContent.findOne({id:id});
+
+    if(appEvent){
+
+      res.send({message:true,events:appEvent.events});
+    }
+    else{
+      res.send({message:false});
+    }
+
+  }catch(err){
+    console.log(err)
+  }
+
+}
+
+module.exports.deleteEvents = async(req,res)=>{
+  try{
+
+    const {id,e_id}= req.params;
+    
+    const deleteEvents = await AppContent.updateOne({id:id},{
+      $pull:{
+       events:{ 
+        _id:e_id
+      }
+      }
+    });
+
+    res.send({message:true});
+
+  }catch(err){
+    console.log(err);
+  }
+}
