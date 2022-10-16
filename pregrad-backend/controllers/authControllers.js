@@ -16,48 +16,61 @@ const createToken =(id)=>{
   return jwt.sign({id},process.env.JWT_SECRET,{
     expiresIn:maxAge
   })
-
-
 }
 
 const oAuth2Client = new google.auth.OAuth2(process.GOOGLE_CLIENTID,process.env.GOOGLE_SECRET,process.REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token:process.env.REFRESH_TOKEN})
 
-const transporter = nodemailer.createTransport({
-  service:"gmail",
-  auth:{
-    type:"OAuth2",
-    user:process.env.AUTH_EMAIL,
-    clientId:process.env.GOOGLE_CLIENTID,
-    clientSecret:process.env.GOOGLE_SECRET,
-    refreshToken:process.env.REFRESH_TOKEN  
-  }
-})         
 
 const sendOtpToVerify = async({email})=>{
  
   try{
- 
-    const otp = Math.floor(Math.random()*(10000-1000)+1000)
-    const expiredAt = Date.now()+3600000
+
+    const transporter = nodemailer.createTransport({
+      service:"gmail",
+      auth:{
+        type:"OAuth2",
+        user:process.env.AUTH_EMAIL,
+        clientId:process.env.GOOGLE_CLIENTID,
+        clientSecret:process.env.GOOGLE_SECRET,
+        refreshToken:process.env.REFRESH_TOKEN  
+      }
+    })         
+    
+
+    const otp = await generateOtp({ email });
 
     const mailOptions={
-      from:process.env.AUTH_EMAIL,
+      from:`Pregrad <${process.env.GMAIL}>`,
       to:email,
-      subject:"Please Verify Your Email",
-      html:`<p>Please Enter the ${otp} in the app to verify your email address and complete the registeration process</p>
-      <p>The code expires in 1 hour</p>`
+      subject:"Verification Email",
+      text: `This is your verification code - ${otp}`,
+      html: `<h1>This is your verification code - <b>${otp}</b>.</h1>`
     }
 
-const newUser = await Otp.create({email,otp,createdAt:Date.now(),expiredAt})
-
-const result = await transporter.sendMail(mailOptions)
-
+   const result = await transporter.sendMail(mailOptions)
+  return result;  
   }catch(err){
     console.log(err)
   }
 
 }
+
+const generateOtp = async ({ email }) => {
+  try {
+
+      const otp = Math.floor(Math.random() * (10000 - 1000) + 1000);
+      const expiredAt = Date.now() + 3600000;
+      
+      const newOtp = await Otp.create({ email, otp, createdAt: Date.now(), expiredAt });
+
+      return otp;
+
+  } catch (err) {
+      console.log(err);
+  }
+}
+
 
 module.exports.signup = async (req, res) => {
 
@@ -108,7 +121,8 @@ try{
     {
       if(user.verified == false)
       {
-      sendOtpToVerify(user);
+      sendOtpToVerify(user).then(res => console.log("Email sent !"))
+      .catch(err => console.log(err));
       res.send({ message: "true",type:"register" });
     }else{
       res.send({ message: "Already Verified" });
@@ -177,7 +191,7 @@ module.exports.verifyOtp = async(req,res)=>{
 try{
   const {email,otp1,otp2,otp3,otp4} = req.body; 
 
-const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
+  const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 
   const user = await Otp.findOne({email});
 

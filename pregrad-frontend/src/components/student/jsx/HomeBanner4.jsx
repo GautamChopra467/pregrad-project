@@ -13,9 +13,8 @@ const HomeBanner4 = () => {
   const getExtra = () => {
     axios.get(`http://localhost:8000/admin/showcources`).then(({ data }) => {
       if (data) {
-        setTestimonials(data.data[0].testimonials);
+        setTestimonials(data.data[0].testimonials);       
       }
-      console.log(data.data[0].testimonials);
     });
   };
 

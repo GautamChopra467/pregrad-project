@@ -516,3 +516,34 @@ module.exports.homeCources = async(req,res)=>{
     console.log(err);
   }
 }
+
+module.exports.allAdmins = async(req,res)=>{
+  try{
+
+    const admins = await Admin.find({role:"admin"});
+
+    res.send({admin:admins});
+
+  }catch(err){
+    console.log(err);
+  }
+}
+
+module.exports.deleteAdmin = async(req,res)=>{
+  try{
+
+    const {a_id} = req.params;
+    
+    const deleteadmin =  await Admin.findByIdAndDelete({_id:a_id});
+
+    if(deleteadmin){
+      res.send({message:true});
+    }
+    else{
+      res.send({message:false});
+    }
+
+  }catch(err){
+   console.log(err);
+  }
+} 

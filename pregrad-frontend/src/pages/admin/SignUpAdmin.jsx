@@ -203,7 +203,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
                 <div className="box8_signupadmin">
                   <div>
                   <input type="checkbox" id="cb1" onClick={() => setCheckboxCheck(!checkboxCheck)} />
-                  <label for="cb1"></label>
+                  <label htmlFor="cb1"></label>
                   <p><span>I agree to</span> <a href="youtube.com">Terms and Conditions</a></p>
                   </div>
                   <p className="errors-msg_signupadmin">{formErrors.checkbox}</p>

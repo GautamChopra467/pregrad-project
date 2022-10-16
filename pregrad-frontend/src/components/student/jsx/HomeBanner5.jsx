@@ -8,7 +8,7 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import axios from "axios";
 
 const HomeBanner5 = () => {
-  const flag = true;
+  let flag = true;
 
   const [courses,setCourses] = useState([]);
 
@@ -16,6 +16,12 @@ const HomeBanner5 = () => {
     axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
       if(data){
         setCourses(data.data[0].cources);
+         if(data.data[0].cources.length < 3){
+          flag = false;
+        }
+        else{
+          flag = true;
+        }
       }
     })
   }
