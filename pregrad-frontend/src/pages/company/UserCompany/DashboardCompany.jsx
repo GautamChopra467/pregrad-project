@@ -142,7 +142,7 @@ const DashboardCompany = () => {
     if(!values.mobile){
       errors.mobile = "Mobile number required"
     }else if(values.mobile.toString().length !== 10){
-      errors.mobile = "Mobile number is Invalid 2";
+      errors.mobile = "Mobile number is Invalid";
     }
 
     return errors;
@@ -208,13 +208,13 @@ const getCompanyDetails = ()=>{
       axios.put(`http://localhost:8000/company/editaccount/${id}`,{
         ...accountInfo
       }).then(({data})=>{
-        console.log(data)
         if(data.message){
           setIsModal2(!isModal2)
           setIsSubmit2(false)
+          getCompanyInfo()
+          getCompanyDetails()
         }
         else{
-          console.log("reached")
           setFormErrors(data.errors);
           setIsSubmit2(false)
         }

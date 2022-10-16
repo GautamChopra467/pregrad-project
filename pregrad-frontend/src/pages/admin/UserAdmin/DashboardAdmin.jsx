@@ -346,7 +346,7 @@ useEffect(()=>{
           </div>
 
         { 
-        (adminInfo.role === "superadmmin")?
+        (adminInfo.role === "superadmin")?
          <div className='bottom_details_section_dashboardAdmin'>
             <div className='admin_container_dashboardAdmin'>
             <div className='bottom_details_upper_section_dashboardAdmin'>

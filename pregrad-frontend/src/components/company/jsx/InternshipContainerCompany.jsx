@@ -14,7 +14,6 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
-
     const ref = useRef();
 
     const navigate = useNavigate();
@@ -219,7 +218,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
           </div>
 
           <div className='bottom_section_internship_listingscompany'>
-            <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications ({intern.applied.length})</button>
+            <button onClick={() => navigate(`/company/info/${intern.id}/applicants?iid=${intern._id}`)} className='btn_primary_listingscompany'>View Applications</button>
             <Link to={`/company/internship/${intern._id}?cid=${intern.id}`}>View details &gt;</Link>
           </div>
           {

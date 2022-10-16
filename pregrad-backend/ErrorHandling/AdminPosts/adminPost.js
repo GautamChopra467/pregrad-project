@@ -36,7 +36,7 @@ module.exports = {
     }
     else{
 
-        res.sned({errors:errors}) ;
+        res.send({errors:errors}) ;
     }
     },
     cources(req,res,next){

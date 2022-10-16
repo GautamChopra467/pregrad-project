@@ -119,16 +119,19 @@ const InternshipDetail = ({theme, setTheme}) => {
                     <BsFillBarChartFill className="experience_icon_internshipdetail" />
                     <p>{internship.experience}</p>
                     {internship.experience === "Beginner" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The applicant should have<br /> atleast 1 project" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> atleast 1 project" />
                     )}
 
                     {internship.experience === "Intermediate" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> atleast 1 work experience OR 2 projects" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> either 1 work experience OR 2 projects" />
                     )}
                     
                     {internship.experience === "Expert" && (
-                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> atleast 1 work experience AND 2 projects" />
+                       <AiOutlineInfoCircle  currentitem="false" className="info_icon_internshipdetail" data-tip="The candidate should have<br /> both 1 work experience AND 2 projects" />
                     )}
+
+                    {/* ReactTooltip is used 2 times because on applying 1 time it was not working */}
+                    <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
               
                     <ReactTooltip place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click" multiline={true} />
                   </div>
@@ -212,7 +215,7 @@ const InternshipDetail = ({theme, setTheme}) => {
               <div className='bottom_section_internship_internshipdetail'>
                 <div className='bottom_upper_section_internshipdetail'>
                     <BsPeople className="applicants_icon_internshipdetail" />
-                   {(internship.applied.length != undefined )?<p>{internship.applied.length} applicants</p>:""}
+                   {(internship.applied && internship.applied.length != 0 )?<p>{internship.applied.length} applicants</p>:""}
                 </div>
                 <div className='bottom_lower_section_internshipdetail'>
                     <div className='line_internshipdetail'></div>

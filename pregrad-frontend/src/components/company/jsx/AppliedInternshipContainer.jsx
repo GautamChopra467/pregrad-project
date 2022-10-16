@@ -49,10 +49,10 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
       }
     })
     console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
-    if(option1 || option2 || option3 || option4){
+    if(info.description){
       setError("")
     }else {
-      setError("Reason required")
+      setError("Description is required")
     }
   }
 
@@ -172,30 +172,30 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
               <form>
                 <div className="form_box_appliedinternship">
                     <div className="checkbox_container_appliedinternship">
-                      <input type="checkbox" id="cb1" onClick={() => setOption1(!option1)} />
+                      <input type="checkbox" id="cb1" checked={option1} onClick={() => setOption1(!option1)} />
                       <label htmlFor="cb1"></label>
                       <p>False Information</p>
                     </div>
                     <div className="checkbox_container_appliedinternship">
-                      <input type="checkbox" id="cb2" onClick={() => setOption2(!option2)} />
+                      <input type="checkbox" id="cb2" checked={option2} onClick={() => setOption2(!option2)} />
                       <label htmlFor="cb2"></label>
                       <p>Filled this position outside Pregrad</p>
                     </div>
                     <div className="checkbox_container_appliedinternship">
-                      <input type="checkbox" id="cb3" onClick={() => setOption3(!option3)} />
+                      <input type="checkbox" id="cb3" checked={option3} onClick={() => setOption3(!option3)} />
                       <label htmlFor="cb3"></label>
                       <p>We are not hiring for this role anymore</p>
                     </div>
                     <div className="checkbox_container_appliedinternship">
-                      <input type="checkbox" id="cb4" onClick={() => setOption4(!option4)} />
+                      <input type="checkbox" id="cb4" checked={option4} onClick={() => setOption4(!option4)} />
                       <label htmlFor="cb4"></label>
                       <p>Didn’t recieve good candidates for the internship</p>
                     </div>
-                    <p className='errors_msg_appliedinternship'>{error}</p>
                   </div>
   
                   <div className="form_box_appliedinternship">
-                  <textarea name="description" rows={4} placeholder="Anything you want to add" onChange={handleForm}></textarea>      
+                  <textarea name="description" rows={4} placeholder="Anything you want to add" onChange={handleForm}></textarea>
+                  <p className='errors_msg_appliedinternship'>{error}</p>      
                 </div>
   
                 <div className='modal_bottom_section_appliedinternship'>

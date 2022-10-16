@@ -27,6 +27,7 @@ const Reports = () => {
   const [showapplied,setShowApplied] = useState([]);
 
   const getReportedInternships = ()=>{
+    console.log("hii")
       axios.get("http://localhost:8000/admin/reportedinternships").then(({data})=>{
         if(data.length === 0){
           setIsContent(false);
@@ -63,15 +64,12 @@ const Reports = () => {
         })
     }
 
-
-  console.log(showapplied);
-
   const changeRejected = (id) => {
     
     setShowApplied(showapplied.map((e)=>{
       if(e._id === id){
           setCount(++count)
-          return {...e,flag:true,class:"student_box_applicantscompany reject_applicantscompany"}
+          return {...e,flag:true,class:"student_box_verification reject_applicantscompany"}
        }else{
           return e;
        }
@@ -83,6 +81,7 @@ const Reports = () => {
       const {data} = await axios.put(`http://localhost:8000/admin/verifiedreportedinternship/${id}`,[
         ...showapplied
     ])
+    console.log(data)
     if(data.status){
       getReportedInternships(); 
       setCount(0);
