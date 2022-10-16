@@ -10,6 +10,7 @@ import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
 import { FaRegFileVideo, FaTimes } from "react-icons/fa";
 import { FiCopy, FiFileText, FiShare2 } from "react-icons/fi";
+import { BsFillXDiamondFill } from "react-icons/bs";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from "react-tooltip";
@@ -441,9 +442,9 @@ const [video,setVideo] = useState()
              {
               Achievement.map((achi)=>(
                 <div className="achievements_info_box_studentprofile" key={achi._id}>
-                <h3>{achi.title}</h3>
-                <a href={achi.certificate}>Certificate Link</a>
-              </div>
+                  <h3>{achi.title}</h3>
+                  <a href={achi.certificate}>Certificate Link</a>
+                </div>
               ))
               }
               {!Achievement.length && (
@@ -465,7 +466,7 @@ const [video,setVideo] = useState()
               {        
               WorkExperience.map((work)=>(
               <div className="workexperience_details_box_studentprofile" key={work._id}>
-                <h3>{work.companyname}</h3>
+                <h3><BsFillXDiamondFill className="point_icon_studentprofile" /> {work.companyname}</h3>
                 <h5>{work.position} | {work.duration} months</h5>
                 <p>
                 {work.role}  
@@ -473,7 +474,7 @@ const [video,setVideo] = useState()
                 <div className="skills_content_studentprofile">
                   <ul>
                     {work.skills.map((skill) => (
-                      <li>{skill}</li>
+                      <li key={skill}>{skill}</li>
                     ))}
                     
                   </ul>
@@ -498,7 +499,7 @@ const [video,setVideo] = useState()
               {          
               Project.map((proj)=>(
               <div className="projects_details_box_studentprofile" key={proj._id}>
-                <h3>{proj.projecttitle}</h3>
+                <h3><BsFillXDiamondFill className="point_icon_studentprofile" /> {proj.projecttitle}</h3>
                 <p>
                 {proj.description}
                 </p>
@@ -511,7 +512,7 @@ const [video,setVideo] = useState()
                 <div className="skills_content_studentprofile">
                   <ul>
                     {proj.skills.map((skill) => (
-                      <li>{skill}</li>
+                      <li key={skill}>{skill}</li>
                     ))}
                   </ul>
                 </div>
@@ -756,7 +757,7 @@ const [video,setVideo] = useState()
           <div className="skills_content_resumestudent">
               <ul>
                 {work.skills.map((skill) => (
-                  <li>{skill}</li>
+                  <li key={skill}>{skill}</li>
                 ))}
               </ul>
           </div>
@@ -792,7 +793,7 @@ const [video,setVideo] = useState()
               <div className="skills_content_resumestudent">
                 <ul>
                 {proj.skills.map((skill) => (
-                  <li>{skill}</li>
+                  <li key={skill}>{skill}</li>
                 ))}
                 </ul>
               </div>

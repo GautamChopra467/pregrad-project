@@ -79,7 +79,7 @@ module.exports = {
     project(req,res,next){
 
         const {projecttitle,description,skills,projectlink} = req.body;
-
+        console.log(projecttitle,description,skills,projectlink)
         const errors = {};
 
   

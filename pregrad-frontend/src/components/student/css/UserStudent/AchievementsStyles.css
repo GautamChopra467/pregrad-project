@@ -196,7 +196,10 @@
 }
 
 .top_section_content_achievements h4 {
+  font-size: 17px;
+  font-weight: 600;
   color: var(--black-color);
+  text-transform: uppercase;
 }
 
 .content_logo_container_achievements {
@@ -398,5 +401,9 @@
 
   .content_logo_achievements {
     padding: 2px 10px 0 10px;
+  }
+
+  .top_section_content_achievements h4 {
+    font-size: 16px;
   }
 }

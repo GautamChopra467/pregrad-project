@@ -145,16 +145,21 @@ module.exports.editAccount = async(req,res)=>{
 
   try{
     const {id} = req.params
-    console.log("In controller")
-    const company = await Company.findOneAndUpdate({id},{
-      $set:{
-        name:req.body.name,
-        companyname:req.body.companyname,
-        designation:req.body.designation,
-        phoneno:req.body.mobile
-      }
-    })
     
+    
+    const company = await Company.findById({_id:id});
+
+
+    if(company){
+
+    company.name = req.body.name;
+    company.companyname = req.body.companyname;
+    company.designation = req.body.designation;
+    company.phoneno = req.body.mobile;
+    }
+    
+    await company.save();
+
     res.send({message:true});
   }catch(err){
     console.log(err);

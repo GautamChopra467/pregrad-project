@@ -107,7 +107,7 @@ const [studentachi,setStudentachi] = useState([])
            setIsModal(!isModal) 
           getAchievements()
         }else if(res.data.message === "You cannot add duplicate information"){
-          setFormErrors(validate(res.data.message));
+          setFormErrors({others: res.data.message});
          }
       })
      }
@@ -124,11 +124,6 @@ const [studentachi,setStudentachi] = useState([])
 
     if(!values.certificate){
       errors.certificate = "Certificate link required";
-    }
-
-    if(values == "You cannot add duplicate information"){
-      errors.others = "You cannot add duplicate information";
-      return errors
     }
 
     return errors;

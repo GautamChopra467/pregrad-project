@@ -111,7 +111,7 @@ const Education = () => {
         setIsModal(!isModal);
         getEducation()
        }else if(res.data.message === "You cannot add duplicate information"){
-        setFormErrors(validate(res.data.message));
+        setFormErrors({others: res.data.message});
        }
      })
     }
@@ -119,11 +119,7 @@ const Education = () => {
 
   const validate = (values) => {
     const errors = {};
-
-    if(values == "You cannot add duplicate information"){
-      errors.others = "You cannot add duplicate information";
-    }
-
+    
     if(!values.university){
       errors.university = "Name required";
     }

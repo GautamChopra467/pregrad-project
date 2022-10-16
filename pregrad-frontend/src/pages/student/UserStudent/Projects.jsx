@@ -160,7 +160,7 @@ const getProjects = async()=>{
           setIsModal(!isModal)
            getProjects()
         }else if(res.data.message === "You cannot add duplicate information"){
-          setFormErrors(validate(res.data.message));
+          setFormErrors({others: res.data.message});
          }
       })
     }
@@ -169,7 +169,6 @@ const getProjects = async()=>{
   const validate = (values) => {
     const errors = {};
 
-  
     if(!values.projecttitle){
       errors.projecttitle = "Title required";
     }
@@ -185,11 +184,6 @@ const getProjects = async()=>{
     if(!values.projectlink){
       errors.projectlink = "Project Link required";
     }
-
-    if(values == "You cannot add duplicate information"){
-      errors.others = "You cannot add duplicate information";
-    }
-
 
     return errors;
   }

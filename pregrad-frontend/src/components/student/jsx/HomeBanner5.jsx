@@ -3,8 +3,7 @@ import "../css/HomeBanner5Styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination, Navigation } from "swiper";
-import Student1 from "../../../img/home-banner/student1.png";
+import { Navigation } from "swiper";
 import { BsStarFill, BsStarHalf } from "react-icons/bs"; 
 import axios from "axios";
 

@@ -172,7 +172,7 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
         getWorkExperience();
         // userHealthProfile()
       }else if(res.data.message === "You cannot add duplicate information"){
-        setFormErrors(validate(res.data.message));
+        setFormErrors({others: res.data.message});
        }
      })
     }
@@ -180,10 +180,6 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
 
   const validate = (values) => {
     const errors = {};
-
-    if(values == "You cannot add duplicate information"){
-      errors.others = "You cannot add duplicate information";
-    }
 
     if(!values.companyname){
       errors.companyname = "Name required";

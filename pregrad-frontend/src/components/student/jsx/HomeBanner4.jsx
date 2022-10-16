@@ -43,7 +43,7 @@ const HomeBanner4 = () => {
               760: {
                 slidesPerView: 1.5,
               },
-              1060: {
+              1015: {
                 slidesPerView: 2.2,
               },
               1260: {
@@ -54,6 +54,7 @@ const HomeBanner4 = () => {
             pagination={{
               clickable: true,
             }}
+            navigation={false}
             modules={[FreeMode, Pagination]}
             className="swiper_homebanner4"
           >
