@@ -241,7 +241,7 @@ const getCompanyDetails = ()=>{
   }
 
   const editAccountDetails = ()=>{
-    setIsModal2(!isModal2)
+    setIsModal2(!isModal2);
     setAccountInfo({...accountInfo,
     name:companydetails.name,
     companyname:companydetails.companyname,

@@ -14,7 +14,6 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,getinternship}) => {
 
-  console.log(internship);
 
     const ref = useRef();
 
@@ -26,11 +25,9 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
 
     const [isModal2, setIsModal2] = useState(false);
    
-    const [modalId,setModalId] = useState()
+    const [modalId,setModalId] = useState();
 
-    const [status,setStatus] = useState(true)
-
-
+    const [status,setStatus] = useState(true);
     
 
     const [info, setInfo] = useState({
@@ -45,13 +42,10 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
       })
     }
   
-
   const [option1, setOption1] = useState(false);
   const [option2, setOption2] = useState(false);
   const [option3, setOption3] = useState(false);
   const [option4, setOption4] = useState(false);
-
-
 
     useEffect(() => {
       const checkIfClickedOutside = e => {

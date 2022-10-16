@@ -212,7 +212,7 @@ const InternshipDetail = ({theme, setTheme}) => {
               <div className='bottom_section_internship_internshipdetail'>
                 <div className='bottom_upper_section_internshipdetail'>
                     <BsPeople className="applicants_icon_internshipdetail" />
-                    <p>60 applicants</p>
+                   {(internship.applied.length != undefined )?<p>{internship.applied.length} applicants</p>:""}
                 </div>
                 <div className='bottom_lower_section_internshipdetail'>
                     <div className='line_internshipdetail'></div>

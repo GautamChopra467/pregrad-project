@@ -7,7 +7,7 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import axios from "axios";
 
 const HomeBanner6 = () => {
-  const flag = true;
+  let flag = true;
   
   const [events,setEvents] = useState([]);
 
@@ -15,6 +15,13 @@ const HomeBanner6 = () => {
     axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
       if(data){
         setEvents(data.data[0].events);
+
+        if(data.data[0].events.length < 3){
+          flag = false;
+        }
+        else{
+          flag = true;
+        }
     
       }
     })

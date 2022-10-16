@@ -172,6 +172,7 @@ const getCompanyDetails = ()=>{
 const getAdminInfo = ()=>{
   axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
   setAdminInfo(data)
+  console.log(data);
 })
 }
 
@@ -344,7 +345,9 @@ useEffect(()=>{
             </div>
           </div>
 
-          <div className='bottom_details_section_dashboardAdmin'>
+        { 
+        (adminInfo.role === "superadmmin")?
+         <div className='bottom_details_section_dashboardAdmin'>
             <div className='admin_container_dashboardAdmin'>
             <div className='bottom_details_upper_section_dashboardAdmin'>
               <MdOutlineAdminPanelSettings className="admin_icon_dashboardAdmin" />
@@ -370,7 +373,8 @@ useEffect(()=>{
           
             </div>
             </div>
-          </div>
+          </div>:""
+          }
         </div>
 
         <div className='right_section_container_dashboardAdmin'>

@@ -16,8 +16,6 @@ const createToken =(id)=>{
   return jwt.sign({id},process.env.JWT_SECRET,{
     expiresIn:maxAge
   })
-
-
 }
 
 const oAuth2Client = new google.auth.OAuth2(process.GOOGLE_CLIENTID,process.env.GOOGLE_SECRET,process.REDIRECT_URI)
@@ -177,7 +175,7 @@ module.exports.verifyOtp = async(req,res)=>{
 try{
   const {email,otp1,otp2,otp3,otp4} = req.body; 
 
-const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
+  const otp = `${otp1}`+`${otp2}`+`${otp3}`+`${otp4}`;
 
   const user = await Otp.findOne({email});
 

@@ -40,7 +40,6 @@ module.exports.CheckUser = async(req,res,next)=>{
                         status:false,
                         message:"token not found"
                     });
-                next();
             }else{
                     const user = await User.findById(decodedToken.id)
                   
@@ -59,7 +58,6 @@ module.exports.CheckUser = async(req,res,next)=>{
                             status:false,
                             message:"user not found"
                         })
-                    next();
 
                 }
             }
@@ -71,6 +69,5 @@ module.exports.CheckUser = async(req,res,next)=>{
                 status:false,
                 message:"nothing found"
             })
-        next()
     }
 }
