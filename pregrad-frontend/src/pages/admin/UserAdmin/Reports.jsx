@@ -27,10 +27,11 @@ const Reports = () => {
   const [showapplied,setShowApplied] = useState([]);
 
   const getReportedInternships = ()=>{
-    console.log("hii")
       axios.get("http://localhost:8000/admin/reportedinternships").then(({data})=>{
         if(data.length === 0){
           setIsContent(false);
+          setReportedInternships([]);
+          setShowApplied([]);
         }
        else if(data){
           setReportedInternships(data);
@@ -42,18 +43,20 @@ const Reports = () => {
   const changeAccepted = (id) => {
     setShowApplied(showapplied.map((e)=>{
       if(e._id === id){
-       if(e.status === true){
-        setCount(--count)
-         return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
-       }else{
-         return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
-       }
+        if(e.flag === true){
+          setCount(--count);
+          return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
+        }else{
+          return {...e,flag:false,class:"student_box_applicantscompany accept_applicantscompany"}
+        }
       }else{
-         return e;
+        return e;
       }
-  }))
-       }
- 
+    }
+    ))
+    
+  }
+
   
   const countApplied= ()=>{
         let applied_count = 0;
@@ -65,8 +68,8 @@ const Reports = () => {
     }
 
   const changeRejected = (id) => {
-    
     setShowApplied(showapplied.map((e)=>{
+      
       if(e._id === id){
           setCount(++count)
           return {...e,flag:true,class:"student_box_verification reject_applicantscompany"}
@@ -81,16 +84,14 @@ const Reports = () => {
       const {data} = await axios.put(`http://localhost:8000/admin/verifiedreportedinternship/${id}`,[
         ...showapplied
     ])
-    console.log(data)
     if(data.status){
       getReportedInternships(); 
       setCount(0);
     }
 }
-
-useEffect(()=>{
-  countApplied();
-},[count])
+// useEffect(()=>{
+//   countApplied();
+// },[count])
 
   useEffect(()=>{
     const verifyUser = async()=>{
@@ -103,7 +104,6 @@ useEffect(()=>{
           navigate('/login');
         }else{
           getReportedInternships();
-         
         }
       }
     }
@@ -123,7 +123,6 @@ useEffect(()=>{
       ) : (
         <div className='main_container_verification'>
           <div className='main_box_verification'>
-            
           {isContent && reportedInternships ?  (
             reportedInternships.map((reported)=>(
       <div className='student_box_verification' key={reported._id}>

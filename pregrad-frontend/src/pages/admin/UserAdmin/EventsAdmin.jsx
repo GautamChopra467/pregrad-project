@@ -49,8 +49,8 @@ const EventsAdmin = () => {
       errors.name = "Name required";
     } else if (values.name.length < 2) {
       errors.name = "Minimum 2 characters required";
-    } else if (values.name.length > 18) {
-      errors.name = "Maximum 18 characters required";
+    } else if (values.name.length > 28) {
+      errors.name = "Maximum 28 characters required";
     }
 
     if (!values.imagelink) {
@@ -285,7 +285,7 @@ const EventsAdmin = () => {
                   <div className="testimonial_details_eventsadmin">
                     <h2>{event.name}</h2>
                     <h3>{event.speaker}, {event.organisation}</h3>
-                    <p>{event.date} - {event.time}</p>
+                    <p>{event.date} | {event.time}</p>
                   </div>
                 </div>
                 <div className="testimonial_box_bottom_section_eventsadmin">

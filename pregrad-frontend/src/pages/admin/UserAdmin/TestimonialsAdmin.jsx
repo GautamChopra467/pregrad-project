@@ -44,8 +44,8 @@ const TestimonialsAdmin = () => {
       errors.name = "Name required";
     }else if(values.name.length < 2){
       errors.name = "Minimum 2 characters required";
-    }else if(values.name.length > 18){
-      errors.name = "Maximum 18 characters required";
+    }else if(values.name.length > 28){
+      errors.name = "Maximum 28 characters required";
     }
 
     if(!values.image_link){
@@ -83,6 +83,8 @@ const TestimonialsAdmin = () => {
     
         if(data.testimonials.length < 7){
         setTestimonials(data.testimonials);
+        setFormErrors({});
+        setIsSubmit(false);
       }else{
         setTestimonials(data.testimonials);
         setFormErrors({other:"Maximum limit reached, first delete previous testimonials to add a new one."})
