@@ -129,11 +129,22 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
         errors.type = "Company type required"
     }
 
+    const currDate = new Date();
+    const currYear = currDate.getFullYear();
+    console.log(currDate)
+
     if(!values.year){
         errors.year = "Year of establishment required"
     }else if(values.year.length !== 4){
         errors.year = "Invalid Year"
+    }else if(!Number.isInteger(parseFloat(values.year))){
+      errors.year = "Year should not be in decimal"
+    }else if(parseInt(values.year) < 1){
+      errors.year = "Year should be greater than 1"
+    }else if(values.year > currYear){
+      errors.year = "Year should not be greater than current year"
     }
+
 
     if(!selectedLocation){
         errors.location = "Location required"
@@ -199,7 +210,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
 
               <div className="form_box_detailsOneCompany">
                  <label>Established In* (Year)</label>
-                 <input type="text" name="year" placeholder="Year of Establishment" value={user.year} onChange={handleForm} />
+                 <input type="number" name="year" placeholder="Year of Establishment" value={user.year} onChange={handleForm} />
                  <p className="errors-msg_detailsOneCompany">{formErrors.year}</p>
               </div>
               

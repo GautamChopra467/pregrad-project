@@ -55,16 +55,21 @@ const Verification = () => {
     }
 
     const changeRejected = (id) => {
-    
+      
       setShowApplied(showapplied.map((e)=>{
         if(e._id === id){
+          if(e.status == false || e.status == undefined){
             setCount(++count)
             return {...e,status:true,class:"student_box_applicantscompany reject_applicantscompany"}
-         }else{
+         }
+         else 
+         return e ;
+        }else{
             return e;
          }
      }))
     }
+    console.log(showapplied) ;
 
     const deleteRejectedApplicant = async()=>{
       
@@ -82,6 +87,8 @@ const Verification = () => {
      axios.get(`http://localhost:8000/company/unauthorized`).then(({data})=>{
       if(data.length === 0){
         setIsContent(false);
+        setUnAuthorized([]);
+        setShowApplied([]);
       }
       else if(data){
         setUnAuthorized(data);
@@ -105,7 +112,6 @@ const Verification = () => {
       }
     }
     verifyUser();
-    countApplied();
   },[cookies,removeCookie,navigate])
 
   return (

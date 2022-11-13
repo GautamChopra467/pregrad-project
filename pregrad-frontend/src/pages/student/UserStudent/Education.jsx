@@ -132,17 +132,31 @@ const Education = () => {
       errors.degree = "Degree required";
     }
 
+    const currDate = new Date();
+    const currYear = currDate.getFullYear();
+
     if(!values.start){
       errors.start = "Start year required";
     }else if(values.start.length !== 4 || (!Number.isInteger(parseFloat(values.start))) || (isNaN(values.start))){
       errors.start = "Invalid Year";
+    }else if(values.start > currYear){
+      errors.start = "Year should not be greater than current year"
+    }else if(parseInt(values.start) < 1){
+      errors.start = "Year should be greater than 1"
     }
 
     if(!values.end){
       errors.end = "End year required";
     }else if(values.end.length !== 4 || (!Number.isInteger(parseFloat(values.end))) || (isNaN(values.end))){
       errors.end = "Invalid Year";
+    }else if(values.end > currYear){
+      errors.end = "Year should not be greater than current year"
+    }else if(values.end < values.start){
+      errors.end = "End year should not be lesser than start year"
+    }else if(parseInt(values.end) < 1){
+      errors.end = "Year should be greater than 1"
     }
+
 
     return errors;
   }
@@ -293,13 +307,13 @@ const Cancel = ()=>{
 
                 <div className="form_box_education">
                   <label>Start Year</label>
-                  <input type="text" name="start" placeholder="Enter start year"  onChange={handleForm} />
+                  <input type="number" name="start" placeholder="Enter start year"  onChange={handleForm} />
                   <p className="errors_msg_education">{formErrors.start}</p>
                 </div>
 
                 <div className="form_box_education">
                   <label>End Year</label>
-                  <input type="text" name="end" placeholder="Enter end year"  onChange={handleForm} />
+                  <input type="number" name="end" placeholder="Enter end year"  onChange={handleForm} />
                   <p className="errors_msg_education">{formErrors.end}</p>
                 </div>
 
@@ -331,13 +345,13 @@ const Cancel = ()=>{
 
             <div className="form_box_education">
               <label>Start Year</label>
-              <input type="text" name="start" placeholder="Enter start year" value={editeducation.start || ''}  onChange={updateForm} />
+              <input type="number" name="start" placeholder="Enter start year" value={editeducation.start || ''}  onChange={updateForm} />
               <p className="errors_msg_education">{formErrors.start}</p>
             </div>
 
             <div className="form_box_education">
               <label>End Year</label>
-              <input type="text" name="end" placeholder="Enter end year" value={editeducation.end || ''}  onChange={updateForm} />
+              <input type="number" name="end" placeholder="Enter end year" value={editeducation.end || ''}  onChange={updateForm} />
               <p className="errors_msg_education">{formErrors.end}</p>
             </div>
 

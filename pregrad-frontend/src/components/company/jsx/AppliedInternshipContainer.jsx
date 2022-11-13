@@ -64,7 +64,16 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
       setReportingId(id);
       setReportingTitle(title);
       setIsModal(!isModal);
-    } 
+    }
+    
+    const cancelModal = () => {
+      setIsModal(!isModal);
+      setError("") 
+      setOption1(false);
+  setOption2(false);
+ setOption3(false);
+  setOption4(false);
+    }
 
   return (
    <>
@@ -199,7 +208,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
                 </div>
   
                 <div className='modal_bottom_section_appliedinternship'>
-                   <button onClick={() => setIsModal(!isModal)} className='btn_light_appliedinternship'>Cancel</button>
+                   <button onClick={cancelModal} className='btn_light_appliedinternship'>Cancel</button>
                    <button type='submit' onClick={submitReport} className='btn_primary_appliedinternship'>Report Internship</button>
                 </div>
               </form>

@@ -70,9 +70,13 @@ const Reports = () => {
   const changeRejected = (id) => {
     setShowApplied(showapplied.map((e)=>{
       
-      if(e._id === id){
+      if(e._id === id){ 
+        if(e.flag == false || e.flag == undefined){
           setCount(++count)
-          return {...e,flag:true,class:"student_box_verification reject_applicantscompany"}
+          return {...e,flag:true,class:"student_box_verification reject_applicantscompany"} ;
+        }else{
+          return e ;
+        } 
        }else{
           return e;
        }
