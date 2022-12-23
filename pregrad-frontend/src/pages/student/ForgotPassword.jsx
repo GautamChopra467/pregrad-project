@@ -158,7 +158,7 @@ const ForgotPassword = ({theme, setTheme}) => {
 
                 <div className="form-container-box_emailOtp">
                     <label>Confirm Password</label>
-                    <input type="text" name="confirmpassword" placeholder="Confirm password" value={user.confirmpassword} onChange={handleForm} />
+                    <input type="password" name="confirmpassword" placeholder="Confirm password" value={user.confirmpassword} onChange={handleForm} />
                     <p className="errors-msg_emailOtp">{formErrors.confirmpassword}</p>
                 </div>
                 </div>
