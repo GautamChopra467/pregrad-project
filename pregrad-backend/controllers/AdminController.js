@@ -4,9 +4,10 @@ const Company = require("../models/companyModel");
 const Internship = require("../models/internshipModel");
 const Student = require("../models/userModel");
 const AppContent = require("../models/AppModel");
+const logger = require("../loggers/app-logger") ;
 
 module.exports.registerAdmin = async(req,res)=>{
-
+  try{
    const {name,password,email} = req.body;
 
    const admin = await Admin.findOne({email});
@@ -28,7 +29,10 @@ module.exports.registerAdmin = async(req,res)=>{
 
       return res.send({ message: "true" });
    }
-   
+  }catch(err){
+    logger.error(err + " in register admin in admincontroller.") ;
+    return res.send({message : false}) ;
+  }
 } 
 
 module.exports.AdminInfo = async(req,res)=>{
@@ -43,10 +47,9 @@ module.exports.AdminInfo = async(req,res)=>{
 
   }
   catch(err){
-    console.log(err);
+    logger.error(err + " in Admin Info in admincontroller.") ;
+    return res.send({message : false}) ;
   }
- 
-
 }
 
 module.exports.verifiedCompany = async(req,res)=>{
@@ -98,12 +101,12 @@ module.exports.verifiedCompany = async(req,res)=>{
     res.send({status:true})
    
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Verified Company in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
 module.exports.reportedInternship = async(req,res)=>{
- 
   try{
 
     const reported = await Internship.find({});
@@ -118,7 +121,8 @@ module.exports.reportedInternship = async(req,res)=>{
    res.send(reportedArray);
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Reported Internship in admincontroller.") ;
+    return res.send({message : false}) ;
   }
   
 }
@@ -140,7 +144,8 @@ module.exports.reports = async(req,res)=>{
     res.send(report.reports);
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Reports in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
@@ -197,7 +202,8 @@ module.exports.VerifiedRepotedInternship = async(req,res)=>{
       res.send({status:true})
 
   }catch(err){
-     console.log(err);
+    logger.error(err + " in Verified Reported Internship.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -247,7 +253,8 @@ module.exports.createTestimoials = async(req,res)=>{
   res.send({message:true});
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in create testimonials in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -271,7 +278,8 @@ module.exports.getTestimonials = async(req,res)=>{
  
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in get testimonials in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -294,7 +302,8 @@ module.exports.deleteTestimonial = async(req,res)=>{
   
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in delete testimonials in admincontroller.") ;
+    return res.send({message : false}) ;
   }
  
 
@@ -352,7 +361,8 @@ module.exports.addCources = async(req,res)=>{
   res.send({message:true});
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Add Cources in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -377,7 +387,8 @@ module.exports.showCources = async(req,res)=>{
  
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Show Cources in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -398,7 +409,8 @@ module.exports.deleteCources = async(req,res)=>{
     res.send({message:true});
 
   }catch(err){
-      console.log(err);
+    logger.error(err + " in Delete Cources in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
@@ -453,7 +465,8 @@ module.exports.addEvents = async(req,res)=>{
 
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Add Events in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -475,7 +488,8 @@ module.exports.showEvents = async(req,res)=>{
     }
 
   }catch(err){
-    console.log(err)
+    logger.error(err + " in Show Events in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -496,7 +510,8 @@ module.exports.deleteEvents = async(req,res)=>{
     res.send({message:true});
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Delete Events in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
@@ -513,7 +528,8 @@ module.exports.homeCources = async(req,res)=>{
     }
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in Home Cources in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
@@ -525,7 +541,8 @@ module.exports.allAdmins = async(req,res)=>{
     res.send({admin:admins});
 
   }catch(err){
-    console.log(err);
+    logger.error(err + " in All Admin in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 }
 
@@ -544,6 +561,7 @@ module.exports.deleteAdmin = async(req,res)=>{
     }
 
   }catch(err){
-   console.log(err);
+    logger.error(err + " in Delete Admin in admincontroller.") ;
+    return res.send({message : false}) ;
   }
 } 

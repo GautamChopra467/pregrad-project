@@ -3,12 +3,11 @@ const Company = require('../models/companyModel')
 const CompanyInfo = require("../models/companyInfoModel")
 const UserRegister = require("../models/userModel");
 const StudentInfo = require("../models/UserInfoModel");
+const logger = require("../loggers/app-logger") ;
 
 module.exports.createInternship = async(req,res)=>{
 try{
-     const {id} =req.params
-
-    console.log(req.body)
+     const {id} =req.params ;
 
     const newinternship = await Internship.create({
      id,
@@ -38,7 +37,8 @@ try{
     res.send({message:true});
 
 }catch(err){
-     console.log(err)
+     logger.error(err + " in Create Internship in internshipcontroller.") ;
+     return res.send({message : false}) ;
 }
 }
 
@@ -54,9 +54,9 @@ try{
           res.send("No internship");
      }
 }catch(err){
-     console.log(err)
-}
-     
+     logger.error(err + " in Internship in internshipcontroller.") ;
+     return res.send({message : false}) ;
+}    
 }
 
 module.exports.singleInternship = async(req,res)=>{
@@ -74,7 +74,8 @@ module.exports.singleInternship = async(req,res)=>{
           }
 
      }catch(err){
-       console.log(err)
+          logger.error(err + " in single Internship in internshipcontroller.") ;
+          return res.send({message : false}) ;
      }
 }
 
@@ -111,7 +112,8 @@ module.exports.editInternship = async(req,res)=>{
           res.send({message:true});
           
      }catch(err){
-          console.log(err)
+          logger.error(err + " in edit Internship in internshipcontroller.") ;
+     return res.send({message : false}) ;
      }
 
 }
@@ -131,7 +133,8 @@ module.exports.closeInternship = async(req,res)=>{
           res.send({message:"true"})
 
      }catch(err){
-          console.log(err)
+          logger.error(err + " in Close Internship in internshipcontroller.") ;
+          return res.send({message : false}) ;
      }
     
 }
@@ -147,11 +150,8 @@ module.exports.allInternship = async(req,res)=>{
  
      // const internships = await Internship.find({}).limit(limit).skip(skip)
 
-     // console.log(req.params.id)
-
+    
      const internships = await Internship.find();
-
-     // console.log(internships)
 
      const allInternship = [];
 
@@ -174,9 +174,7 @@ module.exports.allInternship = async(req,res)=>{
           // internships[i] = {...internships[i],companyname:company.companyname,headquaters:companyinfo.headquaters}
    
      }
-
-     // console.log(allInternship)
-//   
+  
      if(internships){
           
           res.send(allInternship)
@@ -184,7 +182,8 @@ module.exports.allInternship = async(req,res)=>{
           res.send("Server Error")
      }
    }catch(err){
-     console.log(err)
+     logger.error(err + " in All Internship in internshipcontroller.") ;
+     return res.send({message : false}) ;
    }  
      
 }
@@ -238,12 +237,13 @@ try{
           })
 
 }catch(err){
-     console.log(err)
+     logger.error(err + " in All Internship in internshipcontroller.") ;
+     return res.send({message : false}) ;
 }
 }
 
 module.exports.rejectedApplicants = async(req,res)=>{
-
+     try{
      const {id} = req.params;
 
      let count = 0;
@@ -277,7 +277,11 @@ module.exports.rejectedApplicants = async(req,res)=>{
         })
 
      res.send({status:true})
-
+     }
+     catch(err){
+          logger.error(err + " in rejected Applicants in internshipcontroller.") ;
+          return res.send({message : false}) ;
+     }
 }
 
 module.exports.reportInternship = async(req,res)=>{
@@ -310,6 +314,7 @@ module.exports.reportInternship = async(req,res)=>{
      res.send({success:true});
 
      }catch(err){
-          console.log(err);
+          logger.error(err + " in Reported Internship in internshipcontroller.") ;
+          return res.send({message : false}) ;
      }
 }

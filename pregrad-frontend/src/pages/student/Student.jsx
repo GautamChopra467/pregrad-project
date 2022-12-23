@@ -12,10 +12,12 @@ import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import StudentProfile from "./UserStudent/StudentProfile";
 import Error404 from "./Error404";
-
+import {useSelector,useDispatch} from "react-redux" ;
+import { fetchHealth } from "../../redux/reducers";
 
 const Student = ({theme, setTheme}) => {
-
+  const hp = useSelector(state => state.health) ;
+  const dispatch = useDispatch() ;
   const navigate = useNavigate()
 
 const {id} = useParams()
@@ -27,44 +29,44 @@ const [profilehealth,setprofileHealth] = useState(20)
   const [cookies,setCookie,removeCookie] = useCookies([])
 
   const userHealthProfile = ()=>{
-   
-        axios.get(`http://localhost:8000/student/profilehealth/${id}`).then(({data})=>{
-          setprofileHealth(data.profileHealth)
-  }) 
+    dispatch(fetchHealth(id)) 
 }
 
 const getUserDetails = async()=>{
-  const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+  const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`) ;
+  if(data.verified) 
   setUser(data)
+  else if (data.message)
+  navigate(`/*`) ;
 }
 
 useEffect(()=>{
   const verifyUser = async()=>{
     if(!cookies.jwt){
-      navigate('/login')
+      navigate('/login') ;
     }else{
       const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
       if(data.id !== id || data.status !== true){
-        removeCookie("jwt")
-        navigate('/login')
+        removeCookie("jwt") ;
+        navigate('/login') ;
       }else{
-        getUserDetails()
-        userHealthProfile()
+         getUserDetails() ;
+        userHealthProfile() ;
       }
     }
   }
   verifyUser()
-},[profilehealth])
+},[hp])
 
 
   return ( 
-    <Sidebar profilehealth={profilehealth} userHealthProfile={userHealthProfile} userinfo={user === undefined ?"":user} theme={theme} setTheme={setTheme}>
+    <Sidebar hp={hp} userHealthProfile={userHealthProfile} userinfo={user === undefined ?"":user} theme={theme} setTheme={setTheme}>
       <Routes>
-        <Route exact path="/internships" element={<Internships profilehealth={profilehealth}/>} />
-        <Route exact path="/workexperience" element={<WorkExperience profilehealth={profilehealth} userHealthProfile={userHealthProfile}/>} />
-        <Route exact path="/projects" element={<Projects />} />
-        <Route exact path="/achievements" element={<Achievements />} />
-        <Route exact path="/education" element={<Education />} />
+        <Route exact path="/internships" element={<Internships />} />
+        <Route exact path="/workexperience" element={<WorkExperience userHealthProfile={userHealthProfile}/>}/>
+        <Route exact path="/projects" element={<Projects userHealthProfile={userHealthProfile}/>} />
+        <Route exact path="/achievements" element={<Achievements userHealthProfile={userHealthProfile}/>} />
+        <Route exact path="/education" element={<Education userHealthProfile={userHealthProfile}/>} />
         <Route exact path="/profile" element={<StudentProfile userinfo={user === undefined ?"":user} getUserDetails={getUserDetails}/>} />
         {/* <Route exact path="*" element={<Error404 />} /> */}
       </Routes>

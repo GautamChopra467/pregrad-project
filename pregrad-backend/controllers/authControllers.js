@@ -5,11 +5,10 @@ const Admin = require("../models/adminModel");
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
 const bcrypt = require('bcryptjs')
-
-
 const jwt = require('jsonwebtoken');
+const logger = require("../loggers/app-logger") ;
 
-const maxAge = 3*24*60*60
+const maxAge = 3*24*60*60 ;
 
 const createToken =(id)=>{
 
@@ -51,7 +50,8 @@ const sendOtpToVerify = async({email})=>{
    const result = await transporter.sendMail(mailOptions)
   return result;  
   }catch(err){
-    console.log(err)
+    logger.error(err + " in send Otp to Verify.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -67,13 +67,13 @@ const generateOtp = async ({ email }) => {
       return otp;
 
   } catch (err) {
-      console.log(err);
+    logger.error(err + " in Generate Otp to.") ;
+    return res.send({message : false}) ;
   }
 }
 
-
 module.exports.signup = async (req, res) => {
-
+try{
   const { name, email, password, mobile } = req.body;
 
   const company = await Company.findOne({email})
@@ -102,8 +102,11 @@ module.exports.signup = async (req, res) => {
       }
     });
   }
-
-};
+}catch(err){
+  logger.error(err + " in Signup") ;
+  return res.send({message : false}) ;
+}
+}
 
 module.exports.verifyEmail=async(req,res)=>{
 try{
@@ -121,8 +124,8 @@ try{
     {
       if(user.verified == false)
       {
-      sendOtpToVerify(user).then(res => console.log("Email sent !"))
-      .catch(err => console.log(err));
+      sendOtpToVerify(user).then(res => logger.info("Email sent !"))
+      .catch(err => logger.error(err + " in sending otp ."));
       res.send({ message: "true",type:"register" });
     }else{
       res.send({ message: "Already Verified" });
@@ -183,7 +186,8 @@ try{
     res.send({ message: "Please Enter a register Email Id" });
 }
 }catch(err){
-  console.log(err)
+  logger.error(err + " in verify Email") ;
+  return res.send({message : false}) ;
 }
 }
 
@@ -242,7 +246,8 @@ try{
   res.send({message:"Invalid Email"});
 }
 }catch(err){
-  console.log(err);
+  logger.error(err + " in verify Otp") ;
+  return res.send({message : false}) ;
 }
 
 }
@@ -303,7 +308,8 @@ else{
     res.send({usertype:"student",id:user._id,verified:user.detailFlag})
   }
 }catch(err){
-  console.log(err)
+  logger.error(err + " in Login") ;
+  return res.send({message : false}) ;
 }
     
 }
@@ -313,14 +319,16 @@ module.exports.newPassword = async(req,res)=>{
 
     const {email,password} = req.body
 
-    const user = await UserRegister.findOne({email})
+    const user = await UserRegister.findOne({email}) ;
 
-    const company = await Company.findOne({email})
+    const company = await Company.findOne({email}) ;
+
+    const admin = await Admin.findOne({email}) ;
 
     if(user){
-      const salt = await bcrypt.genSalt(10)
+      const salt = await bcrypt.genSalt(10);
 
-      const hashPassword = await bcrypt.hash(password,salt)
+      const hashPassword = await bcrypt.hash(password,salt);
   
       const updateduser = await UserRegister.findOneAndUpdate({email},{$set:{
        password:hashPassword
@@ -330,22 +338,31 @@ module.exports.newPassword = async(req,res)=>{
     }
     else if(company){
 
-      const salt = await bcrypt.genSalt(10)
+      const salt = await bcrypt.genSalt(10) ;
 
-      const hashPassword = await bcrypt.hash(password,salt)
+      const hashPassword = await bcrypt.hash(password,salt);
   
       const updatedcompnany = await Company.findOneAndUpdate({email},{$set:{
        password:hashPassword
       }})
 
-      res.send({message:"true"})
+      res.send({message:"true"});
+    }
+    else if(admin){
+      const salt = await bcrypt.genSalt(10);
+
+      const hashPassword = await bcrypt.hash(password,salt);
+  
+      const updatedadmin = await Admin.findOneAndUpdate({email},{$set:{
+       password:hashPassword
+      }})
+
+      res.send({message:"true"}) ;
     }
 
-    
-
-
 }catch(err){
-  console.log(err)
+  logger.error(err + " in New Password.") ;
+  return res.send({message : false}) ;
 }
 }
 
@@ -368,7 +385,8 @@ module.exports.getUserDetails = async(req,res)=>{
     res.send({message:"User not found"})
   }
   }catch(err){
-    console.log(err)
+    logger.error(err + " in Get User Details") ;
+    return res.send({message : false}) ;
   }
   
 

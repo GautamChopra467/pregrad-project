@@ -57,17 +57,19 @@ const Login = ({theme, setTheme}) => {
         else if(data.usertype === "superadmin" || data.usertype === "admin"){
             navigate(`/admin/info/${data.id}/dashboard`);
         }
-      else  if(data.usertype === "student" && data.verified == false){
+        else  if(data.usertype === "student" && data.verified == false){
           navigate(`/student/${data.id}/detailsone`);
         }else if(data.usertype === "student" && data.verified == true){
-         
           navigate(`/student/${data.id}/internships`);
         }else if(data.usertype === "company" && data.verified == false){
           navigate(`/company/${data.id}/detailsone`);
         }
         else if(data.usertype === "company" && data.verified == true){
-        
           navigate(`/company/info/${data.id}/dashboard`);
+        }
+        else if(data.message == false)
+        {
+            navigate(`/*`) ; 
         }
         else {
              setFormErrors({final: data.message})
@@ -109,10 +111,8 @@ const Login = ({theme, setTheme}) => {
 }
 
   return (
-    <div>
-      
+    <div>    
       <HeaderAuth theme={theme} setTheme={setTheme} />
-
       <div className="main_login">
         <div className="left-part_login">
           <div className="top_login">

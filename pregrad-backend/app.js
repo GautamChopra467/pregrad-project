@@ -9,13 +9,14 @@ const studentInfoRoute = require('./routes/studentInfoRoute')
 const companyRoute = require('./routes/companyRoutes')
 const internshipRoute = require("./routes/internshipRoute")
 const adminRoute = require("./routes/AdminRoutes");
-
+const morgan = require("morgan") ;
 const port = process.env.PORT || 8000;
-
+const logger = require("./loggers/app-logger") ;
 const passport = require('passport') 
 const session = require('express-session')
-
-
+const serverLogStream = require("./loggers/server-logger") ;
+const LOGTYPE = require("./utils/constants/app_constants") ;
+const ROUTING = require("./utils/constants/app_constants") ;
 // middleware position - static , data parser , dynamic
 
 //query parameters are client side and params are used in backend
@@ -29,20 +30,22 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use("/", authRouter);
+app.use(morgan(LOGTYPE.LOG.LOGGER.MORGAN_TYPE,{stream : serverLogStream})) ;
 
-app.use("/student",studentInfoRoute);
+app.use(ROUTING.ROUTE_PATH.AUTH, authRouter);
 
-app.use('/company',companyRoute);
+app.use(ROUTING.ROUTE_PATH.STUDENT,studentInfoRoute);
 
-app.use('/internship',internshipRoute);
+app.use(ROUTING.ROUTE_PATH.COMPANY,companyRoute); 
 
-app.use('/admin',adminRoute);
+app.use(ROUTING.ROUTE_PATH.INTERNSHIP,internshipRoute);
+
+app.use(ROUTING.ROUTE_PATH.ADMIN,adminRoute);
 
 const start = async()=>{
 try{
    await connectDb(process.env.MONGO_URI);
-   app.listen(port, () => console.log(`Server running on port ${port}`));
+   app.listen(port, () => logger.info(`Server running on port ${port}`));
 
 }catch(err){
     console.log(err)

@@ -49,7 +49,12 @@ const ForgotPassword = ({theme, setTheme}) => {
         }
         else if(res.data.message === "true"){
           navigate("/login");
-        }else {
+        }
+        else if(data.message == false)
+        {
+            navigate(`/*`) ; 
+        }
+        else {
           setFormErrors({final: res.data.message});
         }
       });

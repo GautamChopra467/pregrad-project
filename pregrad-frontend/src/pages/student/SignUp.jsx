@@ -13,14 +13,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const SignUp = ({theme, setTheme}) => {
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(true);
-
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [checkboxCheck, setCheckboxCheck] = useState(false);
 
-  const type = "register"
+  const type = "register" ;
 
   const [user, setUser] = useState({
     name: "",
@@ -53,7 +51,12 @@ const SignUp = ({theme, setTheme}) => {
         }
        else if(res.data.message === "true"){
           navigate(`/emailverify/${type}`);
-        }else {
+        }
+        else if(data.message == false)
+        {
+            navigate(`/*`) ; 
+        }
+        else {
           setFormErrors({final: res.data.message});
         }
       });

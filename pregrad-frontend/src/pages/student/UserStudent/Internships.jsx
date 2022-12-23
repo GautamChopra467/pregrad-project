@@ -35,7 +35,7 @@ const Internships = () => {
 
 const getAllInterships = ()=>{
   axios.get(`http://localhost:8000/company/allinternships/${id}`).then(({data})=>{
-    console.log(data)
+  
     setInternships(data)
     setTimeout(() => {
       setIsPageLoading(false)
@@ -45,7 +45,7 @@ const getAllInterships = ()=>{
 
 const getAppliedInternship = ()=>{
    axios.get(`http://localhost:8000/student/getappliedinternship/${id}`).then(({data})=>{
-    console.log(data);
+   
     setappliedInternship(data)
     setTimeout(() => {
       setIsPageLoading(false)

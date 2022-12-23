@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const UserRegister = require("../models/userModel");
 const CompanyInfo = require("../models/companyInfoModel");
 const Internship = require('../models/internshipModel');
-
+const logger = require("../loggers/app-logger") ;
 module.exports.registerCompany = async(req,res)=>{
   try{
 
@@ -42,11 +42,13 @@ module.exports.registerCompany = async(req,res)=>{
   }
 
 }catch(err){
-  console.log(err)
+  logger.error(err + " in Register Company in companycontroller.") ;
+  return res.send({message : false}) ;
 }
 }
 
 module.exports.getCompanyInfo = async(req,res)=>{
+  try{
     const {id} = req.params
 
     const company = await Company.findOne({_id:id})
@@ -66,6 +68,10 @@ module.exports.getCompanyInfo = async(req,res)=>{
         message:"Company Not found"
       })
     }
+  }catch(err){
+    logger.error(err + " in Get Company Info in companycontroller.") ;
+    return res.send({message : false}) ;
+  }
 }
 
 
@@ -98,7 +104,8 @@ res.send({message:"true",verified:company.detailFlag})
 
 }catch(err)
 {
-  console.log(err)
+    logger.error(err + " in Company Details in companycontroller.") ;
+    return res.send({message : false}) ;
 }
  
 }
@@ -113,7 +120,8 @@ module.exports.getCompanyDetails = async(req,res)=>{
       res.send(company)
     }
   }catch(err){
-    console.log(err)
+    logger.error(err + " in Get Company Details in companycontroller.") ;
+    return res.send({message : false}) ;
   }
 
 }
@@ -136,7 +144,8 @@ module.exports.editProfile = async(req,res)=>{
     res.send({message:true});
 
   }catch(err){
-    console.log(err)
+    logger.error(err + " in edit profile in companycontroller.") ;
+    return res.send({message : false}) ;
   } 
 
 }
@@ -162,7 +171,8 @@ module.exports.editAccount = async(req,res)=>{
 
     res.send({message:true});
   }catch(err){
-    console.log(err);
+    logger.error(err + " in edit account in companycontroller.") ;
+    return res.send({message : false}) ;
   }
   
 
@@ -170,18 +180,19 @@ module.exports.editAccount = async(req,res)=>{
 
 module.exports.getInternships = async(req,res)=>{
 try{
-  const {id} = req.params
+  const {id} = req.params ;
 
-  const internship = await Internship.find({id})
+  const internship = await Internship.find({id}) ;
 
   if(internship){
    
-    res.send(internship)
+    res.send(internship) ;
   }else{
-    res.send("No Internships")
+    res.send("No Internships") ;
   }
 }catch(err){
-  console.log(err)
+  logger.error(err + " in Get Internship in companycontroller.") ;
+    return res.send({message : false}) ;
 }
   
 
@@ -197,7 +208,8 @@ module.exports.unAuthorizedCompany = async(req,res)=>{
     
   }
   catch(err){
-     console.log(err);
+    logger.error(err + " in unAuthorized in companycontroller.") ;
+    return res.send({message : false}) ;
   }
   
 }

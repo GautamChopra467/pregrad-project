@@ -149,7 +149,12 @@ const DetailsOne = ({theme, setTheme}) => {
     axios.get(`http://localhost:8000/userDetails/${id}`).then(({data})=>{
       if(data.verified){
         navigate(`/student/${id}/internships`)
-      }else{
+      }
+      else if(data.message == false)
+      {
+          navigate(`/*`) ; 
+      }
+      else{
         navigate(`/student/${id}/detailsone`)
         setUser(data);
        } 

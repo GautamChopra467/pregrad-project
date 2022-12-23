@@ -12,7 +12,6 @@ import Resume from "./pages/student/Resume";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 // Company Routes
 import HomeCompany from "./pages/company/HomeCompany";
 import SignUpCompany from "./pages/company/SignUpCompany";
@@ -23,6 +22,8 @@ import Error404 from "./pages/student/Error404";
 import InfoAdmin from "./pages/admin/InfoAdmin";
 import CompanyResume from "./pages/company/CompanyResume";
 import SignUpAdmin from "./pages/admin/SignUpAdmin";
+import {Provider} from "react-redux" ;
+import store from "./redux/index" ;
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -32,6 +33,7 @@ const App = () => {
   },[theme]);
 
   return (  //home navigate('/home') 
+  <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home theme={theme} setTheme={setTheme}/>} />
@@ -63,6 +65,7 @@ const App = () => {
       </Routes>
       <ToastContainer />
     </BrowserRouter>
+    </Provider>
   );
 };
 

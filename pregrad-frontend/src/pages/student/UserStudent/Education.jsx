@@ -9,7 +9,7 @@ import {useCookies} from 'react-cookie';
 import PageLoader from "../../../img/page-loader.gif";
 
 
-const Education = () => {
+const Education = ({userHealthProfile}) => {
 
   const navigate = useNavigate()
 
@@ -109,8 +109,9 @@ const Education = () => {
       else if(res.data.message === "true")
        {
         setIsModal(!isModal);
-        getEducation()
-       }else if(res.data.message === "You cannot add duplicate information"){
+        getEducation();
+        userHealthProfile() ;
+        }else if(res.data.message === "You cannot add duplicate information"){
         setFormErrors({others: res.data.message});
        }
      })
@@ -167,7 +168,8 @@ const deleteEducation = async(u_id,e_id)=>{
  
   if(data.message === "true")
   {
-    getEducation()
+    getEducation();
+    userHealthProfile() ;
   }
  
 

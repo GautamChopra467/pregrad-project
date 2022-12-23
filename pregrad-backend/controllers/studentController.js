@@ -2,11 +2,11 @@ const StudentInfo = require('../models/UserInfoModel')
 const UserRegister = require("../models/userModel");
 const Internship = require("../models/internshipModel")
 const Company = require('../models/companyModel')
-
+const logger = require("../loggers/app-logger") ;
 //Achievement Functions
 
 module.exports.studentAchievement = async(req,res)=>{
-
+    try{
     const {id} = req.params;
 
     const {title,certificate} = req.body;
@@ -50,11 +50,14 @@ module.exports.studentAchievement = async(req,res)=>{
  }
 
  res.send({message:"true"})
-   
+}catch(err){
+    logger.error(err + " in  Student Achievement in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 module.exports.getAchievementInfo = async(req,res)=>{
-
+    try{
     const {id} = req.params
 
     const  user = await StudentInfo.findOne({id})
@@ -64,6 +67,10 @@ module.exports.getAchievementInfo = async(req,res)=>{
     }else{
         res.send({message:"false"})
     }
+}catch(err){
+    logger.error(err + " in get Achievement Info in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 module.exports.deleteAchievement = async(req,res)=>{
@@ -79,7 +86,8 @@ try{
     res.send({message:"true"})
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in  delete Achievement in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 }
 
@@ -95,7 +103,8 @@ module.exports.updateAchievement = async(req,res)=>{
     res.send(data)
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in  update Achievement in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 }
 
@@ -117,7 +126,8 @@ module.exports.updatedAchievement = async(req,res)=>{
     res.send({achievements:user.achievements})
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in  updated Achievement in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 
 }
@@ -176,13 +186,15 @@ module.exports.studentProject = async(req,res)=>{
 res.send({message:"true"})
 
   }catch(err){
-    console.log(err)
+    logger.error(err + " in  student Project in studentcontroller.") ;
+    return res.send({message : false}) ;
   }
 
 
 }
 
 module.exports.getProjectsInfo = async(req,res)=>{
+   try{
     const {id} = req.params
   
     const student = await StudentInfo.findOne({id})
@@ -194,6 +206,10 @@ module.exports.getProjectsInfo = async(req,res)=>{
     else{
         res.send({message:"false"})
     }
+}catch(err){
+    logger.error(err + " in  get Project Info in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 module.exports.deleteProject = async(req,res)=>{
@@ -210,7 +226,8 @@ module.exports.deleteProject = async(req,res)=>{
     res.send({message:"true"})
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in  delete Project in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 }
 
@@ -233,7 +250,8 @@ module.exports.updatedProject = async(req,res)=>{
     res.send({project:user.project});
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in  updated Project in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 
 
@@ -250,14 +268,15 @@ module.exports.updateProject = async(req,res)=>{
         res.send(data);
     
     }catch(err){
-        console.log(err)
+        logger.error(err + " in update project in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }
 
 // Education function
 
 module.exports.studentEducation = async(req,res)=>{
-
+try{
 const {id} = req.params;
 
 const {university,field,start,end,degree} = req.body;
@@ -308,12 +327,15 @@ if(student){
 }
 
 res.send({message:"true"})
- 
+}catch(err){
+    logger.error(err + " in  student Education in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 
 module.exports.getEducationInfo = async(req,res)=>{
-    
+    try{
     const {id} = req.params;
 
     const  student = await StudentInfo.findOne({id})
@@ -325,6 +347,10 @@ module.exports.getEducationInfo = async(req,res)=>{
     }else{
         res.send({message:"false"})
     }
+}catch(err){
+    logger.error(err + " in get Education Info in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 module.exports.deleteEducation = async(req,res)=>{
@@ -341,7 +367,8 @@ module.exports.deleteEducation = async(req,res)=>{
         res.send({message:"true"})
     
     }catch(err){
-        console.log(err)
+        logger.error(err + " in delete Education in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }
 
@@ -352,26 +379,24 @@ module.exports.updatedEducation = async(req,res)=>{
 
     const {university,field,end,start,degree} = req.body;
 
-    const user = await StudentInfo.findOne({id:u_id})
+    const user = await StudentInfo.findOne({id:u_id}) ;
 
-    const data = await user.education.id(id)
+    const data = await user.education.id(id) ;
 
-    data.set(req.body)
+    data.set(req.body) ;
 
-    await user.save()
-
-    console.log(user.education);
+    await user.save() ;
     
-    res.send({education:user.education})
+    res.send({education:user.education}) ;
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in updated Education in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 
 
 
 }
-
 
 module.exports.updateEducation = async(req,res)=>{
     try{
@@ -384,14 +409,15 @@ module.exports.updateEducation = async(req,res)=>{
         res.send(data)
     
     }catch(err){
-        console.log(err)
+        logger.error(err + " in update Education in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }
 
 // workexperiene function
 
 module.exports.studentWorkExperience = async(req,res)=>{
-
+    try{
     const {id} = req.params;
 
     const {companyname,websitelink,position,skills,role,duration} = req.body
@@ -445,7 +471,10 @@ module.exports.studentWorkExperience = async(req,res)=>{
     }
     
     res.send({message:"true"})
-    
+}catch(err){
+    logger.error(err + " in student Work ExperienceInfo in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 module.exports.getWorkExperienceInfo = async(req,res)=>{
@@ -458,7 +487,8 @@ module.exports.getWorkExperienceInfo = async(req,res)=>{
     {
     res.send({workexperience:student.workexperience,message:"true"})
     }else{
-        res.send({message:"false"})
+        logger.error(err + " in get Work ExperienceInfo in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }
 
@@ -476,7 +506,8 @@ module.exports.deleteWorkExperience = async(req,res)=>{
         res.send({message:"true"})
     
     }catch(err){
-        console.log(err)
+        logger.error(err + " in deleted Work Experience in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 
 }
@@ -499,7 +530,8 @@ module.exports.updatedWorkExperience = async(req,res)=>{
     res.send({workexperience:user.workexperience})
 
 }catch(err){
-    console.log(err)
+    logger.error(err + " in updated Work Experience in studentcontroller.") ;
+        return res.send({message : false}) ;
 }
 }
 
@@ -514,13 +546,15 @@ module.exports.updateWorkExperience = async(req,res)=>{
         res.send(data)
     
     }catch(err){
-        console.log(err)
+        logger.error(err + " in update Work Experience in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }      
 
 //all Student Info
 
 module.exports.allStudentData= async(req,res)=>{
+    try{
     const {id} = req.params
 
     const student = await StudentInfo.findOne({id})
@@ -541,7 +575,11 @@ module.exports.allStudentData= async(req,res)=>{
     }else{
         res.send({message:"false"})
     }
-
+}
+catch(err){
+    logger.error(err + " in all student data in studentcontroller.") ;
+    return res.send({message : false}) ;
+}
 }
 
 //detailsOne function
@@ -588,7 +626,8 @@ module,exports.detailsOne = async(req,res)=>{
         res.send({message:"true",verified:user.detailFlag})
        
     }catch(err){
-        console.log(err)
+        logger.error(err + " in delete One in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
     
 }
@@ -640,7 +679,8 @@ module.exports.profileHealth = async(req,res)=>{
         res.send({profileHealth:student.profilescore})
 
     }catch(err){
-        console.log(err)
+        logger.error(err + " in Profile Health in studentcontroller.") ;
+        return res.send({message : false}) ;
     }
 }
 
@@ -677,7 +717,8 @@ module.exports.editProfileDetails = async(req,res)=>{
 
         res.send("Updated")
 }catch(err){
-    console.log(err)
+    logger.error(err + " in edit Profile in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
 }
 
@@ -722,7 +763,8 @@ module.exports.appliedInternship = async(req,res)=>{
             res.send("Applied")
         // }
     }catch(err){
-        console.log(err)
+        logger.error(err + " in  Applied Internship in studentcontroller.") ;
+    return res.send({message : false}) ;
     }
 
 }
@@ -752,7 +794,8 @@ try{
 
 
 }catch(err){
-console.log(err)
+    logger.error(err + " in  Get Applied Internship in studentcontroller.") ;
+    return res.send({message : false}) ;
 }
     
 }

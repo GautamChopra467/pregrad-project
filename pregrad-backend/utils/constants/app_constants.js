@@ -78,5 +78,17 @@ module.exports = {
         ADMIN:{
             ADMINREGISTER:"/register"
         }
+    },
+    LOG :{
+        LOGGER :{
+            MORGAN_TYPE :':method :url :res[content-length] - :response-time ms :date[web]'
+        }
+    },
+    ROUTE_PATH:{
+        AUTH : "/" ,
+        STUDENT :"/student",
+        COMPANY :"/company",
+        INTERNSHIP : "/internhship",
+        ADMIN : "/admin" 
     }
 }

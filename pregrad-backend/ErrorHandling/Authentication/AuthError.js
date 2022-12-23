@@ -75,7 +75,6 @@ module.exports = {
           next();
         }
         else{
-          console.log("Returning Errors");
           return res.send({errors:errors});
       }
   

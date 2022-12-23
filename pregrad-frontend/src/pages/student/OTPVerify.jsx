@@ -72,7 +72,12 @@ const {email,type} = useParams()
         }else{
           navigate(`/forgotpassword/${email}`)
         }
-        }else {
+        }
+        else if(data.message == false)
+        {
+            navigate(`/*`) ; 
+        }
+        else {
           setFormErrors({final: res.data.message})
         }
       });

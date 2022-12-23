@@ -18,19 +18,13 @@ import PageLoader from "../../../img/page-loader.gif";
 
 const StudentProfile = ({userinfo,getUserDetails}) => {
 
-  console.log(userinfo);
-
   const navigate = useNavigate();
   const ref = useRef();
-
-  const {id} = useParams()
+  const {id} = useParams();
   
- const [cookies,setCookie,removeCookie] = useCookies([])
-
- const [isPageLoading, setIsPageLoading] = useState(false);
-
- const  [user,setUser] = useState({})
-
+  const [cookies,setCookie,removeCookie] = useCookies([]) ;
+  const [isPageLoading, setIsPageLoading] = useState(false) ;
+  const  [user,setUser] = useState({}) ; 
 
 const [Achievement,setAchievement] = useState([])
 
@@ -142,7 +136,6 @@ const [video,setVideo] = useState()
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
 
   const submitForm = (e) => {
     e.preventDefault();

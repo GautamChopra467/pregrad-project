@@ -18,14 +18,12 @@ import { TbFileCertificate } from "react-icons/tb";
 import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 
-
-const Sidebar = ({ children,theme,userinfo, setTheme,profilehealth}) => {
-
+const Sidebar = ({ children,theme,userinfo, setTheme , hp}) => {
+ 
   const [isOpenSidebar, setIsOpenSidebar] = useState(window.innerWidth > 940 ? true : false);
-    
-  const {id} = useParams()
 
-
+  const {id} = useParams();
+ 
   const routes = [
     {
       path: `/student/${id}/internships`,
@@ -154,7 +152,7 @@ const Sidebar = ({ children,theme,userinfo, setTheme,profilehealth}) => {
           exit="hidden"
           variants={scoreAnimation} className="score_section_sidebar">
           <div className="left_score_section_sidebar">
-            <p>{profilehealth} %</p>
+            <p>{hp} %</p>
           </div>
 
           <div className="right_score_section_sidebar">

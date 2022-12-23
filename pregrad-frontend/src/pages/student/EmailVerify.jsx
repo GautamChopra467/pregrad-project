@@ -66,6 +66,10 @@ const {type} = useParams()
           navigate(`/otpverify/${user.email}/${res.data.type}`);
         }
         }
+        else if(data.message == false)
+        {
+            navigate(`/*`) ; 
+        }
         else {
           setLoading(false);
           setFormErrors({final: res.data.message})

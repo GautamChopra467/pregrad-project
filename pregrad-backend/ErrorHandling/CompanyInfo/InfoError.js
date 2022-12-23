@@ -127,8 +127,6 @@ module.exports = {
     account(req,res,next){
 
         const errors = {};
-        
-        console.log(req.body)
 
         if(!req.body.name){
           errors.name = "Name Required"

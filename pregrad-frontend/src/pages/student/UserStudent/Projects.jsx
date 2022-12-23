@@ -9,7 +9,7 @@ import axios from 'axios'
 import {useCookies} from 'react-cookie';
 import PageLoader from "../../../img/page-loader.gif";
 
-const Projects = () => {
+const Projects = ({userHealthProfile}) => {
   const [isContent, setIsContent] = useState(false);
 
   const [isModal, setIsModal] = useState(false);
@@ -158,7 +158,8 @@ const getProjects = async()=>{
         }
         else if(res.data.message==="true"){
           setIsModal(!isModal)
-           getProjects()
+           getProjects();
+           userHealthProfile() ;
         }else if(res.data.message === "You cannot add duplicate information"){
           setFormErrors({others: res.data.message});
          }
@@ -192,7 +193,8 @@ const deleteProject = async(u_id,p_id)=>{
  const {data} = await axios.delete(`http://localhost:8000/student/deleteproject/${u_id}/${p_id}`)
  if(data.message === "true")
  {
-  getProjects()
+  getProjects();
+  userHealthProfile() ;
  }
 }
 

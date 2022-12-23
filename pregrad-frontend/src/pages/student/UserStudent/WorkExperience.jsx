@@ -9,10 +9,9 @@ import axios from 'axios'
 import {useCookies} from 'react-cookie';
 import PageLoader from "../../../img/page-loader.gif";
 
+const WorkExperience = ({userHealthProfile}) => {
 
-const WorkExperience = ({profilehealth,userHealthProfile}) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate() ;
 
   const {id} = useParams()
 
@@ -130,8 +129,6 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
     },800)
 
         setStudentwork(res.data.workexperience)
-        userHealthProfile()
-
       }
     }).catch((err)=>{
       console.log(err)
@@ -145,16 +142,13 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
       }else{
         const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
-         
           removeCookie("jwt")
           navigate('/login')
           
         }else{
-          // console.log("Profile from Experience",profilehealth)
-          navigate(`/student/${id}/workexperience`)
+          navigate(`/student/${id}/workexperience`) 
           setIsPageLoading(true)
           getWorkExperience()
-        
         }
       }
     }
@@ -169,14 +163,17 @@ const WorkExperience = ({profilehealth,userHealthProfile}) => {
      else if(res.data.message === "true")
       {
         setIsModal(!isModal);
+        
         getWorkExperience();
-        // userHealthProfile()
+
+        userHealthProfile() ;
+        
       }else if(res.data.message === "You cannot add duplicate information"){
         setFormErrors({others: res.data.message});
        }
      })
     }
-  }, [formErrors,cookies,removeCookie,navigate,profilehealth]);
+  }, [formErrors,cookies,removeCookie,navigate]);
 
   const validate = (values) => {
     const errors = {};
@@ -234,8 +231,9 @@ const deleteWorkExperience = async(u_id,w_id)=>{
  
   if(data.message === "true")
   {
-   getWorkExperience()
-  //  userHealthProfile()
+  
+   getWorkExperience() ;
+   userHealthProfile() ;
   }
 }
 

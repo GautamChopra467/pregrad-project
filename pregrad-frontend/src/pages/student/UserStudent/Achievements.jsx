@@ -8,7 +8,7 @@ import {useCookies} from 'react-cookie';
 import { MdOutlineDelete } from "react-icons/md";
 import PageLoader from "../../../img/page-loader.gif";
 
-const Achievements = () => {
+const Achievements = ({userHealthProfile}) => {
   
   const navigate = useNavigate()
 
@@ -105,7 +105,8 @@ const [studentachi,setStudentachi] = useState([])
       }).then(res=>{
         if(res.data.message === "true"){
            setIsModal(!isModal) 
-          getAchievements()
+          getAchievements() ;
+          userHealthProfile() ;
         }else if(res.data.message === "You cannot add duplicate information"){
           setFormErrors({others: res.data.message});
          }
@@ -136,6 +137,7 @@ const [studentachi,setStudentachi] = useState([])
  if(data.message === "true")
  {
   getAchievements()
+  userHealthProfile() ;
  }
 
  }
