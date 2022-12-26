@@ -1,23 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css";
-import { FiFileText } from 'react-icons/fi';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
-import { FaTrashAlt } from "react-icons/fa";
 import { BsFillPatchCheckFill } from "react-icons/bs";
 import axios from 'axios'
 
 const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlistedState}) => {
 
-  const navigate = useNavigate();
-
   var iid = window.location.search.substring(1).split("=")[1];
-  
-  const [isContent, setIsContent] = useState(true);
 
   const [showapplied,setShowApplied] = useState(shortlistedCandidates)
-
-  let [totalApplied,setTotalApplied] = useState(0)
 
   let [count,setCount] = useState(0)
 
@@ -73,7 +65,7 @@ const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlisted
 
   const deleteRejectedApplicant = async()=>{
 
-      const {data} = await axios.put(`http://localhost:8000/company/rejectedapplicants/${iid}?type=Hired`,[
+      const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `company/rejectedapplicants/${iid}?type=Hired`,[
         ...showapplied
     ])
     if(data.status){
@@ -88,7 +80,7 @@ const ShortlistedApplicants = ({shortlistedCandidates,showApplicants,shortlisted
      {
   showapplied.map((application)=>(
     (application.internshipstatus === "Shortlisted"?(
-      <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
+      <div className={application.status === undefined ? "student_box_applicantscompany":(application.status === true?application.class:application.class)} key={application.id}>
       <div className='top_section_student_applicantscompany'>
         <h2>{application.name}</h2>
         <Link target="_blank" to={`/resume/${application.id}`}>

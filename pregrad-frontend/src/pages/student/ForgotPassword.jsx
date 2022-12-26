@@ -42,7 +42,7 @@ const ForgotPassword = ({theme, setTheme}) => {
 
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/newpassword", user)
+      axios.post(process.env.REACT_APP_SERVER_URL + `newpassword`, user)
       .then( res => {
         if(res.data.errors){
           setFormErrors(res.data.errors);
@@ -50,7 +50,7 @@ const ForgotPassword = ({theme, setTheme}) => {
         else if(res.data.message === "true"){
           navigate("/login");
         }
-        else if(data.message == false)
+        else if(res.data.message === false)
         {
             navigate(`/*`) ; 
         }
@@ -63,7 +63,7 @@ const ForgotPassword = ({theme, setTheme}) => {
 
   const validate = (values) => {
     const errors = {};
-    const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex =/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(!values.email){
       errors.email = "Email required";

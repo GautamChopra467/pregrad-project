@@ -18,9 +18,9 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
 
   const {id} = useParams()
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
-   const [companydetails,setCompanyDetails] = useState({})
+   const [companydetails, setCompanyDetails] = useState({})
 
   const handleType = (event) => {
     setSelectedType(event.target.value);
@@ -36,8 +36,6 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
-  const type = "register"
 
   const [user, setUser] = useState({
     linkedin: "",
@@ -61,7 +59,7 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
   }
 
   const getCompanyInfo = async()=>{
-    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
       setCompanyDetails(data)
       if(data.verified){
         navigate(`/company/info/${id}/dashboard`)
@@ -84,10 +82,10 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
     if(!cookies.jwt){
       navigate('/login')
     }else{
-      axios.post(`http://localhost:8000/company`,{},{
+      axios.post(process.env.REACT_APP_SERVER_URL + `company`,{},{
         withCredentials:true,
       }).then(({data})=>{
-        if(data.id != id){
+        if(data.id !== id){
           removeCookie("jwt")
           navigate('/login')
         }else{ 
@@ -100,13 +98,13 @@ const DetailsOneCompany = ({ theme, setTheme }) => {
   verifyCompany()  
 
   if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/company/companydetails/${id}`,{
+      axios.post(process.env.REACT_APP_SERVER_URL + `company/companydetails/${id}`,{
         ...companyDetails
        }).then(({data})=>{
         if(data.errors){
           setFormErrors(data.errors);
         }
-        else if(data.message == "true" && data.verified == true)
+        else if(data.message === "true" && data.verified === true)
         {
           navigate(`/company/info/${id}/dashboard`)
         }else{

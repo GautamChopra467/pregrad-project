@@ -1,4 +1,4 @@
-import React,{useEffect,useState, useRef} from "react";
+import React,{useEffect,useState} from "react";
 import "../../../components/student/css/UserStudent/StudentProfileStyles.css";
 import "../../../components/student/css/UserStudent/ResumeStudentStyles.css";
 import ProfileBackground from "../../../img/profile-background.jpg";
@@ -19,12 +19,12 @@ import PageLoader from "../../../img/page-loader.gif";
 const StudentProfile = ({userinfo,getUserDetails}) => {
 
   const navigate = useNavigate();
-  const ref = useRef();
+  // const ref = useRef();
   const {id} = useParams();
   
-  const [cookies,setCookie,removeCookie] = useCookies([]) ;
+  const [cookies,removeCookie] = useCookies([]) ;
   const [isPageLoading, setIsPageLoading] = useState(false) ;
-  const  [user,setUser] = useState({}) ; 
+  // const  [user,setUser] = useState({}) ; 
 
 const [Achievement,setAchievement] = useState([])
 
@@ -57,7 +57,7 @@ const [video,setVideo] = useState()
 
   const getUserData = async()=>{
 
-    const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
+    const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/profile/${id}`)
   
     if(data.message === "true"){
     setAchievement(data.achievement)
@@ -75,7 +75,7 @@ const [video,setVideo] = useState()
   }
 
   // const getUserDetail = async()=>{
-  //   const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+  //   const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `userDetails/${id}`)
   //   setUser(data)
   // }
 
@@ -135,23 +135,23 @@ const [video,setVideo] = useState()
   const [isModal2, setIsModal2] = useState(false);
 
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  // const [isSubmit, setIsSubmit] = useState(false);
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(data));
-    setIsSubmit(true);
-  }
+  // const submitForm = (e) => {
+  //   e.preventDefault();
+  //   setFormErrors(validate(data));
+  //   setIsSubmit(true);
+  // }
 
-  const validate = (values) => {
-    const errors = {};
+  // const validate = (values) => {
+  //   const errors = {};
 
-    if(!values.name){
-      errors.name = "Name required";
-    }
+  //   if(!values.name){
+  //     errors.name = "Name required";
+  //   }
 
-    return errors;
-  }
+  //   return errors;
+  // }
 
   useEffect(()=>{
     const verifyUser = async()=>{
@@ -159,7 +159,7 @@ const [video,setVideo] = useState()
         
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -171,21 +171,7 @@ const [video,setVideo] = useState()
         }
       }
     }
-    verifyUser()
-
-    // const checkIfClickedOutside = e => {
-    //   console.log("before reached", ref.current.contains(e.target))
-    //   console.log("reached 2", isModal2)
-    //   if (isModal2 && ref.current && !ref.current.contains(e.target)) {
-    //     console.log("reached")
-    //     setIsModal2(false)
-    //   }
-    // }
-    // document.addEventListener("click", checkIfClickedOutside)
-
-    // return () => {
-    //   document.removeEventListener("click", checkIfClickedOutside)
-    // }  
+    verifyUser() 
   },[cookies,removeCookie,navigate, setIsModal2])
 
   const generatePDF = async () => {
@@ -247,7 +233,7 @@ const [video,setVideo] = useState()
 
   const editProfileDetails = (e)=>{
     e.preventDefault()
-    axios.put(`http://localhost:8000/student/editprofiledetails/${id}`,{
+    axios.put(process.env.REACT_APP_SERVER_URL + `student/editprofiledetails/${id}`,{
       ...editProfileObject
     }).then(({data})=>{
       if(data.errors){
@@ -313,7 +299,7 @@ const [video,setVideo] = useState()
 
                 <div className="profile_edit3_studentprofile" title="Video Resume">
                   
-                <a href={video} target="_blank"><FaRegFileVideo /></a>
+                <a href={video} target="_blank" rel="noreferrer"><FaRegFileVideo /></a>
                 </div>
 
               <div className="profile_edit2_studentprofile" onClick={(e)=>setEditDetails(e)}>
@@ -365,7 +351,7 @@ const [video,setVideo] = useState()
                 </ReactTooltip>
 
                 <div className="profile_edit_studentprofile" data-tip data-for="videoResume">
-                  <a href={video} target="_blank"><FaRegFileVideo /></a>
+                  <a href={video} target="_blank" rel="noreferrer"><FaRegFileVideo /></a>
                 </div>
                 <ReactTooltip id="videoResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
                   <span>Video resume - An Introductory video for your resume</span>
@@ -384,9 +370,9 @@ const [video,setVideo] = useState()
               <div className="line_studentprofile"></div>
               <div className="social_links_box_studentprofile">
                 
-                {  studentSocialLink.github == ""?(""): (<a target="_blank" href={studentSocialLink.github}><AiFillGithub className="social_links_studentprofile" /></a>)}
-                {  studentSocialLink.linkedin == ""?(""): (<a target="_blank" href={studentSocialLink.linkedin}><AiFillLinkedin className="social_links_studentprofile" /></a>)}
-                {  studentSocialLink.instagram == ""?(""): (<a target="_blank" href={studentSocialLink.instagram}><AiFillInstagram className="social_links_studentprofile" /></a>)}
+                {  studentSocialLink.github === ""?(""): (<a target="_blank" rel="noreferrer" href={studentSocialLink.github}><AiFillGithub className="social_links_studentprofile" /></a>)}
+                {  studentSocialLink.linkedin === ""?(""): (<a target="_blank" rel="noreferrer" href={studentSocialLink.linkedin}><AiFillLinkedin className="social_links_studentprofile" /></a>)}
+                {  studentSocialLink.instagram === ""?(""): (<a target="_blank" rel="noreferrer" href={studentSocialLink.instagram}><AiFillInstagram className="social_links_studentprofile" /></a>)}
                   
                 
                 
@@ -692,7 +678,7 @@ const [video,setVideo] = useState()
               </div>
             </div>
             {
-              Education.length != 0?
+              Education.length !== 0?
               ( <div className="education_container_resumestudent card_resumestudent">
               <h4>Education</h4>
               <div className="line_resumestudent"></div>
@@ -712,7 +698,7 @@ const [video,setVideo] = useState()
                       
             }
                  { 
-                   (Achievement.length!=0)?
+                   (Achievement.length !== 0)?
               (
               <div className="achievements_container_resumestudent card_resumestudent">
               <h4>Achievements</h4>
@@ -734,7 +720,7 @@ const [video,setVideo] = useState()
 
           <div className="main_details_right_section_resumestudent">
             {
-              (WorkExperience.length != 0)?(
+              (WorkExperience.length !== 0)?(
                 <div className="workexperience_container_resumestudent card_resumestudent">
                 <h4>Work Experience</h4>
                 <div className="line_resumestudent"></div>
@@ -767,7 +753,7 @@ const [video,setVideo] = useState()
 
             {
          
-         Project.length !=0?(
+         Project.length !== 0 ? (
           <div className="projects_container_resumestudent card_resumestudent">
      
               <h4>Projects</h4>

@@ -3,14 +3,12 @@ import HeaderAuth from '../../components/student/jsx/HeaderAuth';
 import "../../components/student/css/ResumeStyles.css";
 import "../../components/student/css/UserStudent/ResumeStudentStyles.css";
 import ProfileBackground from "../../img/profile-background.jpg";
-import { BiDownload, BiEditAlt, BiLink } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { BiDownload, BiLink } from "react-icons/bi";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
-import {useCookies} from 'react-cookie'
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import jsPDF from "jspdf"
-import { FaRegFileVideo, FaTimes } from "react-icons/fa";
+import { FaRegFileVideo} from "react-icons/fa";
 import ReactTooltip from 'react-tooltip';
 
 
@@ -34,12 +32,12 @@ const Resume = ({theme, setTheme}) => {
       })
 
       const getUserDetails= async()=>{
-        const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`)
+        const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `userDetails/${id}`)
         setUser(data)
       }
 
       const getUserData = async()=>{
-        const {data} = await axios.get(`http://localhost:8000/student/profile/${id}`)
+        const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/profile/${id}`)
       
         if(data.message === "true"){
         setAchievement(data.achievement)
@@ -79,7 +77,7 @@ const Resume = ({theme, setTheme}) => {
                 </div>
 
                 <div className="profile_edit3_resume" title="Video Resume">
-                  <a href={videoLink} target="_blank"><FaRegFileVideo /></a>
+                  <a href={videoLink} target="_blank" rel="noreferrer"><FaRegFileVideo /></a>
                 </div>
             </div>
 
@@ -94,8 +92,8 @@ const Resume = ({theme, setTheme}) => {
                 <div className="info_left_section_resume">
                   <h5>{user.name}</h5>
                   {
-                    studentDomain.map((domain)=>(
-                      <p>{domain}</p>
+                    studentDomain.map((domain, index)=>(
+                      <p key={index}>{domain}</p>
                     ))
                   }
                 </div>
@@ -113,7 +111,7 @@ const Resume = ({theme, setTheme}) => {
                 </ReactTooltip>
 
                 <div className="profile_edit_resume" data-tip data-for="videoResume">
-                  <a href={videoLink} target="_blank"><FaRegFileVideo /></a>
+                  <a href={videoLink} target="_blank" rel="noreferrer"><FaRegFileVideo /></a>
                 </div>
                 <ReactTooltip id="videoResume" place="bottom" data-background-color="#1e272e" effect="solid" delayShow={800}>
                   <span>Video resume - An Introductory video for your resume</span>
@@ -130,12 +128,10 @@ const Resume = ({theme, setTheme}) => {
             <div className="social_container_resume card_resume">
               <h4>Social Links</h4>
               <div className="line_resume"></div>
-              <div className="social_links_box_resume">
-                
-              {  studentSocialLink.github == ""?(""): (<a href={studentSocialLink.github} target="_blank"><AiFillGithub className="social_links_resume" /></a>)}
-                {  studentSocialLink.linkedin == ""?(""): (<a href={studentSocialLink.linkedin} target="_blank"><AiFillLinkedin className="social_links_resume" /></a>)}
-                {  studentSocialLink.instagram == ""?(""): (<a href={studentSocialLink.instagram} target="_blank"><AiFillInstagram className="social_links_resume" /></a>)}
-                  
+              <div className="social_links_box_resume">   
+                {  studentSocialLink.github === ""?(""): (<a href={studentSocialLink.github} target="_blank" rel="noreferrer"><AiFillGithub className="social_links_resume" /></a>)}
+                {  studentSocialLink.linkedin === ""?(""): (<a href={studentSocialLink.linkedin} target="_blank" rel="noreferrer"><AiFillLinkedin className="social_links_resume" /></a>)}
+                {  studentSocialLink.instagram === ""?(""): (<a href={studentSocialLink.instagram} target="_blank" rel="noreferrer"><AiFillInstagram className="social_links_resume" /></a>)}   
               </div>
             </div>
 
@@ -174,9 +170,9 @@ const Resume = ({theme, setTheme}) => {
               {
               Achievement.map((achi)=>(
                 <div className="achievements_info_box_resume" key={achi._id}>
-                <h3>{achi.title}</h3>
-                <a href={achi.certificate} target="_blank">Certificate Link</a>
-              </div>
+                  <h3>{achi.title}</h3>
+                  <a href={achi.certificate} target="_blank" rel="noreferrer">Certificate Link</a>
+                </div>
               ))
               }
             </div>
@@ -196,8 +192,8 @@ const Resume = ({theme, setTheme}) => {
                 </p>
                 <div className="skills_content_resume">
                   <ul>
-                    {work.skills.map((skill) => (
-                      <li>{skill}</li>
+                    {work.skills.map((skill, index) => (
+                      <li key={index}>{skill}</li>
                     ))}
                   </ul>
                 </div>
@@ -216,7 +212,7 @@ const Resume = ({theme, setTheme}) => {
                 <p>
                 {proj.description}
                 </p>
-                <a href={proj.projectlink} target="_blank" data-tip data-for="projectLink">
+                <a href={proj.projectlink} target="_blank" rel="noreferrer" data-tip data-for="projectLink">
                   <BiLink size={24} className="project_details_icon_resume" />
                 </a>
                 <ReactTooltip id="projectLink" place="left" data-background-color="#1e272e" effect="solid" delayShow={800} data-event-off="click">
@@ -224,8 +220,8 @@ const Resume = ({theme, setTheme}) => {
                 </ReactTooltip>
                 <div className="skills_content_resume">
                   <ul>
-                  {proj.skills.map((skill) => (
-                      <li>{skill}</li>
+                  {proj.skills.map((skill, index) => (
+                      <li key={index}>{skill}</li>
                     ))}
                   </ul>
                 </div>
@@ -241,7 +237,7 @@ const Resume = ({theme, setTheme}) => {
 
 
 
-      {/* RESUME */}
+      {/* PDF RESUME */}
 
        <div className='resumestudent'>
         <div className="main_container_resumestudent">
@@ -256,8 +252,8 @@ const Resume = ({theme, setTheme}) => {
                 <div className="info_left_section_resumestudent">
                   <h5>{user.name}</h5>
                   {
-                    studentDomain.map((domain)=>(
-                      <p>{domain}</p>
+                    studentDomain.map((domain, index)=>(
+                      <p key={index}>{domain}</p>
                     ))
                   }
                 </div>
@@ -293,7 +289,7 @@ const Resume = ({theme, setTheme}) => {
               </div>
             </div>
             {
-              Education.length != 0?
+              Education.length !== 0?
               ( <div className="education_container_resumestudent card_resumestudent">
               <h4>Education</h4>
               <div className="line_resumestudent"></div>
@@ -313,7 +309,7 @@ const Resume = ({theme, setTheme}) => {
                       
             }
                  { 
-                   (Achievement.length!=0)?
+                   (Achievement.length !== 0)?
               (
               <div className="achievements_container_resumestudent card_resumestudent">
               <h4>Achievements</h4>
@@ -321,7 +317,7 @@ const Resume = ({theme, setTheme}) => {
               <div className="line_resumestudent"></div>
              {
               Achievement.map((achi)=>(
-              <div className="achievements_info_box_resumestudent">
+              <div key={achi._id} className="achievements_info_box_resumestudent">
                 <h3>{achi.title}</h3>
                 <a href={achi.certificate}>{achi.certificate}</a>
               </div>
@@ -335,14 +331,14 @@ const Resume = ({theme, setTheme}) => {
 
           <div className="main_details_right_section_resumestudent">
             {
-              (WorkExperience.length != 0)?(
+              (WorkExperience.length !== 0)?(
                 <div className="workexperience_container_resumestudent card_resumestudent">
                 <h4>Work Experience</h4>
                 <div className="line_resumestudent"></div>
   
            { 
            WorkExperience.map((work)=>(
-            <div className="workexperience_details_box_resumestudent">
+            <div key={work._id} className="workexperience_details_box_resumestudent">
             <h3>{work.companyname}</h3>
             <h5>{work.position} | {work.duration} months</h5>
           <p>
@@ -350,8 +346,8 @@ const Resume = ({theme, setTheme}) => {
           </p>
           <div className="skills_content_resumestudent">
               <ul>
-                {work.skills.map((skill) => (
-                  <li>{skill}</li>
+                {work.skills.map((skill, index) => (
+                  <li key={index}>{skill}</li>
                 ))}
               </ul>
           </div>
@@ -368,7 +364,7 @@ const Resume = ({theme, setTheme}) => {
 
             {
          
-         Project.length !=0?(
+         Project.length !== 0 ? (
           <div className="projects_container_resumestudent card_resumestudent">
      
               <h4>Projects</h4>
@@ -386,8 +382,8 @@ const Resume = ({theme, setTheme}) => {
               </a>
               <div className="skills_content_resumestudent">
                 <ul>
-                {proj.skills.map((skill) => (
-                      <li>{skill}</li>
+                {proj.skills.map((skill, index) => (
+                      <li key={index}>{skill}</li>
                     ))}
                 </ul>
               </div>

@@ -12,9 +12,9 @@ const CoursesAdmin = () => {
 
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
-  const [Cources,setCources] = useState([]);
+  const [Cources, setCources] = useState([]);
 
   const {id} = useParams();
 
@@ -101,7 +101,7 @@ const CoursesAdmin = () => {
   }
 
   const getCources = ()=>{
-    axios.get(`http://localhost:8000/admin/getcources/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/getcources/${id}`).then(({data})=>{
       if(data.message){ 
         if(data.cources.length < 7){
           setCources(data.cources);
@@ -114,7 +114,7 @@ const CoursesAdmin = () => {
 
   const deleteCources = (id,c_id)=>{
 
-    axios.put(`http://localhost:8000/admin/deletecources/${id}/${c_id}`).then(({data})=>{
+    axios.put(process.env.REACT_APP_SERVER_URL + `admin/deletecources/${id}/${c_id}`).then(({data})=>{
       if(data.message){
         getCources();
       }
@@ -127,8 +127,8 @@ const CoursesAdmin = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
-        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role !== "superadmin"){ 
           removeCookie("jwt");
           navigate('/login');
         }
@@ -138,7 +138,7 @@ const CoursesAdmin = () => {
 
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       if( Cources.length < 7){
-        axios.post(`http://localhost:8000/admin/cources/${id}`,{
+        axios.post(process.env.REACT_APP_SERVER_URL + `admin/cources/${id}`,{
           ...info
         }).then(({data})=>{
           if(data.message){

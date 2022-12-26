@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../../../components/admin/css/UserAdmin/EventsAdminStyles.css";
-import Student1 from "../../../img/home-banner/student1.png";
 import { FaTrashAlt } from "react-icons/fa";
-import { BsStarFill, BsStarHalf } from "react-icons/bs";
-import { Link,useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {useCookies} from "react-cookie";
 
 const EventsAdmin = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
-  const [Events,setEvents] = useState()
+  const [Events, setEvents] = useState()
 
   const {id} = useParams();
 
@@ -89,7 +87,7 @@ const EventsAdmin = () => {
   };
 
   const getEvents = ()=>{
-    axios.get(`http://localhost:8000/admin/getevents/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/getevents/${id}`).then(({data})=>{
       if(data.message){ 
         if(data.events.length < 7 ){
         setEvents(data.events);
@@ -102,7 +100,7 @@ const EventsAdmin = () => {
 
   const deleteEvent = (id,e_id)=>{
 
-    axios.put(`http://localhost:8000/admin/deleteevent/${id}/${e_id}`).then(({data})=>{
+    axios.put(process.env.REACT_APP_SERVER_URL + `admin/deleteevent/${id}/${e_id}`).then(({data})=>{
       if(data.message){
         getEvents();
       }
@@ -115,8 +113,8 @@ const EventsAdmin = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
-        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role !== "superadmin"){ 
           removeCookie("jwt")
           navigate('/login')
         }
@@ -126,7 +124,7 @@ const EventsAdmin = () => {
 
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       if(Events.length < 7){
-      axios.post(`http://localhost:8000/admin/events/${id}`,{
+      axios.post(process.env.REACT_APP_SERVER_URL + `admin/events/${id}`,{
         ...info
       }).then(({data})=>{
         if(data.message){

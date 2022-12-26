@@ -13,11 +13,11 @@ const DetailsOne = ({theme, setTheme}) => {
 
   const {id} = useParams()
 
- const [cookies,setCookie,removeCookie] = useCookies([])
+ const [cookies, removeCookie] = useCookies([])
 
- const  [user,setUser] = useState({})
+ const  [user, setUser] = useState({})
 
- const [video,setVideo] = useState("")
+ const [video, setVideo] = useState("")
 
   var currentYear = new Date().getFullYear();
 
@@ -146,11 +146,11 @@ const DetailsOne = ({theme, setTheme}) => {
 
   const getUserDetails= async()=>{
 
-    axios.get(`http://localhost:8000/userDetails/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `userDetails/${id}`).then(({data})=>{
       if(data.verified){
         navigate(`/student/${id}/internships`)
       }
-      else if(data.message == false)
+      else if(data.message === false)
       {
           navigate(`/*`) ; 
       }
@@ -167,7 +167,7 @@ const DetailsOne = ({theme, setTheme}) => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -179,13 +179,13 @@ const DetailsOne = ({theme, setTheme}) => {
     verifyUser()
     
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-     axios.post(`http://localhost:8000/student/detailsone/${id}`,{
+     axios.post(process.env.REACT_APP_SERVER_URL + `student/detailsone/${id}`,{
       ...detailsOneStudent
      }).then(({data})=>{
       if(data.errors){
         setFormErrors(data.errors)
       }
-      else if(data.message == "true" && data.verified == true)
+      else if(data.message === "true" && data.verified === true)
       {
         navigate(`/student/${id}/internships`)
       }else{

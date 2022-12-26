@@ -14,7 +14,7 @@ const Reports = () => {
 
   const {id} = useParams();
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
   
@@ -27,7 +27,7 @@ const Reports = () => {
   const [showapplied,setShowApplied] = useState([]);
 
   const getReportedInternships = ()=>{
-      axios.get("http://localhost:8000/admin/reportedinternships").then(({data})=>{
+      axios.get(process.env.REACT_APP_SERVER_URL + `admin/reportedinternships`).then(({data})=>{
         if(data.length === 0){
           setIsContent(false);
           setReportedInternships([]);
@@ -38,6 +38,9 @@ const Reports = () => {
           setShowApplied(data);
         }
       })
+      setTimeout(() => {
+        setIsPageLoading(false)
+      },800)
   }
 
   const changeAccepted = (id) => {
@@ -58,20 +61,20 @@ const Reports = () => {
   }
 
   
-  const countApplied= ()=>{
-        let applied_count = 0;
-        showapplied.map((e)=>{
-            if(e.flag){
-              setCount(++applied_count);
-            }
-        })
-    }
+  // const countApplied= ()=>{
+  //       let applied_count = 0;
+  //       showapplied.map((e)=>{
+  //           if(e.flag){
+  //             setCount(++applied_count);
+  //           }
+  //       })
+  //   }
 
   const changeRejected = (id) => {
     setShowApplied(showapplied.map((e)=>{
       
       if(e._id === id){ 
-        if(e.flag == false || e.flag == undefined){
+        if(e.flag === false || e.flag === undefined){
           setCount(++count)
           return {...e,flag:true,class:"student_box_verification reject_applicantscompany"} ;
         }else{
@@ -85,10 +88,11 @@ const Reports = () => {
 
   const deleteRejectedApplicant = async()=>{
     
-      const {data} = await axios.put(`http://localhost:8000/admin/verifiedreportedinternship/${id}`,[
+      const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `admin/verifiedreportedinternship/${id}`,[
         ...showapplied
     ])
     if(data.status){
+      setIsPageLoading(true)
       getReportedInternships(); 
       setCount(0);
     }
@@ -102,11 +106,12 @@ const Reports = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){ 
           removeCookie("jwt");
           navigate('/login');
         }else{
+          setIsPageLoading(true);
           getReportedInternships();
         }
       }

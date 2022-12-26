@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../img/logo.png";
 import Logo2 from "../../../img/logo-white.png";
-import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import "../css/HeaderUserStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
-import axios from "axios"
 const HeaderUser = ({theme, setTheme,name}) => {
   const navigate = useNavigate();
 
@@ -26,10 +24,9 @@ const HeaderUser = ({theme, setTheme,name}) => {
   const handleClick = () => setClick(!click);
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
 
-  const [cookies,setCookies,removeCookie] = useCookies([])
+  const [ removeCookie] = useCookies([])
 
   const LogOut = async()=>{
-    console.log(cookies.session)
     removeCookie("jwt")
     navigate('/login')
     window.location.reload(true);

@@ -11,7 +11,7 @@ const HomeBanner4 = () => {
   const [testimonials, setTestimonials] = useState([]);
 
   const getExtra = () => {
-    axios.get(`http://localhost:8000/admin/showcources`).then(({ data }) => {
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/showcources`).then(({ data }) => {
       if (data) {
         setTestimonials(data.data[0].testimonials);       
       }
@@ -57,7 +57,7 @@ const HomeBanner4 = () => {
             modules={[FreeMode, Pagination]}
             className="swiper_homebanner4"
           >
-            {testimonials != undefined
+            {testimonials !== undefined
               ? testimonials.map((testimonial) => (
                   <SwiperSlide key={testimonial._id}>
                     <div className="card_container_homebanner4">

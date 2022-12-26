@@ -15,7 +15,7 @@ const Education = ({userHealthProfile}) => {
 
    const {id} = useParams()
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -64,7 +64,7 @@ const Education = ({userHealthProfile}) => {
 
   const getEducation = async()=>{
     
-        const {data} = await axios.get(`http://localhost:8000/student/geteducation/${id}`)
+        const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/geteducation/${id}`)
           if(data.message === "true")
           {  
            setStudentedu(data.education)
@@ -87,7 +87,7 @@ const Education = ({userHealthProfile}) => {
       
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -100,7 +100,7 @@ const Education = ({userHealthProfile}) => {
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-     axios.post(`http://localhost:8000/student/education/${id}`,{
+     axios.post(process.env.REACT_APP_SERVER_URL + `student/education/${id}`,{
        ...education
      }).then((res)=>{
       if(res.data.errors){
@@ -164,7 +164,7 @@ const Education = ({userHealthProfile}) => {
 
 const deleteEducation = async(u_id,e_id)=>{
 
-  const {data} = await axios.delete(`http://localhost:8000/student/deleteeducation/${u_id}/${e_id}`)
+  const {data} = await axios.delete(process.env.REACT_APP_SERVER_URL + `student/deleteeducation/${u_id}/${e_id}`)
  
   if(data.message === "true")
   {
@@ -178,7 +178,7 @@ const deleteEducation = async(u_id,e_id)=>{
 const UpdatedEducation = async(e,u_id)=>{
   e.preventDefault();
    
-  const {data} = await axios.put(`http://localhost:8000/student/updatededucation/${u_id}/${editeducation._id}`,{
+  const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `student/updatededucation/${u_id}/${editeducation._id}`,{
     ...editeducation
   })
   if(data.education){
@@ -194,7 +194,7 @@ const UpdatedEducation = async(e,u_id)=>{
 const editEducation = async(u_id,e_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
-  const {data} = await axios.get(`http://localhost:8000/student/updateeducation/${u_id}/${e_id}`)
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/updateeducation/${u_id}/${e_id}`)
   setEditEducation(data)
 
 }

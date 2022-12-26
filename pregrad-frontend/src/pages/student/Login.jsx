@@ -4,19 +4,15 @@ import LoginLogo from "../../img/login-image.png";
 import InstaLogo from "../../img/instagram-logo.svg";
 import LinkedinLogo from "../../img/linkedin-logo.svg";
 import YoutubeLogo from "../../img/youtube-logo.svg";
-import GoogleLogo from "../../img/google-logo.svg";
 import "../../components/student/css/LoginStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
-import {useCookies} from 'react-cookie';
 import HeaderAuth from "../../components/student/jsx/HeaderAuth";
 
 
 const Login = ({theme, setTheme}) => {
 
   const navigate = useNavigate();
-
-  const [cookies,setCookie,removeCookie] = useCookies([])
 // const type = "forgotpassword" 
 
   const [formErrors, setFormErrors] = useState({});
@@ -44,7 +40,7 @@ const Login = ({theme, setTheme}) => {
   useEffect(() => {
   
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/login",
+      axios.post(process.env.REACT_APP_SERVER_URL + `login`,
       { 
         ...user
       },{
@@ -57,17 +53,17 @@ const Login = ({theme, setTheme}) => {
         else if(data.usertype === "superadmin" || data.usertype === "admin"){
             navigate(`/admin/info/${data.id}/dashboard`);
         }
-        else  if(data.usertype === "student" && data.verified == false){
+        else  if(data.usertype === "student" && data.verified === false){
           navigate(`/student/${data.id}/detailsone`);
-        }else if(data.usertype === "student" && data.verified == true){
+        }else if(data.usertype === "student" && data.verified === true){
           navigate(`/student/${data.id}/internships`);
-        }else if(data.usertype === "company" && data.verified == false){
+        }else if(data.usertype === "company" && data.verified === false){
           navigate(`/company/${data.id}/detailsone`);
         }
-        else if(data.usertype === "company" && data.verified == true){
+        else if(data.usertype === "company" && data.verified === true){
           navigate(`/company/info/${data.id}/dashboard`);
         }
-        else if(data.message == false)
+        else if(data.message === false)
         {
             navigate(`/*`) ; 
         }
@@ -80,7 +76,7 @@ const Login = ({theme, setTheme}) => {
 
   const validate = (values) => {
     const errors = {};
-    const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex =/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(!values.email){
       errors.email = "Email required";
@@ -99,16 +95,16 @@ const Login = ({theme, setTheme}) => {
     return errors;
   }
 
-  const googleAuth = async()=>{
-    if(cookies.jwt)
-    {
-      const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true})
-      navigate(`/student/${data.id}`)
-    }
-    else{
-     window.open("http://localhost:8000/auth/google","_self")
-   }
-}
+//   const googleAuth = async()=>{
+//     if(cookies.jwt)
+//     {
+//       const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true})
+//       navigate(`/student/${data.id}`)
+//     }
+//     else{
+//      window.open(process.env.REACT_APP_SERVER_URL + `auth/google`,"_self")
+//    }
+// }
 
   return (
     <div>    

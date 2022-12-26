@@ -28,7 +28,7 @@ const HeaderAuth = ({theme, setTheme}) => {
           {theme === "dark-theme" && <img src={Logo2} alt="pregrad" />}
           </Link>
           <Link to="/" className="intern_headerauth">
-            Contact
+            Home
           </Link>
         </div>
 
@@ -39,7 +39,7 @@ const HeaderAuth = ({theme, setTheme}) => {
         >
           <div className="abc_headerauth">
             <Link to="/" className="intern2_headerauth">
-              Contact
+              Home
             </Link>
           </div>
           <div className="theme_icon_container_headerauth" onClick={toggleTheme}>

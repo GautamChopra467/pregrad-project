@@ -149,13 +149,13 @@ const DashboardCompany = () => {
   }
 
   const getCompanyInfo = ()=>{
-    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
     setCompanyDetails(data)
 })
 }
 
 const getCompanyDetails = ()=>{
-  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanydetails/${id}`).then(({data})=>{
     setCompanyInfoDetails(data)
     setTimeout(() => {
       setIsPageLoading(false)
@@ -171,11 +171,11 @@ const getCompanyDetails = ()=>{
         navigate('/login')
       }else{
         setIsPageLoading(true)
-        axios.post(`http://localhost:8000/company`,{},{
+        axios.post(process.env.REACT_APP_SERVER_URL + `company`,{},{
           withCredentials:true,
         }).then(({data})=>{
 
-          if(data.id != id){
+          if(data.id !== id){
             removeCookie("jwt")
             navigate('/login')
           }else{
@@ -191,7 +191,7 @@ const getCompanyDetails = ()=>{
     verifyCompany()  
   
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-        axios.put(`http://localhost:8000/company/editprofile/${id}`,{
+        axios.put(process.env.REACT_APP_SERVER_URL + `company/editprofile/${id}`,{
           ...editDetailsProfile
         }).then(({data})=>{
           if(data.message){
@@ -204,8 +204,8 @@ const getCompanyDetails = ()=>{
         })
     }
 
-    if(Object.keys(formErrors2).length == 0 && isSubmit2){
-      axios.put(`http://localhost:8000/company/editaccount/${id}`,{
+    if(Object.keys(formErrors2).length === 0 && isSubmit2){
+      axios.put(process.env.REACT_APP_SERVER_URL + `company/editaccount/${id}`,{
         ...accountInfo
       }).then(({data})=>{
         if(data.message){

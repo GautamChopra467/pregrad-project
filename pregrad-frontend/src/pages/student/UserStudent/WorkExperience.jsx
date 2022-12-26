@@ -15,7 +15,7 @@ const WorkExperience = ({userHealthProfile}) => {
 
   const {id} = useParams()
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const [editform,seteditform] = useState("")
 
@@ -23,7 +23,7 @@ const WorkExperience = ({userHealthProfile}) => {
 
   const [isModal, setIsModal] = useState(false);
 
-  const [isModalDelete, setIsModalDelete] = useState(false);
+  // const [isModalDelete, setIsModalDelete] = useState(false);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -115,7 +115,7 @@ const WorkExperience = ({userHealthProfile}) => {
   }
 
   const getWorkExperience = ()=>{
-    axios.get(`http://localhost:8000/student/getworkexperience/${id}`).then((res)=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `student/getworkexperience/${id}`).then((res)=>{
       if(res.data.message === "true"){  
     setStudentwork(res.data.workexperience)
     if(res.data.workexperience.length > 0){
@@ -140,7 +140,7 @@ const WorkExperience = ({userHealthProfile}) => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -154,7 +154,7 @@ const WorkExperience = ({userHealthProfile}) => {
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-     axios.post(`http://localhost:8000/student/workexperience/${id}`,{
+     axios.post(process.env.REACT_APP_SERVER_URL + `student/workexperience/${id}`,{
       ...workexperience,skills:selectedSkills
      }).then((res)=>{
       if(res.data.errors){
@@ -219,7 +219,7 @@ const WorkExperience = ({userHealthProfile}) => {
 const editWorkExperience = async(u_id,w_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
-  const {data} = await axios.get(`http://localhost:8000/student/updateworkexperience/${u_id}/${w_id}`)
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/updateworkexperience/${u_id}/${w_id}`)
   seteditSelectedSkills(data.skills)
   skillsData = skillsData.filter((e)=> !data.skills.includes(e))
   setEditSkills(skillsData)
@@ -227,7 +227,7 @@ const editWorkExperience = async(u_id,w_id)=>{
 }
  
 const deleteWorkExperience = async(u_id,w_id)=>{
-  const {data} = await axios.delete(`http://localhost:8000/student/deleteworkexperience/${u_id}/${w_id}`)
+  const {data} = await axios.delete(process.env.REACT_APP_SERVER_URL + `student/deleteworkexperience/${u_id}/${w_id}`)
  
   if(data.message === "true")
   {
@@ -240,7 +240,7 @@ const deleteWorkExperience = async(u_id,w_id)=>{
 const UpdatedWorExperience = async(e,u_id)=>{
   e.preventDefault();
    
-  const {data} = await axios.put(`http://localhost:8000/student/updatedworkexperience/${u_id}/${editworkexperience._id}`,{
+  const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `student/updatedworkexperience/${u_id}/${editworkexperience._id}`,{
     ...editworkexperience,skills:editselectedSkills
   })
 

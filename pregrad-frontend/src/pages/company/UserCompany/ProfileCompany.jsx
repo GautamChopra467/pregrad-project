@@ -4,7 +4,7 @@ import ProfileBackground from "../../../img/profile-background.jpg";
 import { BsLinkedin } from "react-icons/bs";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
-import { useNavigate,useParams,Link } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import PageLoader from "../../../img/page-loader.gif";
 
 const ProfileCompany = () => {
@@ -23,13 +23,13 @@ const ProfileCompany = () => {
   const [companyInfoDetails,setCompanyInfoDetails] = useState({})
 
   const getCompanyInfo = ()=>{
-    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
     setCompanyDetails(data)
 })
 }
 
 const getCompanyDetails = ()=>{
-  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanydetails/${id}`).then(({data})=>{
    setCompanyInfoDetails(data)
    setTimeout(() => {
     setIsPageLoading(false)
@@ -45,11 +45,11 @@ const getCompanyDetails = ()=>{
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        axios.post(`http://localhost:8000/company`,{},{
+        axios.post(process.env.REACT_APP_SERVER_URL + `company`,{},{
           withCredentials:true,
         }).then(({data})=>{
 
-          if(data.id != id){
+          if(data.id !== id){
             removeCookie("jwt")
             navigate('/login')
           }else{
@@ -96,7 +96,7 @@ const getCompanyDetails = ()=>{
             <img src={ProfileBackground} alt="background" />
             <div className="profile_edit2_container_profilecompany">
               <div className="profile_edit2_profilecompany">
-                <a href={companyInfoDetails.linkedin} target="_blank"><BsLinkedin size={18} /></a>
+                <a href={companyInfoDetails.linkedin} target="_blank" rel="noreferrer"><BsLinkedin size={18} /></a>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ const getCompanyDetails = ()=>{
 
               <div className="profile_edit_container_profilecompany">
                 <div className="profile_edit_profilecompany">
-                  <a href={companyInfoDetails.linkedin} target="_blank"><BsLinkedin /></a>
+                  <a href={companyInfoDetails.linkedin} target="_blank" rel="noreferrer"><BsLinkedin /></a>
                 </div>
               </div>
             </div>

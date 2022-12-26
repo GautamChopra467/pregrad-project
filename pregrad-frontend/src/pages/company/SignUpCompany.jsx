@@ -4,7 +4,6 @@ import SignUpLogo from "../../img/signupcompany-image.png";
 import InstaLogo from "../../img/instagram-logo.svg";
 import LinkedinLogo from "../../img/linkedin-logo.svg";
 import YoutubeLogo from "../../img/youtube-logo.svg";
-import GoogleLogo from "../../img/google-logo.svg";
 import "../../components/company/css/SignUpCompanyStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
@@ -47,7 +46,7 @@ const SignUp = ({theme, setTheme}) => {
 
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/company/register", user)
+      axios.post(process.env.REACT_APP_SERVER_URL + `company/register`, user)
       .then( res => {
         if(res.data.errors){
           setFormErrors(res.data.errors);
@@ -63,7 +62,7 @@ const SignUp = ({theme, setTheme}) => {
 
   const validate = (values) => {
     const errors = {};
-    const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex =/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(!values.name){
       errors.name = "Name required";

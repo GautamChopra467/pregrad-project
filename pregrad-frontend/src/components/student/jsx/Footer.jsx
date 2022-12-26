@@ -1,9 +1,6 @@
 import React from 'react';
 import "../css/FooterStyles.css";
 import { Link } from 'react-router-dom';
-import App from "../../../img/home-banner/app.jpg";
-import Play from "../../../img/home-banner/play.jpg";
-import Pay from "../../../img/home-banner/pay.png";
 import { FaFacebookSquare } from 'react-icons/fa';
 import { BsInstagram, BsTwitter } from 'react-icons/bs';
 import { AiFillYoutube } from 'react-icons/ai';
@@ -17,10 +14,6 @@ const Footer = () => {
             </div>
 			
             <h5>Pregrad the career <br></br>accelerator and live training <br></br>platform. Start your career early.</h5>
-			{/* <h4>Contact</h4>
-			<p><strong>Address: </strong>G-9, 1st Floor, Sector-6 Noida-201307</p>
-			<p><strong>Phone: </strong>+91 8800527540</p>
-			<p><strong>Hours: </strong>10:00 - 18:00, Mon - Sun</p> */}
 			<div className="follow_footer">
 				<h4>Follow Us</h4>
 				<div className="icon_footer">

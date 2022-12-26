@@ -13,7 +13,7 @@ const HomeBanner5 = () => {
   const [courses,setCourses] = useState([]);
 
   const getExtra = ()=>{
-    axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/showcources`).then(({data})=>{
       if(data){
         setCourses(data.data[0].cources);
          if(data.data[0].cources.length < 3){
@@ -71,9 +71,9 @@ const HomeBanner5 = () => {
           
               {
 
-                  (courses != undefined)?courses.map((course)=>(
+                  (courses !== undefined)?courses.map((course)=>(
                     <SwiperSlide className="swiper_homebanner5" key={course._id}>
-                    <a href={course.courselink} target="_blank">
+                    <a href={course.courselink} target="_blank" rel="noreferrer">
                     <div className="course_box_homebanner5">
                      <div className="course_box_upper_section_homebanner5">
                        <img src={course.imagelink} alt="course" />

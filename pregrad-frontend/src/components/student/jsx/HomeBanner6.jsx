@@ -1,9 +1,9 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/HomeBanner6Styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination, Navigation } from "swiper";
+import { Navigation } from "swiper";
 import axios from "axios";
 
 const HomeBanner6 = () => {
@@ -12,7 +12,7 @@ const HomeBanner6 = () => {
   const [events,setEvents] = useState([]);
 
   const getExtra = ()=>{
-    axios.get(`http://localhost:8000/admin/showcources`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/showcources`).then(({data})=>{
       if(data){
         setEvents(data.data[0].events);
 
@@ -68,10 +68,10 @@ const HomeBanner6 = () => {
             className="mySwiper"
           >
            { 
-(events != undefined)?events.map((event)=>(
+          (events !== undefined)?events.map((event)=>(
            
             <SwiperSlide className="swiper_homebanner6" key={event._id}>
-          <a href={event.eventlink} target="_blank">
+          <a href={event.eventlink} target="_blank" rel="noreferrer">
              <div className="course_box_homebanner6">
               <div className="course_box_upper_section_homebanner6">
                 <img src={event.imagelink} alt="course" />

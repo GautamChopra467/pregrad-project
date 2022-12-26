@@ -88,7 +88,7 @@ const SidebarCompany = ({ children, theme, setTheme }) => {
       }
 
       const getCompanyInfo = ()=>{
-        axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+        axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
         setCompanyDetails(data);
     })
     }

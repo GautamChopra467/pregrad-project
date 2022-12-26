@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from 'react';
 import "../../../components/student/css/UserStudent/InternshipsStyles.css";
-import { BiHeading } from 'react-icons/bi';
 import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
@@ -16,13 +15,11 @@ const Internships = () => {
 
    const {id} = useParams()
 
-   const [companyid,setCompanyId] = useState()
-
    const [internships,setInternships] = useState([])
 
    const [appliedinternship,setappliedInternship] = useState([])
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
   const [currentPage, setCurrentPage] = useState("new-internships");
 
@@ -34,7 +31,7 @@ const Internships = () => {
 
 
 const getAllInterships = ()=>{
-  axios.get(`http://localhost:8000/company/allinternships/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `company/allinternships/${id}`).then(({data})=>{
   
     setInternships(data)
     setTimeout(() => {
@@ -44,7 +41,7 @@ const getAllInterships = ()=>{
 }
 
 const getAppliedInternship = ()=>{
-   axios.get(`http://localhost:8000/student/getappliedinternship/${id}`).then(({data})=>{
+   axios.get(process.env.REACT_APP_SERVER_URL + `student/getappliedinternship/${id}`).then(({data})=>{
    
     setappliedInternship(data)
     setTimeout(() => {
@@ -59,7 +56,7 @@ useEffect(()=>{
       
       navigate('/login')
     }else{
-      const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+      const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
       if(data.id !== id || data.status !== true){
         removeCookie("jwt")
         navigate('/login')
@@ -96,7 +93,7 @@ useEffect(()=>{
         <div className='main_container_internships'>
         {currentPage === "new-internships" && (
           isNewInternshipContent ? (
-            <InternshipContainerStudent internship={(internships==undefined)?"":internships} getAllInterships={getAllInterships}/>
+            <InternshipContainerStudent internship={(internships === undefined)?"":internships} getAllInterships={getAllInterships}/>
           ) : (
             <div className='add_section1_internships'>
               <div className='add_section1_logo_internships'>

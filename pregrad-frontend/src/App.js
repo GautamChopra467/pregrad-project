@@ -32,7 +32,7 @@ const App = () => {
     document.body.className = theme;
   },[theme]);
 
-  return (  //home navigate('/home') 
+  return ( 
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
@@ -48,9 +48,8 @@ const App = () => {
         <Route exact path="*" element={<Error404 />} />
 
 
-  // navbar home skills
 
-        {/* Company Routes */}
+        
         <Route exact path="/company" element={<HomeCompany theme={theme} setTheme={setTheme} />} />
         <Route exact path="/company/signup" element={<SignUpCompany theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/company/info/:id/*" element={<InfoCompany theme={theme} setTheme={setTheme}/>} />
@@ -59,7 +58,6 @@ const App = () => {
         <Route exact path="/company/resume/:id" element={<CompanyResume theme={theme} setTheme={setTheme}/>} />
 
 
-        {/* Admin Routes */}
         <Route exact path="/admin/info/:id/*" element={<InfoAdmin theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/admin/:id/signup" element={<SignUpAdmin theme={theme} setTheme={setTheme}/>} />              
       </Routes>

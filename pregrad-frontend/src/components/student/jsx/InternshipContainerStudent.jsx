@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import "../../company/css/UserCompany/ListingsCompanyStyles.css";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BsFillBarChartFill, BsPlayCircle } from "react-icons/bs";
 import { AiOutlineFieldTime, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -13,19 +13,13 @@ import ReactTooltip from 'react-tooltip';
 
 const InternshipContainerStudent = ({internship,getAllInterships}) => {
 
-    const ref = useRef();
+  const {id} = useParams()
 
-    const navigate = useNavigate();
+  // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
 
-    const {id} = useParams()
-
-    const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
-
-
-const applyInternship = async(iid)=>{
-
-    const {data} = await axios.post(`http://localhost:8000/student/appliedinternship/${id}`,{
-        iid
+  const applyInternship = async(iid)=>{
+    const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student/appliedinternship/${id}`,{
+      iid
     })
     getAllInterships()
     const notify = () => toast.success('Applied Successfully, You can see the internship in applied section.', {
@@ -36,15 +30,15 @@ const applyInternship = async(iid)=>{
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
     notify();
-}
+  }
 
   return (
     <>
 
       {
-        (internship == undefined)?"":internship.map((intern)=>(
+        (internship === undefined)?"":internship.map((intern)=>(
             (intern.isBlocked)?"":
          ( <div key={intern.main._id}>
               <div className='internship_container_listingscompany'>

@@ -15,7 +15,7 @@ const Achievements = ({userHealthProfile}) => {
   const {id} = useParams()
 
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const [isPageLoading, setIsPageLoading] = useState(false);
   
@@ -60,7 +60,7 @@ const [studentachi,setStudentachi] = useState([])
   }
 
   const getAchievements = ()=>{
-    axios.get(`http://localhost:8000/student/getachievements/${id}`).then((res)=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `student/getachievements/${id}`).then((res)=>{
       if(res.data.message === "true"){
       setStudentachi(res.data.achievements)
       if(res.data.achievements.length > 0){
@@ -86,7 +86,7 @@ const [studentachi,setStudentachi] = useState([])
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -100,7 +100,7 @@ const [studentachi,setStudentachi] = useState([])
     verifyUser()
    
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/student/achievements/${id}`,{
+      axios.post(process.env.REACT_APP_SERVER_URL + `student/achievements/${id}`,{
        ...achievements
       }).then(res=>{
         if(res.data.message === "true"){
@@ -132,7 +132,7 @@ const [studentachi,setStudentachi] = useState([])
 
  const deleteAchievement = async(u_id,a_id)=>{
   
- const {data} = await axios.delete(`http://localhost:8000/student/deleteachievement/${u_id}/${a_id}`)
+ const {data} = await axios.delete(process.env.REACT_APP_SERVER_URL + `student/deleteachievement/${u_id}/${a_id}`)
  
  if(data.message === "true")
  {
@@ -145,7 +145,7 @@ const [studentachi,setStudentachi] = useState([])
 const editAchievement = async(u_id,a_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
-  const {data} = await axios.get(`http://localhost:8000/student/updateachievement/${u_id}/${a_id}`)
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/updateachievement/${u_id}/${a_id}`)
   setEditAchievement(data)
 }
 
@@ -158,7 +158,7 @@ const editAchievement = async(u_id,a_id)=>{
   const UpdatedAchievement = async(e,u_id)=>{
     e.preventDefault();
    
-    const {data} = await axios.put(`http://localhost:8000/student/updatedachievement/${u_id}/${editachievement._id}`,{
+    const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `student/updatedachievement/${u_id}/${editachievement._id}`,{
       ...editachievement
     })
     if(data.achievements){

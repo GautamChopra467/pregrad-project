@@ -4,7 +4,6 @@ import SignUpLogo from "../../img/signupcompany-image.png";
 import InstaLogo from "../../img/instagram-logo.svg";
 import LinkedinLogo from "../../img/linkedin-logo.svg";
 import YoutubeLogo from "../../img/youtube-logo.svg";
-import GoogleLogo from "../../img/google-logo.svg";
 import "../../components/admin/css/SignUpAdminStyles.css";
 import { BsArrowRightShort } from "react-icons/bs";
 import axios from "axios";
@@ -17,7 +16,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
 
   const {id} = useParams();
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
   const [showPassword, setShowPassword] = useState(true);
 
@@ -54,7 +53,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true || data.role !== "superadmin"){ 
           removeCookie("jwt")
           navigate('/login')
@@ -67,7 +66,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
     verifyUser()
 
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post("http://localhost:8000/admin/register", user)
+      axios.post(process.env.REACT_APP_SERVER_URL + `admin/register`, user)
       .then( res => {
         if(res.data.errors){
           setFormErrors(res.data.errors);
@@ -84,7 +83,7 @@ const SignUpAdmin = ({theme, setTheme}) => {
   const validate = (values) => {
 
     const errors = {};
-    const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex =/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(!values.name){
       errors.name = "Name required";

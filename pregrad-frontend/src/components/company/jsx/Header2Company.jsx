@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../img/logo.png";
 import Logo2 from "../../../img/logo-white.png";
-import { FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
 import { CgMenuRight } from "react-icons/cg"
-import { FaRegUser } from "react-icons/fa"
 import "../../student/css/HeaderStudentStyles.css";
 import {useCookies} from 'react-cookie'
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
-import { useEffect } from "react";
-import axios from "axios"
 
 const Header2Company = (props) => {
 
@@ -33,7 +29,7 @@ const Header2Company = (props) => {
     
     const navigate = useNavigate()
     
-      const [cookies,setCookies,removeCookie] = useCookies([])
+      const [removeCookie] = useCookies([])
     
       const LogOut = async()=>{
          removeCookie("jwt")

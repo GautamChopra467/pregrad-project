@@ -13,18 +13,23 @@ const ReportCandidates  = () => {
 
   const navigate = useNavigate();
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [isContent, setIsContent] = useState(true);
 
   const [reports,setReports] = useState([])
 
   const getReports = ()=>{
-    axios.get(`http://localhost:8000/admin/getreports/${i_id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/getreports/${i_id}`).then(({data})=>{
       if(data){
-        console.log(data);
         setReports(data);
       }
+      if(data.length === 0){
+        setIsContent(false);
+      }
+      setTimeout(() => {
+        setIsPageLoading(false)
+      },800)
     })
   }
 
@@ -33,11 +38,12 @@ const ReportCandidates  = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){ 
           removeCookie("jwt");
           navigate('/login');
         }else{
+          setIsPageLoading(true);
           getReports();
         }
       }

@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import "../../../components/company/css/AppliedInternshipContainerStyles.css";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import ReactTooltip from 'react-tooltip';
@@ -38,7 +38,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
     
   const submitReport = async(e)=>{
     e.preventDefault(); 
-    axios.post(`http://localhost:8000/internship/report/${reportingId}/${id}`,
+    axios.post(process.env.REACT_APP_SERVER_URL + `internship/report/${reportingId}/${id}`,
       info
     ).then(({data})=>{
       if(data.error){
@@ -78,7 +78,7 @@ const AppliedInternshipContainer = ({appliedinternship,getAppliedInternship}) =>
   return (
    <>
    {
-     (appliedinternship == undefined)?"":appliedinternship.map((applied)=>(
+     (appliedinternship === undefined)?"":appliedinternship.map((applied)=>(
       <div key={applied._doc._id}>
       <div className='internship_container_appliedinternship'>
           <div className='top_section_internship_appliedinternship'>

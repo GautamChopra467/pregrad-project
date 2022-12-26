@@ -114,7 +114,7 @@ const SidebarAdmin = ({ children, theme, setTheme }) => {
       }
 
       const getAdminInfo = ()=>{
-        axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
+        axios.get(process.env.REACT_APP_SERVER_URL + `admin/getadmininfo/${id}`).then(({data})=>{
         setAdminInfo(data);
     })
     }

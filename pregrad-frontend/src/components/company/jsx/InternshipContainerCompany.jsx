@@ -18,8 +18,6 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
 
     const navigate = useNavigate();
 
-    const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
-
     const [isModal, setIsModal] = useState(false);
 
     const [isModal2, setIsModal2] = useState(false);
@@ -81,7 +79,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
     const updateInternshipstatus = async(e,iid,status)=>{
         e.preventDefault();
         if(option1 || option2 || option3 || option4){
-          const {data} = await axios.put(`http://localhost:8000/company/closeinternship/${iid}`,{
+          const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `company/closeinternship/${iid}`,{
             status
           })
           if(data.message){
@@ -127,7 +125,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
               <div className='dots_icon_container_listingscompany' id={intern._id}>
                 <BiDotsVerticalRounded onClick={()=>openModal(intern._id)} id={intern._id}  className="dots_icon_listingscompany" />
               </div>
-              {(modalId == intern._id && isModal) && (
+              {(modalId === intern._id && isModal) && (
                 <div className='modal_container_listingscompany'>
                   <div className='modal_box_listingscompany'>
                     <FiClipboard className="modal_icon_listingscompany" />
@@ -234,7 +232,7 @@ const InternshipContainerCompany = ({internship,companyinfodetail,companydetail,
 
             
 
-            {(modalId == intern._id && isModal2) && (
+            {(modalId === intern._id && isModal2) && (
         
         <div className='modal_backgound_listingscompany'>
         <div className='modal_container2_listingscompany'>

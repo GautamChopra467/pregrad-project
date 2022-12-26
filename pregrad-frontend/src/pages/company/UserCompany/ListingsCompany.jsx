@@ -15,18 +15,18 @@ const ListingsCompany = () => {
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const [internships,setInternships] = useState([])
+  const [internships, setInternships] = useState([])
 
-  const [companydetails,setCompanyDetails] = useState({})
+  const [companydetails, setCompanyDetails] = useState({})
 
-  const [companyInfoDetails,setCompanyInfoDetails] = useState({})
+  const [companyInfoDetails, setCompanyInfoDetails] = useState({})
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const [isContent, setIsContent] = useState(true);
 
   const getInternship = ()=>{
-    axios.get(`http://localhost:8000/company/getinternships/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `company/getinternships/${id}`).then(({data})=>{
       if(data.length > 0){
         setIsContent(false);
         setInternships(data)
@@ -38,14 +38,14 @@ const ListingsCompany = () => {
  }
 
  const getCompanyInfo = ()=>{
-  axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
    
   setCompanyDetails(data)
 })
 }
 
  const getCompanyDetails = ()=>{
-  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanydetails/${id}`).then(({data})=>{
    
     setCompanyInfoDetails(data)
  }) 
@@ -55,10 +55,10 @@ const ListingsCompany = () => {
     if(!cookies.jwt){
       navigate('/login')
     }else{
-      axios.post(`http://localhost:8000/company`,{},{
+      axios.post(process.env.REACT_APP_SERVER_URL + `company`,{},{
         withCredentials:true,
       }).then(({data})=>{
-        if(data.id != id){
+        if(data.id !== id){
           removeCookie("jwt")
           navigate('/login')
         }else{ 

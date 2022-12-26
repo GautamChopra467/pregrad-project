@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const maxAge = 3*24*60*60
-require('../config/passportGoogle')
+// require('../config/passportGoogle')
 
 const { signup, login,verifyEmail,verifyOtp,newPassword,getUserDetails} = require("../controllers/authControllers");
 

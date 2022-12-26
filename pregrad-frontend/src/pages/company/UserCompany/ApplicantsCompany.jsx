@@ -1,9 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css";
 import { FiFileText } from 'react-icons/fi';
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineFileSearch } from "react-icons/ai";
-import { FaTrashAlt } from "react-icons/fa";
 import axios from 'axios'
 import NewApplicants from '../../../components/company/jsx/NewApplicants';
 import ShortlistedApplicants from '../../../components/company/jsx/ShortlistedApplicants';
@@ -11,8 +8,6 @@ import HiredApplicants from '../../../components/company/jsx/HiredApplicants';
 import PageLoader from "../../../img/page-loader.gif";
 
 const ApplicantsCompany = () => {
-  
-    const navigate = useNavigate();
 
     var iid = window.location.search.substring(1).split("=")[1];
     
@@ -31,8 +26,6 @@ const ApplicantsCompany = () => {
     let [totalApplied,setTotalApplied] = useState(0)
 
     const [isPageLoading, setIsPageLoading] = useState(false);
-
-    let [count,setCount] = useState(0)
 
     const setContent = (data)=>{
       if(data.appliedCandidates.length>0){
@@ -56,7 +49,7 @@ const ApplicantsCompany = () => {
     }
  
          const showApplicants = async()=>{
-              const {data} = await  axios.get(`http://localhost:8000/company/application/${iid}`)
+              const {data} = await  axios.get(process.env.REACT_APP_SERVER_URL + `company/application/${iid}`)
                 setShowApplied(data.appliedCandidates)
                 setShortlisted(data.shortlistedCandidates)
                 setHired(data.hiredCandidates)

@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import "../css/SidebarStyles.css";
 import Logo from "../../../img/logo.png";
@@ -11,10 +11,8 @@ import {
   MdOutlineDesignServices,
   MdOutlineCastForEducation,
 } from "react-icons/md";
-import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import { GiAchievement } from "react-icons/gi";
-import { TbFileCertificate } from "react-icons/tb";
 import {  NavLink } from "react-router-dom";
 import { CgMenuRight } from "react-icons/cg";
 

@@ -28,7 +28,7 @@ body {
     --background-secondary-hover: #E6EAEF;
     --create-btn: #370A99;
     --create-btn-hover: #3e0bad;
-    --header-bg: #fff;
+    --header-bg: #ffffff;
     --info-color-light: #616D7A;
     --info-color-dark: #68798D;
     --menu-link: #3f4358;
@@ -64,7 +64,3 @@ body {
     --accept-color: #249454;
     --reject-color: #FF3333;
 }
-
-
-/* --input-border: #ebf0f5
---input-hover : #d7e1ea */

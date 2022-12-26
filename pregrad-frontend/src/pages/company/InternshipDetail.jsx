@@ -6,7 +6,6 @@ import { AiOutlineFieldTime, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
-import { MdOutlineReportGmailerrorred, MdPeopleAlt, MdReport } from "react-icons/md";
 import {useParams} from "react-router-dom"
 import axios from 'axios'
 import ReactTooltip from 'react-tooltip';
@@ -29,10 +28,10 @@ const InternshipDetail = ({theme, setTheme}) => {
 
   const [companyInfoDetails,setCompanyInfoDetails] = useState({})
 
-    const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
+    // const skillsData = ["HTML", "CSS", "JS", "NodeJs", "ExpressJs"];
 
     const getInternship = ()=>{
-      axios.get(`http://localhost:8000/company/internship/${i_id}`).then(({data})=>{
+      axios.get(process.env.REACT_APP_SERVER_URL + `company/internship/${i_id}`).then(({data})=>{
      
         setInternship(data) 
         setInternshipSkills(data.skills)
@@ -43,53 +42,52 @@ const InternshipDetail = ({theme, setTheme}) => {
     }
 
     const getCompanyInfo = ()=>{
-      axios.get(`http://localhost:8000/company/getcompanyinfo/${cid}`).then(({data})=>{
+      axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${cid}`).then(({data})=>{
       setCompanyDetails(data)
     })
     }
     
      const getCompanyDetails = ()=>{
-      axios.get(`http://localhost:8000/company/getcompanydetails/${cid}`).then(({data})=>{
+      axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanydetails/${cid}`).then(({data})=>{
         setCompanyInfoDetails(data)
     }) 
      }
 
 
-     const [info, setInfo] = useState({
-      description: ""
-    })
+    //  const [info, setInfo] = useState({
+    //   description: ""
+    // })
 
-    const handleForm = (event) => {
-      const {name, value} = event.target;
-      setInfo({
-        ...info,
-        [name]: value
-      })
-    }
+    // const handleForm = (event) => {
+    //   const {name, value} = event.target;
+    //   setInfo({
+    //     ...info,
+    //     [name]: value
+    //   })
+    // }
   
-  const [isModal, setIsModal] = useState(false);
-  const [error, setError] = useState("");
-  const [option1, setOption1] = useState(false);
-  const [option2, setOption2] = useState(false);
-  const [option3, setOption3] = useState(false);
-  const [option4, setOption4] = useState(false);
+  // const [isModal, setIsModal] = useState(false);
+  // const [error, setError] = useState("");
+  // const [option1, setOption1] = useState(false);
+  // const [option2, setOption2] = useState(false);
+  // const [option3, setOption3] = useState(false);
+  // const [option4, setOption4] = useState(false);
     
-  const submitReport = async(e)=>{
-    e.preventDefault(); 
-    axios.post(`http://localhost:8000/internship/report/${i_id}`,
-      info
-    ).then(({data})=>{
-      if(data.success){
-        console.log("Reported !")
-      }
-    })
-    console.log(option1, ".",option2, ".",option3, ".",option4, ".", info)
-    if(option1 || option2 || option3 || option4){
-      setError("");
-    }else {
-      setError("Reason required")
-    }
-  }
+  // const submitReport = async(e)=>{
+  //   e.preventDefault(); 
+  //   axios.post(process.env.REACT_APP_SERVER_URL + `internship/report/${i_id}`,
+  //     info
+  //   ).then(({data})=>{
+  //     if(data.success){
+  //       console.log("Reported !")
+  //     }
+  //   })
+  //   if(option1 || option2 || option3 || option4){
+  //     setError("");
+  //   }else {
+  //     setError("Reason required")
+  //   }
+  // }
 
     useEffect(()=>{
       getInternship()
@@ -215,7 +213,7 @@ const InternshipDetail = ({theme, setTheme}) => {
               <div className='bottom_section_internship_internshipdetail'>
                 <div className='bottom_upper_section_internshipdetail'>
                     <BsPeople className="applicants_icon_internshipdetail" />
-                   {(internship.applied && internship.applied.length != 0 )?<p>{internship.applied.length} applicants</p>:""}
+                   {(internship.applied && internship.applied.length !== 0 )?<p>{internship.applied.length} applicants</p>:""}
                 </div>
                 <div className='bottom_lower_section_internshipdetail'>
                     <div className='line_internshipdetail'></div>

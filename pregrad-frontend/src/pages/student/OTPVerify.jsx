@@ -15,17 +15,6 @@ const OTPVerify = ({theme, setTheme}) => {
 
 const {email,type} = useParams()
 
-  const toggleTheme = () => {
-    if(theme === "light-theme"){
-      setTheme("dark-theme");
-    }else{
-      setTheme("light-theme");
-    }
-  }
-
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -61,19 +50,19 @@ const {email,type} = useParams()
   useEffect(() => {
     if( Object.keys(formErrors).length === 0 && isSubmit ){
     
-      axios.post(`http://localhost:8000/verifyotp`, user)
+      axios.post(process.env.REACT_APP_SERVER_URL + `verifyotp`, user)
       .then( res => {
         if(res.data.errors){
           setFormErrors(res.data.errors)
         }
         else if(res.data.message === "true"){
           if(type === 'register'){
-          navigate("/login");
-        }else{
-          navigate(`/forgotpassword/${email}`)
+            navigate("/login");
+          }else{
+            navigate(`/forgotpassword/${email}`)
+          }
         }
-        }
-        else if(data.message == false)
+        else if(res.data.message === false)
         {
             navigate(`/*`) ; 
         }
@@ -86,7 +75,7 @@ const {email,type} = useParams()
 
   const validate = (values) => {
     const errors = {};
-    const regex =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex =/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if(!values.email){
       errors.email = "Email required";

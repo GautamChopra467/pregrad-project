@@ -17,13 +17,11 @@ const Verification = () => {
   
   const [isPageLoading, setIsPageLoading] = useState(false);
 
-  const [formErrors, setFormErrors] = useState();
-
   const [isContent, setIsContent] = useState(true);
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
 
-  const [unAuthorized,setUnAuthorized] = useState([]);
+  const [unAuthorized, setUnAuthorized] = useState([]);
 
   let [count,setCount] = useState(0);
 
@@ -45,20 +43,20 @@ const Verification = () => {
        }
  
   
-  const countApplied= ()=>{
-        let applied_count = 0
-        showapplied.map((e)=>{
-            if(e.status){
-              setCount(++applied_count);
-            }
-        })
-    }
+  // const countApplied= ()=>{
+  //       let applied_count = 0
+  //       showapplied.map((e)=>{
+  //           if(e.status){
+  //             setCount(++applied_count);
+  //           }
+  //       })
+  //   }
 
     const changeRejected = (id) => {
       
       setShowApplied(showapplied.map((e)=>{
         if(e._id === id){
-          if(e.status == false || e.status == undefined){
+          if(e.status === false || e.status === undefined){
             setCount(++count)
             return {...e,status:true,class:"student_box_applicantscompany reject_applicantscompany"}
          }
@@ -73,18 +71,19 @@ const Verification = () => {
 
     const deleteRejectedApplicant = async()=>{
       
-        const {data} = await axios.put(`http://localhost:8000/admin/verifiedCompany/${id}`,[
+        const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `admin/verifiedCompany/${id}`,[
           ...showapplied
       ])
       if(data.status){
         getUnAuthorizedCompany();
+        setIsPageLoading(true);
         setCount(0);
       }
   }
   
 
   const getUnAuthorizedCompany = ()=>{
-     axios.get(`http://localhost:8000/company/unauthorized`).then(({data})=>{
+     axios.get(process.env.REACT_APP_SERVER_URL + `company/unauthorized`).then(({data})=>{
       if(data.length === 0){
         setIsContent(false);
         setUnAuthorized([]);
@@ -94,6 +93,9 @@ const Verification = () => {
         setUnAuthorized(data);
         setShowApplied(data);
       }
+      setTimeout(() => {
+        setIsPageLoading(false)
+      },800)
      })
   }
 
@@ -102,7 +104,7 @@ const Verification = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){ 
           removeCookie("jwt")
           navigate('/login')

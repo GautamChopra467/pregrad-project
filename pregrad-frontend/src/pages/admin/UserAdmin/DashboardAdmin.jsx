@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FiSettings } from 'react-icons/fi';
-import { HiOutlinePencil } from "react-icons/hi";
 import { MdOutlineAdminPanelSettings, MdOutlinePeopleAlt } from 'react-icons/md';
 import { BiTrash } from "react-icons/bi";
 import { useNavigate, Link,useParams } from 'react-router-dom';
@@ -8,14 +7,12 @@ import "../../../components/admin/css/UserAdmin/DashboardAdminStyles.css";
 import axios from 'axios'
 import {useCookies} from 'react-cookie';
 import PageLoader from "../../../img/page-loader.gif";
-import ReactTooltip from 'react-tooltip';
-
 
 const DashboardAdmin = () => {
   
   const navigate = useNavigate();
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -24,173 +21,181 @@ const DashboardAdmin = () => {
 
   const {id} = useParams();
   
-  const [companydetails,setCompanyDetails] = useState({})
+  // const [companydetails,setCompanyDetails] = useState({})
  
-  const [companyInfoDetails,setCompanyInfoDetails] = useState({})
+  // const [companyInfoDetails,setCompanyInfoDetails] = useState({})
 
   // EDIT FORM 1
-  const [isModal, setIsModal] = useState(false);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  // const [isModal, setIsModal] = useState(false);
+  // const [formErrors, setFormErrors] = useState({});
+  // const [isSubmit, setIsSubmit] = useState(false);
   const [adminInfo,setAdminInfo] = useState({})
 
-  const locationData = ["Delhi, New Delhi", "Mumbai", "Chennai", "Jaipur", "Hyderabad"]
-  const [selectedLocation, setSelectedLocation] = useState("");
+  // const locationData = ["Delhi, New Delhi", "Mumbai", "Chennai", "Jaipur", "Hyderabad"]
+  // const [selectedLocation, setSelectedLocation] = useState("");
  
-  const handleLocation = (event) => {
-    setSelectedLocation(event.target.value);
-  }
+  // const handleLocation = (event) => {
+  //   setSelectedLocation(event.target.value);
+  // }
 
-  const typeData = ["StartUp", "Private Limited Company", "Public Company", "Business Corporation", "Government Agency", "Not Registered Organisation"]
-  const [selectedType, setSelectedType] = useState("");
+  // const typeData = ["StartUp", "Private Limited Company", "Public Company", "Business Corporation", "Government Agency", "Not Registered Organisation"]
+  // const [selectedType, setSelectedType] = useState("");
  
-  const handleType = (event) => {
-    setSelectedType(event.target.value);
-  }
+  // const handleType = (event) => {
+  //   setSelectedType(event.target.value);
+  // }
 
-  const [companyInfo, setCompanyInfo] = useState({
-    linkedinlink: "",
-    websitelink: "",
-    about: ""
-  });
+  // const [companyInfo, setCompanyInfo] = useState({
+  //   linkedinlink: "",
+  //   websitelink: "",
+  //   about: ""
+  // });
 
-  const handleForm = (e) => {
-    const {name, value} = e.target;
-    setCompanyInfo({
-      ...companyInfo,
-      [name]: value
-    })
+  // const handleForm = (e) => {
+  //   const {name, value} = e.target;
+  //   setCompanyInfo({
+  //     ...companyInfo,
+  //     [name]: value
+  //   })
    
-  }
+  // }
 
-  const submitForm = (e) => {
-    e.preventDefault();
-    setFormErrors(validate(companyInfo));
-    setIsSubmit(true);
+  // const submitForm = (e) => {
+  //   e.preventDefault();
+  //   setFormErrors(validate(companyInfo));
+  //   setIsSubmit(true);
      
-  }
+  // }
 
-  const validate = (values) => {
-    const errors = {};
+  // const validate = (values) => {
+  //   const errors = {};
 
-    if(!values.linkedinlink){
-      errors.linkedinlink = "Linkedin Id required"
-    }
+  //   if(!values.linkedinlink){
+  //     errors.linkedinlink = "Linkedin Id required"
+  //   }
 
-    if(!selectedLocation){
-      errors.location = "Location required"
-    }
+  //   if(!selectedLocation){
+  //     errors.location = "Location required"
+  //   }
 
-    if(!selectedType){
-      errors.type = "Company Type required"
-    }
+  //   if(!selectedType){
+  //     errors.type = "Company Type required"
+  //   }
 
-    if(!values.about){
-      errors.about = "About company required"
-    }
+  //   if(!values.about){
+  //     errors.about = "About company required"
+  //   }
 
-    return errors;
-  }
+  //   return errors;
+  // }
 
 
-  const [isModal2, setIsModal2] = useState(false);
-  const [formErrors2, setFormErrors2] = useState({});
-  const [isSubmit2, setIsSubmit2] = useState(false);
+  // const [isModal2, setIsModal2] = useState(false);
+  // const [formErrors2, setFormErrors2] = useState({});
+  // const [isSubmit2, setIsSubmit2] = useState(false);
 
-  const [accountInfo, setAccountInfo] = useState({
-    name: "",
-    companyname: "",
-    designation: "", 
-    mobile: "",
-  });
+  // const [accountInfo, setAccountInfo] = useState({
+  //   name: "",
+  //   companyname: "",
+  //   designation: "", 
+  //   mobile: "",
+  // });
 
-  const handleForm2 = (e) => {
-    const {name, value} = e.target;
-    setAccountInfo({
-      ...accountInfo,
-      [name]: value
-    })
+  // const handleForm2 = (e) => {
+  //   const {name, value} = e.target;
+  //   setAccountInfo({
+  //     ...accountInfo,
+  //     [name]: value
+  //   })
    
-  }
+  // }
 
-  const submitForm2 = (e) => {
-    e.preventDefault();
-    setFormErrors2(validate2(accountInfo));
-    setIsSubmit2(true);
+  // const submitForm2 = (e) => {
+  //   e.preventDefault();
+  //   setFormErrors2(validate2(accountInfo));
+  //   setIsSubmit2(true);
    
-  }
+  // }
 
-  const validate2 = (values) => {
-    const errors = {};
+  // const validate2 = (values) => {
+  //   const errors = {};
 
-    if(!values.name){
-      errors.name = "Name Required"
-    }else if(values.name.length < 3){
-      errors.name = "Minimum 3 characters required"
-    }else if(values.name.length > 18){
-      errors.name = "Maximum 18 characters required";
-    }
+  //   if(!values.name){
+  //     errors.name = "Name Required"
+  //   }else if(values.name.length < 3){
+  //     errors.name = "Minimum 3 characters required"
+  //   }else if(values.name.length > 18){
+  //     errors.name = "Maximum 18 characters required";
+  //   }
 
-    if(!values.companyname){
-      errors.companyname = "Company name required"
-    }else if(values.companyname.length < 2){
-      errors.companyname = "Minimum 2 characters required"
-    }else if(values.companyname.length > 18){
-      errors.companyname = "Maximum 18 characters required";
-    }
+  //   if(!values.companyname){
+  //     errors.companyname = "Company name required"
+  //   }else if(values.companyname.length < 2){
+  //     errors.companyname = "Minimum 2 characters required"
+  //   }else if(values.companyname.length > 18){
+  //     errors.companyname = "Maximum 18 characters required";
+  //   }
     
-    if(!values.designation){
-      errors.designation = "Designation required"
-    }else if(values.designation.length > 20){
-      errors.designation = "Maximum 20 characters required";
-    }
+  //   if(!values.designation){
+  //     errors.designation = "Designation required"
+  //   }else if(values.designation.length > 20){
+  //     errors.designation = "Maximum 20 characters required";
+  //   }
 
-    if(!values.mobile){
-      errors.mobile = "Mobile number required"
-    }else if(values.mobile.length !== 10){
-      errors.mobile = "Mobile number is Invalid";
-    }
+  //   if(!values.mobile){
+  //     errors.mobile = "Mobile number required"
+  //   }else if(values.mobile.length !== 10){
+  //     errors.mobile = "Mobile number is Invalid";
+  //   }
 
-    return errors;
-  }
+  //   return errors;
+  // }
 
-  const getCompanyInfo = ()=>{
-    axios.get(`http://localhost:8000/company/getcompanyinfo/${id}`).then(({data})=>{
-    setCompanyDetails(data)
-})
-}
+//   const getCompanyInfo = ()=>{
+//     axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanyinfo/${id}`).then(({data})=>{
+//     setCompanyDetails(data)
+// })
+// }
 
-const getCompanyDetails = ()=>{
-  axios.get(`http://localhost:8000/company/getcompanydetails/${id}`).then(({data})=>{
-    setCompanyInfoDetails(data)
-    setTimeout(() => {
-      setIsPageLoading(false)
-    },800)
-}) 
-}
+// const getCompanyDetails = ()=>{
+//   axios.get(process.env.REACT_APP_SERVER_URL + `company/getcompanydetails/${id}`).then(({data})=>{
+//     setCompanyInfoDetails(data)
+//     setTimeout(() => {
+//       setIsPageLoading(false)
+//     },800)
+// }) 
+// }
 
 const getAdminInfo = ()=>{
-  axios.get(`http://localhost:8000/admin/getadmininfo/${id}`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `admin/getadmininfo/${id}`).then(({data})=>{
   setAdminInfo(data)
-  console.log(data);
+  setTimeout(() => {
+    setIsPageLoading(false)
+  },800)
 })
 }
 
 const getAllAdmins = ()=>{
 
-  axios.get(`http://localhost:8000/admin/alladmins`).then(({data})=>{
+  axios.get(process.env.REACT_APP_SERVER_URL + `admin/alladmins`).then(({data})=>{
     if(data){
       setAdmins(data.admin);
     }
+
+    setTimeout(() => {
+      setIsPageLoading(false)
+    },800)
   })
 
 }
 
 const deleteAdmin = (a_id)=>{
 
-  axios.delete(`http://localhost:8000/admin/deleteadmin/${a_id}`).then(({data})=>{
+  axios.delete(process.env.REACT_APP_SERVER_URL + `admin/deleteadmin/${a_id}`).then(({data})=>{
     if(data.message){
+      setIsPageLoading(true)
       getAllAdmins();
+      
     }
   })
 
@@ -203,12 +208,12 @@ useEffect(()=>{
       navigate('/login')
     }else{
 
-      const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
+      const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
       if(data.id !== id || data.status !== true){ 
         removeCookie("jwt")
         navigate('/login')
       }else{
-        // setIsPageLoading(true);
+        setIsPageLoading(true);
         getAdminInfo();
         getAllAdmins();
         navigate(`/admin/info/${id}/dashboard`);
@@ -227,7 +232,7 @@ useEffect(()=>{
       // if(!cookies.jwt){
       //   navigate('/login')
       // }else{
-      //   axios.post(`http://localhost:8000/company`,{},{
+      //   axios.post(process.env.REACT_APP_SERVER_URL + `company`,{},{
       //     withCredentials:true,
       //   }).then(({data})=>{
 
@@ -247,14 +252,14 @@ useEffect(()=>{
     // verifyCompany()  
   
     // if( Object.keys(formErrors).length === 0 && isSubmit ){
-    //     axios.put(`http://localhost:8000/company/editprofile/${id}`,{
+    //     axios.put(process.env.REACT_APP_SERVER_URL + `company/editprofile/${id}`,{
     //       ...editDetailsProfile
     //     })
     //     setIsModal(!isModal)
     // }
 
     // if(Object.keys(formErrors2).length == 0 && isSubmit2){
-    //   axios.put(`http://localhost:8000/company/editaccount/${id}`,{
+    //   axios.put(process.env.REACT_APP_SERVER_URL + `company/editaccount/${id}`,{
     //     ...accountInfo
     //   })
     //   setIsModal2(!isModal2)
@@ -265,29 +270,29 @@ useEffect(()=>{
   const name_initials=typeof initials==="string" ?initials.split('')[0]:""
 
 
-  const setEditProfile = ()=>{
-    setIsModal(!isModal)
-    setCompanyInfo({...companyInfo,linkedinlink:companyInfoDetails.linkedin,websitelink:companyInfoDetails.websitelink,
-    about:companyInfoDetails.description })
-    setSelectedLocation(companyInfoDetails.headquaters)
-    setSelectedType(companyInfoDetails.typeofcompany)
-  }
+  // const setEditProfile = ()=>{
+  //   setIsModal(!isModal)
+  //   setCompanyInfo({...companyInfo,linkedinlink:companyInfoDetails.linkedin,websitelink:companyInfoDetails.websitelink,
+  //   about:companyInfoDetails.description })
+  //   setSelectedLocation(companyInfoDetails.headquaters)
+  //   setSelectedType(companyInfoDetails.typeofcompany)
+  // }
 
-  const editDetailsProfile = {
-    companyInfo,
-    selectedLocation,
-    selectedType
-  }
+  // const editDetailsProfile = {
+  //   companyInfo,
+  //   selectedLocation,
+  //   selectedType
+  // }
 
-  const editAccountDetails = ()=>{
-    setIsModal2(!isModal2)
-    setAccountInfo({...accountInfo,
-    name:companydetails.name,
-    companyname:companydetails.companyname,
-    designation:companydetails.designation, 
-    mobile: companydetails.phoneno
-  })
-  }
+  // const editAccountDetails = ()=>{
+  //   setIsModal2(!isModal2)
+  //   setAccountInfo({...accountInfo,
+  //   name:companydetails.name,
+  //   companyname:companydetails.companyname,
+  //   designation:companydetails.designation, 
+  //   mobile: companydetails.phoneno
+  // })
+  // }
 
   return (
     <div>
@@ -356,7 +361,7 @@ useEffect(()=>{
 
             <div className='bottom_details_lower_section_dashboardAdmin'>
              { 
-             (admins != undefined)?
+             (admins !== undefined)?
       admins.map((admin)=>(
         <div className='admin_box_dashboardAdmin' key={admin._id}>
         <div className='admin_box_upper_section_dashboardAdmin'>

@@ -1,29 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import "../../../components/company/css/UserCompany/ApplicantsCompanyStyles.css";
-import { FiFileText } from 'react-icons/fi';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineFileSearch } from "react-icons/ai";
-import { FaTrashAlt } from "react-icons/fa";
-import axios from 'axios';
 
 const HiredApplicants = ({hiredCandidates}) => {
 
-  const navigate = useNavigate();
-
-  var iid = window.location.search.substring(1).split("=")[1];
-  
-  const [isContent, setIsContent] = useState(true);
-
   const [showapplied,setShowApplied] = useState(hiredCandidates)
-
-  let [totalApplied,setTotalApplied] = useState(0)
-
-  let [count,setCount] = useState(0)
-
 
       //  const showApplicants = async()=>{
 
-      //       const {data} = await  axios.get(`http://localhost:8000/company/application/${iid}`)
+      //       const {data} = await  axios.get(process.env.REACT_APP_SERVER_URL + `company/application/${iid}`)
       //         setShowApplied(data.candidates)
       //         setTotalApplied(data.length)
 
@@ -40,7 +26,7 @@ const HiredApplicants = ({hiredCandidates}) => {
      {
   showapplied.map((application)=>(
     (application.internshipstatus === "Hired"?(
-      <div className={application.status == undefined ? "student_box_applicantscompany":(application.status == true?application.class:application.class)} key={application.id}>
+      <div className={application.status === undefined ? "student_box_applicantscompany":(application.status === true?application.class:application.class)} key={application.id}>
       <div className='top_section_student_applicantscompany'>
         <h2>{application.name}</h2>
         <Link target="_blank" to={`/resume/${application.id}`}>

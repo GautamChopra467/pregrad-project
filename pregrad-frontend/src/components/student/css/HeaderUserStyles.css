@@ -166,18 +166,18 @@ img {
   padding: 20px 20px;
 }
 
-.logout_container_headerUser a {
+.logout_container_headerUser a, .logout_container_headerUser p {
   text-decoration: none;
   color: var(--black-color);
   font-weight: 500;
   cursor: pointer;
 }
 
-.logout_container_headerUser a:hover {
+.logout_container_headerUser a:hover, .logout_container_headerUser p:hover {
   color: var(--primary-color);
 }
 
-.logout_container_headerUser a:hover::before {
+.logout_container_headerUser a:hover::before, .logout_container_headerUser p:hover::before {
   transform-origin: none;
   transform: scaleX(0);
 }

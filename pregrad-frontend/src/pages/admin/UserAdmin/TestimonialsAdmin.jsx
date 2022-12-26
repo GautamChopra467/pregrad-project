@@ -9,11 +9,11 @@ const TestimonialsAdmin = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies, removeCookie] = useCookies([]);
   const navigate = useNavigate();
   const {id} = useParams();
 
-  const [testimonials,setTestimonials] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
 
   const [info, setInfo] = useState({
     name: "",
@@ -69,7 +69,7 @@ const TestimonialsAdmin = () => {
 
   const deleteTestimonial = (id,t_id)=>{
 
-    axios.put(`http://localhost:8000/admin/deletetestimonial/${id}/${t_id}`).then(({data})=>{
+    axios.put(process.env.REACT_APP_SERVER_URL + `admin/deletetestimonial/${id}/${t_id}`).then(({data})=>{
       if(data.message){
         getTestimonials();
       }
@@ -78,7 +78,7 @@ const TestimonialsAdmin = () => {
   }
 
   const getTestimonials = ()=>{
-    axios.get(`http://localhost:8000/admin/gettestimonials/${id}`).then(({data})=>{
+    axios.get(process.env.REACT_APP_SERVER_URL + `admin/gettestimonials/${id}`).then(({data})=>{
       if(data.message){
     
         if(data.testimonials.length < 7){
@@ -99,8 +99,8 @@ const TestimonialsAdmin = () => {
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/admin/checkadmin`,{},{withCredentials:true}) 
-        if(data.id !== id || data.status !== true || data.role != "superadmin"){ 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `admin/checkadmin`,{},{withCredentials:true}) 
+        if(data.id !== id || data.status !== true || data.role !== "superadmin"){ 
           removeCookie("jwt")
           navigate('/login')
         }
@@ -110,7 +110,7 @@ const TestimonialsAdmin = () => {
 
     if( Object.keys(formErrors).length === 0 && isSubmit ){
       if(testimonials.length < 7){
-        axios.post(`http://localhost:8000/admin/testimonials/${id}`,{
+        axios.post(process.env.REACT_APP_SERVER_URL + `admin/testimonials/${id}`,{
           ...info
         }).then(({data})=>{
           if(data.message){

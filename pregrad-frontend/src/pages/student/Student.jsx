@@ -11,7 +11,6 @@ import { useNavigate,useParams } from "react-router-dom";
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
 import StudentProfile from "./UserStudent/StudentProfile";
-import Error404 from "./Error404";
 import {useSelector,useDispatch} from "react-redux" ;
 import { fetchHealth } from "../../redux/reducers";
 
@@ -24,16 +23,16 @@ const {id} = useParams()
 
 const  [user,setUser] = useState({})
 
-const [profilehealth,setprofileHealth] = useState(20)
+// const [profilehealth,setprofileHealth] = useState(20)
 
-  const [cookies,setCookie,removeCookie] = useCookies([])
+  const [cookies, removeCookie] = useCookies([])
 
   const userHealthProfile = ()=>{
     dispatch(fetchHealth(id)) 
 }
 
 const getUserDetails = async()=>{
-  const {data} = await axios.get(`http://localhost:8000/userDetails/${id}`) ;
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `userDetails/${id}`) ;
   if(data.verified) 
   setUser(data)
   else if (data.message)
@@ -45,7 +44,7 @@ useEffect(()=>{
     if(!cookies.jwt){
       navigate('/login') ;
     }else{
-      const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+      const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
       if(data.id !== id || data.status !== true){
         removeCookie("jwt") ;
         navigate('/login') ;

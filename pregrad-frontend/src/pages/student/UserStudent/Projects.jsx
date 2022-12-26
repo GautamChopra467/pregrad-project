@@ -26,7 +26,7 @@ const Projects = ({userHealthProfile}) => {
 
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const [cookies,setCookie,removeCookie] = useCookies([]);
+  const [cookies,removeCookie] = useCookies([]);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -116,7 +116,7 @@ const Projects = ({userHealthProfile}) => {
   }
 
 const getProjects = async()=>{
-  const {data} = await axios.get(`http://localhost:8000/student/getprojects/${id}`)
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/getprojects/${id}`)
   if(data.message==="true"){
     setGetProject(data.project)
     if(data.project.length > 0){
@@ -137,7 +137,7 @@ const getProjects = async()=>{
       if(!cookies.jwt){
         navigate('/login')
       }else{
-        const {data} = await axios.post(`http://localhost:8000/student`,{},{withCredentials:true}) 
+        const {data} = await axios.post(process.env.REACT_APP_SERVER_URL + `student`,{},{withCredentials:true}) 
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
@@ -150,7 +150,7 @@ const getProjects = async()=>{
     }
     verifyUser()
     if( Object.keys(formErrors).length === 0 && isSubmit ){
-      axios.post(`http://localhost:8000/student/projects/${id}`,{
+      axios.post(process.env.REACT_APP_SERVER_URL + `student/projects/${id}`,{
             ...project,skills:selectedSkills
       }).then(res=>{
         if(res.data.errors){
@@ -190,7 +190,7 @@ const getProjects = async()=>{
   }
 
 const deleteProject = async(u_id,p_id)=>{
- const {data} = await axios.delete(`http://localhost:8000/student/deleteproject/${u_id}/${p_id}`)
+ const {data} = await axios.delete(process.env.REACT_APP_SERVER_URL + `student/deleteproject/${u_id}/${p_id}`)
  if(data.message === "true")
  {
   getProjects();
@@ -202,7 +202,7 @@ const UpdatedProject = async(e,u_id)=>{
 
   e.preventDefault();
 
-    const {data} = await axios.put(`http://localhost:8000/student/updatedproject/${u_id}/${editproject._id}`,{
+    const {data} = await axios.put(process.env.REACT_APP_SERVER_URL + `student/updatedproject/${u_id}/${editproject._id}`,{
       ...editproject,skills:editselectedSkills
     })
     if(data.project){
@@ -219,7 +219,7 @@ const UpdatedProject = async(e,u_id)=>{
 const editProject = async(u_id,p_id)=>{
   setIsModal(!isModal) 
   seteditform("edit")
-  const {data} = await axios.get(`http://localhost:8000/student/updateproject/${u_id}/${p_id}`)
+  const {data} = await axios.get(process.env.REACT_APP_SERVER_URL + `student/updateproject/${u_id}/${p_id}`)
   seteditSelectedSkills(data.skills)
   skillsData = skillsData.filter((e)=> !data.skills.includes(e))
   setEditSkills(skillsData)
