@@ -88,6 +88,18 @@
     font-size: 22px;
   }
   
+  @media screen and (max-width: 1000px) {
+    .footer {
+      padding: 30px 60px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .footer {
+      padding: 30px 40px;
+    }
+  }
+
   @media screen and (max-width: 497px) {
     .footer {
       padding: 30px 20px;

@@ -24,6 +24,7 @@ import CompanyResume from "./pages/company/CompanyResume";
 import SignUpAdmin from "./pages/admin/SignUpAdmin";
 import {Provider} from "react-redux" ;
 import store from "./redux/index" ;
+import ContactUs from "./pages/student/ContactUs";
 
 const App = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -45,6 +46,7 @@ const App = () => {
         <Route exact path="/student/:id/detailsone" element={<DetailsOne theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/forgotpassword/:email" element={<ForgotPassword theme={theme} setTheme={setTheme}/>} />
         <Route exact path="/resume/:id" element={<Resume theme={theme} setTheme={setTheme}/>} />
+        <Route exact path="/contact" element={<ContactUs theme={theme} setTheme={setTheme}/>} />
         <Route exact path="*" element={<Error404 />} />
 
 
