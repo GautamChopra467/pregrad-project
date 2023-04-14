@@ -104,14 +104,14 @@ try{
   }
 }catch(err){
   logger.error(err + " in Signup") ;
-  return res.send({message : false}) ;
+  // return res.send({message : false}) ;
 }
 }
 
 module.exports.verifyEmail=async(req,res)=>{
 try{
 
-  const {email} = req.body
+  const {email} = req.body ; 
 
   const user = await UserRegister.findOne({email})
  const company = await Company.findOne({email})

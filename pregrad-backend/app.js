@@ -42,12 +42,11 @@ app.use(ROUTING.ROUTE_PATH.INTERNSHIP,internshipRoute);
 
 app.use(ROUTING.ROUTE_PATH.ADMIN,adminRoute);
 
-const start = async()=>{
+const start = async()=>{ 
 try{
    await connectDb(process.env.MONGO_URI);
    app.listen(port, () => logger.info(`Server running on port ${port}`));
-
-}catch(err){
+}catch(err){ 
     console.log(err)
 }
 }
@@ -80,3 +79,5 @@ app.use(passport.session())
 // authorization and authentication
 
 // create a folder named - repository in db.
+
+// mongodb+srv://Ankur:<password>@cluster0.nlukaf4.mongodb.net/?retryWrites=true&w=majority

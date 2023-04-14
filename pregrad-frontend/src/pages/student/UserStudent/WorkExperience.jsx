@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import "../../../components/student/css/UserStudent/WorkExperienceStyles.css";
 import { FiFileText } from "react-icons/fi";
 import { BiEditAlt } from "react-icons/bi";
@@ -22,8 +22,6 @@ const WorkExperience = ({userHealthProfile}) => {
   const [isContent, setIsContent] = useState(false);
 
   const [isModal, setIsModal] = useState(false);
-
-  // const [isModalDelete, setIsModalDelete] = useState(false);
 
   const [isPageLoading, setIsPageLoading] = useState(false);
 
@@ -111,10 +109,9 @@ const WorkExperience = ({userHealthProfile}) => {
     e.preventDefault();
     setFormErrors(validate(workexperience));
     setIsSubmit(true);
-    
   }
 
-  const getWorkExperience = ()=>{
+  const getWorkExperience = useCallback(()=>{
     axios.get(process.env.REACT_APP_SERVER_URL + `student/getworkexperience/${id}`).then((res)=>{
       if(res.data.message === "true"){  
     setStudentwork(res.data.workexperience)
@@ -133,7 +130,7 @@ const WorkExperience = ({userHealthProfile}) => {
     }).catch((err)=>{
       console.log(err)
     })
-  } 
+  },[id]) 
 
   useEffect(() => {
     const verifyUser = async()=>{
@@ -144,7 +141,6 @@ const WorkExperience = ({userHealthProfile}) => {
         if(data.id !== id || data.status !== true){
           removeCookie("jwt")
           navigate('/login')
-          
         }else{
           navigate(`/student/${id}/workexperience`) 
           setIsPageLoading(true)
@@ -152,8 +148,10 @@ const WorkExperience = ({userHealthProfile}) => {
         }
       }
     }
-    verifyUser()
-    if( Object.keys(formErrors).length === 0 && isSubmit ){
+    verifyUser();
+    console.log(formErrors) ;
+    if(Object.keys(formErrors).length === 0 && isSubmit ){
+     
      axios.post(process.env.REACT_APP_SERVER_URL + `student/workexperience/${id}`,{
       ...workexperience,skills:selectedSkills
      }).then((res)=>{
@@ -163,17 +161,20 @@ const WorkExperience = ({userHealthProfile}) => {
      else if(res.data.message === "true")
       {
         setIsModal(!isModal);
-        
+
         getWorkExperience();
 
-        userHealthProfile() ;
+        userHealthProfile();
         
       }else if(res.data.message === "You cannot add duplicate information"){
         setFormErrors({others: res.data.message});
        }
+       setIsSubmit(false) ;
      })
     }
-  }, [formErrors,cookies,removeCookie,navigate]);
+  }, [formErrors,cookies,removeCookie,navigate,id,getWorkExperience,isModal,isSubmit]);
+
+    // formErrors,cookies,removeCookie,navigate,getWorkExperience, id, isModal, isSubmit, selectedSkills, userHealthProfile, workexperience]);
 
   const validate = (values) => {
     const errors = {};
@@ -193,9 +194,9 @@ const WorkExperience = ({userHealthProfile}) => {
     if(!values.duration){
       errors.duration = "Duration required";
     }else if(parseInt(values.duration) < 1){
-      errors.duration = "Duration should be greater than 1"
+      errors.duration = "Duration should be greater than 1";
     }else if(!Number.isInteger(parseFloat(values.duration))){
-      errors.duration = "Duration should not be in decimal"
+      errors.duration = "Duration should not be in decimal";
     }
 
     if(!values.websitelink){
@@ -245,9 +246,11 @@ const UpdatedWorExperience = async(e,u_id)=>{
   })
 
   if(data.workexperience){
-    setStudentwork(data.workexperience)
-    setIsModal(!isModal)
-    getWorkExperience()
+    setStudentwork(data.workexperience) ;
+    setIsModal(!isModal) ;
+    getWorkExperience() ;
+    setFormErrors({}) ;
+    setIsSubmit(false) ;
   }
   else{
     setFormErrors(data.errors);

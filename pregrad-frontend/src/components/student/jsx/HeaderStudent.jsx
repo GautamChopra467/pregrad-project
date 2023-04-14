@@ -33,7 +33,8 @@ const navigate = useNavigate()
   const [removeCookie] = useCookies([])
 
   const LogOut = async()=>{
-     removeCookie("jwt")
+     removeCookie("jwt") ;
+     console.log("Logout") ;
      navigate('/login')
      window.location.reload(true);
   }
@@ -107,7 +108,6 @@ const navigate = useNavigate()
         ) : (
             <>
           <div className="user_avavtar_headerStudent" onClick={handleClick}>{name_initials}</div>
-          
          </>
         )}
       </div>
